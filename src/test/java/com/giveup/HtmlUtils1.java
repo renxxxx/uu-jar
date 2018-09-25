@@ -1,4 +1,5 @@
 package com.giveup;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,7 +9,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class HtmlUtils {
+public class HtmlUtils1 {
 
 	public static List<String> extractOffUrls(String oldcontent, String newcontent) throws InterruptedException {
 		oldcontent = oldcontent == null ? "" : oldcontent;

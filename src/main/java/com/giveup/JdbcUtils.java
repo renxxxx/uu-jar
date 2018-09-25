@@ -15,6 +15,10 @@ import org.apache.log4j.Logger;
 public class JdbcUtils {
 	public static Logger logger = Logger.getLogger(JdbcUtils.class);
 
+	public static ResultSet runQuery(PreparedStatement pst, String sql, Object param) throws SQLException {
+		return runQuery(pst, sql, Arrays.asList(new Object[] { param }));
+	}
+
 	public static ResultSet runQuery(PreparedStatement pst, String sql, List<Object> params) throws SQLException {
 		if (params == null)
 			params = new ArrayList<Object>();
