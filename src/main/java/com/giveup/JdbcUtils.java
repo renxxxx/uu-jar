@@ -30,6 +30,10 @@ public class JdbcUtils {
 		return pst.executeQuery();
 	}
 
+	public static int runUpdate(PreparedStatement pst, String sql, Object param) throws SQLException {
+		return runUpdate(pst, sql, Arrays.asList(new Object[] { param }));
+	}
+
 	public static int runUpdate(PreparedStatement pst, String sql, List<Object> params) throws SQLException {
 		if (params == null)
 			params = new ArrayList<Object>();
