@@ -8,7 +8,7 @@ import org.apache.log4j.Logger;
 import redis.clients.jedis.Jedis;
 
 public class LockUtils {
-	
+
 	public static Logger logger = Logger.getLogger(LockUtils.class);
 
 	public static boolean distributedLock(String lock, String locker) throws Exception {
@@ -23,7 +23,8 @@ public class LockUtils {
 		}
 	}
 
-	public static boolean distributedLock(Jedis jedis, String lock, String locker) throws SQLException, InterruptedException {
+	public static boolean distributedLock(Jedis jedis, String lock, String locker)
+			throws SQLException, InterruptedException {
 		int i = 0;
 		while (true) {
 			String result = jedis.set(lock, locker, "NX", "PX", 1 * 60 * 1000);
