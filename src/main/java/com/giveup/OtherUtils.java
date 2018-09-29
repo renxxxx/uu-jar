@@ -23,7 +23,7 @@ import redis.clients.jedis.Jedis;
 public class OtherUtils {
 	public static Logger logger = Logger.getLogger(OtherUtils.class);
 
-	public static String buildUrlPath(String... paths) throws SQLException {
+	public static String buildUrlPath(String... paths) {
 		String urlPath = "";
 		for (String path : paths) {
 			urlPath = urlPath + "/" + path;
@@ -31,10 +31,35 @@ public class OtherUtils {
 		return twistingPathSeparator(urlPath);
 	}
 
-	public static String twistingPathSeparator(String path) throws SQLException {
+	public static String twistingPathSeparator(String path) {
 		path = path.replaceAll("\\\\+", "/");
 		path = path.replaceAll("/+", "/");
 		return path;
+	}
+
+	public static void main(String[] args) {
+		System.out.println(twistingArrayString(",,,,123,,1234,,", ","));
+	}
+
+	public static String twistingArrayString(String str, String separator) {
+		String str1 = "";
+		StringBuilder sb2 = new StringBuilder();
+		if (str == null)
+			return null;
+		str1 = str.trim();
+		if (str1.isEmpty())
+			return "";
+		String[] str1s = str1.split(separator);
+		for (String temp : str1s) {
+			temp = temp.trim();
+			if (!temp.isEmpty())
+				sb2 = sb2.append(separator).append(temp);
+		}
+		String str2 = sb2.toString();
+		if (!str2.isEmpty())
+			return str2.substring(1);
+		else
+			return str2;
 	}
 
 	public static String fileExt(String fileName) {
