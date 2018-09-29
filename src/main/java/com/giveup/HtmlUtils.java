@@ -68,6 +68,8 @@ public class HtmlUtils {
 
 	public static List<String> extractUrls(String htmlStr) {
 		List<String> pics = new ArrayList();
+		if (htmlStr == null || htmlStr.trim().isEmpty())
+			return pics;
 		String img = "";
 		Pattern p_image;
 		Matcher m_image;
