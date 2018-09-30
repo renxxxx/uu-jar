@@ -3,3 +3,6 @@
 String com.giveup.OtherUtils.twistingArrayString(String str, String separator)
 
 SNAPSHOT
+
+------1.4.0--------------
+START
