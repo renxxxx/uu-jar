@@ -30,6 +30,19 @@ public class IOUtils {
 
 	}
 
+	public static int write(File in, OutputStream out) throws Exception {
+		InputStream is = null;
+		try {
+			is = new FileInputStream(in);
+			return org.apache.commons.io.IOUtils.copy(is, out);
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			if (is != null)
+				is.close();
+		}
+	}
+
 	public static void deleteRecursion(File file) throws Exception {
 		if (file.isDirectory()) {
 			File[] files = file.listFiles();
