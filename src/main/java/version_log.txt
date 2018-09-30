@@ -6,3 +6,5 @@ SNAPSHOT
 
 ------1.4.0--------------
 START
++boolean com.giveup.OtherUtils.allEqualsIgnoreCaseWith(String target, String... items)
++boolean com.giveup.OtherUtils.equalsIgnoreCaseWithAny(String str, String... strs)

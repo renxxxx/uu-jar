@@ -31,6 +31,22 @@ public class OtherUtils {
 		return twistingPathSeparator(urlPath);
 	}
 
+	public static String extractFileNamePrefix(String fileName) {
+		String[] fileNameParts = fileName.split("\\.");
+		StringBuilder prefixSb = new StringBuilder("");
+		int toIndex = fileNameParts.length;
+		if (fileNameParts.length > 1)
+			toIndex--;
+
+		for (int i = 0; i < toIndex; i++) {
+			prefixSb = prefixSb.append(".").append(fileNameParts[i]);
+		}
+		String prefix = prefixSb.toString();
+		if (prefix.length() > 1)
+			prefix = prefix.substring(1);
+		return prefix;
+	}
+
 	public static String twistingPathSeparator(String path) {
 		path = path.replaceAll("\\\\+", "/");
 		path = path.replaceAll("/+", "/");
@@ -38,7 +54,7 @@ public class OtherUtils {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(twistingArrayString(",,,,123,,1234,,", ","));
+		System.out.println(extractFileNamePrefix("asd.fsa.d."));
 	}
 
 	public static String twistingArrayString(String str, String separator) {
@@ -76,6 +92,24 @@ public class OtherUtils {
 				return true;
 		}
 		return false;
+	}
+
+	public static boolean equalsIgnoreCaseWithAny(String str, String... strs) {
+		for (String s : strs) {
+			if (str == s || str.equalsIgnoreCase(s))
+				return true;
+		}
+		return false;
+	}
+
+	public static boolean allEqualsIgnoreCaseWith(String target, String... items) {
+		for (String c : items) {
+			if (target == c)
+				continue;
+			if (target != c || !target.equalsIgnoreCase(c))
+				return false;
+		}
+		return true;
 	}
 
 	public static boolean allEqualWith(CharSequence target, CharSequence... items) {
