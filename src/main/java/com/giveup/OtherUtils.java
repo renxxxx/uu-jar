@@ -23,6 +23,15 @@ import redis.clients.jedis.Jedis;
 public class OtherUtils {
 	public static Logger logger = Logger.getLogger(OtherUtils.class);
 
+	public static List<String> extractOffStrs(List<String> oldStrs, List<String> newStrs) throws InterruptedException {
+		List<String> offUrls = new ArrayList<String>();
+		for (String oldUrl : oldStrs) {
+			if (!newStrs.contains(oldUrl))
+				offUrls.add(oldUrl);
+		}
+		return offUrls;
+	}
+
 	public static String buildUrlPath(String... paths) {
 		String urlPath = "";
 		for (String path : paths) {
@@ -109,6 +118,10 @@ public class OtherUtils {
 			if (target != c || !target.equalsIgnoreCase(c))
 				return false;
 		}
+		return true;
+	}
+
+	public static boolean validUrlIs404(String url) {
 		return true;
 	}
 
