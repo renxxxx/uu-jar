@@ -27,7 +27,14 @@ public class JdbcUtils {
 		for (int i = 0; i < params.size(); i++) {
 			pst.setObject(i + 1, params.get(i));
 		}
-		return pst.executeQuery();
+		try {
+			return pst.executeQuery();
+		} catch (SQLException e) {
+			if (e.getMessage().contains("You have an error in your SQL syntax"))
+				throw new SQLException(e.getMessage() + " sql: " + sql);
+			else
+				throw e;
+		}
 	}
 
 	public static int runUpdate(PreparedStatement pst, String sql, Object param) throws SQLException {
@@ -42,7 +49,15 @@ public class JdbcUtils {
 		for (int i = 0; i < params.size(); i++) {
 			pst.setObject(i + 1, params.get(i));
 		}
-		int sqlN = pst.executeUpdate();
+		int sqlN = 0;
+		try {
+			sqlN = pst.executeUpdate();
+		} catch (SQLException e) {
+			if (e.getMessage().contains("You have an error in your SQL syntax"))
+				throw new SQLException(e.getMessage() + " sql: " + sql);
+			else
+				throw e;
+		}
 		logger.debug("affected : " + sqlN);
 		return sqlN;
 	}
@@ -80,7 +95,15 @@ public class JdbcUtils {
 			}
 			pst.addBatch();
 		}
-		int[] sqlNs = pst.executeBatch();
+		int[] sqlNs = new int[] {};
+		try {
+			sqlNs = pst.executeBatch();
+		} catch (SQLException e) {
+			if (e.getMessage().contains("You have an error in your SQL syntax"))
+				throw new SQLException(e.getMessage() + " sql: " + sql);
+			else
+				throw e;
+		}
 		logger.debug("affected : " + Arrays.toString(sqlNs));
 		return sqlNs;
 	}
@@ -95,8 +118,15 @@ public class JdbcUtils {
 			pst.addBatch();
 		}
 
-		int[] sqlNs = pst.executeBatch();
-
+		int[] sqlNs = new int[] {};
+		try {
+			sqlNs = pst.executeBatch();
+		} catch (SQLException e) {
+			if (e.getMessage().contains("You have an error in your SQL syntax"))
+				throw new SQLException(e.getMessage() + " sql: " + sql);
+			else
+				throw e;
+		}
 		logger.debug("affected : " + Arrays.toString(sqlNs));
 		return sqlNs;
 	}
