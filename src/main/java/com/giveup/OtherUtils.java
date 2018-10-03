@@ -62,6 +62,19 @@ public class OtherUtils {
 		return path;
 	}
 
+	public static String jointElesWithSeperator(List<String> arr, String seperator) {
+		if (arr == null || arr.size() == 0)
+			return "";
+		StringBuilder s = new StringBuilder();
+		for (int i = 0; i < arr.size(); i++) {
+			s = s.append(seperator).append(arr.get(i) == null || arr.get(i).trim().isEmpty() ? "" : arr.get(i));
+		}
+		String ss = s.toString();
+		if (ss.length() > 0)
+			ss = ss.substring(1);
+		return ss;
+	}
+
 	public static void main(String[] args) {
 		System.out.println(extractFileNamePrefix("asd.fsa.d."));
 	}
