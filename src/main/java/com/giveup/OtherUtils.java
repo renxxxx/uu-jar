@@ -16,6 +16,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import redis.clients.jedis.Jedis;
@@ -62,6 +63,13 @@ public class OtherUtils {
 		return path;
 	}
 
+	public static boolean urlWithSchemeIf(String url) {
+		if (StringUtils.left(url, 7).equalsIgnoreCase("http://")
+				|| StringUtils.left(url, 8).equalsIgnoreCase("https://"))
+			return true;
+		return false;
+	}
+
 	public static String jointElesWithSeperator(List<String> arr, String seperator) {
 		if (arr == null || arr.size() == 0)
 			return "";
@@ -76,7 +84,7 @@ public class OtherUtils {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(equalsWithAny("1", null, "1"));
+		System.out.println(urlWithSchemeIf(null));
 	}
 
 	public static String twistingArrayString(String str, String separator) {
