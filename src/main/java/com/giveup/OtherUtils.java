@@ -76,7 +76,7 @@ public class OtherUtils {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(extractFileNamePrefix("asd.fsa.d."));
+		System.out.println(equalsWithAny("1", null, "1"));
 	}
 
 	public static String twistingArrayString(String str, String separator) {
@@ -109,16 +109,28 @@ public class OtherUtils {
 	}
 
 	public static boolean equalsWithAny(CharSequence cs, CharSequence... css) {
+		if (css == null)
+			return false;
 		for (CharSequence c : css) {
-			if (cs == c || cs.equals(c))
+			if (cs == c)
+				return true;
+			if (cs != null && cs.equals(c))
+				return true;
+			if (c != null && c.equals(cs))
 				return true;
 		}
 		return false;
 	}
 
 	public static boolean equalsIgnoreCaseWithAny(String str, String... strs) {
+		if (strs == null)
+			return false;
 		for (String s : strs) {
-			if (str == s || str.equalsIgnoreCase(s))
+			if (str == s)
+				return true;
+			if (str != null && str.equalsIgnoreCase(s))
+				return true;
+			if (s != null && s.equalsIgnoreCase(str))
 				return true;
 		}
 		return false;
