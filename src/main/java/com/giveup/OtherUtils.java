@@ -66,7 +66,7 @@ public class OtherUtils {
 	public static boolean urlWithSchemeIf(String url) {
 		if (StringUtils.left(url, 7).equalsIgnoreCase("http://")
 				|| StringUtils.left(url, 8).equalsIgnoreCase("https://"))
-			return true;
+			return true; 
 		return false;
 	}
 
