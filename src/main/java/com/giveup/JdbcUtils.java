@@ -177,6 +177,15 @@ public class JdbcUtils {
 			return null;
 	}
 
+	public static Object parseResultSetOfOneInteger(ResultSet rs) throws SQLException {
+		Object value = parseResultSetOfOneColumn(rs);
+		if (value == null)
+			return null;
+		else {
+			return new Integer(value.toString());
+		}
+	}
+
 	public static String buildSqlPart1(int cnt) throws SQLException {
 		StringBuilder ss = new StringBuilder("(");
 		for (int i = 0; i < cnt; i++) {
