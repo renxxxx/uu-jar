@@ -177,7 +177,7 @@ public class JdbcUtils {
 			return null;
 	}
 
-	public static Object parseResultSetOfOneInteger(ResultSet rs) throws SQLException {
+	public static Integer parseResultSetOfOneInteger(ResultSet rs) throws SQLException {
 		Object value = parseResultSetOfOneColumn(rs);
 		if (value == null)
 			return null;
