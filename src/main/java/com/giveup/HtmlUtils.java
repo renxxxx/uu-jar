@@ -15,22 +15,25 @@ import org.apache.log4j.Logger;
 public class HtmlUtils {
 	public static Logger logger = Logger.getLogger(HtmlUtils.class);
 
-//	public static List<String> extractOffUrls(String oldcontent, String newcontent) throws InterruptedException {
-//		oldcontent = oldcontent == null ? "" : oldcontent;
-//		newcontent = newcontent == null ? "" : newcontent;
-//		List<String> offUrls = new ArrayList<String>();
-//		List<String> oldUrls = HtmlUtils.extractUrls(oldcontent);
-//		List<String> newUrls = HtmlUtils.extractUrls(newcontent);
-//		for (String oldUrl : oldUrls) {
-//			if (!newUrls.contains(oldUrl))
-//				offUrls.add(oldUrl);
-//		}
-//		return offUrls;
-//	}
+	// public static List<String> extractOffUrls(String oldcontent, String
+	// newcontent) throws InterruptedException {
+	// oldcontent = oldcontent == null ? "" : oldcontent;
+	// newcontent = newcontent == null ? "" : newcontent;
+	// List<String> offUrls = new ArrayList<String>();
+	// List<String> oldUrls = HtmlUtils.extractUrls(oldcontent);
+	// List<String> newUrls = HtmlUtils.extractUrls(newcontent);
+	// for (String oldUrl : oldUrls) {
+	// if (!newUrls.contains(oldUrl))
+	// offUrls.add(oldUrl);
+	// }
+	// return offUrls;
+	// }
 
 	public static List<String> extractOffUrls(String oldcontent, String newcontent) throws InterruptedException {
 		oldcontent = oldcontent == null ? "" : oldcontent;
 		newcontent = newcontent == null ? "" : newcontent;
+		if (oldcontent.equals(newcontent))
+			return new ArrayList<String>();
 		List<String> offUrls = new ArrayList<String>();
 		List<String> oldUrls = HtmlUtils.extractUrls(oldcontent);
 		List<String> newUrls = HtmlUtils.extractUrls(newcontent);
