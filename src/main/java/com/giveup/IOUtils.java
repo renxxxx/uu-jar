@@ -30,6 +30,20 @@ public class IOUtils {
 
 	}
 
+	public static String toString(File file) throws Exception {
+		InputStream is = null;
+		try {
+			is = new FileInputStream(file);
+			return org.apache.commons.io.IOUtils.toString(is);
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			if (is != null)
+				is.close();
+		}
+
+	}
+
 	public static int write(File in, OutputStream out) throws Exception {
 		InputStream is = null;
 		try {
