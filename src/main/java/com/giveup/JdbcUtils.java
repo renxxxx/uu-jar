@@ -15,6 +15,10 @@ import org.apache.log4j.Logger;
 public class JdbcUtils {
 	public static Logger logger = Logger.getLogger(JdbcUtils.class);
 
+	public static ResultSet runQuery(PreparedStatement pst, String sql) throws SQLException {
+		return runQuery(pst, sql, null);
+	}
+
 	public static ResultSet runQuery(PreparedStatement pst, String sql, Object param) throws SQLException {
 		return runQuery(pst, sql, Arrays.asList(new Object[] { param }));
 	}
@@ -35,6 +39,14 @@ public class JdbcUtils {
 			else
 				throw e;
 		}
+	}
+
+	public static String toLikePart(String columnValue) {
+		return new StringBuilder("%").append(columnValue).append("%").toString();
+	}
+
+	public static int runUpdate(PreparedStatement pst, String sql) throws SQLException {
+		return runUpdate(pst, sql, null);
 	}
 
 	public static int runUpdate(PreparedStatement pst, String sql, Object param) throws SQLException {
