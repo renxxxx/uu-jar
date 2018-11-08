@@ -15,17 +15,29 @@ import org.apache.log4j.Logger;
 public class HtmlUtils {
 	public static Logger logger = Logger.getLogger(HtmlUtils.class);
 
+	// public static List<String> extractOffUrls(String oldcontent, String
+	// newcontent) throws InterruptedException {
+	// oldcontent = oldcontent == null ? "" : oldcontent;
+	// newcontent = newcontent == null ? "" : newcontent;
+	// List<String> offUrls = new ArrayList<String>();
+	// List<String> oldUrls = HtmlUtils.extractUrls(oldcontent);
+	// List<String> newUrls = HtmlUtils.extractUrls(newcontent);
+	// for (String oldUrl : oldUrls) {
+	// if (!newUrls.contains(oldUrl))
+	// offUrls.add(oldUrl);
+	// }
+	// return offUrls;
+	// }
+
 	public static List<String> extractOffUrls(String oldcontent, String newcontent) throws InterruptedException {
 		oldcontent = oldcontent == null ? "" : oldcontent;
 		newcontent = newcontent == null ? "" : newcontent;
+		if (oldcontent.equals(newcontent))
+			return new ArrayList<String>();
 		List<String> offUrls = new ArrayList<String>();
 		List<String> oldUrls = HtmlUtils.extractUrls(oldcontent);
 		List<String> newUrls = HtmlUtils.extractUrls(newcontent);
-		for (String oldUrl : oldUrls) {
-			if (!newUrls.contains(oldUrl))
-				offUrls.add(oldUrl);
-		}
-		return offUrls;
+		return OtherUtils.extractOffStrs(oldUrls, newUrls);
 	}
 
 	public static List<String> extractOffUrls(File oldFile, File newFile) throws Exception {
@@ -68,6 +80,8 @@ public class HtmlUtils {
 
 	public static List<String> extractUrls(String htmlStr) {
 		List<String> pics = new ArrayList();
+		if (htmlStr == null || htmlStr.trim().isEmpty())
+			return pics;
 		String img = "";
 		Pattern p_image;
 		Matcher m_image;
