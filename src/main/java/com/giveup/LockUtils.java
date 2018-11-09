@@ -11,18 +11,6 @@ public class LockUtils {
 
 	public static Logger logger = Logger.getLogger(LockUtils.class);
 
-	public static boolean distributedLock(String lock, String locker) throws Exception {
-		Jedis jedis = null;
-		try {
-			return distributedLock(jedis, lock, locker);
-		} catch (Exception e) {
-			throw e;
-		} finally {
-			if (jedis != null)
-				jedis.close();
-		}
-	}
-
 	public static boolean distributedLock(Jedis jedis, String lock, String locker)
 			throws SQLException, InterruptedException {
 		int i = 0;
@@ -37,18 +25,6 @@ public class LockUtils {
 			Thread.sleep(1000);
 		}
 		return false;
-	}
-
-	public static boolean distributedUnlock(String lock, String locker) throws Exception {
-		Jedis jedis = null;
-		try {
-			return distributedUnlock(jedis, lock, locker);
-		} catch (Exception e) {
-			throw e;
-		} finally {
-			if (jedis != null)
-				jedis.close();
-		}
 	}
 
 	public static boolean distributedUnlock(Jedis jedis, String lock, String locker) {
