@@ -84,7 +84,7 @@ public class OtherUtils {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(urlWithSchemeIf(null));
+		System.out.println(extractFileNamePrefix("123123123213.jpg"));
 	}
 
 	public static String twistingArrayString(String str, String separator) {
