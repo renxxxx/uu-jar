@@ -57,7 +57,7 @@ public class IOUtils {
 		}
 	}
 
-	public static void deleteRecursion(File file) throws Exception {
+	public static void deleteRecursion(File file) {
 		if (file.isDirectory()) {
 			File[] files = file.listFiles();
 			for (File fileTmp : files) {
@@ -69,4 +69,18 @@ public class IOUtils {
 		}
 	}
 
+	public static void deleteFileUpEmpty(File file) {
+		file.delete();
+		logger.debug(file.getParentFile().list());
+		if (file.getParentFile().list().length == 0) {
+			deleteFileUpEmpty(file.getParentFile());
+		} else {
+			return;
+		}
+	}
+
+	public static void main(String[] args) {
+		String s = "C:\\data\\renxinwei\\webroot\\oss\\zaylt\\tmp\\zaylt.log";
+		deleteFileUpEmpty(new File(s));
+	}
 }
