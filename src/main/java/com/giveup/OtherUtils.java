@@ -41,6 +41,17 @@ public class OtherUtils {
 		return twistingPathSeparator(urlPath);
 	}
 
+	public static String buildPath(String... pathParts) {
+		String urlPath = "";
+		for (int i = 0; i < pathParts.length; i++) {
+			if (i == pathParts.length - 1)
+				urlPath = urlPath + pathParts[i];
+			else
+				urlPath = urlPath + pathParts[i] + "/";
+		}
+		return twistingPathSeparator(urlPath);
+	}
+
 	public static String extractFileNamePrefix(String fileName) {
 		String[] fileNameParts = fileName.split("\\.");
 		StringBuilder prefixSb = new StringBuilder("");
@@ -66,7 +77,7 @@ public class OtherUtils {
 	public static boolean urlWithSchemeIf(String url) {
 		if (StringUtils.left(url, 7).equalsIgnoreCase("http://")
 				|| StringUtils.left(url, 8).equalsIgnoreCase("https://"))
-			return true; 
+			return true;
 		return false;
 	}
 

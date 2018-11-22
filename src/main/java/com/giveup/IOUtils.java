@@ -3,7 +3,6 @@ package com.giveup;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
@@ -44,16 +43,33 @@ public class IOUtils {
 
 	}
 
-	public static int write(File in, OutputStream out) throws Exception {
+	public static int write(File in, OutputStream os) throws Exception {
 		InputStream is = null;
 		try {
 			is = new FileInputStream(in);
-			return org.apache.commons.io.IOUtils.copy(is, out);
+			return org.apache.commons.io.IOUtils.copy(is, os);
 		} catch (Exception e) {
 			throw e;
 		} finally {
 			if (is != null)
 				is.close();
+		}
+	}
+
+	public static int write(InputStream is, File out) throws Exception {
+		OutputStream os = null;
+		try {
+			if (!out.getParentFile().exists())
+				out.getParentFile().mkdirs();
+			if (!out.exists())
+				out.createNewFile();
+			os = new FileOutputStream(out);
+			return org.apache.commons.io.IOUtils.copy(is, os);
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			if (os != null)
+				os.close();
 		}
 	}
 
