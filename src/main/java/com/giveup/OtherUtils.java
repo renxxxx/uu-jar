@@ -1,28 +1,33 @@
 package com.giveup;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
-import redis.clients.jedis.Jedis;
-
 public class OtherUtils {
 	public static Logger logger = Logger.getLogger(OtherUtils.class);
+
+	public static Map<String, String> parseQueryStr(String queryStr, String encode)
+			throws UnsupportedEncodingException {
+		if (queryStr == null || queryStr.trim().isEmpty())
+			return null;
+		String[] params = queryStr.split("&");
+
+		Map<String, String> parsedParams = new HashMap<String, String>(params.length);
+		for (String p : params) {
+			String[] kv = p.split("=");
+			if (kv.length == 2) {
+				parsedParams.put(kv[0], URLDecoder.decode(kv[1], encode));
+			}
+		}
+		return parsedParams;
+	}
 
 	public static List<String> extractOffStrs(List<String> oldStrs, List<String> newStrs) throws InterruptedException {
 		List<String> offUrls = new ArrayList<String>();
