@@ -30,6 +30,16 @@ public class ValueUtils {
 			return new Float(valueStr);
 	}
 
+	public static String toString(Object value) {
+		if (value == null)
+			return null;
+		String valueStr = value.toString();
+		if (valueStr.isEmpty())
+			return null;
+		else
+			return valueStr.toString();
+	}
+
 	public static Long toLong(Object value) {
 		if (value == null)
 			return null;
