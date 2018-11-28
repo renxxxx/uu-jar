@@ -198,15 +198,45 @@ public class JdbcUtils {
 		}
 	}
 
-	public static String buildSqlPart1(int cnt) throws SQLException {
-		StringBuilder ss = new StringBuilder("(");
-		for (int i = 0; i < cnt; i++) {
+	// public static String buildSqlPart1(int cnt) throws SQLException {
+	// StringBuilder ss = new StringBuilder("(");
+	// for (int i = 0; i < cnt; i++) {
+	// if (i == 0)
+	// ss = ss.append("?");
+	// else
+	// ss = ss.append(",?");
+	// }
+	// ss.append(")");
+	// return ss.toString();
+	// }
+
+	public static String buildSqlPartAndSplitOr(String splitSql, String[] params) {
+		if (params == null || params.length == 0)
+			return "";
+		String sqlPart = " and ( ";
+		for (int i = 0; i < params.length; i++) {
 			if (i == 0)
-				ss = ss.append("?");
+				sqlPart += splitSql;
 			else
-				ss = ss.append(",?");
+				sqlPart += " or " + splitSql;
 		}
-		ss.append(")");
-		return ss.toString();
+		sqlPart += " )";
+		return sqlPart;
 	}
+
+//	public static String buildSqlPartOrderBy(String[] sorts, String[] orders) {
+//		String ss = " order by ";
+//		for (int i = 0; i < sorts.length; i++) {
+//			String order = null;
+//			if ((orders.length - 1) < i)
+//				order = "desc";
+//			else
+//				order = orders[i];
+//			if (i == 0)
+//				ss += sorts[i] + " " + order;
+//			else
+//				ss += " , " + sorts[i] + " " + order;
+//		}
+//		return ss;
+//	}
 }
