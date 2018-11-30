@@ -210,33 +210,62 @@ public class JdbcUtils {
 	// return ss.toString();
 	// }
 
-	public static String buildSqlPartAndSplitOr(String splitSql, String[] params) {
+	public static String buildSqlPartSqlListByOr(String sql, String[] params) {
 		if (params == null || params.length == 0)
 			return "";
-		String sqlPart = " and ( ";
+		String sqlPart = " ";
 		for (int i = 0; i < params.length; i++) {
 			if (i == 0)
-				sqlPart += splitSql;
+				sqlPart += sql;
 			else
-				sqlPart += " or " + splitSql;
+				sqlPart += " or " + sql;
 		}
-		sqlPart += " )";
+		sqlPart += " ";
 		return sqlPart;
 	}
 
-//	public static String buildSqlPartOrderBy(String[] sorts, String[] orders) {
-//		String ss = " order by ";
-//		for (int i = 0; i < sorts.length; i++) {
-//			String order = null;
-//			if ((orders.length - 1) < i)
-//				order = "desc";
-//			else
-//				order = orders[i];
-//			if (i == 0)
-//				ss += sorts[i] + " " + order;
-//			else
-//				ss += " , " + sorts[i] + " " + order;
-//		}
-//		return ss;
-//	}
+	public static String buildSqlPartParamList(String[] params) {
+		if (params == null || params.length == 0)
+			return "";
+		String sqlPart = "  ";
+		for (int i = 0; i < params.length; i++) {
+			if (i == 0)
+				sqlPart += "'" + params[i] + "'";
+			else
+				sqlPart += " , " + params[i] + "'";
+		}
+		sqlPart += " ";
+		return sqlPart;
+	}
+
+	public static String buildSqlPartQuestionMarkList(int count) {
+		if (count == 0)
+			return "";
+		String sqlPart = "";
+		for (int i = 0; i < count; i++) {
+			if (i == 0)
+				sqlPart += " ?";
+			else
+				sqlPart += ",?";
+		}
+		sqlPart += " ";
+		return sqlPart;
+	}
+
+	// public static String buildSqlPartOrderBy(String[] sorts, String[] orders)
+	// {
+	// String ss = " order by ";
+	// for (int i = 0; i < sorts.length; i++) {
+	// String order = null;
+	// if ((orders.length - 1) < i)
+	// order = "desc";
+	// else
+	// order = orders[i];
+	// if (i == 0)
+	// ss += sorts[i] + " " + order;
+	// else
+	// ss += " , " + sorts[i] + " " + order;
+	// }
+	// return ss;
+	// }
 }
