@@ -232,7 +232,7 @@ public class JdbcUtils {
 			if (i == 0)
 				sqlPart += "'" + params[i] + "'";
 			else
-				sqlPart += " , " + params[i] + "'";
+				sqlPart += " , '" + params[i] + "'";
 		}
 		sqlPart += " ";
 		return sqlPart;

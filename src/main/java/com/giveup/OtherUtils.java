@@ -86,56 +86,56 @@ public class OtherUtils {
 		return false;
 	}
 
-	public static String jointElesWithSeperator(List<String> arr, String separator) {
-		if (arr == null || arr.size() == 0)
-			return "";
-		StringBuilder s = new StringBuilder();
-		for (int i = 0; i < arr.size(); i++) {
-			s = s.append(separator).append(arr.get(i) == null || arr.get(i).trim().isEmpty() ? "" : arr.get(i));
-		}
-		String ss = s.toString();
-		if (ss.length() > 0)
-			ss = ss.substring(1);
-		return ss;
-	}
+//	public static String jointElesWithSeperator(List<String> arr, String separator) {
+//		if (arr == null || arr.size() == 0)
+//			return "";
+//		StringBuilder s = new StringBuilder();
+//		for (int i = 0; i < arr.size(); i++) {
+//			s = s.append(separator).append(arr.get(i) == null || arr.get(i).trim().isEmpty() ? "" : arr.get(i));
+//		}
+//		String ss = s.toString();
+//		if (ss.length() > 0)
+//			ss = ss.substring(1);
+//		return ss;
+//	}
+//
+//	public static void main(String[] args) {
+//		System.out.println(extractFileNamePrefix("123123123213.jpg"));
+//	}
+//
+//	public static String rebuildSplitString(String str, String separator) {
+//		String[] ss = str.split(separator);
+//		List lll = new ArrayList();
+//		for (String s : ss) {
+//			if (s == null)
+//				continue;
+//			s = s.trim();
+//			if (!s.isEmpty())
+//				lll.add(s);
+//		}
+//		return jointElesWithSeperator(lll, separator);
+//	}
 
-	public static void main(String[] args) {
-		System.out.println(extractFileNamePrefix("123123123213.jpg"));
-	}
-
-	public static String rebuildSplitString(String str, String separator) {
-		String[] ss = str.split(separator);
-		List lll = new ArrayList();
-		for (String s : ss) {
-			if (s == null)
-				continue;
-			s = s.trim();
-			if (!s.isEmpty())
-				lll.add(s);
-		}
-		return jointElesWithSeperator(lll, separator);
-	}
-
-	public static String twistingArrayString(String str, String separator) {
-		String str1 = "";
-		StringBuilder sb2 = new StringBuilder();
-		if (str == null)
-			return null;
-		str1 = str.trim();
-		if (str1.isEmpty())
-			return "";
-		String[] str1s = str1.split(separator);
-		for (String temp : str1s) {
-			temp = temp.trim();
-			if (!temp.isEmpty())
-				sb2 = sb2.append(separator).append(temp);
-		}
-		String str2 = sb2.toString();
-		if (!str2.isEmpty())
-			return str2.substring(1);
-		else
-			return str2;
-	}
+//	public static String twistingArrayString(String str, String separator) {
+//		String str1 = "";
+//		StringBuilder sb2 = new StringBuilder();
+//		if (str == null)
+//			return null;
+//		str1 = str.trim();
+//		if (str1.isEmpty())
+//			return "";
+//		String[] str1s = str1.split(separator);
+//		for (String temp : str1s) {
+//			temp = temp.trim();
+//			if (!temp.isEmpty())
+//				sb2 = sb2.append(separator).append(temp);
+//		}
+//		String str2 = sb2.toString();
+//		if (!str2.isEmpty())
+//			return str2.substring(1);
+//		else
+//			return str2;
+//	}
 
 	public static String fileExt(String fileName) {
 		String[] parts = fileName.split("\\.");
