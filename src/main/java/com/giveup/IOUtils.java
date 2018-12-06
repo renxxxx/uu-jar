@@ -73,26 +73,28 @@ public class IOUtils {
 		}
 	}
 
-	public static void deleteRecursion(File file) {
+	public static boolean deleteRecursion(File file) {
 		if (file.isDirectory()) {
 			File[] files = file.listFiles();
 			for (File fileTmp : files) {
-				deleteRecursion(fileTmp);
+				if (!deleteRecursion(fileTmp))
+					return false;
 			}
-			file.delete();
+			logger.info("delete " + file.getAbsolutePath());
+			return file.delete();
 		} else {
-			file.delete();
+			logger.info("delete " + file.getAbsolutePath());
+			return file.delete();
 		}
 	}
 
-	public static void deleteFileUpEmpty(File file) {
-		file.delete();
-		logger.debug(file.getParentFile().list());
+	public static boolean deleteFileUpEmpty(File file) {
+		logger.info("delete " + file.getAbsolutePath());
+		boolean success = file.delete();
 		if (file.getParentFile().list().length == 0) {
 			deleteFileUpEmpty(file.getParentFile());
-		} else {
-			return;
 		}
+		return success;
 	}
 
 	public static void main(String[] args) {

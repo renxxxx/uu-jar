@@ -34,7 +34,6 @@ public class HtmlUtils {
 		newcontent = newcontent == null ? "" : newcontent;
 		if (oldcontent.equals(newcontent))
 			return new ArrayList<String>();
-		List<String> offUrls = new ArrayList<String>();
 		List<String> oldUrls = HtmlUtils.extractUrls(oldcontent);
 		List<String> newUrls = HtmlUtils.extractUrls(newcontent);
 		return OtherUtils.extractOffStrs(oldUrls, newUrls);
