@@ -36,7 +36,7 @@ public class HtmlUtils {
 			return new ArrayList<String>();
 		List<String> oldUrls = HtmlUtils.extractUrls(oldcontent);
 		List<String> newUrls = HtmlUtils.extractUrls(newcontent);
-		return OtherUtils.extractOffStrs(oldUrls, newUrls);
+		return OtherUtils.extractOffStrs(oldUrls, newUrls, true);
 	}
 
 	public static List<String> extractOffUrls(File oldFile, File newFile) throws Exception {
