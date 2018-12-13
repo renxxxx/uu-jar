@@ -33,8 +33,8 @@ public class JdbcUtils {
 				pst.setObject(i + 1, params.get(i));
 			}
 			return pst.executeQuery();
-		} catch (SQLException e) {
-			throw new SQLException("occure an error by running sql: " + sql + " " + params, e);
+		} catch (Exception e) {
+			throw new SQLException(e.getMessage() + " sql: " + sql, e);
 		}
 	}
 
@@ -42,15 +42,15 @@ public class JdbcUtils {
 		return new StringBuilder("%").append(columnValue).append("%").toString();
 	}
 
-	public static int runUpdate(PreparedStatement pst, String sql) throws SQLException {
+	public static int runUpdate(PreparedStatement pst, String sql) throws Exception {
 		return runUpdate(pst, sql, null);
 	}
 
-	public static int runUpdate(PreparedStatement pst, String sql, Object param) throws SQLException {
+	public static int runUpdate(PreparedStatement pst, String sql, Object param) throws Exception {
 		return runUpdate(pst, sql, Arrays.asList(new Object[] { param }));
 	}
 
-	public static int runUpdate(PreparedStatement pst, String sql, List<Object> params) throws SQLException {
+	public static int runUpdate(PreparedStatement pst, String sql, List<Object> params) throws Exception {
 		if (params == null)
 			params = new ArrayList<Object>();
 		logger.debug(sql);
@@ -61,8 +61,8 @@ public class JdbcUtils {
 				pst.setObject(i + 1, params.get(i));
 			}
 			sqlN = pst.executeUpdate();
-		} catch (SQLException e) {
-			throw new SQLException("occure an error by running sql: " + sql + " " + params, e);
+		} catch (Exception e) {
+			throw new Exception(e.getMessage() + " sql: " + sql, e);
 		}
 		logger.debug("affected : " + sqlN);
 		return sqlN;
@@ -89,8 +89,7 @@ public class JdbcUtils {
 		return keys;
 	}
 
-	public static int[] runBatch(PreparedStatement pst, String sql, List<List<Object>> paramBatches)
-			throws SQLException {
+	public static int[] runBatch(PreparedStatement pst, String sql, List<List<Object>> paramBatches) throws Exception {
 		if (paramBatches == null)
 			paramBatches = new ArrayList<List<Object>>();
 		logger.debug(sql);
@@ -105,13 +104,13 @@ public class JdbcUtils {
 			}
 			sqlNs = pst.executeBatch();
 		} catch (SQLException e) {
-			throw new SQLException("occure an error by running sql: " + sql + " " + paramBatches, e);
+			throw new Exception(e.getMessage() + " sql: " + sql, e);
 		}
 		logger.debug("affected : " + Arrays.toString(sqlNs));
 		return sqlNs;
 	}
 
-	public static int[] runThinBatch(PreparedStatement pst, String sql, List<Object> paramBatches) throws SQLException {
+	public static int[] runThinBatch(PreparedStatement pst, String sql, List<Object> paramBatches) throws Exception {
 		if (paramBatches == null)
 			paramBatches = new ArrayList<Object>();
 		logger.debug(sql);
@@ -124,7 +123,7 @@ public class JdbcUtils {
 			}
 			sqlNs = pst.executeBatch();
 		} catch (SQLException e) {
-			throw new SQLException("occure an error by running sql: " + sql + " " + paramBatches, e);
+			throw new Exception(e.getMessage() + " sql: " + sql, e);
 		}
 		logger.debug("affected : " + Arrays.toString(sqlNs));
 		return sqlNs;
@@ -136,9 +135,13 @@ public class JdbcUtils {
 		int columnCnt = metaData.getColumnCount();
 		while (rs.next()) {
 			Map<String, Object> row = new HashMap();
+			List<Object> valueLists = new ArrayList<Object>();
 			for (int i = 1; i <= columnCnt; i++) {
-				row.put(metaData.getColumnLabel(i), rs.getObject(i));
+				Object value = rs.getObject(i);
+				row.put(metaData.getColumnLabel(i), value);
+				valueLists.add(value);
 			}
+			row.put("valueLists", valueLists);
 			rows.add(row);
 			if (rows.size() <= 10)
 				logger.debug(row);
