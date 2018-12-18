@@ -135,19 +135,35 @@ public class JdbcUtils {
 		int columnCnt = metaData.getColumnCount();
 		while (rs.next()) {
 			Map<String, Object> row = new HashMap();
-			List<Object> valueLists = new ArrayList<Object>();
 			for (int i = 1; i <= columnCnt; i++) {
 				Object value = rs.getObject(i);
 				row.put(metaData.getColumnLabel(i), value);
-				valueLists.add(value);
 			}
-			row.put("valueLists", valueLists);
 			rows.add(row);
 			if (rows.size() <= 10)
 				logger.debug(row);
 		}
 		logger.debug("affected : " + rows.size());
 		return rows;
+	}
+
+	public static List<List<Object>> parseResultSetOfValueLists(ResultSet rs) throws SQLException {
+		ResultSetMetaData metaData = rs.getMetaData();
+		int columnCnt = metaData.getColumnCount();
+
+		List<List<Object>> valueLists = new ArrayList<List<Object>>();
+		while (rs.next()) {
+			List<Object> valueList = new ArrayList<Object>();
+			for (int i = 1; i <= columnCnt; i++) {
+				Object value = rs.getObject(i);
+				valueList.add(value);
+			}
+			valueLists.add(valueList);
+			if (valueLists.size() <= 10)
+				logger.debug(valueList);
+		}
+		logger.debug("affected : " + valueLists.size());
+		return valueLists;
 	}
 
 	public static List<Object> parseResultSetOfThinList(ResultSet rs) throws SQLException {
