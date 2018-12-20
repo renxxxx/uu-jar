@@ -147,6 +147,28 @@ public class JdbcUtils {
 		return rows;
 	}
 
+	public static List<Map> parseResultSetOfList(ResultSet rs, String[] excludeColumns) throws SQLException {
+		List<String> excludeColumnList = Arrays.asList(excludeColumns);
+		List<Map> rows = new ArrayList();
+		ResultSetMetaData metaData = rs.getMetaData();
+		int columnCnt = metaData.getColumnCount();
+		while (rs.next()) {
+			Map<String, Object> row = new HashMap();
+			for (int i = 1; i <= columnCnt; i++) {
+				String column = metaData.getColumnLabel(i);
+				if (excludeColumnList.contains(column))
+					continue;
+				Object value = rs.getObject(i);
+				row.put(metaData.getColumnLabel(i), value);
+			}
+			rows.add(row);
+			if (rows.size() <= 10)
+				logger.debug(row);
+		}
+		logger.debug("affected : " + rows.size());
+		return rows;
+	}
+
 	public static List<List<Object>> parseResultSetOfValueLists(ResultSet rs) throws SQLException {
 		ResultSetMetaData metaData = rs.getMetaData();
 		int columnCnt = metaData.getColumnCount();
