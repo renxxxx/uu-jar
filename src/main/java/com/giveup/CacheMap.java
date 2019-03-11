@@ -1,5 +1,6 @@
 package com.giveup;
 
+import java.text.SimpleDateFormat;
 import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -92,7 +93,16 @@ public class CacheMap<K, V> extends AbstractMap<K, V> {
 	}
 
 	public static abstract class Ccc<K, V> extends CacheMap<K, V> {
-		public abstract V getPutCreate(K key);
+		public V getWithCreate(K key) {
+			V obj = this.get(key);
+			if (obj == null) {
+				obj = create(key);
+				this.put(key, obj, 1 * 60 * 60l);
+			}
+			return obj;
+		}
+
+		public abstract V create(K key);
 	}
 
 	@Override
