@@ -91,6 +91,10 @@ public class CacheMap<K, V> extends AbstractMap<K, V> {
 		new ClearThread().start();
 	}
 
+	public static abstract class Ccc<K, V> extends CacheMap<K, V> {
+		public abstract V getPutCreate(K key);
+	}
+
 	@Override
 	public Set<Entry<K, V>> entrySet() {
 		Set<Entry<K, V>> entrySet = new HashSet<Map.Entry<K, V>>();
