@@ -8,6 +8,18 @@ import org.apache.log4j.Logger;
 public class SplitUtils {
 	public static Logger logger = Logger.getLogger(SplitUtils.class);
 
+	public static String[] toArray(String split) {
+		return toArray(split, true);
+	}
+
+	public static String[] toArray(String split, String regex) {
+		return toArray(split, regex, true);
+	}
+
+	public static String[] toArray(String split, boolean clearEmpty) {
+		return toArray(split, ",", clearEmpty);
+	}
+
 	public static String[] toArray(String split, String regex, boolean clearEmpty) {
 		if (split == null || split.trim().isEmpty())
 			return new String[] {};
@@ -23,6 +35,18 @@ public class SplitUtils {
 			}
 			return splitArr;
 		}
+	}
+
+	public static String toSplit(String[] splitArr) {
+		return toSplit(splitArr, true);
+	}
+
+	public static String toSplit(String[] splitArr, String regex) {
+		return toSplit(splitArr, regex, true);
+	}
+
+	public static String toSplit(String[] splitArr, boolean clearEmpty) {
+		return toSplit(splitArr, ",", clearEmpty);
 	}
 
 	public static String toSplit(String[] splitArr, String regex, boolean clearEmpty) {

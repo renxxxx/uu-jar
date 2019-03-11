@@ -97,6 +97,30 @@ public class IOUtils {
 		return success;
 	}
 
+	public static String fileExtStrip(String fileName) {
+		String[] fileNameParts = fileName.split("\\.");
+		StringBuilder prefixSb = new StringBuilder("");
+		int toIndex = fileNameParts.length;
+		if (fileNameParts.length > 1)
+			toIndex--;
+
+		for (int i = 0; i < toIndex; i++) {
+			prefixSb = prefixSb.append(".").append(fileNameParts[i]);
+		}
+		String prefix = prefixSb.toString();
+		if (prefix.length() > 1)
+			prefix = prefix.substring(1);
+		return prefix;
+	}
+
+	public static String fileExtGet(String fileName) {
+		String[] parts = fileName.split("\\.");
+		if (parts.length == 1)
+			return null;
+
+		return parts[parts.length - 1];
+	}
+
 	public static void main(String[] args) {
 		String s = "C:\\data\\renxinwei\\webroot\\oss\\zaylt\\tmp\\zaylt.log";
 		deleteFileUpEmpty(new File(s));
