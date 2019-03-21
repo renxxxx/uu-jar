@@ -11,11 +11,11 @@ public class LockUtils {
 
 	public static Logger logger = Logger.getLogger(LockUtils.class);
 
-	public static boolean distributedLock(Jedis jedis, String lock, String locker)
+	public static boolean distributedLock(Jedis jedis, String lock, String locker, long period)
 			throws SQLException, InterruptedException {
 		int i = 0;
 		while (true) {
-			String result = jedis.set(lock, locker, "NX", "PX", 1 * 60 * 1000);
+			String result = jedis.set(lock, locker, "NX", "PX", period);
 			if ("OK".equals(result)) {
 				return true;
 			}
@@ -25,6 +25,11 @@ public class LockUtils {
 			Thread.sleep(1000);
 		}
 		return false;
+	}
+
+	public static boolean distributedLock(Jedis jedis, String lock, String locker)
+			throws SQLException, InterruptedException {
+		return distributedLock(jedis, lock, locker, 1 * 60 * 1000);
 	}
 
 	public static boolean distributedUnlock(Jedis jedis, String lock, String locker) {
