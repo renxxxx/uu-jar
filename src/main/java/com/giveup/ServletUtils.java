@@ -1,5 +1,6 @@
 package com.giveup;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
@@ -16,6 +17,15 @@ public class ServletUtils {
 		if (value != null && !value.isEmpty())
 			return value;
 		return value;
+	}
+
+	public static String getCookie(String key, HttpServletRequest request) {
+		Cookie[] cookies = request.getCookies();
+		for (Cookie cookie : cookies) {
+			if (cookie.getName().equals(key))
+				return cookie.getValue();
+		}
+		return null;
 	}
 
 	public static String getClientDoScheme(HttpServletRequest request) {
