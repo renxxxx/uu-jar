@@ -43,6 +43,33 @@ public class OtherUtils {
 		return extractOffStrs(new ArrayList(Arrays.asList(oldStrs)), new ArrayList(Arrays.asList(newStrs)), force);
 	}
 
+	public static List<Map> lineToCatalog(List<Map> srcList, String idName, String upIdName, String childrenName) {
+		List<Map> aas = new ArrayList();
+		Map<Integer, Map> am = new HashMap();
+		while (true) {
+			if (am.size() == srcList.size())
+				break;
+			for (Map a : srcList) {
+				Integer id = (Integer) a.get(idName);
+				Integer upId = (Integer) a.get(upIdName);
+				a.put(childrenName, new ArrayList());
+
+				if (upId == 0) {
+					aas.add(a);
+				} else {
+					Map up = am.get(upId);
+					if (up == null)
+						break;
+					List children = (List) up.get(childrenName);
+					children.add(a);
+				}
+
+				am.put(id, a);
+			}
+		}
+		return aas;
+	}
+
 	public static boolean validUrlIs404(String url) {
 		return true;
 	}
