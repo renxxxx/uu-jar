@@ -52,6 +52,8 @@ public class OtherUtils {
 			for (Map a : srcList) {
 				Integer id = (Integer) a.get(idName);
 				Integer upId = (Integer) a.get(upIdName);
+				if (am.get(id) != null)
+					continue;
 				a.put(childrenName, new ArrayList());
 
 				if (upId == 0) {
@@ -59,7 +61,7 @@ public class OtherUtils {
 				} else {
 					Map up = am.get(upId);
 					if (up == null)
-						break;
+						continue;
 					List children = (List) up.get(childrenName);
 					children.add(a);
 				}
