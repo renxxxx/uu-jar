@@ -4,6 +4,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -53,38 +55,56 @@ public class UrlUtils {
 		return parsedParams;
 	}
 
-//	public static Map<String, String> URLRequest(String URL) {
-//		URL = URLDecoder.decode(URL);
-//		Map<String, String> mapRequest = new HashMap<String, String>();
-//
-//		String[] arrSplit = null;
-//
-//		String[] ss = URL.split("\\?");
-//		if (ss.length <= 1)
-//			return mapRequest;
-//		if (ss.length > 2)
-//			return mapRequest;
-//
-//		String strUrlParam = ss[1];
-//		if (strUrlParam == null || strUrlParam.isEmpty()) {
-//			return mapRequest;
-//		}
-//		// 每个键值为一组 www.2cto.com
-//		arrSplit = strUrlParam.split("[&]");
-//		for (String strSplit : arrSplit) {
-//			String[] arrSplitEqual = strSplit.split("[=]");
-//
-//			// 解析出键值
-//			if (arrSplitEqual.length > 1) {
-//				// 正确解析
-//				mapRequest.put(arrSplitEqual[0], arrSplitEqual[1]);
-//			} else {
-//				if (arrSplitEqual[0] != "") {
-//					// 只有参数没有值，不加入
-//					mapRequest.put(arrSplitEqual[0], "");
-//				}
-//			}
-//		}
-//		return mapRequest;
-//	}
+	public static void main(String[] args) {
+		Pattern p = Pattern.compile("^.*\\.([^\\.]*)$");
+		Matcher matcher = p.matcher("22.22.1...qq");
+		matcher.matches();
+		System.out.println(matcher.group(1));
+	}
+
+	public static String fileExtStrip(String fileName) {
+		return fileName.replaceAll("\\.[^\\.]*$", "");
+	}
+
+	public static String fileExtGet(String fileName) {
+		Pattern p = Pattern.compile("^.*\\.([^\\.]*)$");
+		Matcher matcher = p.matcher(fileName);
+		matcher.matches();
+		return matcher.group(1);
+	}
+
+	// public static Map<String, String> URLRequest(String URL) {
+	// URL = URLDecoder.decode(URL);
+	// Map<String, String> mapRequest = new HashMap<String, String>();
+	//
+	// String[] arrSplit = null;
+	//
+	// String[] ss = URL.split("\\?");
+	// if (ss.length <= 1)
+	// return mapRequest;
+	// if (ss.length > 2)
+	// return mapRequest;
+	//
+	// String strUrlParam = ss[1];
+	// if (strUrlParam == null || strUrlParam.isEmpty()) {
+	// return mapRequest;
+	// }
+	// // 每个键值为一组 www.2cto.com
+	// arrSplit = strUrlParam.split("[&]");
+	// for (String strSplit : arrSplit) {
+	// String[] arrSplitEqual = strSplit.split("[=]");
+	//
+	// // 解析出键值
+	// if (arrSplitEqual.length > 1) {
+	// // 正确解析
+	// mapRequest.put(arrSplitEqual[0], arrSplitEqual[1]);
+	// } else {
+	// if (arrSplitEqual[0] != "") {
+	// // 只有参数没有值，不加入
+	// mapRequest.put(arrSplitEqual[0], "");
+	// }
+	// }
+	// }
+	// return mapRequest;
+	// }
 }
