@@ -54,6 +54,19 @@ public class HtmlUtils {
 		return oUrls;
 	}
 
+	public static List<String> extractUrls(File file) throws Exception {
+		FileInputStream fis = null;
+		try {
+			fis = new FileInputStream(file);
+			return extractUrls(fis);
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			if (fis != null)
+				fis.close();
+		}
+	}
+
 	public static List<String> extractUrls(InputStream is) throws Exception {
 		InputStreamReader isr = null;
 		BufferedReader br = null;

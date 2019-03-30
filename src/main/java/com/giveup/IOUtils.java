@@ -1,15 +1,43 @@
 package com.giveup;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.RandomAccessFile;
+import java.security.MessageDigest;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.apache.commons.codec.binary.Hex;
 import org.apache.log4j.Logger;
 
 public class IOUtils {
 	public static Logger logger = Logger.getLogger(IOUtils.class);
+
+	public static String getMD5(File file) throws Exception {
+		FileInputStream fileInputStream = null;
+		try {
+			MessageDigest MD5 = MessageDigest.getInstance("MD5");
+			fileInputStream = new FileInputStream(file);
+			byte[] buffer = new byte[8192];
+			int length;
+			while ((length = fileInputStream.read(buffer)) != -1) {
+				MD5.update(buffer, 0, length);
+			}
+			return new String(Hex.encodeHex(MD5.digest()));
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			if (fileInputStream != null)
+				fileInputStream.close();
+
+		}
+	}
 
 	public static int copy(File in, File out) throws Exception {
 		InputStream is = null;
@@ -73,6 +101,27 @@ public class IOUtils {
 		}
 	}
 
+	public static boolean replaceFileContent(File file, String regex, String newStr) throws IOException {
+		RandomAccessFile raf = null;
+		try {
+			raf = new RandomAccessFile(file, "rw");
+			String line = null;
+			long lastPoint = 0; // 记住上一次的偏移量
+			while ((line = raf.readLine()) != null) {
+				final long ponit = raf.getFilePointer();
+				String str = line.replaceAll(regex, newStr);
+				raf.seek(lastPoint);
+				raf.writeBytes(str);
+				lastPoint = ponit;
+			}
+		} catch (IOException e) {
+			throw e;
+		} finally {
+			raf.close();
+		}
+		return true;
+	}
+
 	public static boolean deleteRecursion(File file) {
 		if (file.isDirectory()) {
 			File[] files = file.listFiles();
@@ -95,30 +144,6 @@ public class IOUtils {
 			deleteFileUpEmpty(file.getParentFile());
 		}
 		return success;
-	}
-
-	public static String fileExtStrip(String fileName) {
-		String[] fileNameParts = fileName.split("\\.");
-		StringBuilder prefixSb = new StringBuilder("");
-		int toIndex = fileNameParts.length;
-		if (fileNameParts.length > 1)
-			toIndex--;
-
-		for (int i = 0; i < toIndex; i++) {
-			prefixSb = prefixSb.append(".").append(fileNameParts[i]);
-		}
-		String prefix = prefixSb.toString();
-		if (prefix.length() > 1)
-			prefix = prefix.substring(1);
-		return prefix;
-	}
-
-	public static String fileExtGet(String fileName) {
-		String[] parts = fileName.split("\\.");
-		if (parts.length == 1)
-			return null;
-
-		return parts[parts.length - 1];
 	}
 
 	public static void main(String[] args) {

@@ -3,22 +3,30 @@ package com.giveup;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 
 public class UrlUtils {
 
-	public static String buildPath(boolean head, boolean end, String... pathParts) {
-		String url = head ? "/" : "";
-		for (int i = 0; i < pathParts.length; i++) {
-			if (i == pathParts.length - 1)
-				url = url + pathParts[i];
-			else
-				url = url + pathParts[i] + "/";
-		}
-		url = url + (end ? "/" : "");
-		return twistingPathSeparator(url);
+	// public static String buildPath(boolean head, boolean end, String...
+	// pathParts) {
+	// String url = head ? "/" : "";
+	// for (int i = 0; i < pathParts.length; i++) {
+	// if (i == pathParts.length - 1)
+	// url = url + pathParts[i];
+	// else
+	// url = url + pathParts[i] + "/";
+	// }
+	// url = url + (end ? "/" : "");
+	// return twistingPathSeparator(url);
+	// }
+
+	public static String buildPath(List<String> pathParts) {
+		return buildPath(pathParts.toArray(new String[] {}));
 	}
 
 	public static String buildPath(String... pathParts) {
@@ -53,38 +61,57 @@ public class UrlUtils {
 		return parsedParams;
 	}
 
-//	public static Map<String, String> URLRequest(String URL) {
-//		URL = URLDecoder.decode(URL);
-//		Map<String, String> mapRequest = new HashMap<String, String>();
-//
-//		String[] arrSplit = null;
-//
-//		String[] ss = URL.split("\\?");
-//		if (ss.length <= 1)
-//			return mapRequest;
-//		if (ss.length > 2)
-//			return mapRequest;
-//
-//		String strUrlParam = ss[1];
-//		if (strUrlParam == null || strUrlParam.isEmpty()) {
-//			return mapRequest;
-//		}
-//		// 每个键值为一组 www.2cto.com
-//		arrSplit = strUrlParam.split("[&]");
-//		for (String strSplit : arrSplit) {
-//			String[] arrSplitEqual = strSplit.split("[=]");
-//
-//			// 解析出键值
-//			if (arrSplitEqual.length > 1) {
-//				// 正确解析
-//				mapRequest.put(arrSplitEqual[0], arrSplitEqual[1]);
-//			} else {
-//				if (arrSplitEqual[0] != "") {
-//					// 只有参数没有值，不加入
-//					mapRequest.put(arrSplitEqual[0], "");
-//				}
-//			}
-//		}
-//		return mapRequest;
-//	}
+	public static void main(String[] args) {
+		System.out.println(fileExtGet("aa"));
+	}
+
+	public static String fileExtStrip(String fileName) {
+		return fileName.replaceAll("\\.[^\\.]*$", "");
+	}
+
+	public static String fileExtGet(String fileName) {
+		Pattern p = Pattern.compile("^.*\\.(.*)$");
+		Matcher matcher = p.matcher(fileName);
+		matcher.matches();
+		try {
+			return matcher.group(1);
+		} catch (RuntimeException e) {
+			return "";
+		}
+	}
+
+	// public static Map<String, String> URLRequest(String URL) {
+	// URL = URLDecoder.decode(URL);
+	// Map<String, String> mapRequest = new HashMap<String, String>();
+	//
+	// String[] arrSplit = null;
+	//
+	// String[] ss = URL.split("\\?");
+	// if (ss.length <= 1)
+	// return mapRequest;
+	// if (ss.length > 2)
+	// return mapRequest;
+	//
+	// String strUrlParam = ss[1];
+	// if (strUrlParam == null || strUrlParam.isEmpty()) {
+	// return mapRequest;
+	// }
+	// // 每个键值为一组 www.2cto.com
+	// arrSplit = strUrlParam.split("[&]");
+	// for (String strSplit : arrSplit) {
+	// String[] arrSplitEqual = strSplit.split("[=]");
+	//
+	// // 解析出键值
+	// if (arrSplitEqual.length > 1) {
+	// // 正确解析
+	// mapRequest.put(arrSplitEqual[0], arrSplitEqual[1]);
+	// } else {
+	// if (arrSplitEqual[0] != "") {
+	// // 只有参数没有值，不加入
+	// mapRequest.put(arrSplitEqual[0], "");
+	// }
+	// }
+	// }
+	// return mapRequest;
+	// }
 }
