@@ -7,12 +7,33 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 public class OtherUtils {
 	public static Logger logger = Logger.getLogger(OtherUtils.class);
+
+	public static boolean isLinux() {
+		Properties prop = System.getProperties();
+		String os = prop.getProperty("os.name");
+		if (os != null && os.toLowerCase().indexOf("linux") > -1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public static boolean isWindows() {
+		Properties prop = System.getProperties();
+		String os = prop.getProperty("os.name");
+		if (os != null && os.toLowerCase().indexOf("windows") > -1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 	public static List<String> extractOffStrs(List<String> oldStrs, List<String> newStrs, boolean force) {
 		if (oldStrs == null || oldStrs.isEmpty())

@@ -3,6 +3,7 @@ package com.giveup;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -11,16 +12,21 @@ import org.apache.commons.lang3.StringUtils;
 
 public class UrlUtils {
 
-	public static String buildPath(boolean head, boolean end, String... pathParts) {
-		String url = head ? "/" : "";
-		for (int i = 0; i < pathParts.length; i++) {
-			if (i == pathParts.length - 1)
-				url = url + pathParts[i];
-			else
-				url = url + pathParts[i] + "/";
-		}
-		url = url + (end ? "/" : "");
-		return twistingPathSeparator(url);
+	// public static String buildPath(boolean head, boolean end, String...
+	// pathParts) {
+	// String url = head ? "/" : "";
+	// for (int i = 0; i < pathParts.length; i++) {
+	// if (i == pathParts.length - 1)
+	// url = url + pathParts[i];
+	// else
+	// url = url + pathParts[i] + "/";
+	// }
+	// url = url + (end ? "/" : "");
+	// return twistingPathSeparator(url);
+	// }
+
+	public static String buildPath(List<String> pathParts) {
+		return buildPath(pathParts.toArray(new String[] {}));
 	}
 
 	public static String buildPath(String... pathParts) {
@@ -56,10 +62,7 @@ public class UrlUtils {
 	}
 
 	public static void main(String[] args) {
-		Pattern p = Pattern.compile("^.*\\.([^\\.]*)$");
-		Matcher matcher = p.matcher("22.22.1...qq");
-		matcher.matches();
-		System.out.println(matcher.group(1));
+		System.out.println(fileExtGet("aa"));
 	}
 
 	public static String fileExtStrip(String fileName) {
@@ -67,10 +70,14 @@ public class UrlUtils {
 	}
 
 	public static String fileExtGet(String fileName) {
-		Pattern p = Pattern.compile("^.*\\.([^\\.]*)$");
+		Pattern p = Pattern.compile("^.*\\.(.*)$");
 		Matcher matcher = p.matcher(fileName);
 		matcher.matches();
-		return matcher.group(1);
+		try {
+			return matcher.group(1);
+		} catch (RuntimeException e) {
+			return "";
+		}
 	}
 
 	// public static Map<String, String> URLRequest(String URL) {
