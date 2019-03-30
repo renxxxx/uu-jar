@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 
@@ -63,14 +65,14 @@ public class ValueUtils {
 			return new BigDecimal(valueStr);
 	}
 
-	public static Date toDate(Object value, String pattern) throws ParseException {
+	public static Date toDate(Object value) throws ParseException {
 		if (value == null)
 			return null;
-		String valueStr = value.toString();
-		if (valueStr.trim().isEmpty())
-			return null;
-		else
-			return new SimpleDateFormat(pattern).parse(valueStr);
+		return (Date) value;
 	}
 
+	public static void main(String[] args) {
+		Map a = new HashMap();
+		System.out.println((Date) a.get("a"));
+	}
 }

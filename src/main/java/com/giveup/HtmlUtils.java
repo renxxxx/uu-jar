@@ -11,6 +11,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 public class HtmlUtils {
 	public static Logger logger = Logger.getLogger(HtmlUtils.class);
@@ -90,27 +94,53 @@ public class HtmlUtils {
 		}
 	}
 
-	public static List<String> extractUrls(String htmlStr) {
-		List<String> pics = new ArrayList();
-		if (htmlStr == null || htmlStr.trim().isEmpty())
-			return pics;
-		String img = "";
-		Pattern p_image;
-		Matcher m_image;
-		// String regEx_img = "<img.*src=(.*?)[^>]*?>"; //图片链接地址
-		String regEx_img = "<(img)|(video)|(audio).*src\\s*=\\s*(.*?)[^>]*?>";
-		p_image = Pattern.compile(regEx_img, Pattern.CASE_INSENSITIVE);
-		m_image = p_image.matcher(htmlStr);
-		while (m_image.find()) {
-			// 得到<img />数据
-			img = m_image.group();
-			// 匹配<img>中的src数据
-			Matcher m = Pattern.compile("src\\s*=\\s*\"?(.*?)(\"|>|\\s+)").matcher(img);
-			while (m.find()) {
-				pics.add(m.group(1));
-			}
+	public static void main(String[] args) {
+		Document doc = Jsoup.parse("asdfsadf<img src='asdfsdafasdf' /><img src='11asdfsdafasdf'/>");
+		Elements imgs = doc.getElementsByTag("img");
+		Elements audios = doc.getElementsByTag("audio");
+		Elements videos = doc.getElementsByTag("video");
+
+		List<String> imgSrcs = new ArrayList();
+		for (int i = 0; i < imgs.size(); i++) {
+			Element img = imgs.get(i);
+			String src = img.attr("src");
+			imgSrcs.add(src);
 		}
-		return pics;
+
+		System.out.println(imgSrcs);
+	}
+
+	public static List<String> extractUrls(String htmlStr) {
+		Document doc = Jsoup.parse(htmlStr);
+		Elements imgs = doc.getElementsByTag("img");
+		Elements audios = doc.getElementsByTag("audio");
+		Elements videos = doc.getElementsByTag("video");
+		List<String> srcs = new ArrayList();
+
+		List<String> imgSrcs = new ArrayList();
+		for (int i = 0; i < imgs.size(); i++) {
+			Element img = imgs.get(i);
+			String src = img.attr("src");
+			imgSrcs.add(src);
+		}
+
+		List<String> audioSrcs = new ArrayList();
+		for (int i = 0; i < audios.size(); i++) {
+			Element audio = audios.get(i);
+			String src = audio.attr("src");
+			audioSrcs.add(src);
+		}
+
+		List<String> videoSrcs = new ArrayList();
+		for (int i = 0; i < audios.size(); i++) {
+			Element video = videos.get(i);
+			String src = video.attr("src");
+			videoSrcs.add(src);
+		}
+		srcs.addAll(imgSrcs);
+		srcs.addAll(videoSrcs);
+		srcs.addAll(videoSrcs);
+		return srcs;
 	}
 
 	public static String removeTag(String htmlStr) {
