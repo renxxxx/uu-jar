@@ -98,7 +98,7 @@ public class HtmlUtils {
 		Pattern p_image;
 		Matcher m_image;
 		// String regEx_img = "<img.*src=(.*?)[^>]*?>"; //图片链接地址
-		String regEx_img = "<img.*src\\s*=\\s*(.*?)[^>]*?>";
+		String regEx_img = "<(img)|(video)|(audio).*src\\s*=\\s*(.*?)[^>]*?>";
 		p_image = Pattern.compile(regEx_img, Pattern.CASE_INSENSITIVE);
 		m_image = p_image.matcher(htmlStr);
 		while (m_image.find()) {
