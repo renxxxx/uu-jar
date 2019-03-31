@@ -96,13 +96,13 @@ public class HtmlUtils {
 		}
 
 		List<String> videoSrcs = new ArrayList();
-		for (int i = 0; i < audios.size(); i++) {
+		for (int i = 0; i < videos.size(); i++) {
 			Element video = videos.get(i);
 			String src = video.attr("src");
 			videoSrcs.add(src);
 		}
 		srcs.addAll(imgSrcs);
-		srcs.addAll(videoSrcs);
+		srcs.addAll(audioSrcs);
 		srcs.addAll(videoSrcs);
 		return srcs;
 	}
