@@ -137,17 +137,13 @@ public class IOUtils {
 		}
 	}
 
-	public static boolean deleteFileUpEmpty(File file) {
+	public static boolean deleteFileUpEmpty(File file,File endFolder) {
 		logger.info("delete " + file.getAbsolutePath());
 		boolean success = file.delete();
-		if (file.getParentFile().list().length == 0) {
-			deleteFileUpEmpty(file.getParentFile());
+		if (file.getParentFile().list().length == 0 && !file.getParentFile().getAbsolutePath().equals(endFolder.getAbsolutePath())) {
+			deleteFileUpEmpty(file.getParentFile(),endFolder);
 		}
 		return success;
 	}
 
-	public static void main(String[] args) {
-		String s = "C:\\data\\renxinwei\\webroot\\oss\\zaylt\\tmp\\zaylt.log";
-		deleteFileUpEmpty(new File(s));
-	}
 }

@@ -3,6 +3,7 @@ package com.giveup;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -58,42 +59,6 @@ public class HtmlUtils {
 		return oUrls;
 	}
 
-	public static List<String> extractUrls(File file) throws Exception {
-		FileInputStream fis = null;
-		try {
-			fis = new FileInputStream(file);
-			return extractUrls(fis);
-		} catch (Exception e) {
-			throw e;
-		} finally {
-			if (fis != null)
-				fis.close();
-		}
-	}
-
-	public static List<String> extractUrls(InputStream is) throws Exception {
-		InputStreamReader isr = null;
-		BufferedReader br = null;
-		List<String> pics = new ArrayList();
-		try {
-			isr = new InputStreamReader(is);
-			br = new BufferedReader(isr);
-			String line = null;
-			while ((line = br.readLine()) != null) {
-				pics.addAll(extractUrls(line));
-			}
-			br.close();
-			return pics;
-		} catch (Exception e) {
-			throw e;
-		} finally {
-			if (isr != null)
-				isr.close();
-			if (br != null)
-				br.close();
-		}
-	}
-
 	public static void main(String[] args) {
 		Document doc = Jsoup.parse("asdfsadf<img src='asdfsdafasdf' /><img src='11asdfsdafasdf'/>");
 		Elements imgs = doc.getElementsByTag("img");
@@ -110,8 +75,7 @@ public class HtmlUtils {
 		System.out.println(imgSrcs);
 	}
 
-	public static List<String> extractUrls(String htmlStr) {
-		Document doc = Jsoup.parse(htmlStr);
+	public static List<String> extractUrls(Document doc) {
 		Elements imgs = doc.getElementsByTag("img");
 		Elements audios = doc.getElementsByTag("audio");
 		Elements videos = doc.getElementsByTag("video");
@@ -141,6 +105,21 @@ public class HtmlUtils {
 		srcs.addAll(videoSrcs);
 		srcs.addAll(videoSrcs);
 		return srcs;
+	}
+
+	public static List<String> extractUrls(String htmlStr) {
+		Document doc = Jsoup.parse(htmlStr);
+		return extractUrls(doc);
+	}
+
+	public static List<String> extractUrls(InputStream in) throws IOException {
+		Document doc = Jsoup.parse(in, "utf-8", null);
+		return extractUrls(doc);
+	}
+
+	public static List<String> extractUrls(File file) throws IOException {
+		Document doc = Jsoup.parse(file, "utf-8");
+		return extractUrls(doc);
 	}
 
 	public static String removeTag(String htmlStr) {
