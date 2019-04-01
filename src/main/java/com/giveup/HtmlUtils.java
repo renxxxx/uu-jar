@@ -1,11 +1,9 @@
 package com.giveup;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -60,50 +58,19 @@ public class HtmlUtils {
 	}
 
 	public static void main(String[] args) {
-		Document doc = Jsoup.parse("asdfsadf<img src='asdfsdafasdf' /><img src='11asdfsdafasdf'/>");
-		Elements imgs = doc.getElementsByTag("img");
-		Elements audios = doc.getElementsByTag("audio");
-		Elements videos = doc.getElementsByTag("video");
+		Document doc = Jsoup.parse("asdfsadf<img src='asdfsdafasdf' /><img src='11asdfsdafasdf'/>/n<iframe ");
+		System.out.println(extractUrls(doc));
 
-		List<String> imgSrcs = new ArrayList();
-		for (int i = 0; i < imgs.size(); i++) {
-			Element img = imgs.get(i);
-			String src = img.attr("src");
-			imgSrcs.add(src);
-		}
-
-		System.out.println(imgSrcs);
 	}
 
 	public static List<String> extractUrls(Document doc) {
-		Elements imgs = doc.getElementsByTag("img");
-		Elements audios = doc.getElementsByTag("audio");
-		Elements videos = doc.getElementsByTag("video");
+		Elements elements = doc.getElementsByAttribute("src");
 		List<String> srcs = new ArrayList();
-
-		List<String> imgSrcs = new ArrayList();
-		for (int i = 0; i < imgs.size(); i++) {
-			Element img = imgs.get(i);
-			String src = img.attr("src");
-			imgSrcs.add(src);
+		for (int i = 0; i < elements.size(); i++) {
+			Element media = elements.get(i);
+			String src = media.attr("src");
+			srcs.add(src);
 		}
-
-		List<String> audioSrcs = new ArrayList();
-		for (int i = 0; i < audios.size(); i++) {
-			Element audio = audios.get(i);
-			String src = audio.attr("src");
-			audioSrcs.add(src);
-		}
-
-		List<String> videoSrcs = new ArrayList();
-		for (int i = 0; i < videos.size(); i++) {
-			Element video = videos.get(i);
-			String src = video.attr("src");
-			videoSrcs.add(src);
-		}
-		srcs.addAll(imgSrcs);
-		srcs.addAll(audioSrcs);
-		srcs.addAll(videoSrcs);
 		return srcs;
 	}
 
