@@ -58,6 +58,7 @@ public class HtmlUtils {
 	}
 
 	public static void main(String[] args) {
+		String html = "";
 		Document doc = Jsoup.parse("asdfsadf<img src='asdfsdafasdf' /><img src='11asdfsdafasdf'/>/n<iframe ");
 		System.out.println(extractUrls(doc));
 
