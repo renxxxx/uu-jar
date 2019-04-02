@@ -4,7 +4,7 @@
 
 	<groupId>com.giveup</groupId>
 	<artifactId>utils</artifactId>
-	<version>DEVELOP</version>
+	<version>1.6.1</version>
 	<packaging>jar</packaging>
 
 	<name>giveup</name>
