@@ -21,6 +21,8 @@ public class ServletUtils {
 
 	public static String getCookie(String key, HttpServletRequest request) {
 		Cookie[] cookies = request.getCookies();
+		if (cookies == null)
+			return null;
 		for (Cookie cookie : cookies) {
 			if (cookie.getName().equals(key))
 				return cookie.getValue();
