@@ -1,8 +1,13 @@
 package com.giveup;
 
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.Map;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 public class ServletUtils {
@@ -50,5 +55,15 @@ public class ServletUtils {
 		if (value != null && !value.isEmpty())
 			return value;
 		return value;
+	}
+
+	public static void logParameters(HttpServletRequest request) {
+		logger.debug("parameters");
+		Map<String, String[]> map = request.getParameterMap();
+		Iterator<String> itr = map.keySet().iterator();
+		while (itr.hasNext()) {
+			String key = itr.next();
+			logger.debug(key + ":" + Arrays.toString(map.get(key)));
+		}
 	}
 }
