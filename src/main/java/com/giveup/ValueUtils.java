@@ -65,12 +65,6 @@ public class ValueUtils {
 			return new BigDecimal(valueStr);
 	}
 
-	public static Date toDate(Object value) throws ParseException {
-		if (value == null)
-			return null;
-		return (Date) value;
-	}
-
 	public static void main(String[] args) {
 		Map a = new HashMap();
 		System.out.println((Date) a.get("a"));
