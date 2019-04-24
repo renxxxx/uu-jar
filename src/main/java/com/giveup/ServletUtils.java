@@ -19,11 +19,10 @@ public class ServletUtils {
 			parameterMap = new HashMap();
 			request.setAttribute("parameterMap", parameterMap);
 		}
+		if (parameterMap.containsKey(name))
+			return parameterMap.get(name);
 
-		String value = parameterMap.get(name);
-		if (value == null)
-			value = request.getParameter(name);
-		return value;
+		return request.getParameter(name);
 	}
 
 	public static void setParameter(HttpServletRequest request, String name, String value) {
