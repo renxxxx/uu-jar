@@ -1,12 +1,33 @@
 package com.giveup;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
 public class SplitUtils {
 	public static Logger logger = Logger.getLogger(SplitUtils.class);
+
+	public static List<String> extractOffStrs(String oldSplit, String newSplit) {
+		oldSplit = oldSplit == null ? "" : oldSplit;
+		newSplit = newSplit == null ? "" : newSplit;
+
+		List<String> oldStrs = Arrays.asList(oldSplit.split(","));
+		List<String> newStrs = Arrays.asList(newSplit.split(","));
+		if (oldStrs == null || oldStrs.isEmpty())
+			return new ArrayList<String>();
+		if (newStrs == null || newStrs.isEmpty())
+			return new ArrayList<String>();
+
+		List<String> offUrls = new ArrayList<String>();
+		for (String oldUrl : oldStrs) {
+			if (!newStrs.contains(oldUrl))
+				offUrls.add(oldUrl);
+		}
+
+		return offUrls;
+	}
 
 	public static String[] toArray(String split) {
 		return toArray(split, true);
