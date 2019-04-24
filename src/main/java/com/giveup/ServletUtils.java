@@ -1,17 +1,39 @@
 package com.giveup;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 public class ServletUtils {
 	public static Logger logger = Logger.getLogger(ServletUtils.class);
+
+	public static String getParameter(HttpServletRequest request, String name) {
+		Map<String, String> parameterMap = (Map) request.getAttribute("parameterMap");
+		if (parameterMap == null) {
+			parameterMap = new HashMap();
+			request.setAttribute("parameterMap", parameterMap);
+		}
+
+		String value = parameterMap.get(name);
+		if (value == null)
+			value = request.getParameter(name);
+		return value;
+	}
+
+	public static void setParameter(HttpServletRequest request, String name, String value) {
+		Map<String, String> parameterMap = (Map) request.getAttribute("parameterMap");
+		if (parameterMap == null) {
+			parameterMap = new HashMap();
+		}
+		parameterMap.put(name, value);
+		request.setAttribute("parameterMap", parameterMap);
+	}
 
 	public static String getClientAddr(HttpServletRequest request) {
 		String value = null;
