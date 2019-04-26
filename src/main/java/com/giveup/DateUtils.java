@@ -9,13 +9,13 @@ import org.apache.log4j.Logger;
 public class DateUtils {
 	public static Logger logger = Logger.getLogger(DateUtils.class);
 
-	public static Date parse(String longtime) throws ParseException {
+	public static Date parseLong(String longtime) throws ParseException {
 		if (longtime == null)
 			return null;
 		return new Date(new Long(longtime));
 	}
 
-	public static Date parse(Long time) throws ParseException {
+	public static Date parseLong(Long time) throws ParseException {
 		if (time == null)
 			return null;
 		return new Date(time);
