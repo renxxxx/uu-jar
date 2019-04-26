@@ -1,19 +1,25 @@
 package com.giveup;
 
-import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-
 public class DateUtils {
 	public static Logger logger = Logger.getLogger(DateUtils.class);
+
+	public static Date parse(String longtime) throws ParseException {
+		if (longtime == null)
+			return null;
+		return new Date(new Long(longtime));
+	}
+
+	public static Date parse(Long time) throws ParseException {
+		if (time == null)
+			return null;
+		return new Date(time);
+	}
 
 	public static Date parse(String value, String pattern) throws ParseException {
 		if (value == null || value.isEmpty())
