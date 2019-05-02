@@ -1,5 +1,6 @@
 package com.giveup;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -40,6 +41,32 @@ public class JdbcUtils {
 
 	public static String toLikePart(String columnValue) {
 		return new StringBuilder("%").append(columnValue).append("%").toString();
+	}
+
+	public static int runUpdate(Connection conn, String sql, List<Object> params) throws Exception {
+		PreparedStatement pst = null;
+		try {
+			pst = conn.prepareStatement(sql);
+			return runUpdate(pst, sql, params);
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			if (pst != null)
+				pst.close();
+		}
+	}
+
+	public static ResultSet runQuery(Connection conn, String sql, List<Object> params) throws Exception {
+		PreparedStatement pst = null;
+		try {
+			pst = conn.prepareStatement(sql);
+			return runQuery(pst, sql, params);
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			if (pst != null)
+				pst.close();
+		}
 	}
 
 	public static int runUpdate(PreparedStatement pst, String sql) throws Exception {
