@@ -16,6 +16,35 @@ import org.apache.log4j.Logger;
 public class JdbcUtils {
 	public static Logger logger = Logger.getLogger(JdbcUtils.class);
 
+	public static List<Map> runQueryList(Connection conn, String sql, List<Object> params) throws Exception {
+		PreparedStatement pst = null;
+		try {
+			pst = conn.prepareStatement(sql);
+			return parseResultSetOfList(runQuery(pst, sql, params));
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			if (pst != null)
+				pst.close();
+		}
+	}
+
+	public static Map runQueryOne(Connection conn, String sql, List<Object> params) throws Exception {
+		PreparedStatement pst = null;
+		try {
+			pst = conn.prepareStatement(sql);
+			List<Map> list = parseResultSetOfList(runQuery(pst, sql, params));
+			if (list == null || list.isEmpty())
+				return null;
+			return list.get(0);
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			if (pst != null)
+				pst.close();
+		}
+	}
+
 	public static ResultSet runQuery(PreparedStatement pst, String sql) throws SQLException {
 		return runQuery(pst, sql, null);
 	}
@@ -48,19 +77,6 @@ public class JdbcUtils {
 		try {
 			pst = conn.prepareStatement(sql);
 			return runUpdate(pst, sql, params);
-		} catch (Exception e) {
-			throw e;
-		} finally {
-			if (pst != null)
-				pst.close();
-		}
-	}
-
-	public static ResultSet runQuery(Connection conn, String sql, List<Object> params) throws Exception {
-		PreparedStatement pst = null;
-		try {
-			pst = conn.prepareStatement(sql);
-			return runQuery(pst, sql, params);
 		} catch (Exception e) {
 			throw e;
 		} finally {
