@@ -80,6 +80,23 @@ public class JdbcUtils {
 		return new StringBuilder("%").append(columnValue).append("%").toString();
 	}
 
+	public static int runUpdate(Connection conn, String sql, List<Object> params) throws Exception {
+		return runUpdate(conn, sql, params.toArray());
+	}
+
+	public static int runUpdate(Connection conn, String sql, Object[]... params) throws Exception {
+		PreparedStatement pst = null;
+		try {
+			pst = conn.prepareStatement(sql);
+			return runUpdate(pst, sql, params);
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			if (pst != null)
+				pst.close();
+		}
+	}
+
 	public static int runUpdate(PreparedStatement pst, String sql) throws Exception {
 		return runUpdate(pst, sql, new Object[] {});
 	}
