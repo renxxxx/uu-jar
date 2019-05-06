@@ -20,7 +20,7 @@ public class JdbcUtils {
 		return runQueryList(conn, sql, params.toArray());
 	}
 
-	public static List<Map> runQueryList(Connection conn, String sql, Object[]... params) throws Exception {
+	public static List<Map> runQueryList(Connection conn, String sql, Object... params) throws Exception {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
@@ -37,7 +37,7 @@ public class JdbcUtils {
 		return runQueryOne(conn, sql, params.toArray());
 	}
 
-	public static Map runQueryOne(Connection conn, String sql, Object[]... params) throws Exception {
+	public static Map runQueryOne(Connection conn, String sql, Object... params) throws Exception {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
@@ -84,7 +84,7 @@ public class JdbcUtils {
 		return runUpdate(conn, sql, params.toArray());
 	}
 
-	public static int runUpdate(Connection conn, String sql, Object[]... params) throws Exception {
+	public static int runUpdate(Connection conn, String sql, Object... params) throws Exception {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
