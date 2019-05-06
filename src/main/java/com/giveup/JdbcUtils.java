@@ -123,6 +123,20 @@ public class JdbcUtils {
 		return sqlN;
 	}
 
+	public static Integer runInsertOneGenKey(Connection conn, String sql, Object... params) throws Exception {
+		PreparedStatement pst = null;
+		try {
+			pst = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+			runUpdate(pst, sql, params);
+			return returnGeneratedKey(pst);
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			if (pst != null)
+				pst.close();
+		}
+	}
+
 	public static Integer returnGeneratedKey(PreparedStatement pst) throws SQLException {
 		ResultSet rs = pst.getGeneratedKeys();
 		if (rs.next()) {
