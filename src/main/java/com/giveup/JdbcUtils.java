@@ -17,6 +17,10 @@ public class JdbcUtils {
 	public static Logger logger = Logger.getLogger(JdbcUtils.class);
 
 	public static List<Map> runQueryList(Connection conn, String sql, List<Object> params) throws Exception {
+		return runQueryList(conn, sql, params.toArray());
+	}
+
+	public static List<Map> runQueryList(Connection conn, String sql, Object[]... params) throws Exception {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
@@ -30,6 +34,10 @@ public class JdbcUtils {
 	}
 
 	public static Map runQueryOne(Connection conn, String sql, List<Object> params) throws Exception {
+		return runQueryOne(conn, sql, params.toArray());
+	}
+
+	public static Map runQueryOne(Connection conn, String sql, Object[]... params) throws Exception {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
@@ -46,21 +54,21 @@ public class JdbcUtils {
 	}
 
 	public static ResultSet runQuery(PreparedStatement pst, String sql) throws SQLException {
-		return runQuery(pst, sql, null);
-	}
-
-	public static ResultSet runQuery(PreparedStatement pst, String sql, Object param) throws SQLException {
-		return runQuery(pst, sql, Arrays.asList(new Object[] { param }));
+		return runQuery(pst, sql, new Object[] {});
 	}
 
 	public static ResultSet runQuery(PreparedStatement pst, String sql, List<Object> params) throws SQLException {
+		return runQuery(pst, sql, params.toArray());
+	}
+
+	public static ResultSet runQuery(PreparedStatement pst, String sql, Object... params) throws SQLException {
 		if (params == null)
-			params = new ArrayList<Object>();
+			params = new Object[] {};
 		logger.debug(sql);
 		logger.debug(params);
 		try {
-			for (int i = 0; i < params.size(); i++) {
-				pst.setObject(i + 1, params.get(i));
+			for (int i = 0; i < params.length; i++) {
+				pst.setObject(i + 1, params[i]);
 			}
 			return pst.executeQuery();
 		} catch (Exception e) {
@@ -72,36 +80,23 @@ public class JdbcUtils {
 		return new StringBuilder("%").append(columnValue).append("%").toString();
 	}
 
-	public static int runUpdate(Connection conn, String sql, List<Object> params) throws Exception {
-		PreparedStatement pst = null;
-		try {
-			pst = conn.prepareStatement(sql);
-			return runUpdate(pst, sql, params);
-		} catch (Exception e) {
-			throw e;
-		} finally {
-			if (pst != null)
-				pst.close();
-		}
-	}
-
 	public static int runUpdate(PreparedStatement pst, String sql) throws Exception {
-		return runUpdate(pst, sql, null);
-	}
-
-	public static int runUpdate(PreparedStatement pst, String sql, Object param) throws Exception {
-		return runUpdate(pst, sql, Arrays.asList(new Object[] { param }));
+		return runUpdate(pst, sql, new Object[] {});
 	}
 
 	public static int runUpdate(PreparedStatement pst, String sql, List<Object> params) throws Exception {
+		return runUpdate(pst, sql, params.toArray());
+	}
+
+	public static int runUpdate(PreparedStatement pst, String sql, Object... params) throws Exception {
 		if (params == null)
-			params = new ArrayList<Object>();
+			params = new Object[] {};
 		logger.debug(sql);
 		logger.debug(params);
 		int sqlN = 0;
 		try {
-			for (int i = 0; i < params.size(); i++) {
-				pst.setObject(i + 1, params.get(i));
+			for (int i = 0; i < params.length; i++) {
+				pst.setObject(i + 1, params[i]);
 			}
 			sqlN = pst.executeUpdate();
 		} catch (Exception e) {
@@ -154,14 +149,18 @@ public class JdbcUtils {
 	}
 
 	public static int[] runThinBatch(PreparedStatement pst, String sql, List<Object> paramBatch) throws Exception {
+		return runThinBatch(pst, sql, paramBatch.toArray());
+	}
+
+	public static int[] runThinBatch(PreparedStatement pst, String sql, Object... paramBatch) throws Exception {
 		if (paramBatch == null)
-			paramBatch = new ArrayList<Object>();
+			paramBatch = new Object[] {};
 		logger.debug(sql);
 		int[] sqlNs = new int[] {};
 		try {
-			for (int i = 0; i < paramBatch.size(); i++) {
-				logger.debug(paramBatch.get(i));
-				pst.setObject(1, paramBatch.get(i));
+			for (int i = 0; i < paramBatch.length; i++) {
+				logger.debug(paramBatch[i]);
+				pst.setObject(1, paramBatch[i]);
 				pst.addBatch();
 			}
 			sqlNs = pst.executeBatch();
