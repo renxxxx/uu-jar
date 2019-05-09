@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -207,7 +208,7 @@ public class JdbcUtils {
 		ResultSetMetaData metaData = rs.getMetaData();
 		int columnCnt = metaData.getColumnCount();
 		while (rs.next()) {
-			Map<String, Object> row = new HashMap();
+			Map<String, Object> row = new LinkedHashMap();
 			for (int i = 1; i <= columnCnt; i++) {
 				Object value = rs.getObject(i);
 				row.put(metaData.getColumnLabel(i), value);
@@ -226,7 +227,7 @@ public class JdbcUtils {
 		ResultSetMetaData metaData = rs.getMetaData();
 		int columnCnt = metaData.getColumnCount();
 		while (rs.next()) {
-			Map<String, Object> row = new HashMap();
+			Map<String, Object> row = new LinkedHashMap();
 			for (int i = 1; i <= columnCnt; i++) {
 				String column = metaData.getColumnLabel(i);
 				if (excludeColumnList.contains(column))
