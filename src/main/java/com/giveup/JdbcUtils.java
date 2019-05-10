@@ -126,6 +126,19 @@ public class JdbcUtils {
 		}
 	}
 
+	public static int runUpdateGentle(Connection conn, String sql, Object... params) throws Exception {
+		PreparedStatement pst = null;
+		try {
+			pst = conn.prepareStatement(sql);
+			return runUpdate(pst, sql, params);
+		} catch (Exception e) {
+			return 0;
+		} finally {
+			if (pst != null)
+				pst.close();
+		}
+	}
+
 	public static int runUpdate(PreparedStatement pst, String sql) throws Exception {
 		return runUpdate(pst, sql, new Object[] {});
 	}
