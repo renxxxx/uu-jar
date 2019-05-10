@@ -138,7 +138,7 @@ public class JdbcUtils {
 		if (params == null)
 			params = new Object[] {};
 		logger.debug(sql);
-		logger.debug(params);
+		logger.debug(Arrays.toString(params));
 		int sqlN = 0;
 		try {
 			for (int i = 0; i < params.length; i++) {
