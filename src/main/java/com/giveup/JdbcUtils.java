@@ -34,6 +34,17 @@ public class JdbcUtils {
 		}
 	}
 
+	public static Object runQueryOneColumn(Connection conn, String sql, List<Object> params) throws Exception {
+		return runQueryOneColumn(conn, sql, params.toArray());
+	}
+
+	public static Object runQueryOneColumn(Connection conn, String sql, Object... params) throws Exception {
+		Map row = runQueryOne(conn, sql, params);
+		if (row == null)
+			return null;
+		return row.get(row.keySet().iterator().next());
+	}
+
 	public static Map runQueryOne(Connection conn, String sql, List<Object> params) throws Exception {
 		return runQueryOne(conn, sql, params.toArray());
 	}
