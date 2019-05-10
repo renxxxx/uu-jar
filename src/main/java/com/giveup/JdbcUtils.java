@@ -34,6 +34,23 @@ public class JdbcUtils {
 		}
 	}
 
+	public static List<Object> runQueryThinList(Connection conn, String sql, List<Object> params) throws Exception {
+		return runQueryThinList(conn, sql, params.toArray());
+	}
+
+	public static List<Object> runQueryThinList(Connection conn, String sql, Object... params) throws Exception {
+		PreparedStatement pst = null;
+		try {
+			pst = conn.prepareStatement(sql);
+			return parseResultSetOfThinList(runQuery(pst, sql, params));
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			if (pst != null)
+				pst.close();
+		}
+	}
+
 	public static Object runQueryOneColumn(Connection conn, String sql, List<Object> params) throws Exception {
 		return runQueryOneColumn(conn, sql, params.toArray());
 	}
