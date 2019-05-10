@@ -94,7 +94,7 @@ public class JdbcUtils {
 		if (params == null)
 			params = new Object[] {};
 		logger.debug(sql);
-		logger.debug(params);
+		logger.debug(Arrays.toString(params));
 		try {
 			for (int i = 0; i < params.length; i++) {
 				pst.setObject(i + 1, params[i]);
