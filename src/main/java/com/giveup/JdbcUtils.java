@@ -12,6 +12,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
 public class JdbcUtils {
@@ -132,6 +133,7 @@ public class JdbcUtils {
 			pst = conn.prepareStatement(sql);
 			return runUpdate(pst, sql, params);
 		} catch (Exception e) {
+			logger.debug(ExceptionUtils.getStackTrace(e));
 			return 0;
 		} finally {
 			if (pst != null)
