@@ -397,6 +397,12 @@ public class JdbcUtils {
 		return sqlPart;
 	}
 
+	public static List addParams(List params, String insSplit) {
+		String[] ss = insSplit.split(",");
+		params.addAll(Arrays.asList(ss));
+		return params;
+	}
+
 	public static String buildConditional(String andOr, String column, boolean columnEq, String insSplit) {
 		return buildConditional(andOr, column, columnEq, insSplit.split(","));
 	}
