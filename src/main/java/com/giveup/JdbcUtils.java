@@ -7,7 +7,6 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -398,6 +397,8 @@ public class JdbcUtils {
 	}
 
 	public static List addParams(List params, String insSplit) {
+		if (insSplit == null)
+			return params;
 		String[] ss = insSplit.split(",");
 		params.addAll(Arrays.asList(ss));
 		return params;
