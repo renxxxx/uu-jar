@@ -416,7 +416,7 @@ public class JdbcUtils {
 		if (ins == null || ins.length == 0)
 			return "";
 		columnEq = columnEq == null ? "1" : columnEq;
-		if (!columnEq.equals("1") && !columnEq.equalsIgnoreCase("0"))
+		if (!columnEq.equals("1") && !columnEq.equals("0"))
 			return "";
 
 		andOr = andOr == null || andOr.trim().isEmpty() ? "and" : andOr;
