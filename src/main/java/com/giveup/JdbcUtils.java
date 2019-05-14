@@ -422,13 +422,10 @@ public class JdbcUtils {
 		andOr = (andOr == null || andOr.trim().isEmpty()) ? "and" : andOr;
 		if (!andOr.equalsIgnoreCase("and") && !andOr.equalsIgnoreCase("or"))
 			return "";
-		sqlPart = andOr + " ";
 		if (ins.length == 1) {
-			sqlPart = sqlPart + column + (columnEq.equals("1") ? " = " : " != ");
-			sqlPart = sqlPart + "?";
+			sqlPart = andOr + " " + column + (columnEq.equals("1") ? " = " : " != ") + " ? ";
 		} else {
-			sqlPart = sqlPart + column + (columnEq.equals("1") ? " in " : " not in ");
-			sqlPart = sqlPart + " (";
+			sqlPart = andOr + " " + column + (columnEq.equals("1") ? " in " : " not in ") + " (";
 			for (int i = 0; i < ins.length; i++) {
 				if (i == 0)
 					sqlPart += "?";
