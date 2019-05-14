@@ -397,6 +397,38 @@ public class JdbcUtils {
 		return sqlPart;
 	}
 
+	public static String buildConditional(String andOr, String column, boolean columnEq, String insSplit) {
+		return buildConditional(andOr, column, columnEq, insSplit.split(","));
+	}
+
+	public static String buildConditional(String andOr, String column, boolean columnEq, String... ins) {
+		String sqlPart = " ";
+
+		if (ins == null || ins.length == 0)
+			return "";
+
+		andOr = andOr == null || andOr.trim().isEmpty() ? "and" : andOr;
+		if (!andOr.equalsIgnoreCase("and") && !andOr.equalsIgnoreCase("or"))
+			return "";
+		sqlPart = andOr + " ";
+		if (ins.length == 1) {
+			sqlPart = column + (columnEq ? " = " : " != ");
+			sqlPart = sqlPart + ins[0];
+		} else {
+			sqlPart = column + (columnEq ? " in " : " not in ");
+			sqlPart = sqlPart + " (";
+			for (int i = 0; i < ins.length; i++) {
+				if (i == 0)
+					sqlPart += "'" + ins[i] + "'";
+				else
+					sqlPart += " , '" + ins[i] + "'";
+			}
+			sqlPart = sqlPart + " )";
+		}
+
+		return sqlPart;
+	}
+
 	// public static String buildSqlPartOrderBy(String[] sorts, String[] orders)
 	// {
 	// String ss = " order by ";
