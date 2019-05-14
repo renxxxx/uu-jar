@@ -67,6 +67,6 @@ public class ValueUtils {
 
 	public static void main(String[] args) {
 		Map a = new HashMap();
-		System.out.println((Date) a.get("a"));
+		System.out.println(Boolean.getBoolean("1"));
 	}
 }

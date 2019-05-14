@@ -404,14 +404,16 @@ public class JdbcUtils {
 		return params;
 	}
 
-	public static String buildConditional(String andOr, String column, boolean columnEq, String insSplit) {
+	public static String buildConditional(String andOr, String column, String columnEq, String insSplit) {
 		return buildConditional(andOr, column, columnEq, insSplit.split(","));
 	}
 
-	public static String buildConditional(String andOr, String column, boolean columnEq, String... ins) {
+	public static String buildConditional(String andOr, String column, String columnEq, String... ins) {
 		String sqlPart = " ";
 
 		if (ins == null || ins.length == 0)
+			return "";
+		if (!columnEq.equals("1") && !columnEq.equalsIgnoreCase("0"))
 			return "";
 
 		andOr = andOr == null || andOr.trim().isEmpty() ? "and" : andOr;
@@ -419,10 +421,10 @@ public class JdbcUtils {
 			return "";
 		sqlPart = andOr + " ";
 		if (ins.length == 1) {
-			sqlPart = column + (columnEq ? " = " : " != ");
+			sqlPart = column + (columnEq.equals("1") ? " = " : " != ");
 			sqlPart = sqlPart + ins[0];
 		} else {
-			sqlPart = column + (columnEq ? " in " : " not in ");
+			sqlPart = column + (columnEq.equals("1") ? " in " : " not in ");
 			sqlPart = sqlPart + " (";
 			for (int i = 0; i < ins.length; i++) {
 				if (i == 0)
