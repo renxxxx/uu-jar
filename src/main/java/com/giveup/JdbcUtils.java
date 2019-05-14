@@ -405,6 +405,8 @@ public class JdbcUtils {
 	}
 
 	public static String buildConditional(String andOr, String column, String columnEq, String insSplit) {
+		if (insSplit == null)
+			return "";
 		return buildConditional(andOr, column, columnEq, insSplit.split(","));
 	}
 
