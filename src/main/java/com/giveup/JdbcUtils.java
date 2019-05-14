@@ -422,15 +422,15 @@ public class JdbcUtils {
 		sqlPart = andOr + " ";
 		if (ins.length == 1) {
 			sqlPart = column + (columnEq.equals("1") ? " = " : " != ");
-			sqlPart = sqlPart + ins[0];
+			sqlPart = sqlPart + "?";
 		} else {
 			sqlPart = column + (columnEq.equals("1") ? " in " : " not in ");
 			sqlPart = sqlPart + " (";
 			for (int i = 0; i < ins.length; i++) {
 				if (i == 0)
-					sqlPart += "'" + ins[i] + "'";
+					sqlPart += "?";
 				else
-					sqlPart += " , '" + ins[i] + "'";
+					sqlPart += " , ?";
 			}
 			sqlPart = sqlPart + " )";
 		}
