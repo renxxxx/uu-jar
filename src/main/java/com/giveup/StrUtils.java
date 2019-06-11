@@ -1,5 +1,8 @@
 package com.giveup;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
@@ -9,6 +12,22 @@ import com.alibaba.fastjson.JSONObject;
 
 public class StrUtils {
 	public static Logger logger = Logger.getLogger(StrUtils.class);
+
+	public static List<String> extractOffStrs(String[] oldStrs, String[] newStrs) {
+		oldStrs = oldStrs == null ? new String[] {} : oldStrs;
+		newStrs = newStrs == null ? new String[] {} : newStrs;
+
+		List<String> oldStrList = Arrays.asList(oldStrs);
+		List<String> newStrList = Arrays.asList(newStrs);
+
+		List<String> offUrls = new ArrayList<String>();
+		for (String oldUrl : oldStrList) {
+			if (!newStrList.contains(oldUrl))
+				offUrls.add(oldUrl);
+		}
+
+		return offUrls;
+	}
 
 	public static JSONObject isJSON(String str) {
 		try {

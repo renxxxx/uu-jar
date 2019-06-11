@@ -1,16 +1,13 @@
 package com.giveup;
 
 import java.math.BigDecimal;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
-
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 
 public class ValueUtils {
 	public static Logger logger = Logger.getLogger(ValueUtils.class);
@@ -43,6 +40,62 @@ public class ValueUtils {
 			return null;
 		else
 			return valueStr.toString();
+	}
+
+	public static Date toDate(Object value) {
+		if (value == null)
+			return null;
+		if (value instanceof Date)
+			return (Date) value;
+		if (value instanceof String) {
+			if (value.toString().trim().isEmpty())
+				return null;
+			if (value.toString().trim().length() == 13 && StringUtils.isNumeric(value.toString()))
+				return new Date(Long.parseLong(value.toString().trim()));
+			if (value.toString().trim().length() == 10 && StringUtils.isNumeric(value.toString()))
+				return new Date(Long.parseLong(value.toString().trim()) * 1000);
+			try {
+				return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(value.toString());
+			} catch (Exception e) {
+			}
+			try {
+				return new SimpleDateFormat("yyyy-MM-dd").parse(value.toString());
+			} catch (Exception e) {
+			}
+			try {
+				return new SimpleDateFormat("HH:mm:ss").parse(value.toString());
+			} catch (Exception e) {
+			}
+		}
+		if (value instanceof Long)
+			return new Date((Long) value);
+		if (value instanceof Integer)
+			return new Date((Long) value * 1000);
+		return null;
+	}
+
+	public static Date toDate(Object value, String pattern) {
+		if (value == null)
+			return null;
+		if (value instanceof Date)
+			return (Date) value;
+		if (value instanceof String) {
+			if (value.toString().trim().isEmpty())
+				return null;
+			if (value.toString().trim().length() == 13 && StringUtils.isNumeric(value.toString()))
+				return new Date(Long.parseLong(value.toString().trim()));
+			if (value.toString().trim().length() == 10 && StringUtils.isNumeric(value.toString()))
+				return new Date(Long.parseLong(value.toString().trim()) * 1000);
+			try {
+				return new SimpleDateFormat(pattern).parse(value.toString());
+			} catch (Exception e) {
+			}
+		}
+		if (value instanceof Long)
+			return new Date((Long) value);
+		if (value instanceof Integer)
+			return new Date((Long) value * 1000);
+		return null;
 	}
 
 	public static Long toLong(Object value) {

@@ -1,5 +1,6 @@
 package com.giveup;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,6 +8,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,6 +55,54 @@ public class JdbcUtils {
 
 	public static Object runQueryOneColumn(Connection conn, String sql, List<Object> params) throws Exception {
 		return runQueryOneColumn(conn, sql, params.toArray());
+	}
+
+	public static Integer runQueryOneInteger(Connection conn, String sql, List<Object> params) throws Exception {
+		return ValueUtils.toInteger(runQueryOneColumn(conn, sql, params));
+	}
+
+	public static Integer runQueryOneInteger(Connection conn, String sql, Object... params) throws Exception {
+		return ValueUtils.toInteger(runQueryOneColumn(conn, sql, params));
+	}
+
+	public static String runQueryOneString(Connection conn, String sql, List<Object> params) throws Exception {
+		return ValueUtils.toString(runQueryOneColumn(conn, sql, params));
+	}
+
+	public static String runQueryOneString(Connection conn, String sql, Object... params) throws Exception {
+		return ValueUtils.toString(runQueryOneColumn(conn, sql, params));
+	}
+
+	public static BigDecimal runQueryOneDecimal(Connection conn, String sql, List<Object> params) throws Exception {
+		return ValueUtils.toDecimal(runQueryOneColumn(conn, sql, params));
+	}
+
+	public static BigDecimal runQueryOneDecimal(Connection conn, String sql, Object... params) throws Exception {
+		return ValueUtils.toDecimal(runQueryOneColumn(conn, sql, params));
+	}
+
+	public static Long runQueryOneLong(Connection conn, String sql, List<Object> params) throws Exception {
+		return ValueUtils.toLong(runQueryOneColumn(conn, sql, params));
+	}
+
+	public static Long runQueryOneLong(Connection conn, String sql, Object... params) throws Exception {
+		return ValueUtils.toLong(runQueryOneColumn(conn, sql, params));
+	}
+
+	public static Float runQueryOneFloat(Connection conn, String sql, List<Object> params) throws Exception {
+		return ValueUtils.toFloat(runQueryOneColumn(conn, sql, params));
+	}
+
+	public static Float runQueryOneFloat(Connection conn, String sql, Object... params) throws Exception {
+		return ValueUtils.toFloat(runQueryOneColumn(conn, sql, params));
+	}
+
+	public static Date runQueryOneDate(Connection conn, String sql, List<Object> params) throws Exception {
+		return ValueUtils.toDate(runQueryOneColumn(conn, sql, params));
+	}
+
+	public static Date runQueryOneDate(Connection conn, String sql, Object... params) throws Exception {
+		return ValueUtils.toDate(runQueryOneColumn(conn, sql, params));
 	}
 
 	public static Object runQueryOneColumn(Connection conn, String sql, Object... params) throws Exception {
