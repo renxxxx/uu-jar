@@ -76,11 +76,11 @@ public class Param {
 		return null;
 	}
 
-	public String[] toArr() {
-		return toArr(",");
+	public String[] toCommaSplitArr() {
+		return toSplitArr(",");
 	}
 
-	public String[] toArr(String separator) {
+	public String[] toSplitArr(String separator) {
 		return this.value == null ? null : StringUtils.splitByWholeSeparatorPreserveAllTokens(this.value, separator);
 	}
 
