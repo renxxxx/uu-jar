@@ -149,7 +149,11 @@ public class JdbcUtils {
 			for (int i = 0; i < params.length; i++) {
 				pst.setObject(i + 1, params[i]);
 			}
-			return pst.executeQuery();
+			long s = System.nanoTime();
+			ResultSet rs = pst.executeQuery();
+			long e = System.nanoTime();
+			logger.info("takes: " + (e - s));
+			return rs;
 		} catch (Exception e) {
 			throw new SQLException(e.getMessage() + " sql: " + sql, e);
 		}
@@ -174,6 +178,11 @@ public class JdbcUtils {
 			if (pst != null)
 				pst.close();
 		}
+	}
+
+	public static int runUpdateGentle(Connection conn, String sql, List<Object> params) throws Exception {
+		return runUpdateGentle(conn, sql, params.toArray());
+
 	}
 
 	public static int runUpdateGentle(Connection conn, String sql, Object... params) throws Exception {
@@ -208,11 +217,14 @@ public class JdbcUtils {
 			for (int i = 0; i < params.length; i++) {
 				pst.setObject(i + 1, params[i]);
 			}
+			long s = System.nanoTime();
 			sqlN = pst.executeUpdate();
+			long e = System.nanoTime();
+			logger.info("takes: " + (e - s));
 		} catch (Exception e) {
 			throw new Exception(e.getMessage() + " sql: " + sql, e);
 		}
-		logger.debug("affected : " + sqlN);
+		logger.debug("affected: " + sqlN);
 		return sqlN;
 	}
 
@@ -264,7 +276,10 @@ public class JdbcUtils {
 				}
 				pst.addBatch();
 			}
+			long s = System.nanoTime();
 			sqlNs = pst.executeBatch();
+			long e = System.nanoTime();
+			logger.info("takes: " + (e - s));
 		} catch (SQLException e) {
 			throw new Exception(e.getMessage() + " sql: " + sql, e);
 		}
@@ -287,7 +302,10 @@ public class JdbcUtils {
 				pst.setObject(1, paramBatch[i]);
 				pst.addBatch();
 			}
+			long s = System.nanoTime();
 			sqlNs = pst.executeBatch();
+			long e = System.nanoTime();
+			logger.info("takes: " + (e - s));
 		} catch (SQLException e) {
 			throw new Exception(e.getMessage() + " sql: " + sql, e);
 		}

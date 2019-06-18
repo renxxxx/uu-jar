@@ -110,6 +110,11 @@ public class Param {
 		return vDate(pattern, null);
 	}
 
+	public static void main(String[] args) {
+		float a = 1.000000f;
+		System.out.println((a + "").replaceAll("\\.0*$", ""));
+	}
+
 	public Param vDate(String pattern, String note) {
 		this.datePattern = pattern;
 		if (this.value != null && !this.value.isEmpty())
@@ -117,26 +122,26 @@ public class Param {
 				new SimpleDateFormat(pattern).parse(this.value);
 			} catch (Exception e) {
 				throw new InteractRuntimeException(1001, this.code,
-						"\'" + this.name + "\'有误" + (note == null || note.isEmpty() ? "" : ",要求：" + note));
+						"\"" + this.name + "\"有误" + (note == null || note.isEmpty() ? "" : ",要求：" + note));
 			}
 		return this;
 	}
 
 	public Param vNull() {
 		if (this.value == null)
-			throw new InteractRuntimeException(1001, this.code, "\'" + this.name + "\'不能空");
+			throw new InteractRuntimeException(1001, this.code, "\"" + this.name + "\"不能空");
 		return this;
 	}
 
 	public Param vEmpty() {
 		if ((this.value == null || this.value.isEmpty()))
-			throw new InteractRuntimeException(1001, this.code, "\'" + this.name + "\'不能空");
+			throw new InteractRuntimeException(1001, this.code, "\"" + this.name + "\"不能空");
 		return this;
 	}
 
 	public Param vBlank() {
 		if ((this.value != null && this.value.isEmpty()))
-			throw new InteractRuntimeException(1001, this.code, "\'" + this.name + "\'不能空");
+			throw new InteractRuntimeException(1001, this.code, "\"" + this.name + "\"不能空");
 		return this;
 	}
 
@@ -147,16 +152,39 @@ public class Param {
 		return this;
 	}
 
+	public Param defInEmpty(String defaultValue) {
+		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
+		if (isEmpty() && defaultValue != null)
+			this.value = defaultValue;
+		return this;
+	}
+
 	public Param vLen(int length) {
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() != length) {
-			throw new InteractRuntimeException(1001, this.code, "\'" + this.name + "\'长度只能是" + length);
+			throw new InteractRuntimeException(1001, this.code, "\"" + this.name + "\"长度只能是" + length);
 		}
 		return this;
 	}
 
 	public Param vMaxLen(int length) {
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() > length) {
-			throw new InteractRuntimeException(1001, this.code, "\'" + this.name + "\'长度最大" + length);
+			throw new InteractRuntimeException(1001, this.code, "\"" + this.name + "\"长度最大" + length);
+		}
+		return this;
+	}
+
+	public Param vMaxNum(float maxnum) {
+		if (!isEmpty() && toFloat() > maxnum) {
+			throw new InteractRuntimeException(1001, this.code,
+					"\"" + this.name + "\"最大" + (maxnum + "").replaceAll("\\.0*$", ""));
+		}
+		return this;
+	}
+
+	public Param vMinNum(float minnum) {
+		if (!isEmpty() && toFloat() < minnum) {
+			throw new InteractRuntimeException(1001, this.code,
+					"\"" + this.name + "\"最小" + (minnum + "").replaceAll("\\.0*$", ""));
 		}
 		return this;
 	}
@@ -181,7 +209,7 @@ public class Param {
 
 	public Param vMinLen(int length) {
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() < length) {
-			throw new InteractRuntimeException(1001, this.code, "\'" + this.name + "\'长度最低" + length);
+			throw new InteractRuntimeException(1001, this.code, "\"" + this.name + "\"长度最低" + length);
 		}
 		return this;
 	}
@@ -211,7 +239,7 @@ public class Param {
 		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty()) {
 			if (!regexCache.getWithCreate(regex).matcher(this.value).matches())
 				throw new InteractRuntimeException(1001, this.code,
-						"\'" + this.name + "\'有误" + (note == null || note.isEmpty() ? "" : ",要求：" + note));
+						"\"" + this.name + "\"有误" + (note == null || note.isEmpty() ? "" : ",要求：" + note));
 		}
 		return this;
 	}
