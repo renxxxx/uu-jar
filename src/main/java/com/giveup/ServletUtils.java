@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 
+import com.alibaba.fastjson.JSONObject;
+
 public class ServletUtils {
 	public static Logger logger = Logger.getLogger(ServletUtils.class);
 
@@ -79,12 +81,13 @@ public class ServletUtils {
 	}
 
 	public static void logParameters(HttpServletRequest request) {
-		logger.debug("parameters");
+		logger.info("parameters");
 		Map<String, String[]> map = request.getParameterMap();
 		Iterator<String> itr = map.keySet().iterator();
 		while (itr.hasNext()) {
 			String key = itr.next();
-			logger.debug(key + ":" + Arrays.toString(map.get(key)));
+			logger.info(key + ":" + Arrays.toString(map.get(key)));
 		}
 	}
+
 }

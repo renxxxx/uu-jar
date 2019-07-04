@@ -152,7 +152,7 @@ public class JdbcUtils {
 			long s = System.nanoTime();
 			ResultSet rs = pst.executeQuery();
 			long e = System.nanoTime();
-			logger.info("takes: " + (e - s));
+			logger.debug("takes: " + (e - s));
 			return rs;
 		} catch (Exception e) {
 			throw new SQLException(e.getMessage() + " sql: " + sql, e);
@@ -220,7 +220,7 @@ public class JdbcUtils {
 			long s = System.nanoTime();
 			sqlN = pst.executeUpdate();
 			long e = System.nanoTime();
-			logger.info("takes: " + (e - s));
+			logger.debug("takes: " + (e - s));
 		} catch (Exception e) {
 			throw new Exception(e.getMessage() + " sql: " + sql, e);
 		}
@@ -279,7 +279,7 @@ public class JdbcUtils {
 			long s = System.nanoTime();
 			sqlNs = pst.executeBatch();
 			long e = System.nanoTime();
-			logger.info("takes: " + (e - s));
+			logger.debug("takes: " + (e - s));
 		} catch (SQLException e) {
 			throw new Exception(e.getMessage() + " sql: " + sql, e);
 		}
@@ -305,7 +305,7 @@ public class JdbcUtils {
 			long s = System.nanoTime();
 			sqlNs = pst.executeBatch();
 			long e = System.nanoTime();
-			logger.info("takes: " + (e - s));
+			logger.debug("takes: " + (e - s));
 		} catch (SQLException e) {
 			throw new Exception(e.getMessage() + " sql: " + sql, e);
 		}
