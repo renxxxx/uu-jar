@@ -68,11 +68,7 @@ public class Param {
 
 	public Date toDate() {
 		if (this.value != null)
-			try {
-				return new SimpleDateFormat(this.datePattern).parse(this.value);
-			} catch (ParseException e) {
-				return null;
-			}
+			return ValueUtils.toDate(value, this.datePattern);
 		return null;
 	}
 
