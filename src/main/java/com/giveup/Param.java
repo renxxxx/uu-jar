@@ -12,7 +12,7 @@ public class Param {
 	private String name;
 	private String code;
 	private String value;
-	private String separator;
+	private String separator = ",";
 
 	private Param() {
 	}
