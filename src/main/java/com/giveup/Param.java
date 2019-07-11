@@ -12,7 +12,7 @@ public class Param {
 	private String name;
 	private String code;
 	private String value;
-	private String datePattern;
+	private String separator;
 
 	private Param() {
 	}
@@ -28,20 +28,21 @@ public class Param {
 		Param param = new Param();
 		param.name = name;
 		param.code = code;
-		param.value = value == null ? null : value.trim();
-		return param;
-	}
-
-	public static Param buildToNull(String name, String code, String value) {
-		Param param = new Param();
-		param.name = name;
-		param.code = code;
-		param.value = value == null ? null : value.trim();
-		param.value = (value != null && value.isEmpty()) ? null : value;
+		param.value = value;
 		return param;
 	}
 
 	public Param trim() {
+		this.value = this.value == null ? null : this.value.trim();
+		return this;
+	}
+
+	public Param trimLeft() {
+		this.value = this.value == null ? null : this.value.trim();
+		return this;
+	}
+
+	public Param trimRight() {
 		this.value = this.value == null ? null : this.value.trim();
 		return this;
 	}
@@ -68,16 +69,17 @@ public class Param {
 
 	public Date toDate() {
 		if (this.value != null)
-			return ValueUtils.toDate(value, this.datePattern);
+			return new Date(Long.parseLong(this.value));
 		return null;
 	}
 
-	public String[] toCommaSplitArr() {
-		return toSplitArr(",");
+	public void setSeparator(String separator) {
+		this.separator = separator;
 	}
 
-	public String[] toSplitArr(String separator) {
-		return this.value == null ? null : StringUtils.splitByWholeSeparatorPreserveAllTokens(this.value, separator);
+	public String[] toSplitArr() {
+		return this.value == null ? null
+				: StringUtils.splitByWholeSeparatorPreserveAllTokens(this.value, this.separator);
 	}
 
 	@Override
@@ -102,25 +104,9 @@ public class Param {
 //		return value;
 //	}
 
-	public Param vDate(String pattern) {
-		return vDate(pattern, null);
-	}
-
 	public static void main(String[] args) {
 		float a = 1.000000f;
 		System.out.println((a + "").replaceAll("\\.0*$", ""));
-	}
-
-	public Param vDate(String pattern, String note) {
-		this.datePattern = pattern;
-		if (this.value != null && !this.value.isEmpty())
-			try {
-				new SimpleDateFormat(pattern).parse(this.value);
-			} catch (Exception e) {
-				throw new InteractRuntimeException(1001, this.code,
-						"\"" + this.name + "\"有误" + (note == null || note.isEmpty() ? "" : ",要求：" + note));
-			}
-		return this;
 	}
 
 	public Param vNull() {
@@ -141,14 +127,14 @@ public class Param {
 		return this;
 	}
 
-	public Param def(String defaultValue) {
+	public Param nullToDef(String defaultValue) {
 		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
 		if (this.value == null && defaultValue != null)
 			this.value = defaultValue;
 		return this;
 	}
 
-	public Param defInEmpty(String defaultValue) {
+	public Param emptyToDef(String defaultValue) {
 		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
 		if (isEmpty() && defaultValue != null)
 			this.value = defaultValue;
