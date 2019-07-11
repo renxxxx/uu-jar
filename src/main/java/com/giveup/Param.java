@@ -129,7 +129,14 @@ public class Param {
 
 	public Param nullToDef(String defaultValue) {
 		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
-		if (this.value == null && defaultValue != null)
+		if (isNull() && defaultValue != null)
+			this.value = defaultValue;
+		return this;
+	}
+
+	public Param blankToDef(String defaultValue) {
+		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
+		if (isBlank() && defaultValue != null)
 			this.value = defaultValue;
 		return this;
 	}
