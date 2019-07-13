@@ -12,19 +12,6 @@ import org.apache.commons.lang3.StringUtils;
 
 public class UrlUtils {
 
-	// public static String buildPath(boolean head, boolean end, String...
-	// pathParts) {
-	// String url = head ? "/" : "";
-	// for (int i = 0; i < pathParts.length; i++) {
-	// if (i == pathParts.length - 1)
-	// url = url + pathParts[i];
-	// else
-	// url = url + pathParts[i] + "/";
-	// }
-	// url = url + (end ? "/" : "");
-	// return twistingPathSeparator(url);
-	// }
-
 	public static String buildPath(List<String> pathParts) {
 		return buildPath(pathParts.toArray(new String[] {}));
 	}
@@ -37,19 +24,19 @@ public class UrlUtils {
 			else
 				url = url + pathParts[i] + "/";
 		}
-		return twistingPathSeparator(url);
+		return prettyUrl(url);
 	}
 
-	public static String twistingPathSeparator(String path) {
+	public static String prettyUrl(String path) {
 		path = path.replaceAll("(\\\\+|/+)", "/");
 		return path;
 	}
 
-	public static Map<String, String> parseQueryStr(String queryStr, String encode)
+	public static Map<String, String> parseQueryString(String queryString, String encode)
 			throws UnsupportedEncodingException {
-		if (queryStr == null || queryStr.trim().isEmpty())
+		if (queryString == null || queryString.trim().isEmpty())
 			return null;
-		String[] params = queryStr.split("&");
+		String[] params = queryString.split("&");
 
 		Map<String, String> parsedParams = new HashMap<String, String>(params.length);
 		for (String p : params) {
@@ -62,16 +49,16 @@ public class UrlUtils {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(fileExtGet("aa"));
+		System.out.println(getExtName("aa"));
 	}
 
-	public static String fileExtStrip(String fileName) {
-		return fileName.replaceAll("\\.[^\\.]*$", "");
+	public static String stripExtName(String name) {
+		return name.replaceAll("\\.[^\\.]*$", "");
 	}
 
-	public static String fileExtGet(String fileName) {
+	public static String getExtName(String name) {
 		Pattern p = Pattern.compile("^.*\\.(.*)$");
-		Matcher matcher = p.matcher(fileName);
+		Matcher matcher = p.matcher(name);
 		matcher.matches();
 		try {
 			return matcher.group(1);

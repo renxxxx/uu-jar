@@ -13,45 +13,27 @@ import com.alibaba.fastjson.JSONObject;
 public class StrUtils {
 	public static Logger logger = Logger.getLogger(StrUtils.class);
 
-	public static List<String> extractOffStrs(String[] oldStrs, String[] newStrs) {
-		oldStrs = oldStrs == null ? new String[] {} : oldStrs;
-		newStrs = newStrs == null ? new String[] {} : newStrs;
-
-		List<String> oldStrList = Arrays.asList(oldStrs);
-		List<String> newStrList = Arrays.asList(newStrs);
-
-		List<String> offUrls = new ArrayList<String>();
-		for (String oldUrl : oldStrList) {
-			if (!newStrList.contains(oldUrl))
-				offUrls.add(oldUrl);
-		}
-
-		return offUrls;
-	}
+//	public static List<String> extractOffStrs(String[] oldStrs, String[] newStrs) {
+//		oldStrs = oldStrs == null ? new String[] {} : oldStrs;
+//		newStrs = newStrs == null ? new String[] {} : newStrs;
+//
+//		List<String> oldStrList = Arrays.asList(oldStrs);
+//		List<String> newStrList = Arrays.asList(newStrs);
+//
+//		List<String> offUrls = new ArrayList<String>();
+//		for (String oldUrl : oldStrList) {
+//			if (!newStrList.contains(oldUrl))
+//				offUrls.add(oldUrl);
+//		}
+//
+//		return offUrls;
+//	}
 
 	public static JSONObject isJSON(String str) {
 		try {
 			return JSON.parseObject(str);
 		} catch (RuntimeException e) {
 			return null;
-		}
-	}
-
-	public static boolean isNumber(String str) {
-		try {
-			new Double(str);
-			return true;
-		} catch (RuntimeException e) {
-			return false;
-		}
-	}
-
-	public static boolean isInteger(String str) {
-		try {
-			new Integer(str);
-			return true;
-		} catch (RuntimeException e) {
-			return false;
 		}
 	}
 
@@ -93,7 +75,17 @@ public class StrUtils {
 		return false;
 	}
 
-	public static boolean allEqualsIgnoreCaseWith(String target, String... items) {
+	public static boolean equalsAllWith(String target, String... items) {
+		for (String c : items) {
+			if (target == c)
+				continue;
+			if (target != c || !target.equals(c))
+				return false;
+		}
+		return true;
+	}
+
+	public static boolean equalsAllIgnoreCaseWith(String target, String... items) {
 		for (String c : items) {
 			if (target == c)
 				continue;

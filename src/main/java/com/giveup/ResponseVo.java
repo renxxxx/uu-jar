@@ -5,7 +5,7 @@ package com.giveup;
  * @author rxw
  *
  */
-public class BaseResVo {
+public class ResponseVo {
 
 	private String codeMsg = null;
 	private String errParam = null;

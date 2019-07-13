@@ -1,5 +1,6 @@
 package com.giveup;
 
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,10 +20,6 @@ import org.apache.log4j.Logger;
 public class JdbcUtils {
 	public static Logger logger = Logger.getLogger(JdbcUtils.class);
 
-	public static List<Map> runQueryList(Connection conn, String sql, List<Object> params) throws Exception {
-		return runQueryList(conn, sql, params.toArray());
-	}
-
 	public static List<Map> runQueryList(Connection conn, String sql, Object... params) throws Exception {
 		PreparedStatement pst = null;
 		try {
@@ -34,10 +31,6 @@ public class JdbcUtils {
 			if (pst != null)
 				pst.close();
 		}
-	}
-
-	public static List<Object> runQueryThinList(Connection conn, String sql, List<Object> params) throws Exception {
-		return runQueryThinList(conn, sql, params.toArray());
 	}
 
 	public static List<Object> runQueryThinList(Connection conn, String sql, Object... params) throws Exception {
@@ -53,52 +46,41 @@ public class JdbcUtils {
 		}
 	}
 
-	public static Object runQueryOneColumn(Connection conn, String sql, List<Object> params) throws Exception {
-		return runQueryOneColumn(conn, sql, params.toArray());
-	}
-
-	public static Integer runQueryOneInteger(Connection conn, String sql, List<Object> params) throws Exception {
-		return ValueUtils.toInteger(runQueryOneColumn(conn, sql, params));
+	public static InputStream runQueryOneStream(Connection conn, String sql, Object... params) throws Exception {
+		PreparedStatement pst = null;
+		try {
+			pst = conn.prepareStatement(sql);
+			ResultSet rs = runQuery(pst, sql, params);
+			if (rs.next()) {
+				return rs.getBinaryStream(1);
+			}
+			return null;
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			if (pst != null)
+				pst.close();
+		}
 	}
 
 	public static Integer runQueryOneInteger(Connection conn, String sql, Object... params) throws Exception {
 		return ValueUtils.toInteger(runQueryOneColumn(conn, sql, params));
 	}
 
-	public static String runQueryOneString(Connection conn, String sql, List<Object> params) throws Exception {
-		return ValueUtils.toString(runQueryOneColumn(conn, sql, params));
-	}
-
 	public static String runQueryOneString(Connection conn, String sql, Object... params) throws Exception {
 		return ValueUtils.toString(runQueryOneColumn(conn, sql, params));
-	}
-
-	public static BigDecimal runQueryOneDecimal(Connection conn, String sql, List<Object> params) throws Exception {
-		return ValueUtils.toDecimal(runQueryOneColumn(conn, sql, params));
 	}
 
 	public static BigDecimal runQueryOneDecimal(Connection conn, String sql, Object... params) throws Exception {
 		return ValueUtils.toDecimal(runQueryOneColumn(conn, sql, params));
 	}
 
-	public static Long runQueryOneLong(Connection conn, String sql, List<Object> params) throws Exception {
-		return ValueUtils.toLong(runQueryOneColumn(conn, sql, params));
-	}
-
 	public static Long runQueryOneLong(Connection conn, String sql, Object... params) throws Exception {
 		return ValueUtils.toLong(runQueryOneColumn(conn, sql, params));
 	}
 
-	public static Float runQueryOneFloat(Connection conn, String sql, List<Object> params) throws Exception {
-		return ValueUtils.toFloat(runQueryOneColumn(conn, sql, params));
-	}
-
 	public static Float runQueryOneFloat(Connection conn, String sql, Object... params) throws Exception {
 		return ValueUtils.toFloat(runQueryOneColumn(conn, sql, params));
-	}
-
-	public static Date runQueryOneDate(Connection conn, String sql, List<Object> params) throws Exception {
-		return ValueUtils.toDate(runQueryOneColumn(conn, sql, params));
 	}
 
 	public static Date runQueryOneDate(Connection conn, String sql, Object... params) throws Exception {
@@ -110,10 +92,6 @@ public class JdbcUtils {
 		if (row == null)
 			return null;
 		return row.get(row.keySet().iterator().next());
-	}
-
-	public static Map runQueryOne(Connection conn, String sql, List<Object> params) throws Exception {
-		return runQueryOne(conn, sql, params.toArray());
 	}
 
 	public static Map runQueryOne(Connection conn, String sql, Object... params) throws Exception {
@@ -134,10 +112,6 @@ public class JdbcUtils {
 
 	public static ResultSet runQuery(PreparedStatement pst, String sql) throws SQLException {
 		return runQuery(pst, sql, new Object[] {});
-	}
-
-	public static ResultSet runQuery(PreparedStatement pst, String sql, List<Object> params) throws SQLException {
-		return runQuery(pst, sql, params.toArray());
 	}
 
 	public static ResultSet runQuery(PreparedStatement pst, String sql, Object... params) throws SQLException {
@@ -163,10 +137,6 @@ public class JdbcUtils {
 		return new StringBuilder("%").append(columnValue).append("%").toString();
 	}
 
-	public static int runUpdate(Connection conn, String sql, List<Object> params) throws Exception {
-		return runUpdate(conn, sql, params.toArray());
-	}
-
 	public static int runUpdate(Connection conn, String sql, Object... params) throws Exception {
 		PreparedStatement pst = null;
 		try {
@@ -178,11 +148,6 @@ public class JdbcUtils {
 			if (pst != null)
 				pst.close();
 		}
-	}
-
-	public static int runUpdateGentle(Connection conn, String sql, List<Object> params) throws Exception {
-		return runUpdateGentle(conn, sql, params.toArray());
-
 	}
 
 	public static int runUpdateGentle(Connection conn, String sql, Object... params) throws Exception {
@@ -201,10 +166,6 @@ public class JdbcUtils {
 
 	public static int runUpdate(PreparedStatement pst, String sql) throws Exception {
 		return runUpdate(pst, sql, new Object[] {});
-	}
-
-	public static int runUpdate(PreparedStatement pst, String sql, List<Object> params) throws Exception {
-		return runUpdate(pst, sql, params.toArray());
 	}
 
 	public static int runUpdate(PreparedStatement pst, String sql, Object... params) throws Exception {

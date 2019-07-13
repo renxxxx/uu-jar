@@ -35,34 +35,34 @@ public class OtherUtils {
 		}
 	}
 
-	public static List<String> extractOffStrs(List<String> oldStrs, List<String> newStrs, boolean force) {
-		if (oldStrs == null || oldStrs.isEmpty())
-			return new ArrayList();
-		if (newStrs == null || newStrs.isEmpty()) {
-			if (force)
-				return oldStrs;
-			else
-				return new ArrayList();
-		}
-		List<String> offUrls = new ArrayList<String>();
-		for (String oldUrl : oldStrs) {
-			if (!newStrs.contains(oldUrl))
-				offUrls.add(oldUrl);
-		}
-		return offUrls;
-	}
-
-	public static List<String> extractOffStrs(String[] oldStrs, String[] newStrs, boolean force) {
-		if (oldStrs == null || oldStrs.length == 0)
-			return new ArrayList();
-		if (newStrs == null || newStrs.length == 0) {
-			if (force)
-				return new ArrayList(Arrays.asList(oldStrs));
-			else
-				return new ArrayList();
-		}
-		return extractOffStrs(new ArrayList(Arrays.asList(oldStrs)), new ArrayList(Arrays.asList(newStrs)), force);
-	}
+//	public static List<String> extractOffStrs(List<String> oldStrs, List<String> newStrs, boolean force) {
+//		if (oldStrs == null || oldStrs.isEmpty())
+//			return new ArrayList();
+//		if (newStrs == null || newStrs.isEmpty()) {
+//			if (force)
+//				return oldStrs;
+//			else
+//				return new ArrayList();
+//		}
+//		List<String> offUrls = new ArrayList<String>();
+//		for (String oldUrl : oldStrs) {
+//			if (!newStrs.contains(oldUrl))
+//				offUrls.add(oldUrl);
+//		}
+//		return offUrls;
+//	}
+//
+//	public static List<String> extractOffStrs(String[] oldStrs, String[] newStrs, boolean force) {
+//		if (oldStrs == null || oldStrs.length == 0)
+//			return new ArrayList();
+//		if (newStrs == null || newStrs.length == 0) {
+//			if (force)
+//				return new ArrayList(Arrays.asList(oldStrs));
+//			else
+//				return new ArrayList();
+//		}
+//		return extractOffStrs(new ArrayList(Arrays.asList(oldStrs)), new ArrayList(Arrays.asList(newStrs)), force);
+//	}
 
 	public static List<Map> lineToCatalog(List<Map> srcList, String idName, String upIdName, String childrenName) {
 		List<Map> aas = new ArrayList();

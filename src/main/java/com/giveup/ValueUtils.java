@@ -15,6 +15,8 @@ public class ValueUtils {
 	public static Integer toInteger(Object value) {
 		if (value == null)
 			return null;
+		if (value instanceof Integer)
+			return (Integer) value;
 		String valueStr = value.toString();
 		if (valueStr.trim().isEmpty())
 			return null;
@@ -25,6 +27,8 @@ public class ValueUtils {
 	public static Float toFloat(Object value) {
 		if (value == null)
 			return null;
+		if (value instanceof Float)
+			return (Float) value;
 		String valueStr = value.toString();
 		if (valueStr.trim().isEmpty())
 			return null;
@@ -35,6 +39,8 @@ public class ValueUtils {
 	public static String toString(Object value) {
 		if (value == null)
 			return null;
+		if (value instanceof String)
+			return (String) value;
 		String valueStr = value.toString();
 		if (valueStr.isEmpty())
 			return null;
@@ -75,32 +81,20 @@ public class ValueUtils {
 	}
 
 	public static Date toDate(Object value, String pattern) {
-		if (value == null)
-			return null;
-		if (value instanceof Date)
-			return (Date) value;
-		if (value instanceof String) {
-			if (value.toString().trim().isEmpty())
-				return null;
-			if (value.toString().trim().length() == 13 && StringUtils.isNumeric(value.toString()))
-				return new Date(Long.parseLong(value.toString().trim()));
-			if (value.toString().trim().length() == 10 && StringUtils.isNumeric(value.toString()))
-				return new Date(Long.parseLong(value.toString().trim()) * 1000);
+		Date date = toDate(value);
+		if (date == null)
 			try {
-				return new SimpleDateFormat(pattern).parse(value.toString());
+				date = new SimpleDateFormat(pattern).parse(value.toString());
 			} catch (Exception e) {
 			}
-		}
-		if (value instanceof Long)
-			return new Date((Long) value);
-		if (value instanceof Integer)
-			return new Date((Long) value * 1000);
-		return null;
+		return date;
 	}
 
 	public static Long toLong(Object value) {
 		if (value == null)
 			return null;
+		if (value instanceof Long)
+			return (Long) value;
 		String valueStr = value.toString();
 		if (valueStr.trim().isEmpty())
 			return null;
@@ -111,6 +105,8 @@ public class ValueUtils {
 	public static BigDecimal toDecimal(Object value) {
 		if (value == null)
 			return null;
+		if (value instanceof BigDecimal)
+			return (BigDecimal) value;
 		String valueStr = value.toString();
 		if (valueStr.trim().isEmpty())
 			return null;

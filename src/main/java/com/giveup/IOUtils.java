@@ -137,11 +137,12 @@ public class IOUtils {
 		}
 	}
 
-	public static boolean deleteFileUpEmpty(File file,File endFolder) {
+	public static boolean deleteFileUpEmpty(File file, File endFolder) {
 		logger.info("delete " + file.getAbsolutePath());
 		boolean success = file.delete();
-		if (file.getParentFile().list().length == 0 && !file.getParentFile().getAbsolutePath().equals(endFolder.getAbsolutePath())) {
-			deleteFileUpEmpty(file.getParentFile(),endFolder);
+		if (file.getParentFile().list().length == 0
+				&& !file.getParentFile().getAbsolutePath().equals(endFolder.getAbsolutePath())) {
+			deleteFileUpEmpty(file.getParentFile(), endFolder);
 		}
 		return success;
 	}

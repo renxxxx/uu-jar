@@ -18,43 +18,35 @@ import org.jsoup.select.Elements;
 public class HtmlUtils {
 	public static Logger logger = Logger.getLogger(HtmlUtils.class);
 
-	// public static List<String> extractOffUrls(String oldcontent, String
-	// newcontent) throws InterruptedException {
-	// oldcontent = oldcontent == null ? "" : oldcontent;
-	// newcontent = newcontent == null ? "" : newcontent;
-	// List<String> offUrls = new ArrayList<String>();
-	// List<String> oldUrls = HtmlUtils.extractUrls(oldcontent);
-	// List<String> newUrls = HtmlUtils.extractUrls(newcontent);
-	// for (String oldUrl : oldUrls) {
-	// if (!newUrls.contains(oldUrl))
-	// offUrls.add(oldUrl);
-	// }
-	// return offUrls;
-	// }
-
-	public static List<String> extractOffUrls(String oldcontent, String newcontent) throws InterruptedException {
-		oldcontent = oldcontent == null ? "" : oldcontent;
-		newcontent = newcontent == null ? "" : newcontent;
-		if (oldcontent.equals(newcontent))
+	public static List<String> extractOffUrls(String oldHtml, String newHtml) throws InterruptedException {
+		if (oldHtml == null)
+			return null;
+		if (newHtml == null)
+			return null;
+		if (oldHtml.equals(newHtml))
 			return new ArrayList<String>();
-		List<String> oldUrls = HtmlUtils.extractUrls(oldcontent);
-		List<String> newUrls = HtmlUtils.extractUrls(newcontent);
-		return OtherUtils.extractOffStrs(oldUrls, newUrls, true);
+		List<String> oldUrls = HtmlUtils.extractUrls(oldHtml);
+		List<String> newUrls = HtmlUtils.extractUrls(newHtml);
+		return ListUtils.extractOffEles(oldUrls, newUrls);
 	}
 
 	public static List<String> extractOffUrls(File oldFile, File newFile) throws Exception {
+		if (oldFile == null)
+			return null;
+		if (newFile == null)
+			return null;
 		return extractOffUrls(new FileInputStream(oldFile), new FileInputStream(newFile));
 	}
 
 	public static List<String> extractOffUrls(InputStream oldis, InputStream newis) throws Exception {
+		if (oldis == null)
+			return null;
+		if (newis == null)
+			return null;
 		List<String> oldUrls = extractUrls(oldis);
 		List<String> newUrls = extractUrls(newis);
 		List<String> oUrls = new ArrayList<String>();
-		for (String oldUrl : oldUrls) {
-			if (!newUrls.contains(oldUrl))
-				oUrls.add(oldUrl);
-		}
-		return oUrls;
+		return ListUtils.extractOffEles(oldUrls, newUrls);
 	}
 
 	public static void main(String[] args) {
@@ -65,6 +57,8 @@ public class HtmlUtils {
 	}
 
 	public static List<String> extractUrls(Document doc) {
+		if (doc == null)
+			return null;
 		Elements elements = doc.getElementsByAttribute("src");
 		List<String> srcs = new ArrayList();
 		for (int i = 0; i < elements.size(); i++) {
@@ -76,21 +70,29 @@ public class HtmlUtils {
 	}
 
 	public static List<String> extractUrls(String htmlStr) {
+		if (htmlStr == null)
+			return null;
 		Document doc = Jsoup.parse(htmlStr);
 		return extractUrls(doc);
 	}
 
 	public static List<String> extractUrls(InputStream in) throws IOException {
+		if (in == null)
+			return null;
 		Document doc = Jsoup.parse(in, "utf-8", null);
 		return extractUrls(doc);
 	}
 
 	public static List<String> extractUrls(File file) throws IOException {
+		if (file == null)
+			return null;
 		Document doc = Jsoup.parse(file, "utf-8");
 		return extractUrls(doc);
 	}
 
-	public static String removeTag(String htmlStr) {
+	public static String extractAllText(String htmlStr) {
+		if (htmlStr == null)
+			return null;
 		String regEx_script = "<script[^>]*?>[\\s\\S]*?<\\/script>"; // script
 		String regEx_style = "<style[^>]*?>[\\s\\S]*?<\\/style>"; // style
 		String regEx_html = "<[^>]+>"; // HTML tag
