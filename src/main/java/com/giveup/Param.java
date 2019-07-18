@@ -1,8 +1,6 @@
 package com.giveup;
 
 import java.math.BigDecimal;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.Pattern;
 
@@ -13,6 +11,14 @@ public class Param {
 	private String code;
 	private String value;
 	private String separator = ",";
+	private String datePattern = "yyyy-MM-dd HH:mm:ss";
+
+	private Integer intValue;
+	private Float floatValue;
+	private Long longValue;
+	private BigDecimal decimalValue;
+	private Date dateValue;
+	private String[] splitArrValue;
 
 	private Param() {
 	}
@@ -52,25 +58,42 @@ public class Param {
 	}
 
 	public Integer toInteger() {
-		return isEmpty() ? null : Integer.parseInt(this.value);
+		if (this.intValue != null)
+			return this.intValue;
+		this.intValue = isEmpty() ? null : Integer.parseInt(this.value);
+		return this.intValue;
 	}
 
 	public Float toFloat() {
-		return isEmpty() ? null : Float.parseFloat(this.value);
+		if (this.floatValue != null)
+			return this.floatValue;
+		this.floatValue = isEmpty() ? null : Float.parseFloat(this.value);
+		return this.floatValue;
 	}
 
 	public Long toLong() {
-		return isEmpty() ? null : Long.parseLong(this.value);
+		if (this.longValue != null)
+			return this.longValue;
+		this.longValue = isEmpty() ? null : Long.parseLong(this.value);
+		return this.longValue;
 	}
 
 	public BigDecimal toDecimal() {
-		return isEmpty() ? null : new BigDecimal(this.value);
+		if (this.decimalValue != null)
+			return this.decimalValue;
+		this.decimalValue = isEmpty() ? null : new BigDecimal(this.value);
+		return this.decimalValue;
 	}
 
 	public Date toDate() {
-		if (this.value != null)
-			return new Date(Long.parseLong(this.value));
-		return null;
+		if (this.dateValue != null)
+			return this.dateValue;
+		this.dateValue = isEmpty() ? null : ValueUtils.toDate(this.value, this.datePattern);
+		return this.dateValue;
+	}
+
+	public void setDatePattern(String datePattern) {
+		this.datePattern = datePattern;
 	}
 
 	public void setSeparator(String separator) {
@@ -78,8 +101,11 @@ public class Param {
 	}
 
 	public String[] toSplitArr() {
-		return this.value == null ? null
+		if (this.splitArrValue != null)
+			return this.splitArrValue;
+		this.splitArrValue = isEmpty() ? null
 				: StringUtils.splitByWholeSeparatorPreserveAllTokens(this.value, this.separator);
+		return this.splitArrValue;
 	}
 
 	@Override
@@ -127,24 +153,24 @@ public class Param {
 		return this;
 	}
 
-	public Param nullToDef(String defaultValue) {
+	public Param nullDef(String defaultValue) {
 		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
 		if (isNull() && defaultValue != null)
-			this.value = defaultValue;
+			set(defaultValue);
 		return this;
 	}
 
-	public Param blankToDef(String defaultValue) {
+	public Param blankDef(String defaultValue) {
 		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
 		if (isBlank() && defaultValue != null)
-			this.value = defaultValue;
+			set(defaultValue);
 		return this;
 	}
 
-	public Param emptyToDef(String defaultValue) {
+	public Param emptyDef(String defaultValue) {
 		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
 		if (isEmpty() && defaultValue != null)
-			this.value = defaultValue;
+			set(defaultValue);
 		return this;
 	}
 
@@ -214,6 +240,12 @@ public class Param {
 	}
 
 	public Param set(String value) {
+		this.splitArrValue = null;
+		this.dateValue = null;
+		this.intValue = null;
+		this.floatValue = null;
+		this.longValue = null;
+		this.decimalValue = null;
 		this.value = value;
 		return this;
 	}
