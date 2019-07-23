@@ -1,9 +1,6 @@
 package com.giveup;
 
-import java.util.Arrays;
 import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -39,8 +36,7 @@ public class ServletUtils {
 			hj.put("secure", cookie.getSecure());
 			hj.put("version", cookie.getVersion());
 			hj.put("comment", cookie.getComment());
-			j.put("name", cookie.getName());
-			j.put("cookie", hj);
+			j.put(cookie.getName(), hj);
 		}
 		return j;
 	}
