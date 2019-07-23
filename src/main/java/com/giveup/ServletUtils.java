@@ -1,7 +1,7 @@
 package com.giveup;
 
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -15,26 +15,56 @@ import com.alibaba.fastjson.JSONObject;
 public class ServletUtils {
 	public static Logger logger = Logger.getLogger(ServletUtils.class);
 
-	public static String getParameter(HttpServletRequest request, String name) {
-		Map<String, String> parameterMap = (Map) request.getAttribute("parameterMap");
-		if (parameterMap == null) {
-			parameterMap = new HashMap();
-			request.setAttribute("parameterMap", parameterMap);
+	public static JSONObject headersToJson(HttpServletRequest request) {
+		JSONObject j = new JSONObject(true);
+		Enumeration<String> names = request.getHeaderNames();
+		while (names.hasMoreElements()) {
+			String name = (String) names.nextElement();
+			String value = request.getHeader(name);
+			j.put(name, value);
 		}
-		if (parameterMap.containsKey(name))
-			return parameterMap.get(name);
-
-		return request.getParameter(name);
+		return j;
 	}
 
-	public static void setParameter(HttpServletRequest request, String name, String value) {
-		Map<String, String> parameterMap = (Map) request.getAttribute("parameterMap");
-		if (parameterMap == null) {
-			parameterMap = new HashMap();
+	public static JSONObject cookiesToJson(HttpServletRequest request) {
+		JSONObject j = new JSONObject();
+		Cookie[] cookies = request.getCookies();
+		for (int i = 0; i < cookies.length; i++) {
+			JSONObject hj = new JSONObject(true);
+			Cookie cookie = cookies[i];
+			hj.put("value", cookie.getValue());
+			hj.put("domain", cookie.getDomain());
+			hj.put("maxAge", cookie.getMaxAge());
+			hj.put("path", cookie.getPath());
+			hj.put("secure", cookie.getSecure());
+			hj.put("version", cookie.getVersion());
+			hj.put("comment", cookie.getComment());
+			j.put("name", cookie.getName());
+			j.put("cookie", hj);
 		}
-		parameterMap.put(name, value);
-		request.setAttribute("parameterMap", parameterMap);
+		return j;
 	}
+
+//	public static String getParameter(HttpServletRequest request, String name) {
+//		Map<String, String> parameterMap = (Map) request.getAttribute("parameterMap");
+//		if (parameterMap == null) {
+//			parameterMap = new HashMap();
+//			request.setAttribute("parameterMap", parameterMap);
+//		}
+//		if (parameterMap.containsKey(name))
+//			return parameterMap.get(name);
+//
+//		return request.getParameter(name);
+//	}
+//
+//	public static void setParameter(HttpServletRequest request, String name, String value) {
+//		Map<String, String> parameterMap = (Map) request.getAttribute("parameterMap");
+//		if (parameterMap == null) {
+//			parameterMap = new HashMap();
+//		}
+//		parameterMap.put(name, value);
+//		request.setAttribute("parameterMap", parameterMap);
+//	}
 
 	public static String getClientAddr(HttpServletRequest request) {
 		String value = null;
@@ -80,14 +110,14 @@ public class ServletUtils {
 		return value;
 	}
 
-	public static void logParameters(HttpServletRequest request) {
-		logger.info("parameters");
-		Map<String, String[]> map = request.getParameterMap();
-		Iterator<String> itr = map.keySet().iterator();
-		while (itr.hasNext()) {
-			String key = itr.next();
-			logger.info(key + ":" + Arrays.toString(map.get(key)));
-		}
-	}
+//	public static void logParameters(HttpServletRequest request) {
+//		logger.info("parameters");
+//		Map<String, String[]> map = request.getParameterMap();
+//		Iterator<String> itr = map.keySet().iterator();
+//		while (itr.hasNext()) {
+//			String key = itr.next();
+//			logger.info(key + ":" + Arrays.toString(map.get(key)));
+//		}
+//	}
 
 }
