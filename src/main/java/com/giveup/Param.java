@@ -103,7 +103,7 @@ public class Param {
 	public String[] toSplitArr() {
 		if (this.splitArrValue != null)
 			return this.splitArrValue;
-		this.splitArrValue = isEmpty() ? null
+		this.splitArrValue = isNull() ? null
 				: StringUtils.splitByWholeSeparatorPreserveAllTokens(this.value, this.separator);
 		return this.splitArrValue;
 	}
