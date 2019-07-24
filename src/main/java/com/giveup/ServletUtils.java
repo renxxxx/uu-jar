@@ -26,6 +26,8 @@ public class ServletUtils {
 	public static JSONObject cookiesToJson(HttpServletRequest request) {
 		JSONObject j = new JSONObject();
 		Cookie[] cookies = request.getCookies();
+		if (cookies == null)
+			return j;
 		for (int i = 0; i < cookies.length; i++) {
 			JSONObject hj = new JSONObject(true);
 			Cookie cookie = cookies[i];
