@@ -112,23 +112,6 @@ public class Param {
 	public String toString() {
 		return this.value;
 	}
-//	public static String paramv(String name, String value, boolean nullIs, String defaultValue, int length,
-//			String regex) {
-//		value = value == null ? value : value.trim();
-//		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
-//		if (!nullIs && (value == null || value.isEmpty()))
-//			throw new InteractRuntimeException(1001, name + "不能空");
-//		if ((value == null || value.isEmpty()) && defaultValue != null && !defaultValue.isEmpty())
-//			value = defaultValue;
-//		if (value != null && !value.isEmpty() && length > -1 && value.length() > length) {
-//			throw new InteractRuntimeException(1001, name + "最大长度" + length);
-//		}
-//		if (value != null && !value.isEmpty() && regex != null && !regex.isEmpty()) {
-//			if (!Sc.regexCache.getWithCreate(regex).matcher(value).matches())
-//				throw new InteractRuntimeException(1001, name + "有误");
-//		}
-//		return value;
-//	}
 
 	public static void main(String[] args) {
 		float a = 1.000000f;
@@ -141,15 +124,33 @@ public class Param {
 		return this;
 	}
 
+	public Param vNull(boolean doIs) {
+		if (doIs)
+			this.vNull();
+		return this;
+	}
+
 	public Param vEmpty() {
 		if ((this.value == null || this.value.isEmpty()))
 			throw new InteractRuntimeException(1001, this.code, "\"" + this.name + "\"不能空");
 		return this;
 	}
 
+	public Param vEmpty(boolean doIs) {
+		if (doIs)
+			this.vEmpty();
+		return this;
+	}
+
 	public Param vBlank() {
 		if ((this.value != null && this.value.isEmpty()))
 			throw new InteractRuntimeException(1001, this.code, "\"" + this.name + "\"不能空");
+		return this;
+	}
+
+	public Param vBlank(boolean doIs) {
+		if (doIs)
+			this.vBlank();
 		return this;
 	}
 
@@ -160,6 +161,12 @@ public class Param {
 		return this;
 	}
 
+	public Param nullDef(boolean doIs, String defaultValue) {
+		if (doIs)
+			this.nullDef(defaultValue);
+		return this;
+	}
+
 	public Param blankDef(String defaultValue) {
 		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
 		if (isBlank() && defaultValue != null)
@@ -167,10 +174,22 @@ public class Param {
 		return this;
 	}
 
+	public Param blankDef(boolean doIs, String defaultValue) {
+		if (doIs)
+			this.blankDef(defaultValue);
+		return this;
+	}
+
 	public Param emptyDef(String defaultValue) {
 		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
 		if (isEmpty() && defaultValue != null)
 			set(defaultValue);
+		return this;
+	}
+
+	public Param emptyDef(boolean doIs, String defaultValue) {
+		if (doIs)
+			this.emptyDef(defaultValue);
 		return this;
 	}
 
