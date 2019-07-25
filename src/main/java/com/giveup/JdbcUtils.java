@@ -20,10 +20,6 @@ import org.apache.log4j.Logger;
 public class JdbcUtils {
 	public static Logger logger = Logger.getLogger(JdbcUtils.class);
 
-	public static List<Map> runQueryList(Connection conn, String sql, List<Object> params) throws Exception {
-		return runQueryList(conn, sql, params.toArray());
-	}
-
 	public static List<Map> runQueryList(Connection conn, String sql, Object... params) throws Exception {
 		PreparedStatement pst = null;
 		try {
@@ -37,10 +33,6 @@ public class JdbcUtils {
 		}
 	}
 
-	public static List<Object> runQueryThinList(Connection conn, String sql, List<Object> params) throws Exception {
-		return runQueryThinList(conn, sql, params.toArray());
-	}
-
 	public static List<Object> runQueryThinList(Connection conn, String sql, Object... params) throws Exception {
 		PreparedStatement pst = null;
 		try {
@@ -52,10 +44,6 @@ public class JdbcUtils {
 			if (pst != null)
 				pst.close();
 		}
-	}
-
-	public static InputStream runQueryOneStream(Connection conn, String sql, List<Object> params) throws Exception {
-		return runQueryOneStream(conn, sql, params.toArray());
 	}
 
 	public static InputStream runQueryOneStream(Connection conn, String sql, Object... params) throws Exception {
@@ -75,56 +63,28 @@ public class JdbcUtils {
 		}
 	}
 
-	public static Integer runQueryOneInteger(Connection conn, String sql, List<Object> params) throws Exception {
-		return runQueryOneInteger(conn, sql, params.toArray());
-	}
-
 	public static Integer runQueryOneInteger(Connection conn, String sql, Object... params) throws Exception {
 		return ValueUtils.toInteger(runQueryOneColumn(conn, sql, params));
-	}
-
-	public static String runQueryOneString(Connection conn, String sql, List<Object> params) throws Exception {
-		return runQueryOneString(conn, sql, params.toArray());
 	}
 
 	public static String runQueryOneString(Connection conn, String sql, Object... params) throws Exception {
 		return ValueUtils.toString(runQueryOneColumn(conn, sql, params));
 	}
 
-	public static BigDecimal runQueryOneDecimal(Connection conn, String sql, List<Object> params) throws Exception {
-		return runQueryOneDecimal(conn, sql, params.toArray());
-	}
-
 	public static BigDecimal runQueryOneDecimal(Connection conn, String sql, Object... params) throws Exception {
 		return ValueUtils.toDecimal(runQueryOneColumn(conn, sql, params));
-	}
-
-	public static Long runQueryOneLong(Connection conn, String sql, List<Object> params) throws Exception {
-		return runQueryOneLong(conn, sql, params.toArray());
 	}
 
 	public static Long runQueryOneLong(Connection conn, String sql, Object... params) throws Exception {
 		return ValueUtils.toLong(runQueryOneColumn(conn, sql, params));
 	}
 
-	public static Float runQueryOneFloat(Connection conn, String sql, List<Object> params) throws Exception {
-		return runQueryOneFloat(conn, sql, params.toArray());
-	}
-
 	public static Float runQueryOneFloat(Connection conn, String sql, Object... params) throws Exception {
 		return ValueUtils.toFloat(runQueryOneColumn(conn, sql, params));
 	}
 
-	public static Date runQueryOneDate(Connection conn, String sql, List<Object> params) throws Exception {
-		return runQueryOneDate(conn, sql, params.toArray());
-	}
-
 	public static Date runQueryOneDate(Connection conn, String sql, Object... params) throws Exception {
 		return ValueUtils.toDate(runQueryOneColumn(conn, sql, params));
-	}
-
-	public static Object runQueryOneColumn(Connection conn, String sql, List<Object> params) throws Exception {
-		return runQueryOneColumn(conn, sql, params.toArray());
 	}
 
 	public static Object runQueryOneColumn(Connection conn, String sql, Object... params) throws Exception {
@@ -132,10 +92,6 @@ public class JdbcUtils {
 		if (row == null)
 			return null;
 		return row.get(row.keySet().iterator().next());
-	}
-
-	public static Map runQueryOne(Connection conn, String sql, List<Object> params) throws Exception {
-		return runQueryOne(conn, sql, params.toArray());
 	}
 
 	public static Map runQueryOne(Connection conn, String sql, Object... params) throws Exception {
@@ -152,10 +108,6 @@ public class JdbcUtils {
 			if (pst != null)
 				pst.close();
 		}
-	}
-
-	public static ResultSet runQuery(PreparedStatement pst, String sql, List<Object> params) throws Exception {
-		return runQuery(pst, sql, params.toArray());
 	}
 
 	public static ResultSet runQuery(PreparedStatement pst, String sql, Object... params) throws SQLException {
@@ -181,10 +133,6 @@ public class JdbcUtils {
 		return new StringBuilder("%").append(columnValue).append("%").toString();
 	}
 
-	public static int runUpdate(Connection conn, String sql, List<Object> params) throws Exception {
-		return runUpdate(conn, sql, params.toArray());
-	}
-
 	public static int runUpdate(Connection conn, String sql, Object... params) throws Exception {
 		PreparedStatement pst = null;
 		try {
@@ -196,10 +144,6 @@ public class JdbcUtils {
 			if (pst != null)
 				pst.close();
 		}
-	}
-
-	public static int runUpdateGentle(Connection conn, String sql, List<Object> params) throws Exception {
-		return runUpdateGentle(conn, sql, params.toArray());
 	}
 
 	public static int runUpdateGentle(Connection conn, String sql, Object... params) throws Exception {
@@ -214,10 +158,6 @@ public class JdbcUtils {
 			if (pst != null)
 				pst.close();
 		}
-	}
-
-	public static int runUpdate(PreparedStatement pst, String sql, List<Object> params) throws Exception {
-		return runUpdate(pst, sql, params.toArray());
 	}
 
 	public static int runUpdate(PreparedStatement pst, String sql, Object... params) throws Exception {
@@ -239,10 +179,6 @@ public class JdbcUtils {
 		}
 		logger.debug("affected: " + sqlN);
 		return sqlN;
-	}
-
-	public static Integer runInsertOneGenKey(Connection conn, String sql, List<Object> params) throws Exception {
-		return runInsertOneGenKey(conn, sql, params.toArray());
 	}
 
 	public static Integer runInsertOneGenKey(Connection conn, String sql, Object... params) throws Exception {
@@ -418,33 +354,21 @@ public class JdbcUtils {
 		}
 	}
 
-	// public static String buildSqlPart1(int cnt) throws SQLException {
-	// StringBuilder ss = new StringBuilder("(");
-	// for (int i = 0; i < cnt; i++) {
-	// if (i == 0)
-	// ss = ss.append("?");
-	// else
-	// ss = ss.append(",?");
-	// }
-	// ss.append(")");
-	// return ss.toString();
-	// }
-
-	public static String buildSqlPartSqlListByOr(String sql, String[] params) {
-		if (params == null || params.length == 0)
+	public static String buildSqlPart_phraseListByOr(String partSql, int count) {
+		if (count == 0)
 			return "";
 		String sqlPart = " ";
-		for (int i = 0; i < params.length; i++) {
+		for (int i = 0; i < count; i++) {
 			if (i == 0)
-				sqlPart += sql;
+				sqlPart += partSql;
 			else
-				sqlPart += " or " + sql;
+				sqlPart += " or " + partSql;
 		}
 		sqlPart += " ";
 		return sqlPart;
 	}
 
-	public static String buildSqlPartParamList(String[] params) {
+	public static String buildSqlPart_paramSplit(String... params) {
 		if (params == null || params.length == 0)
 			return "";
 		String sqlPart = "  ";
@@ -458,7 +382,7 @@ public class JdbcUtils {
 		return sqlPart;
 	}
 
-	public static String buildSqlPartQuestionMarkList(int count) {
+	public static String buildSqlPart_placeholderList(int count) {
 		if (count == 0)
 			return "";
 		String sqlPart = "";
@@ -472,62 +396,45 @@ public class JdbcUtils {
 		return sqlPart;
 	}
 
-	public static List addParams(List params, String insSplit) {
-		if (insSplit == null)
-			return params;
-		String[] ss = insSplit.split(",");
-		params.addAll(Arrays.asList(ss));
-		return params;
-	}
+//	public static List addParams(List params, String insSplit) {
+//		if (insSplit == null)
+//			return params;
+//		String[] ss = insSplit.split(",");
+//		params.addAll(Arrays.asList(ss));
+//		return params;
+//	}
 
-	public static String buildConditional(String andOr, String column, String columnEq, String insSplit) {
-		if (insSplit == null)
-			return "";
-		return buildConditional(andOr, column, columnEq, insSplit.split(","));
-	}
-
-	public static String buildConditional(String andOr, String column, String columnEq, String... ins) {
-		String sqlPart = " ";
-
-		if (ins == null || ins.length == 0)
-			return "";
-		columnEq = (columnEq == null || columnEq.trim().isEmpty()) ? "1" : columnEq;
-		if (!columnEq.equals("1") && !columnEq.equals("0"))
-			return "";
-
-		andOr = (andOr == null || andOr.trim().isEmpty()) ? "and" : andOr;
-		if (!andOr.equalsIgnoreCase("and") && !andOr.equalsIgnoreCase("or"))
-			return "";
-		if (ins.length == 1) {
-			sqlPart = andOr + " " + column + (columnEq.equals("1") ? " = " : " != ") + " ? ";
-		} else {
-			sqlPart = andOr + " " + column + (columnEq.equals("1") ? " in " : " not in ") + " (";
-			for (int i = 0; i < ins.length; i++) {
-				if (i == 0)
-					sqlPart += "?";
-				else
-					sqlPart += " , ?";
-			}
-			sqlPart = sqlPart + " )";
-		}
-
-		return sqlPart;
-	}
-
-	// public static String buildSqlPartOrderBy(String[] sorts, String[] orders)
-	// {
-	// String ss = " order by ";
-	// for (int i = 0; i < sorts.length; i++) {
-	// String order = null;
-	// if ((orders.length - 1) < i)
-	// order = "desc";
-	// else
-	// order = orders[i];
-	// if (i == 0)
-	// ss += sorts[i] + " " + order;
-	// else
-	// ss += " , " + sorts[i] + " " + order;
-	// }
-	// return ss;
-	// }
+//	public static String buildConditional(String andOr, String column, String columnEq, String insSplit) {
+//		if (insSplit == null)
+//			return "";
+//		return buildConditional(andOr, column, columnEq, insSplit.split(","));
+//	}
+//
+//	public static String buildConditional(String andOr, String column, String columnEq, String... ins) {
+//		String sqlPart = " ";
+//
+//		if (ins == null || ins.length == 0)
+//			return "";
+//		columnEq = (columnEq == null || columnEq.trim().isEmpty()) ? "1" : columnEq;
+//		if (!columnEq.equals("1") && !columnEq.equals("0"))
+//			return "";
+//
+//		andOr = (andOr == null || andOr.trim().isEmpty()) ? "and" : andOr;
+//		if (!andOr.equalsIgnoreCase("and") && !andOr.equalsIgnoreCase("or"))
+//			return "";
+//		if (ins.length == 1) {
+//			sqlPart = andOr + " " + column + (columnEq.equals("1") ? " = " : " != ") + " ? ";
+//		} else {
+//			sqlPart = andOr + " " + column + (columnEq.equals("1") ? " in " : " not in ") + " (";
+//			for (int i = 0; i < ins.length; i++) {
+//				if (i == 0)
+//					sqlPart += "?";
+//				else
+//					sqlPart += " , ?";
+//			}
+//			sqlPart = sqlPart + " )";
+//		}
+//
+//		return sqlPart;
+//	}
 }
