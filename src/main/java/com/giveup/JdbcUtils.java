@@ -396,8 +396,8 @@ public class JdbcUtils {
 		return sqlPart;
 	}
 
-	public static String sss(String[] sorts, String[] orders, String[] sortPool, String[] sortColumnPool,
-			String baseSort, String baseOrder) {
+	public static String buildSqlPart_orderBy(String[] sorts, String[] orders, String[] sortPool,
+			String[] sortColumnPool, String baseSort, String baseOrder) {
 		StringBuilder sqlB = new StringBuilder(" order by ");
 		List<String> sortListPool = new ArrayList<String>(Arrays.asList(sortPool));
 		List<String> sortColumnListPool = new ArrayList<String>(Arrays.asList(sortColumnPool));
