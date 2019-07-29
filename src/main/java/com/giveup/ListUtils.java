@@ -33,4 +33,19 @@ public class ListUtils {
 		}
 		return offEles;
 	}
+
+	public static void main(String[] args) {
+		List<String> aa = new ArrayList<String>();
+		aa.add("a1");
+		aa.add("a2");
+		aa.add("a3");
+		aa.add("a4");
+
+		List<String> bb = new ArrayList<String>();
+		bb.add("a1");
+		bb.add("a2");
+		bb.add("a3");
+		bb.add("a4");
+		System.out.println(extractOffEles(aa, bb));
+	}
 }

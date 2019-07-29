@@ -396,6 +396,32 @@ public class JdbcUtils {
 		return sqlPart;
 	}
 
+	public static String sss(String[] sorts, String[] orders, String[] sortPool, String[] sortColumnPool,
+			String baseSort, String baseOrder) {
+		StringBuilder sqlB = new StringBuilder(" order by ");
+		List<String> sortListPool = new ArrayList<String>(Arrays.asList(sortPool));
+		List<String> sortColumnListPool = new ArrayList<String>(Arrays.asList(sortColumnPool));
+		for (int i = 0; i < sorts.length; i++) {
+			if (sorts[i] == null || sorts[i].trim().isEmpty())
+				continue;
+			int n = sortListPool.indexOf(sorts[i]);
+			if (n > -1)
+				sqlB.append(sortColumnListPool.get(n));
+			else
+				throw new InteractRuntimeException("排序字段有误");
+			sqlB.append(" ");
+			if (orders[i].equals("desc"))
+				sqlB.append("desc");
+			else if (orders[i].equals("asc"))
+				sqlB.append("asc");
+			else
+				throw new InteractRuntimeException("排序顺序有误");
+			sqlB.append(sorts.length == 0 ? "" : ",");
+		}
+		sqlB.append(baseSort).append(" ").append(baseOrder);
+		return sqlB.toString();
+	}
+
 //	public static List addParams(List params, String insSplit) {
 //		if (insSplit == null)
 //			return params;
