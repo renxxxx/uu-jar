@@ -354,7 +354,7 @@ public class JdbcUtils {
 		}
 	}
 
-	public static String buildSqlPart_phraseListByOr(String partSql, int count) {
+	public static String buildSql_phraseListByOr(String partSql, int count) {
 		if (count == 0)
 			return "";
 		String sqlPart = " ";
@@ -368,7 +368,7 @@ public class JdbcUtils {
 		return sqlPart;
 	}
 
-	public static String buildSqlPart_paramSplit(String... params) {
+	public static String buildSql_paramSplit(String... params) {
 		if (params == null || params.length == 0)
 			return "";
 		String sqlPart = "  ";
@@ -382,7 +382,7 @@ public class JdbcUtils {
 		return sqlPart;
 	}
 
-	public static String buildSqlPart_placeholderList(int count) {
+	public static String buildSql_placeholderList(int count) {
 		if (count == 0)
 			return "";
 		String sqlPart = "";
@@ -396,8 +396,8 @@ public class JdbcUtils {
 		return sqlPart;
 	}
 
-	public static String buildSqlPart_orderBy(String[] sorts, String[] orders, String[] sortPool,
-			String[] sortColumnPool, String baseSort, String baseOrder) {
+	public static String buildSql_orderBy(String[] sorts, String[] orders, String[] sortPool, String[] sortColumnPool,
+			String baseSort, String baseOrder) {
 		StringBuilder sqlB = new StringBuilder(" order by ");
 		List<String> sortListPool = new ArrayList<String>(Arrays.asList(sortPool));
 		List<String> sortColumnListPool = new ArrayList<String>(Arrays.asList(sortColumnPool));
