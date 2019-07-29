@@ -92,12 +92,14 @@ public class Param {
 		return this.dateValue;
 	}
 
-	public void setDatePattern(String datePattern) {
+	public Param setDatePattern(String datePattern) {
 		this.datePattern = datePattern;
+		return this;
 	}
 
-	public void setSeparator(String separator) {
+	public Param setSeparator(String separator) {
 		this.separator = separator;
+		return this;
 	}
 
 	public String[] toSplitArr() {
