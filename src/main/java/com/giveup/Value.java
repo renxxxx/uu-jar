@@ -1,12 +1,13 @@
 package com.giveup;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 
-public class Param {
+public class Value {
 	private String name;
 	private String code;
 	private String value;
@@ -20,7 +21,7 @@ public class Param {
 	private Date dateValue;
 	private String[] splitArrValue;
 
-	private Param() {
+	private Value() {
 	}
 
 	public static CacheMap.Ccc<String, Pattern> regexCache = new CacheMap.Ccc<String, Pattern>() {
@@ -30,25 +31,25 @@ public class Param {
 		}
 	};
 
-	public static Param build(String name, String code, String value) {
-		Param param = new Param();
+	public static Value build(String name, String code, String value) {
+		Value param = new Value();
 		param.name = name;
 		param.code = code;
 		param.value = value;
 		return param;
 	}
 
-	public Param trim() {
+	public Value trim() {
 		this.value = this.value == null ? null : this.value.trim();
 		return this;
 	}
 
-	public Param trimLeft() {
+	public Value trimLeft() {
 		this.value = this.value == null ? null : this.value.trim();
 		return this;
 	}
 
-	public Param trimRight() {
+	public Value trimRight() {
 		this.value = this.value == null ? null : this.value.trim();
 		return this;
 	}
@@ -88,16 +89,16 @@ public class Param {
 	public Date toDate() {
 		if (this.dateValue != null)
 			return this.dateValue;
-		this.dateValue = isEmpty() ? null : ValueUtils.toDate(this.value, this.datePattern);
+		this.dateValue = isEmpty() ? null : toDate(this.value, this.datePattern);
 		return this.dateValue;
 	}
 
-	public Param setDatePattern(String datePattern) {
+	public Value setDatePattern(String datePattern) {
 		this.datePattern = datePattern;
 		return this;
 	}
 
-	public Param setSeparator(String separator) {
+	public Value setSeparator(String separator) {
 		this.separator = separator;
 		return this;
 	}
@@ -120,96 +121,96 @@ public class Param {
 		System.out.println((a + "").replaceAll("\\.0*$", ""));
 	}
 
-	public Param vNull() {
+	public Value vNull() {
 		if (this.value == null)
 			throw new InteractRuntimeException(1001, this.code, "\"" + this.name + "\"不能空");
 		return this;
 	}
 
-	public Param vNull(boolean doIs) {
+	public Value vNull(boolean doIs) {
 		if (doIs)
 			this.vNull();
 		return this;
 	}
 
-	public Param vEmpty() {
+	public Value vEmpty() {
 		if ((this.value == null || this.value.isEmpty()))
 			throw new InteractRuntimeException(1001, this.code, "\"" + this.name + "\"不能空");
 		return this;
 	}
 
-	public Param vEmpty(boolean doIs) {
+	public Value vEmpty(boolean doIs) {
 		if (doIs)
 			this.vEmpty();
 		return this;
 	}
 
-	public Param vBlank() {
+	public Value vBlank() {
 		if ((this.value != null && this.value.isEmpty()))
 			throw new InteractRuntimeException(1001, this.code, "\"" + this.name + "\"不能空");
 		return this;
 	}
 
-	public Param vBlank(boolean doIs) {
+	public Value vBlank(boolean doIs) {
 		if (doIs)
 			this.vBlank();
 		return this;
 	}
 
-	public Param nullDef(String defaultValue) {
+	public Value nullDef(String defaultValue) {
 		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
 		if (isNull() && defaultValue != null)
 			set(defaultValue);
 		return this;
 	}
 
-	public Param nullDef(boolean doIs, String defaultValue) {
+	public Value nullDef(boolean doIs, String defaultValue) {
 		if (doIs)
 			this.nullDef(defaultValue);
 		return this;
 	}
 
-	public Param blankDef(String defaultValue) {
+	public Value blankDef(String defaultValue) {
 		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
 		if (isBlank() && defaultValue != null)
 			set(defaultValue);
 		return this;
 	}
 
-	public Param blankDef(boolean doIs, String defaultValue) {
+	public Value blankDef(boolean doIs, String defaultValue) {
 		if (doIs)
 			this.blankDef(defaultValue);
 		return this;
 	}
 
-	public Param emptyDef(String defaultValue) {
+	public Value emptyDef(String defaultValue) {
 		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
 		if (isEmpty() && defaultValue != null)
 			set(defaultValue);
 		return this;
 	}
 
-	public Param emptyDef(boolean doIs, String defaultValue) {
+	public Value emptyDef(boolean doIs, String defaultValue) {
 		if (doIs)
 			this.emptyDef(defaultValue);
 		return this;
 	}
 
-	public Param vLen(int length) {
+	public Value vLen(int length) {
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() != length) {
 			throw new InteractRuntimeException(1001, this.code, "\"" + this.name + "\"长度只能是" + length);
 		}
 		return this;
 	}
 
-	public Param vMaxLen(int length) {
+	public Value vMaxLen(int length) {
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() > length) {
 			throw new InteractRuntimeException(1001, this.code, "\"" + this.name + "\"长度最大" + length);
 		}
 		return this;
 	}
 
-	public Param vMaxNum(float maxnum) {
+	public Value vMaxNum(float maxnum) {
 		if (!isEmpty() && toFloat() > maxnum) {
 			throw new InteractRuntimeException(1001, this.code,
 					"\"" + this.name + "\"最大" + (maxnum + "").replaceAll("\\.0*$", ""));
@@ -217,7 +218,7 @@ public class Param {
 		return this;
 	}
 
-	public Param vMinNum(float minnum) {
+	public Value vMinNum(float minnum) {
 		if (!isEmpty() && toFloat() < minnum) {
 			throw new InteractRuntimeException(1001, this.code,
 					"\"" + this.name + "\"最小" + (minnum + "").replaceAll("\\.0*$", ""));
@@ -243,24 +244,24 @@ public class Param {
 		return false;
 	}
 
-	public Param vMinLen(int length) {
+	public Value vMinLen(int length) {
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() < length) {
 			throw new InteractRuntimeException(1001, this.code, "\"" + this.name + "\"长度最低" + length);
 		}
 		return this;
 	}
 
-	public Param vLenRange(int min, int max) {
+	public Value vLenRange(int min, int max) {
 		vMinLen(min);
 		vMaxLen(max);
 		return this;
 	}
 
-	public Param vReg(String regex) {
+	public Value vReg(String regex) {
 		return vReg(regex, null);
 	}
 
-	public Param set(String value) {
+	public Value set(String value) {
 		this.splitArrValue = null;
 		this.dateValue = null;
 		this.intValue = null;
@@ -271,13 +272,13 @@ public class Param {
 		return this;
 	}
 
-	public Param vReplace(String regex, String replace) {
+	public Value vReplace(String regex, String replace) {
 		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty() && replace != null)
 			this.value = regexCache.getWithCreate(regex).matcher(this.value).replaceAll(replace);
 		return this;
 	}
 
-	public Param vReg(String regex, String note) {
+	public Value vReg(String regex, String note) {
 		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty()) {
 			if (!regexCache.getWithCreate(regex).matcher(this.value).matches())
 				throw new InteractRuntimeException(1001, this.code,
@@ -286,4 +287,105 @@ public class Param {
 		return this;
 	}
 
+	public static Integer toInteger(Object value) {
+		if (value == null)
+			return null;
+		if (value instanceof Integer)
+			return (Integer) value;
+		String valueStr = value.toString();
+		if (valueStr.trim().isEmpty())
+			return null;
+		else
+			return new Integer(valueStr);
+	}
+
+	public static Float toFloat(Object value) {
+		if (value == null)
+			return null;
+		if (value instanceof Float)
+			return (Float) value;
+		String valueStr = value.toString();
+		if (valueStr.trim().isEmpty())
+			return null;
+		else
+			return new Float(valueStr);
+	}
+
+	public static String toString(Object value) {
+		if (value == null)
+			return null;
+		if (value instanceof String)
+			return (String) value;
+		String valueStr = value.toString();
+		if (valueStr.isEmpty())
+			return null;
+		else
+			return valueStr.toString();
+	}
+
+	public static Date toDate(Object value) {
+		if (value == null)
+			return null;
+		if (value instanceof Date)
+			return (Date) value;
+		if (value instanceof String) {
+			if (value.toString().trim().isEmpty())
+				return null;
+			if (value.toString().trim().length() == 13 && StringUtils.isNumeric(value.toString()))
+				return new Date(Long.parseLong(value.toString().trim()));
+			if (value.toString().trim().length() == 10 && StringUtils.isNumeric(value.toString()))
+				return new Date(Long.parseLong(value.toString().trim()) * 1000);
+			try {
+				return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(value.toString());
+			} catch (Exception e) {
+			}
+			try {
+				return new SimpleDateFormat("yyyy-MM-dd").parse(value.toString());
+			} catch (Exception e) {
+			}
+			try {
+				return new SimpleDateFormat("HH:mm:ss").parse(value.toString());
+			} catch (Exception e) {
+			}
+		}
+		if (value instanceof Long)
+			return new Date((Long) value);
+		if (value instanceof Integer)
+			return new Date((Long) value * 1000);
+		return null;
+	}
+
+	public static Date toDate(Object value, String pattern) {
+		Date date = toDate(value);
+		if (date == null)
+			try {
+				date = new SimpleDateFormat(pattern).parse(value.toString());
+			} catch (Exception e) {
+			}
+		return date;
+	}
+
+	public static Long toLong(Object value) {
+		if (value == null)
+			return null;
+		if (value instanceof Long)
+			return (Long) value;
+		String valueStr = value.toString();
+		if (valueStr.trim().isEmpty())
+			return null;
+		else
+			return new Long(valueStr);
+	}
+
+	public static BigDecimal toDecimal(Object value) {
+		if (value == null)
+			return null;
+		if (value instanceof BigDecimal)
+			return (BigDecimal) value;
+		String valueStr = value.toString();
+		if (valueStr.trim().isEmpty())
+			return null;
+		else
+			return new BigDecimal(valueStr);
+	}
 }
