@@ -399,8 +399,19 @@ public class JdbcUtils {
 	public static String buildSql_orderBy(String[] sorts, String[] orders, String[] sortPool, String[] sortColumnPool,
 			String baseSort, String baseOrder) {
 		StringBuilder sqlB = new StringBuilder(" order by ");
-		List<String> sortListPool = new ArrayList<String>(Arrays.asList(sortPool));
-		List<String> sortColumnListPool = new ArrayList<String>(Arrays.asList(sortColumnPool));
+		if (sorts == null || sorts.length == 0)
+			sorts = new String[] {};
+		if (orders == null || sorts.length == 0) {
+			orders = new String[sorts.length];
+			for (int i = 0; i < orders.length; i++) {
+				orders[i] = "desc";
+			}
+		}
+
+		List<String> sortListPool = sortPool == null ? new ArrayList<String>()
+				: new ArrayList<String>(Arrays.asList(sortPool));
+		List<String> sortColumnListPool = sortColumnPool == null ? new ArrayList<String>()
+				: new ArrayList<String>(Arrays.asList(sortColumnPool));
 		for (int i = 0; i < sorts.length; i++) {
 			if (sorts[i] == null || sorts[i].trim().isEmpty())
 				continue;
