@@ -10,8 +10,12 @@ public class ErrorReturn extends RuntimeException {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ErrorReturn(String message, Throwable cause, boolean enableSuppression,
-			boolean writableStackTrace) {
+	public ErrorReturn(int code, String message) {
+		super(message);
+		this.code = code;
+	}
+
+	public ErrorReturn(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
 		// TODO Auto-generated constructor stub
 	}

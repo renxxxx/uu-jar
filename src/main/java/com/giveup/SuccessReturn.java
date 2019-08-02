@@ -4,6 +4,11 @@ public class SuccessReturn extends RuntimeException {
 	private int code = 0;
 	private Object data;
 
+	public SuccessReturn(int code, String message) {
+		super(message);
+		this.code = code;
+	}
+
 	public SuccessReturn() {
 		super();
 		// TODO Auto-generated constructor stub
