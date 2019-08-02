@@ -5,14 +5,13 @@ package com.giveup;
  * @author rxw
  *
  */
-public class ResponseVo {
+public class ResBean {
 
 	private String codeMsg = null;
 	private String errParam = null;
 	private String errMsg = null;
-	private String serverVer = null;
-	private Integer code = null;
-	private String requestId = "";
+	private Integer code = 0;
+	private String requestId = null;
 	private Object data = new Object();
 
 	public String getErrMsg() {
@@ -29,14 +28,6 @@ public class ResponseVo {
 
 	public void setErrMsg(String errMsg) {
 		this.errMsg = errMsg;
-	}
-
-	public String getServerVer() {
-		return serverVer;
-	}
-
-	public void setServerVer(String serverVer) {
-		this.serverVer = serverVer;
 	}
 
 	public String getCodeMsg() {
