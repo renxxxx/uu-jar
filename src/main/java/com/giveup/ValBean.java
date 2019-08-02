@@ -123,7 +123,7 @@ public class ValBean {
 
 	public ValBean vNull() {
 		if (this.value == null)
-			throw new InteractRuntimeException(1001, this.code, "\"" + this.name + "\"不能空");
+			throw new ErrorReturn("\"" + this.name + "\"不能空").setCode(1001).setErrParam(this.code);
 		return this;
 	}
 
@@ -135,7 +135,7 @@ public class ValBean {
 
 	public ValBean vEmpty() {
 		if ((this.value == null || this.value.isEmpty()))
-			throw new InteractRuntimeException(1001, this.code, "\"" + this.name + "\"不能空");
+			throw new ErrorReturn("\"" + this.name + "\"不能空").setCode(1001).setErrParam(this.code);
 		return this;
 	}
 
@@ -147,7 +147,7 @@ public class ValBean {
 
 	public ValBean vBlank() {
 		if ((this.value != null && this.value.isEmpty()))
-			throw new InteractRuntimeException(1001, this.code, "\"" + this.name + "\"不能空");
+			throw new ErrorReturn("\"" + this.name + "\"不能空").setCode(1001).setErrParam(this.code);
 		return this;
 	}
 
@@ -198,30 +198,32 @@ public class ValBean {
 
 	public ValBean vLen(int length) {
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() != length) {
-			throw new InteractRuntimeException(1001, this.code, "\"" + this.name + "\"长度只能是" + length);
+			throw new ErrorReturn("\"" + this.name + "\"长度只能是" + length).setCode(1001)
+					.setErrParam(this.code);
 		}
 		return this;
 	}
 
 	public ValBean vMaxLen(int length) {
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() > length) {
-			throw new InteractRuntimeException(1001, this.code, "\"" + this.name + "\"长度最大" + length);
+			throw new ErrorReturn("\"" + this.name + "\"长度最大" + length).setCode(1001)
+					.setErrParam(this.code);
 		}
 		return this;
 	}
 
 	public ValBean vMaxNum(float maxnum) {
 		if (!isEmpty() && toFloat() > maxnum) {
-			throw new InteractRuntimeException(1001, this.code,
-					"\"" + this.name + "\"最大" + (maxnum + "").replaceAll("\\.0*$", ""));
+			throw new ErrorReturn("\"" + this.name + "\"最大" + (maxnum + "").replaceAll("\\.0*$", ""))
+					.setCode(1001).setErrParam(this.code);
 		}
 		return this;
 	}
 
 	public ValBean vMinNum(float minnum) {
 		if (!isEmpty() && toFloat() < minnum) {
-			throw new InteractRuntimeException(1001, this.code,
-					"\"" + this.name + "\"最小" + (minnum + "").replaceAll("\\.0*$", ""));
+			throw new ErrorReturn("\"" + this.name + "\"最小" + (minnum + "").replaceAll("\\.0*$", ""))
+					.setCode(1001).setErrParam(this.code);
 		}
 		return this;
 	}
@@ -246,7 +248,8 @@ public class ValBean {
 
 	public ValBean vMinLen(int length) {
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() < length) {
-			throw new InteractRuntimeException(1001, this.code, "\"" + this.name + "\"长度最低" + length);
+			throw new ErrorReturn("\"" + this.name + "\"长度最低" + length).setCode(1001)
+					.setErrParam(this.code);
 		}
 		return this;
 	}
@@ -281,8 +284,9 @@ public class ValBean {
 	public ValBean vReg(String regex, String note) {
 		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty()) {
 			if (!regexCache.getWithCreate(regex).matcher(this.value).matches())
-				throw new InteractRuntimeException(1001, this.code,
-						"\"" + this.name + "\"有误" + (note == null || note.isEmpty() ? "" : ",要求：" + note));
+				throw new ErrorReturn(
+						"\"" + this.name + "\"有误" + (note == null || note.isEmpty() ? "" : ",要求：" + note)).setCode(1001)
+								.setErrParam(this.code);
 		}
 		return this;
 	}
