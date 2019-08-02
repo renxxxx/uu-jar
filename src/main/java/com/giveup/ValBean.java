@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 
-public class Value {
+public class ValBean {
 	private String name;
 	private String code;
 	private String value;
@@ -21,7 +21,7 @@ public class Value {
 	private Date dateValue;
 	private String[] splitArrValue;
 
-	private Value() {
+	private ValBean() {
 	}
 
 	public static CacheMap.Ccc<String, Pattern> regexCache = new CacheMap.Ccc<String, Pattern>() {
@@ -31,25 +31,25 @@ public class Value {
 		}
 	};
 
-	public static Value build(String name, String code, String value) {
-		Value param = new Value();
+	public static ValBean build(String name, String code, String value) {
+		ValBean param = new ValBean();
 		param.name = name;
 		param.code = code;
 		param.value = value;
 		return param;
 	}
 
-	public Value trim() {
+	public ValBean trim() {
 		this.value = this.value == null ? null : this.value.trim();
 		return this;
 	}
 
-	public Value trimLeft() {
+	public ValBean trimLeft() {
 		this.value = this.value == null ? null : this.value.trim();
 		return this;
 	}
 
-	public Value trimRight() {
+	public ValBean trimRight() {
 		this.value = this.value == null ? null : this.value.trim();
 		return this;
 	}
@@ -93,12 +93,12 @@ public class Value {
 		return this.dateValue;
 	}
 
-	public Value setDatePattern(String datePattern) {
+	public ValBean setDatePattern(String datePattern) {
 		this.datePattern = datePattern;
 		return this;
 	}
 
-	public Value setSeparator(String separator) {
+	public ValBean setSeparator(String separator) {
 		this.separator = separator;
 		return this;
 	}
@@ -121,96 +121,96 @@ public class Value {
 		System.out.println((a + "").replaceAll("\\.0*$", ""));
 	}
 
-	public Value vNull() {
+	public ValBean vNull() {
 		if (this.value == null)
 			throw new InteractRuntimeException(1001, this.code, "\"" + this.name + "\"不能空");
 		return this;
 	}
 
-	public Value vNull(boolean doIs) {
+	public ValBean vNull(boolean doIs) {
 		if (doIs)
 			this.vNull();
 		return this;
 	}
 
-	public Value vEmpty() {
+	public ValBean vEmpty() {
 		if ((this.value == null || this.value.isEmpty()))
 			throw new InteractRuntimeException(1001, this.code, "\"" + this.name + "\"不能空");
 		return this;
 	}
 
-	public Value vEmpty(boolean doIs) {
+	public ValBean vEmpty(boolean doIs) {
 		if (doIs)
 			this.vEmpty();
 		return this;
 	}
 
-	public Value vBlank() {
+	public ValBean vBlank() {
 		if ((this.value != null && this.value.isEmpty()))
 			throw new InteractRuntimeException(1001, this.code, "\"" + this.name + "\"不能空");
 		return this;
 	}
 
-	public Value vBlank(boolean doIs) {
+	public ValBean vBlank(boolean doIs) {
 		if (doIs)
 			this.vBlank();
 		return this;
 	}
 
-	public Value nullDef(String defaultValue) {
+	public ValBean nullDef(String defaultValue) {
 		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
 		if (isNull() && defaultValue != null)
 			set(defaultValue);
 		return this;
 	}
 
-	public Value nullDef(boolean doIs, String defaultValue) {
+	public ValBean nullDef(boolean doIs, String defaultValue) {
 		if (doIs)
 			this.nullDef(defaultValue);
 		return this;
 	}
 
-	public Value blankDef(String defaultValue) {
+	public ValBean blankDef(String defaultValue) {
 		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
 		if (isBlank() && defaultValue != null)
 			set(defaultValue);
 		return this;
 	}
 
-	public Value blankDef(boolean doIs, String defaultValue) {
+	public ValBean blankDef(boolean doIs, String defaultValue) {
 		if (doIs)
 			this.blankDef(defaultValue);
 		return this;
 	}
 
-	public Value emptyDef(String defaultValue) {
+	public ValBean emptyDef(String defaultValue) {
 		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
 		if (isEmpty() && defaultValue != null)
 			set(defaultValue);
 		return this;
 	}
 
-	public Value emptyDef(boolean doIs, String defaultValue) {
+	public ValBean emptyDef(boolean doIs, String defaultValue) {
 		if (doIs)
 			this.emptyDef(defaultValue);
 		return this;
 	}
 
-	public Value vLen(int length) {
+	public ValBean vLen(int length) {
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() != length) {
 			throw new InteractRuntimeException(1001, this.code, "\"" + this.name + "\"长度只能是" + length);
 		}
 		return this;
 	}
 
-	public Value vMaxLen(int length) {
+	public ValBean vMaxLen(int length) {
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() > length) {
 			throw new InteractRuntimeException(1001, this.code, "\"" + this.name + "\"长度最大" + length);
 		}
 		return this;
 	}
 
-	public Value vMaxNum(float maxnum) {
+	public ValBean vMaxNum(float maxnum) {
 		if (!isEmpty() && toFloat() > maxnum) {
 			throw new InteractRuntimeException(1001, this.code,
 					"\"" + this.name + "\"最大" + (maxnum + "").replaceAll("\\.0*$", ""));
@@ -218,7 +218,7 @@ public class Value {
 		return this;
 	}
 
-	public Value vMinNum(float minnum) {
+	public ValBean vMinNum(float minnum) {
 		if (!isEmpty() && toFloat() < minnum) {
 			throw new InteractRuntimeException(1001, this.code,
 					"\"" + this.name + "\"最小" + (minnum + "").replaceAll("\\.0*$", ""));
@@ -244,24 +244,24 @@ public class Value {
 		return false;
 	}
 
-	public Value vMinLen(int length) {
+	public ValBean vMinLen(int length) {
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() < length) {
 			throw new InteractRuntimeException(1001, this.code, "\"" + this.name + "\"长度最低" + length);
 		}
 		return this;
 	}
 
-	public Value vLenRange(int min, int max) {
+	public ValBean vLenRange(int min, int max) {
 		vMinLen(min);
 		vMaxLen(max);
 		return this;
 	}
 
-	public Value vReg(String regex) {
+	public ValBean vReg(String regex) {
 		return vReg(regex, null);
 	}
 
-	public Value set(String value) {
+	public ValBean set(String value) {
 		this.splitArrValue = null;
 		this.dateValue = null;
 		this.intValue = null;
@@ -272,13 +272,13 @@ public class Value {
 		return this;
 	}
 
-	public Value vReplace(String regex, String replace) {
+	public ValBean vReplace(String regex, String replace) {
 		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty() && replace != null)
 			this.value = regexCache.getWithCreate(regex).matcher(this.value).replaceAll(replace);
 		return this;
 	}
 
-	public Value vReg(String regex, String note) {
+	public ValBean vReg(String regex, String note) {
 		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty()) {
 			if (!regexCache.getWithCreate(regex).matcher(this.value).matches())
 				throw new InteractRuntimeException(1001, this.code,

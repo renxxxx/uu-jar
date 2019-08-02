@@ -64,27 +64,27 @@ public class JdbcUtils {
 	}
 
 	public static Integer runQueryOneInteger(Connection conn, String sql, Object... params) throws Exception {
-		return Value.toInteger(runQueryOneColumn(conn, sql, params));
+		return ValBean.toInteger(runQueryOneColumn(conn, sql, params));
 	}
 
 	public static String runQueryOneString(Connection conn, String sql, Object... params) throws Exception {
-		return Value.toString(runQueryOneColumn(conn, sql, params));
+		return ValBean.toString(runQueryOneColumn(conn, sql, params));
 	}
 
 	public static BigDecimal runQueryOneDecimal(Connection conn, String sql, Object... params) throws Exception {
-		return Value.toDecimal(runQueryOneColumn(conn, sql, params));
+		return ValBean.toDecimal(runQueryOneColumn(conn, sql, params));
 	}
 
 	public static Long runQueryOneLong(Connection conn, String sql, Object... params) throws Exception {
-		return Value.toLong(runQueryOneColumn(conn, sql, params));
+		return ValBean.toLong(runQueryOneColumn(conn, sql, params));
 	}
 
 	public static Float runQueryOneFloat(Connection conn, String sql, Object... params) throws Exception {
-		return Value.toFloat(runQueryOneColumn(conn, sql, params));
+		return ValBean.toFloat(runQueryOneColumn(conn, sql, params));
 	}
 
 	public static Date runQueryOneDate(Connection conn, String sql, Object... params) throws Exception {
-		return Value.toDate(runQueryOneColumn(conn, sql, params));
+		return ValBean.toDate(runQueryOneColumn(conn, sql, params));
 	}
 
 	public static Object runQueryOneColumn(Connection conn, String sql, Object... params) throws Exception {
