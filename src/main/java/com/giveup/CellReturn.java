@@ -6,6 +6,18 @@ public class CellReturn extends RuntimeException {
 	private String codeMsg;
 	private Object data;
 
+	public static CellReturn success(Object data) {
+		return new CellReturn(0, data);
+	}
+
+	public static CellReturn failure(String codeMsg) {
+		return new CellReturn(99, codeMsg);
+	}
+
+	public static CellReturn failure(String codeMsg, Object data) {
+		return new CellReturn(99, codeMsg, data);
+	}
+
 	public CellReturn() {
 		super();
 	}
