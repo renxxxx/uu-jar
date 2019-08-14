@@ -6,6 +6,10 @@ public class CellReturn extends RuntimeException {
 	protected String codeMsg;
 	protected Object data;
 
+	public static CellReturn instance() {
+		return new CellReturn();
+	}
+
 	public static CellReturn success(Object data) {
 		return new CellReturn().setCode(0).setData(data);
 	}
@@ -14,11 +18,15 @@ public class CellReturn extends RuntimeException {
 		return new CellReturn().setCode(99).setCodeMsg(codeMsg);
 	}
 
+	public static CellReturn failure(int code) {
+		return new CellReturn().setCode(code);
+	}
+
 	public static CellReturn failure(int code, String codeMsg) {
 		return new CellReturn().setCode(code).setCodeMsg(codeMsg);
 	}
 
-	public CellReturn() {
+	private CellReturn() {
 		super();
 	}
 
