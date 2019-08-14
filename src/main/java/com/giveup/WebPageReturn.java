@@ -1,6 +1,6 @@
 package com.giveup;
 
-public class WebPageReturn extends JsonReturn {
+public class WebPageReturn extends CellReturn {
 
 	public WebPageReturn(int code) {
 		super.code = code;
