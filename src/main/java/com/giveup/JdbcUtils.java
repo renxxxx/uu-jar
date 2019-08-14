@@ -20,6 +20,10 @@ import org.apache.log4j.Logger;
 public class JdbcUtils {
 	public static Logger logger = Logger.getLogger(JdbcUtils.class);
 
+	public static void main(String[] args) {
+		System.out.println(123123123);
+	}
+
 	public static List<Map> runQueryList(Connection conn, String sql, Object... params) throws Exception {
 		PreparedStatement pst = null;
 		try {
@@ -419,14 +423,14 @@ public class JdbcUtils {
 			if (n > -1)
 				sqlB.append(sortColumnListPool.get(n));
 			else
-				throw new CellReturn(99, "排序字段有误");
+				throw new JsonReturn(99, "排序字段有误");
 			sqlB.append(" ");
 			if (orders[i].equals("desc"))
 				sqlB.append("desc");
 			else if (orders[i].equals("asc"))
 				sqlB.append("asc");
 			else
-				throw new CellReturn(99, "排序顺序有误");
+				throw new JsonReturn(99, "排序顺序有误");
 			sqlB.append(sorts.length == 0 ? "" : ",");
 		}
 		sqlB.append(baseSort).append(" ").append(baseOrder);
