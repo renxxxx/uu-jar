@@ -10,6 +10,10 @@ public class Goback extends RuntimeException {
 		return new Goback();
 	}
 
+	public static Goback success() {
+		return new Goback().setCode(0);
+	}
+
 	public static Goback success(Object data) {
 		return new Goback().setCode(0).setData(data);
 	}
