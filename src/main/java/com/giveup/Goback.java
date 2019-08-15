@@ -1,10 +1,12 @@
 package com.giveup;
 
+import com.alibaba.fastjson.JSONObject;
+
 public class Goback extends RuntimeException {
 	protected int code = 99;
 	protected String errParam;
 	protected String codeMsg;
-	protected Object data;
+	protected Object data = new JSONObject(true);
 
 	public static Goback instance() {
 		return new Goback();
