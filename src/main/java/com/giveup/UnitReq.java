@@ -39,6 +39,12 @@ public class UnitReq {
 		logger.info(this.reqSign + " " + this.reqId + " " + this.reqStr);
 	}
 
+	public void res() {
+		this.resTime = new Date();
+		logger.info(this.reqSign + " " + this.reqId + " " + this.resStr + " takes:"
+				+ (this.resTime.getTime() - this.reqTime.getTime()) + "ms");
+	}
+
 	public void res(Object param) {
 		this.resTime = new Date();
 		this.resStr = param.toString();
