@@ -31,6 +31,9 @@ public class UnitReq {
 	protected String reqStr = "";
 	protected String resStr = "";
 
+	protected UnitReq() {
+	}
+
 	public UnitReq(String reqSign, Object... params) {
 		this.reqSign = reqSign;
 		for (int i = 0; i < params.length; i++) {
