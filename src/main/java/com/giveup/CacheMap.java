@@ -10,15 +10,6 @@ import org.apache.commons.lang3.StringUtils;
 
 public class CacheMap<K, V> extends AbstractMap<K, V> {
 
-	private static CacheMap<Object, Object> defaultInstance;
-
-	public static synchronized final CacheMap<Object, Object> getDefault() {
-		if (defaultInstance == null) {
-			defaultInstance = new CacheMap<Object, Object>();
-		}
-		return defaultInstance;
-	}
-
 	private class CacheEntry implements Entry<K, V> {
 		long insertTime;
 		long updateTime;
