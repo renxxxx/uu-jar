@@ -1,4 +1,4 @@
-package com.giveup;
+package com.onerunsall.util;
 
 import java.sql.Connection;
 import java.text.SimpleDateFormat;
@@ -15,10 +15,10 @@ import org.apache.log4j.Logger;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.giveup.Goback;
-import com.giveup.JdbcUtils;
-import com.giveup.ResBean;
-import com.giveup.ServletUtils;
+import com.onerunsall.util.Goback;
+import com.onerunsall.util.JdbcUtils;
+import com.onerunsall.util.ResBean;
+import com.onerunsall.util.ServletUtils;
 
 public class UnitReq {
 	public static Logger logger = Logger.getLogger(UnitReq.class);

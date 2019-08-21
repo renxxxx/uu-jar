@@ -1,4 +1,4 @@
-package com.giveup;
+package com.onerunsall.util;
 
 import java.sql.SQLException;
 import java.util.Collections;

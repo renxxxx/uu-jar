@@ -1,4 +1,4 @@
-package com.giveup;
+package com.onerunsall.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
