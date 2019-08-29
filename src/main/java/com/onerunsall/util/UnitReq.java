@@ -19,7 +19,7 @@ public class UnitReq<T> {
 	protected String req = "";
 	protected String res = "";
 
-	UnitRes<T> unitRes = null;
+	protected UnitRes<T> unitRes = null;
 
 	protected UnitReq() {
 	}
@@ -47,7 +47,7 @@ public class UnitReq<T> {
 		unitRes.setCodeMsg(unitBreak.getCodeMsg());
 		unitRes.setErrParam(unitBreak.getErrParam());
 		unitRes.setData(unitBreak.getData());
-
+		unitRes.setReqId(reqId);
 		this.res = unitRes.toString();
 
 		logger.info(this.reqId + " res: " + this.res + " takes: " + (this.resTime.getTime() - this.reqTime.getTime())
