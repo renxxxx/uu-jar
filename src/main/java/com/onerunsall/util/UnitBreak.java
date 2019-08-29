@@ -1,5 +1,7 @@
 package com.onerunsall.util;
 
+import com.alibaba.fastjson.JSONObject;
+
 public class UnitBreak extends RuntimeException {
 	protected int code = 0;
 	protected String errParam = null;
@@ -74,4 +76,5 @@ public class UnitBreak extends RuntimeException {
 		return data;
 	}
 
+	
 }

@@ -46,4 +46,8 @@ public class UnitRes<T> {
 		return data;
 	}
 
+	@Override
+	public String toString() {
+		return "UnitRes [code=" + code + ", errParam=" + errParam + ", codeMsg=" + codeMsg + ", data=" + data + "]";
+	}
 }

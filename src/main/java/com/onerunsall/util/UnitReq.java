@@ -49,7 +49,9 @@ public class UnitReq<T> {
 		unitRes.setErrParam(unitBreak.getErrParam());
 		unitRes.setData(unitBreak.getData());
 
-		logger.info(this.reqId + " res : " + this.res + " takes:" + (this.resTime.getTime() - this.reqTime.getTime())
+		this.res = unitRes.toString();
+
+		logger.info(this.reqId + " res: " + this.res + " takes: " + (this.resTime.getTime() - this.reqTime.getTime())
 				+ "ms");
 		return unitRes;
 	}
