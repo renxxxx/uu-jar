@@ -33,7 +33,14 @@ public class UnitReq<T> {
 		logger.info(this.reqId + " req : " + this.req);
 	}
 
-	public UnitRes res(UnitBreak unitBreak) {
+	public UnitRes<T> res(Exception e) {
+		UnitBreak unitBreak = null;
+		if (e instanceof UnitBreak) {
+			unitBreak = (UnitBreak) e;
+		} else {
+			unitBreak = new UnitBreak();
+			unitBreak.setCode(98);
+		}
 		this.resTime = new Date();
 
 		unitRes = new UnitRes<T>();
