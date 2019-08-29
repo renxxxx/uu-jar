@@ -34,6 +34,14 @@ public class UnitReq<T> {
 		logger.info(this.reqId + " reqer: " + this.reqer + " " + this.unit + " reqData: " + this.reqData);
 	}
 
+	public UnitReq(String unit, Object... params) {
+		this.unit = unit;
+		for (int i = 0; i < params.length; i++) {
+			this.reqData = this.reqData + (i + 1) + "-" + params[i].toString() + " ";
+		}
+		logger.info(this.reqId + " reqer: " + this.reqer + " " + this.unit + " reqData: " + this.reqData);
+	}
+
 	public Date getReqTime() {
 		return reqTime;
 	}
