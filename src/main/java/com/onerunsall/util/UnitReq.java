@@ -29,8 +29,7 @@ public class UnitReq<T> {
 		for (int i = 0; i < params.length; i++) {
 			this.req = this.req + (i + 1) + "-" + params[i].toString() + " ";
 		}
-		logger.info(this.reqId + " " + this.unit);
-		logger.info(this.reqId + " req : " + this.req);
+		logger.info(this.reqId + " " + this.unit + " req: " + this.req);
 	}
 
 	public UnitRes<T> res(Exception e) {
