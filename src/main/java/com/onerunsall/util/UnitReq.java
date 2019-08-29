@@ -15,21 +15,55 @@ public class UnitReq<T> {
 	public Date resTime = null;
 	public String reqId = sdf.format(reqTime) + RandomStringUtils.randomNumeric(6);
 
+	protected String reqer = "";
 	protected String unit = "";
-	protected String req = "";
-	protected String res = "";
+	protected String reqData = "";
+	protected String resData = "";
 
 	protected UnitRes<T> unitRes = null;
 
 	protected UnitReq() {
 	}
 
-	public UnitReq(String unit, Object... params) {
+	public UnitReq(String reqer, String unit, Object... params) {
 		this.unit = unit;
+		this.reqer = reqer;
 		for (int i = 0; i < params.length; i++) {
-			this.req = this.req + (i + 1) + "-" + params[i].toString() + " ";
+			this.reqData = this.reqData + (i + 1) + "-" + params[i].toString() + " ";
 		}
-		logger.info(this.reqId + " " + this.unit + " req: " + this.req);
+		logger.info(this.reqId + " reqer: " + this.reqer + " " + this.unit + " reqData: " + this.reqData);
+	}
+
+	public Date getReqTime() {
+		return reqTime;
+	}
+
+	public Date getResTime() {
+		return resTime;
+	}
+
+	public String getReqId() {
+		return reqId;
+	}
+
+	public String getUnit() {
+		return unit;
+	}
+
+	public String getReqer() {
+		return reqer;
+	}
+
+	public String getReqData() {
+		return reqData;
+	}
+
+	public String getResData() {
+		return resData;
+	}
+
+	public UnitRes<T> getUnitRes() {
+		return unitRes;
 	}
 
 	public UnitRes<T> res(Exception e) {
@@ -37,8 +71,7 @@ public class UnitReq<T> {
 		if (e instanceof UnitBreak) {
 			unitBreak = (UnitBreak) e;
 		} else {
-			unitBreak = new UnitBreak();
-			unitBreak.setCode(98);
+			unitBreak = UnitBreak.diy(98);
 		}
 		this.resTime = new Date();
 
@@ -48,10 +81,10 @@ public class UnitReq<T> {
 		unitRes.setErrParam(unitBreak.getErrParam());
 		unitRes.setData(unitBreak.getData());
 		unitRes.setReqId(reqId);
-		this.res = unitRes.toString();
+		this.resData = unitRes.toString();
 
-		logger.info(this.reqId + " res: " + this.res + " takes: " + (this.resTime.getTime() - this.reqTime.getTime())
-				+ "ms");
+		logger.info(this.reqId + " resData: " + this.resData + " takes: "
+				+ (this.resTime.getTime() - this.reqTime.getTime()) + "ms");
 		return unitRes;
 	}
 }

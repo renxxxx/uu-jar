@@ -36,7 +36,7 @@ public class UnitBreak extends RuntimeException {
 		return new UnitBreak().setCode(code).setCodeMsg(codeMsg).setData(data);
 	}
 
-	UnitBreak() {
+	private UnitBreak() {
 		super();
 	}
 
@@ -76,5 +76,4 @@ public class UnitBreak extends RuntimeException {
 		return data;
 	}
 
-	
 }
