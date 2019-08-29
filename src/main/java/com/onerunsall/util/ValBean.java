@@ -39,6 +39,18 @@ public class ValBean {
 		return param;
 	}
 
+	public ValBean suffix(String suffix) {
+		if (this.value != null)
+			this.value = this.value + suffix;
+		return this;
+	}
+
+	public ValBean prefix(String prefix) {
+		if (this.value != null)
+			this.value = prefix + this.value;
+		return this;
+	}
+
 	public ValBean trim() {
 		this.value = this.value == null ? null : this.value.trim();
 		return this;
@@ -127,8 +139,8 @@ public class ValBean {
 		return this;
 	}
 
-	public ValBean vNull(boolean doIs) {
-		if (doIs)
+	public ValBean vNull(boolean todo) {
+		if (todo)
 			this.vNull();
 		return this;
 	}
@@ -139,8 +151,8 @@ public class ValBean {
 		return this;
 	}
 
-	public ValBean vEmpty(boolean doIs) {
-		if (doIs)
+	public ValBean vEmpty(boolean todo) {
+		if (todo)
 			this.vEmpty();
 		return this;
 	}
@@ -151,8 +163,8 @@ public class ValBean {
 		return this;
 	}
 
-	public ValBean vBlank(boolean doIs) {
-		if (doIs)
+	public ValBean vBlank(boolean todo) {
+		if (todo)
 			this.vBlank();
 		return this;
 	}
@@ -160,12 +172,12 @@ public class ValBean {
 	public ValBean nullDef(String defaultValue) {
 		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
 		if (isNull() && defaultValue != null)
-			set(defaultValue);
+			this.value = defaultValue;
 		return this;
 	}
 
-	public ValBean nullDef(boolean doIs, String defaultValue) {
-		if (doIs)
+	public ValBean nullDef(boolean todo, String defaultValue) {
+		if (todo)
 			this.nullDef(defaultValue);
 		return this;
 	}
@@ -173,12 +185,12 @@ public class ValBean {
 	public ValBean blankDef(String defaultValue) {
 		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
 		if (isBlank() && defaultValue != null)
-			set(defaultValue);
+			this.value = defaultValue;
 		return this;
 	}
 
-	public ValBean blankDef(boolean doIs, String defaultValue) {
-		if (doIs)
+	public ValBean blankDef(boolean todo, String defaultValue) {
+		if (todo)
 			this.blankDef(defaultValue);
 		return this;
 	}
@@ -186,12 +198,12 @@ public class ValBean {
 	public ValBean emptyDef(String defaultValue) {
 		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
 		if (isEmpty() && defaultValue != null)
-			set(defaultValue);
+			this.value = defaultValue;
 		return this;
 	}
 
-	public ValBean emptyDef(boolean doIs, String defaultValue) {
-		if (doIs)
+	public ValBean emptyDef(boolean todo, String defaultValue) {
+		if (todo)
 			this.emptyDef(defaultValue);
 		return this;
 	}
@@ -259,14 +271,13 @@ public class ValBean {
 		return vReg(regex, null);
 	}
 
-	public ValBean set(String value) {
+	public ValBean clear() {
 		this.splitArrValue = null;
 		this.dateValue = null;
 		this.intValue = null;
 		this.floatValue = null;
 		this.longValue = null;
 		this.decimalValue = null;
-		this.value = value;
 		return this;
 	}
 
