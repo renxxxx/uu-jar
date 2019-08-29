@@ -16,8 +16,8 @@ import java.util.List;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.log4j.Logger;
 
-public class OsCommandUtils {
-	public static Logger logger = Logger.getLogger(OsCommandUtils.class);
+public class OsCommandUtil {
+	public static Logger logger = Logger.getLogger(OsCommandUtil.class);
 
 	public static void exec(String commandLinux, String commandWindows) throws IOException, InterruptedException {
 		String command = OtherUtils.isLinux() ? commandLinux : OtherUtils.isWindows() ? commandWindows : null;

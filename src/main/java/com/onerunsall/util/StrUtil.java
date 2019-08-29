@@ -10,8 +10,8 @@ import org.apache.log4j.Logger;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
-public class StrUtils {
-	public static Logger logger = Logger.getLogger(StrUtils.class);
+public class StrUtil {
+	public static Logger logger = Logger.getLogger(StrUtil.class);
 
 //	public static List<String> extractOffStrs(String[] oldStrs, String[] newStrs) {
 //		oldStrs = oldStrs == null ? new String[] {} : oldStrs;

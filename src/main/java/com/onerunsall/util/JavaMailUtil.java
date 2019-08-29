@@ -8,9 +8,9 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-public class JavaMailUtils {
+public class JavaMailUtil {
 	public static void main(String[] args) throws Exception {
-		JavaMailUtils.Heart hert = new JavaMailUtils.Heart();
+		JavaMailUtil.Heart hert = new JavaMailUtil.Heart();
 		hert.setHost("smtp.qq.com");
 		hert.setProtocol("smtp");
 		hert.setPwd("jthdzmjaheysbiga");
@@ -18,7 +18,7 @@ public class JavaMailUtils {
 		hert.setSmtpAuth("true");
 		hert.setUser("413038044@qq.com");
 
-		JavaMailUtils.send(hert, "413038044@qq.com", "ad", "asdf");
+		JavaMailUtil.send(hert, "413038044@qq.com", "ad", "asdf");
 	}
 
 	public static class Heart {

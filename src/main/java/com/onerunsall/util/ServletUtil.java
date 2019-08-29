@@ -9,8 +9,8 @@ import org.apache.log4j.Logger;
 
 import com.alibaba.fastjson.JSONObject;
 
-public class ServletUtils {
-	public static Logger logger = Logger.getLogger(ServletUtils.class);
+public class ServletUtil {
+	public static Logger logger = Logger.getLogger(ServletUtil.class);
 
 	public static JSONObject headersToJson(HttpServletRequest request) {
 		JSONObject j = new JSONObject(true);

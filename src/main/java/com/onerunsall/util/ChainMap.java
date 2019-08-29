@@ -2,16 +2,16 @@ package com.onerunsall.util;
 
 import java.util.Map;
 
-public class MapChain<K, V> {
+public class ChainMap<K, V> {
 
 	private Map<K, V> map = null;
 
-	public MapChain(Map<K, V> map) {
+	public ChainMap(Map<K, V> map) {
 		super();
 		this.map = map;
 	}
 
-	public MapChain<K, V> put(K key, V value) {
+	public ChainMap<K, V> put(K key, V value) {
 		map.put(key, value);
 		return this;
 	}
