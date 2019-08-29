@@ -6,39 +6,44 @@ import java.util.Date;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.log4j.Logger;
 
-public class UnitReq {
+import com.alibaba.fastjson.JSON;
+
+public class UnitReq<T> {
 	public static Logger logger = Logger.getLogger(UnitReq.class);
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 	public Date reqTime = new Date();
 	public Date resTime = null;
 	public String reqId = sdf.format(reqTime) + RandomStringUtils.randomNumeric(6);
 
-	protected String reqName = "";
-	protected String reqStr = "";
-	protected String resStr = "";
+	protected String unit = "";
+	protected String req = "";
+	protected String res = "";
+
+	UnitRes<T> unitRes = null;
 
 	protected UnitReq() {
 	}
 
-	public UnitReq(String reqName, Object... params) {
-		this.reqName = reqName;
+	public UnitReq(String unit, Object... params) {
+		this.unit = unit;
 		for (int i = 0; i < params.length; i++) {
-			this.reqStr = this.reqStr + (i + 1) + "-" + params[i].toString() + " ";
+			this.req = this.req + (i + 1) + "-" + params[i].toString() + " ";
 		}
-		logger.info(this.reqId + " " + this.reqName);
-		logger.info(this.reqId + " req : " + this.reqStr);
+		logger.info(this.reqId + " " + this.unit);
+		logger.info(this.reqId + " req : " + this.req);
 	}
 
-	public void res() {
+	public UnitRes res(UnitBreak unitBreak) {
 		this.resTime = new Date();
-		logger.info(this.reqId + " res : " + this.resStr + " takes:" + (this.resTime.getTime() - this.reqTime.getTime())
+
+		unitRes = new UnitRes<T>();
+		unitRes.setCode(unitBreak.getCode());
+		unitRes.setCodeMsg(unitBreak.getCodeMsg());
+		unitRes.setErrParam(unitBreak.getErrParam());
+		unitRes.setData(unitBreak.getData());
+
+		logger.info(this.reqId + " res : " + this.res + " takes:" + (this.resTime.getTime() - this.reqTime.getTime())
 				+ "ms");
-	}
-
-	public void res(Object param) {
-		this.resTime = new Date();
-		this.resStr = param.toString();
-		logger.info(this.reqId + " res : " + this.resStr + " takes : "
-				+ (this.resTime.getTime() - this.reqTime.getTime()) + "ms");
+		return unitRes;
 	}
 }
