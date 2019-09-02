@@ -48,7 +48,8 @@ public class UnitReq<T> {
 	}
 
 	public void setReqer(String reqer) {
-		this.reqer = reqer;
+		if (this.reqer == null || this.reqer.isEmpty())
+			this.reqer = reqer;
 	}
 
 	public String getReqer() {
