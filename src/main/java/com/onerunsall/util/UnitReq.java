@@ -25,11 +25,9 @@ public class UnitReq<T> {
 	protected UnitReq() {
 	}
 
-	public UnitReq(String unit, Object... params) {
+	public UnitReq(String unit, String reqData) {
 		this.unit = unit;
-		for (int i = 0; i < params.length; i++) {
-			this.reqData = this.reqData + (i + 1) + "-" + params[i].toString() + " ";
-		}
+		this.reqData = this.reqData;
 		logger.info(this.reqId + " reqer: " + this.reqer + " " + this.unit + " reqData: " + this.reqData);
 	}
 
