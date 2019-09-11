@@ -7,36 +7,56 @@ public class UnitBreak extends RuntimeException {
 	protected Object data = null;
 	protected String reqId = null;
 
-	public static UnitBreak instance() {
-		return new UnitBreak();
+//	public static UnitBreak instance() {
+//		return new UnitBreak();
+//	}
+//
+//	public static UnitBreak success() {
+//		return new UnitBreak().setCode(0);
+//	}
+//
+//	public static UnitBreak success(Object data) {
+//		return new UnitBreak().setCode(0).setData(data);
+//	}
+//
+//	public static UnitBreak failure(String codeMsg) {
+//		return new UnitBreak().setCode(99).setCodeMsg(codeMsg);
+//	}
+//
+//	public static UnitBreak diy(int code) {
+//		return new UnitBreak().setCode(code);
+//	}
+//
+//	public static UnitBreak diy(int code, String codeMsg) {
+//		return new UnitBreak().setCode(code).setCodeMsg(codeMsg);
+//	}
+//
+//	public static UnitBreak diy(int code, String codeMsg, Object data) {
+//		return new UnitBreak().setCode(code).setCodeMsg(codeMsg).setData(data);
+//	}
+
+	public UnitBreak(int code) {
+		super(code + "");
+		this.code = code;
 	}
 
-	public static UnitBreak success() {
-		return new UnitBreak().setCode(0);
+	public UnitBreak(int code, String codeMsg) {
+		super(code + "-" + codeMsg);
+		this.code = code;
+		this.codeMsg = codeMsg;
 	}
 
-	public static UnitBreak success(Object data) {
-		return new UnitBreak().setCode(0).setData(data);
+	public UnitBreak(int code, String codeMsg, Object data) {
+		super(code + "-" + codeMsg);
+		this.code = code;
+		this.codeMsg = codeMsg;
+		this.data = data;
 	}
 
-	public static UnitBreak failure(String codeMsg) {
-		return new UnitBreak().setCode(99).setCodeMsg(codeMsg);
-	}
-
-	public static UnitBreak diy(int code) {
-		return new UnitBreak().setCode(code);
-	}
-
-	public static UnitBreak diy(int code, String codeMsg) {
-		return new UnitBreak().setCode(code).setCodeMsg(codeMsg);
-	}
-
-	public static UnitBreak diy(int code, String codeMsg, Object data) {
-		return new UnitBreak().setCode(code).setCodeMsg(codeMsg).setData(data);
-	}
-
-	private UnitBreak() {
-		super();
+	public UnitBreak(int code, Object data) {
+		super(code + "");
+		this.code = code;
+		this.data = data;
 	}
 
 	public String getCodeMsg() {
@@ -89,7 +109,7 @@ public class UnitBreak extends RuntimeException {
 		if (e instanceof UnitBreak) {
 			unitBreak = (UnitBreak) e;
 		} else {
-			unitBreak = UnitBreak.diy(98);
+			unitBreak = new UnitBreak(98);
 		}
 
 		return unitBreak;

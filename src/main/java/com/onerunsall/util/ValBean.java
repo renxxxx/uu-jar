@@ -135,7 +135,7 @@ public class ValBean {
 
 	public ValBean vNull() {
 		if (this.value == null)
-			throw UnitBreak.diy(1001, "\"" + this.name + "\"不能空").setErrParam(this.code);
+			throw new UnitBreak(1001, "\"" + this.name + "\"不能空").setErrParam(this.code);
 		return this;
 	}
 
@@ -147,7 +147,7 @@ public class ValBean {
 
 	public ValBean vEmpty() {
 		if ((this.value == null || this.value.isEmpty()))
-			throw UnitBreak.diy(1001, "\"" + this.name + "\"不能空").setErrParam(this.code);
+			throw new UnitBreak(1001, "\"" + this.name + "\"不能空").setErrParam(this.code);
 		return this;
 	}
 
@@ -159,7 +159,7 @@ public class ValBean {
 
 	public ValBean vBlank() {
 		if ((this.value != null && this.value.isEmpty()))
-			throw UnitBreak.diy(1001, "\"" + this.name + "\"不能空").setErrParam(this.code);
+			throw new UnitBreak(1001, "\"" + this.name + "\"不能空").setErrParam(this.code);
 		return this;
 	}
 
@@ -210,28 +210,28 @@ public class ValBean {
 
 	public ValBean vLen(int length) {
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() != length) {
-			throw UnitBreak.diy(1001, "\"" + this.name + "\"长度只能是" + length).setErrParam(this.code);
+			throw new UnitBreak(1001, "\"" + this.name + "\"长度只能是" + length).setErrParam(this.code);
 		}
 		return this;
 	}
 
 	public ValBean vMaxLen(int length) {
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() > length) {
-			throw UnitBreak.diy(1001, "\"" + this.name + "\"长度最大" + length).setErrParam(this.code);
+			throw new UnitBreak(1001, "\"" + this.name + "\"长度最大" + length).setErrParam(this.code);
 		}
 		return this;
 	}
 
 	public ValBean vMaxNum(float maxnum) {
 		if (!isEmpty() && toFloat() > maxnum) {
-			throw UnitBreak.diy(1001, "\"" + this.name + "\"最大" + maxnum).setErrParam(this.code);
+			throw new UnitBreak(1001, "\"" + this.name + "\"最大" + maxnum).setErrParam(this.code);
 		}
 		return this;
 	}
 
 	public ValBean vMinNum(float minnum) {
 		if (!isEmpty() && toFloat() < minnum) {
-			throw UnitBreak.diy(1001, "\"" + this.name + "\"最小" + minnum).setErrParam(this.code);
+			throw new UnitBreak(1001, "\"" + this.name + "\"最小" + minnum).setErrParam(this.code);
 		}
 		return this;
 	}
@@ -256,7 +256,7 @@ public class ValBean {
 
 	public ValBean vMinLen(int length) {
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() < length) {
-			throw UnitBreak.diy(1001, "\"" + this.name + "\"长度最低" + length).setErrParam(this.code);
+			throw new UnitBreak(1001, "\"" + this.name + "\"长度最低" + length).setErrParam(this.code);
 		}
 		return this;
 	}
@@ -290,9 +290,9 @@ public class ValBean {
 	public ValBean vReg(String regex, String note) {
 		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty()) {
 			if (!regexCache.getWithCreate(regex).matcher(this.value).matches())
-				throw UnitBreak
-						.diy(1001, "\"" + this.name + "\"有误" + (note == null || note.isEmpty() ? "" : ",要求：" + note))
-						.setErrParam(this.code);
+				throw new UnitBreak(1001,
+						"\"" + this.name + "\"有误" + (note == null || note.isEmpty() ? "" : ",要求：" + note))
+								.setErrParam(this.code);
 		}
 		return this;
 	}
