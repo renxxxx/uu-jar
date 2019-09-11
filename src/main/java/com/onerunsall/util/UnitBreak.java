@@ -1,11 +1,5 @@
 package com.onerunsall.util;
 
-import java.util.Date;
-
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.serializer.SerializerFeature;
-
 public class UnitBreak extends RuntimeException {
 	protected int code = 0;
 	protected String errParam = null;
@@ -101,8 +95,4 @@ public class UnitBreak extends RuntimeException {
 		return unitBreak;
 	}
 
-	public static void main(String[] args) {
-		UnitBreak ub = UnitBreak.success(new ChainJSONObject("a", "1"));
-		System.out.println(ub.getData());
-	}
 }
