@@ -9,7 +9,7 @@ import org.apache.log4j.Logger;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 
-public class UnitReq<Q, T> {
+public class UnitReq<T> {
 	public static Logger logger = Logger.getLogger(UnitReq.class);
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 	public Date reqTime = new Date();
