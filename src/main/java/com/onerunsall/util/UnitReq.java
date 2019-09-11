@@ -6,29 +6,25 @@ import java.util.Date;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.log4j.Logger;
 
-import com.alibaba.fastjson.JSON;
-
-public class UnitReq<T> {
+public class UnitReq<Q, T> {
 	public static Logger logger = Logger.getLogger(UnitReq.class);
-	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+	private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 	public Date reqTime = new Date();
 	public Date resTime = null;
 	public String reqId = sdf.format(reqTime) + RandomStringUtils.randomNumeric(6);
 
 	protected String reqer = "";
 	protected String unit = "";
-	protected String reqData = "";
-	protected String resData = "";
-
-	protected UnitRes<T> unitRes = null;
+	protected Q req = null;
+	protected UnitRes<T> res = null;
 
 	protected UnitReq() {
 	}
 
-	public UnitReq(String unit, String reqData) {
+	public UnitReq(String unit, Q req) {
 		this.unit = unit;
-		this.reqData = this.reqData;
-		logger.info(this.reqId + " reqer: " + this.reqer + " " + this.unit + " reqData: " + this.reqData);
+		this.req = this.req;
+		logger.info(this.reqId + " " + this.unit + " req: " + this.req);
 	}
 
 	public Date getReqTime() {
@@ -56,16 +52,8 @@ public class UnitReq<T> {
 		return reqer;
 	}
 
-	public String getReqData() {
-		return reqData;
-	}
-
-	public String getResData() {
-		return resData;
-	}
-
 	public UnitRes<T> getUnitRes() {
-		return unitRes;
+		return res;
 	}
 
 	public UnitRes<T> res(Exception e) {
@@ -77,16 +65,15 @@ public class UnitReq<T> {
 		}
 		this.resTime = new Date();
 
-		unitRes = new UnitRes<T>();
-		unitRes.setCode(unitBreak.getCode());
-		unitRes.setCodeMsg(unitBreak.getCodeMsg());
-		unitRes.setErrParam(unitBreak.getErrParam());
-		unitRes.setData(unitBreak.getData());
-		unitRes.setReqId(reqId);
-		this.resData = unitRes.toString();
+		res = new UnitRes<T>();
+		res.setCode(unitBreak.getCode());
+		res.setCodeMsg(unitBreak.getCodeMsg());
+		res.setErrParam(unitBreak.getErrParam());
+		res.setData(unitBreak.getData());
+		res.setReqId(reqId);
 
-		logger.info(this.reqId + " resData: " + this.resData + " takes: "
+		logger.info(this.reqId + " res: " + res.toString() + " takes: "
 				+ (this.resTime.getTime() - this.reqTime.getTime()) + "ms");
-		return unitRes;
+		return res;
 	}
 }
