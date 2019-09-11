@@ -83,7 +83,7 @@ public class UnitBreak extends RuntimeException {
 		this.reqId = reqId;
 	}
 
-	public UnitBreak err(Exception e) {
+	public static UnitBreak err(Exception e) {
 		UnitBreak unitBreak = null;
 		if (e instanceof UnitBreak) {
 			unitBreak = (UnitBreak) e;
