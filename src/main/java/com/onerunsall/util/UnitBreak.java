@@ -7,6 +7,7 @@ public class UnitBreak extends RuntimeException {
 	protected String errParam = null;
 	protected String codeMsg = null;
 	protected Object data = null;
+	protected String reqId = null;
 
 	public static UnitBreak instance() {
 		return new UnitBreak();
@@ -74,6 +75,14 @@ public class UnitBreak extends RuntimeException {
 
 	public Object getData() {
 		return data;
+	}
+
+	public String getReqId() {
+		return reqId;
+	}
+
+	public void setReqId(String reqId) {
+		this.reqId = reqId;
 	}
 
 }

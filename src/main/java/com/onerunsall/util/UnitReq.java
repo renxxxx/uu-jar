@@ -16,7 +16,7 @@ public class UnitReq<Q, T> {
 	protected String reqer = "";
 	protected String unit = "";
 	protected Q req = null;
-	protected UnitRes<T> res = null;
+	protected UnitBreak ubreak = null;
 
 	protected UnitReq() {
 	}
@@ -44,36 +44,32 @@ public class UnitReq<Q, T> {
 	}
 
 	public void setReqer(String reqer) {
-		if (this.reqer == null || this.reqer.isEmpty())
-			this.reqer = reqer;
+		if (this.reqer != null && !this.reqer.isEmpty())
+			throw new RuntimeException("设置请求人超过两次");
+		this.reqer = reqer;
 	}
 
 	public String getReqer() {
 		return reqer;
 	}
 
-	public UnitRes<T> getUnitRes() {
-		return res;
+	public T getBreakData() {
+		return (T) this.ubreak.getData();
 	}
 
-	public UnitRes<T> res(Exception e) {
-		UnitBreak unitBreak = null;
+	public UnitBreak getUbreak() {
+		return ubreak;
+	}
+
+	public void ubreak(Exception e) {
 		if (e instanceof UnitBreak) {
-			unitBreak = (UnitBreak) e;
+			this.ubreak = (UnitBreak) e;
 		} else {
-			unitBreak = UnitBreak.diy(98);
+			this.ubreak = UnitBreak.diy(98);
 		}
 		this.resTime = new Date();
-
-		res = new UnitRes<T>();
-		res.setCode(unitBreak.getCode());
-		res.setCodeMsg(unitBreak.getCodeMsg());
-		res.setErrParam(unitBreak.getErrParam());
-		res.setData(unitBreak.getData());
-		res.setReqId(reqId);
-
-		logger.info(this.reqId + " res: " + res.toString() + " takes: "
+		this.ubreak.setReqId(reqId);
+		logger.info(this.reqId + " break: " + ubreak.toString() + " takes: "
 				+ (this.resTime.getTime() - this.reqTime.getTime()) + "ms");
-		return res;
 	}
 }
