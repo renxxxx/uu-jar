@@ -1,7 +1,5 @@
 package com.onerunsall.util;
 
-import com.alibaba.fastjson.JSONObject;
-
 public class UnitBreak extends RuntimeException {
 	protected int code = 0;
 	protected String errParam = null;
@@ -85,4 +83,18 @@ public class UnitBreak extends RuntimeException {
 		this.reqId = reqId;
 	}
 
+	public UnitBreak err(Exception e) {
+		UnitBreak unitBreak = null;
+		if (e instanceof UnitBreak) {
+			unitBreak = (UnitBreak) e;
+		} else {
+			unitBreak = UnitBreak.diy(98);
+		}
+		return unitBreak;
+	}
+
+	public static void main(String[] args) {
+		UnitBreak ub = UnitBreak.success(new ChainJSONObject("a", "1"));
+		System.out.println(ub.getData());
+	}
 }
