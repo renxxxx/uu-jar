@@ -1,5 +1,11 @@
 package com.onerunsall.util;
 
+import java.util.Date;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+
 public class UnitBreak extends RuntimeException {
 	protected int code = 0;
 	protected String errParam = null;
@@ -79,17 +85,19 @@ public class UnitBreak extends RuntimeException {
 		return reqId;
 	}
 
-	public void setReqId(String reqId) {
+	public UnitBreak setReqId(String reqId) {
 		this.reqId = reqId;
+		return this;
 	}
 
-	public static UnitBreak err(Exception e) {
+	public UnitBreak err(Exception e) {
 		UnitBreak unitBreak = null;
 		if (e instanceof UnitBreak) {
 			unitBreak = (UnitBreak) e;
 		} else {
 			unitBreak = UnitBreak.diy(98);
 		}
+
 		return unitBreak;
 	}
 
