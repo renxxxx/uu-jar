@@ -6,6 +6,9 @@ import java.util.Date;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.log4j.Logger;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+
 public class UnitReq<Q, T> {
 	public static Logger logger = Logger.getLogger(UnitReq.class);
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
@@ -15,16 +18,17 @@ public class UnitReq<Q, T> {
 
 	protected String reqer = "";
 	protected String unit = "";
-	protected Q req = null;
 	protected UnitBreak ubreak = null;
+	protected String reqString = null;
+	protected String resString = null;
 
 	protected UnitReq() {
 	}
 
-	public UnitReq(String unit, Q req) {
+	public UnitReq(String unit, String reqString) {
 		this.unit = unit;
-		this.req = this.req;
-		logger.info(this.reqId + " " + this.unit + " req: " + this.req);
+		this.reqString = this.reqString;
+		logger.info(this.reqId + " " + this.unit + " req: " + this.reqString);
 	}
 
 	public Date getReqTime() {
@@ -45,7 +49,7 @@ public class UnitReq<Q, T> {
 
 	public void setReqer(String reqer) {
 		if (this.reqer != null && !this.reqer.isEmpty())
-			throw new RuntimeException("设置请求人超过两次");
+			throw new RuntimeException("设置请求人超过一次");
 		this.reqer = reqer;
 	}
 
@@ -61,6 +65,10 @@ public class UnitReq<Q, T> {
 		return ubreak;
 	}
 
+	public String getResString() {
+		return resString;
+	}
+
 	public void ubreak(Exception e) {
 		if (e instanceof UnitBreak) {
 			this.ubreak = (UnitBreak) e;
@@ -69,7 +77,9 @@ public class UnitReq<Q, T> {
 		}
 		this.resTime = new Date();
 		this.ubreak.setReqId(reqId);
-		logger.info(this.reqId + " break: " + ubreak.toString() + " takes: "
-				+ (this.resTime.getTime() - this.reqTime.getTime()) + "ms");
+		this.resString = JSON.toJSONString(this.ubreak, SerializerFeature.WriteMapNullValue);
+
+		logger.info(this.reqId + " break: " + resString + " takes: " + (this.resTime.getTime() - this.reqTime.getTime())
+				+ "ms");
 	}
 }
