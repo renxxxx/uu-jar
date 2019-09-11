@@ -90,7 +90,7 @@ public class UnitBreak extends RuntimeException {
 		return this;
 	}
 
-	public UnitBreak err(Exception e) {
+	public static UnitBreak err(Exception e) {
 		UnitBreak unitBreak = null;
 		if (e instanceof UnitBreak) {
 			unitBreak = (UnitBreak) e;
