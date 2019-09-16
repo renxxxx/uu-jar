@@ -5,7 +5,7 @@ public class UnitBreak extends RuntimeException {
 	protected String errParam = null;
 	protected String codeMsg = null;
 	protected Object data = null;
-	protected String reqId = null;
+	protected String requestId = null;
 
 	public UnitBreak(int code) {
 		super(code + "");
@@ -67,12 +67,12 @@ public class UnitBreak extends RuntimeException {
 		return data;
 	}
 
-	public String getReqId() {
-		return reqId;
+	public String getRequestId() {
+		return requestId;
 	}
 
-	public UnitBreak setReqId(String reqId) {
-		this.reqId = reqId;
+	public UnitBreak setRequestId(String requestId) {
+		this.requestId = requestId;
 		return this;
 	}
 
