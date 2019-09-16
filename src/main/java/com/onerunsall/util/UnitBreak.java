@@ -12,12 +12,6 @@ public class UnitBreak extends RuntimeException {
 		this.code = code;
 	}
 
-	public UnitBreak(String codeMsg) {
-		super(99 + "-" + codeMsg);
-		this.code = 99;
-		this.codeMsg = codeMsg;
-	}
-
 	public UnitBreak(int code, String codeMsg) {
 		super(code + "-" + codeMsg);
 		this.code = code;
