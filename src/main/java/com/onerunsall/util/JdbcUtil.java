@@ -24,11 +24,11 @@ public class JdbcUtil {
 		System.out.println(123123123);
 	}
 
-	public static List<Map> runQueryList(Connection conn, String sql, Object... params) throws Exception {
+	public static List<Map> queryList(Connection conn, String sql, Object... params) throws Exception {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
-			return parseResultSetOfList(runQuery(pst, sql, params));
+			return parseResultSetOfList(query(pst, sql, params));
 		} catch (Exception e) {
 			throw e;
 		} finally {
@@ -37,11 +37,11 @@ public class JdbcUtil {
 		}
 	}
 
-	public static List<Object> runQueryThinList(Connection conn, String sql, Object... params) throws Exception {
+	public static List<Object> queryThinList(Connection conn, String sql, Object... params) throws Exception {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
-			return parseResultSetOfThinList(runQuery(pst, sql, params));
+			return parseResultSetOfThinList(query(pst, sql, params));
 		} catch (Exception e) {
 			throw e;
 		} finally {
@@ -50,11 +50,11 @@ public class JdbcUtil {
 		}
 	}
 
-	public static InputStream runQueryOneStream(Connection conn, String sql, Object... params) throws Exception {
+	public static InputStream queryOneStream(Connection conn, String sql, Object... params) throws Exception {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
-			ResultSet rs = runQuery(pst, sql, params);
+			ResultSet rs = query(pst, sql, params);
 			if (rs.next()) {
 				return rs.getBinaryStream(1);
 			}
@@ -67,42 +67,42 @@ public class JdbcUtil {
 		}
 	}
 
-	public static Integer runQueryOneInteger(Connection conn, String sql, Object... params) throws Exception {
-		return ValBean.toInteger(runQueryOneColumn(conn, sql, params));
+	public static Integer queryOneInteger(Connection conn, String sql, Object... params) throws Exception {
+		return ValBean.toInteger(queryOneColumn(conn, sql, params));
 	}
 
-	public static String runQueryOneString(Connection conn, String sql, Object... params) throws Exception {
-		return ValBean.toString(runQueryOneColumn(conn, sql, params));
+	public static String queryOneString(Connection conn, String sql, Object... params) throws Exception {
+		return ValBean.toString(queryOneColumn(conn, sql, params));
 	}
 
-	public static BigDecimal runQueryOneDecimal(Connection conn, String sql, Object... params) throws Exception {
-		return ValBean.toDecimal(runQueryOneColumn(conn, sql, params));
+	public static BigDecimal queryOneDecimal(Connection conn, String sql, Object... params) throws Exception {
+		return ValBean.toDecimal(queryOneColumn(conn, sql, params));
 	}
 
-	public static Long runQueryOneLong(Connection conn, String sql, Object... params) throws Exception {
-		return ValBean.toLong(runQueryOneColumn(conn, sql, params));
+	public static Long queryOneLong(Connection conn, String sql, Object... params) throws Exception {
+		return ValBean.toLong(queryOneColumn(conn, sql, params));
 	}
 
-	public static Float runQueryOneFloat(Connection conn, String sql, Object... params) throws Exception {
-		return ValBean.toFloat(runQueryOneColumn(conn, sql, params));
+	public static Float queryOneFloat(Connection conn, String sql, Object... params) throws Exception {
+		return ValBean.toFloat(queryOneColumn(conn, sql, params));
 	}
 
-	public static Date runQueryOneDate(Connection conn, String sql, Object... params) throws Exception {
-		return ValBean.toDate(runQueryOneColumn(conn, sql, params));
+	public static Date queryOneDate(Connection conn, String sql, Object... params) throws Exception {
+		return ValBean.toDate(queryOneColumn(conn, sql, params));
 	}
 
-	public static Object runQueryOneColumn(Connection conn, String sql, Object... params) throws Exception {
-		Map row = runQueryOne(conn, sql, params);
+	public static Object queryOneColumn(Connection conn, String sql, Object... params) throws Exception {
+		Map row = queryOne(conn, sql, params);
 		if (row == null)
 			return null;
 		return row.get(row.keySet().iterator().next());
 	}
 
-	public static Map runQueryOne(Connection conn, String sql, Object... params) throws Exception {
+	public static Map queryOne(Connection conn, String sql, Object... params) throws Exception {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
-			List<Map> list = parseResultSetOfList(runQuery(pst, sql, params));
+			List<Map> list = parseResultSetOfList(query(pst, sql, params));
 			if (list == null || list.isEmpty())
 				return null;
 			return list.get(0);
@@ -114,7 +114,7 @@ public class JdbcUtil {
 		}
 	}
 
-	public static ResultSet runQuery(PreparedStatement pst, String sql, Object... params) throws SQLException {
+	public static ResultSet query(PreparedStatement pst, String sql, Object... params) throws SQLException {
 		if (params == null)
 			params = new Object[] {};
 		logger.debug(sql);
@@ -137,11 +137,11 @@ public class JdbcUtil {
 		return new StringBuilder("%").append(columnValue).append("%").toString();
 	}
 
-	public static int runUpdate(Connection conn, String sql, Object... params) throws Exception {
+	public static int update(Connection conn, String sql, Object... params) throws Exception {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
-			return runUpdate(pst, sql, params);
+			return update(pst, sql, params);
 		} catch (Exception e) {
 			throw e;
 		} finally {
@@ -150,11 +150,11 @@ public class JdbcUtil {
 		}
 	}
 
-	public static int runUpdateGentle(Connection conn, String sql, Object... params) throws Exception {
+	public static int updateGentle(Connection conn, String sql, Object... params) throws Exception {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
-			return runUpdate(pst, sql, params);
+			return update(pst, sql, params);
 		} catch (Exception e) {
 			logger.debug(ExceptionUtils.getStackTrace(e));
 			return 0;
@@ -164,7 +164,7 @@ public class JdbcUtil {
 		}
 	}
 
-	public static int runUpdate(PreparedStatement pst, String sql, Object... params) throws Exception {
+	public static int update(PreparedStatement pst, String sql, Object... params) throws Exception {
 		if (params == null)
 			params = new Object[] {};
 		logger.debug(sql);
@@ -189,7 +189,7 @@ public class JdbcUtil {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-			runUpdate(pst, sql, params);
+			update(pst, sql, params);
 			return returnGeneratedKey(pst);
 		} catch (Exception e) {
 			throw e;
