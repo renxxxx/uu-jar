@@ -1,6 +1,8 @@
 package com.onerunsall.util;
 
 import java.util.Enumeration;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -23,24 +25,17 @@ public class ServletUtil {
 		return j;
 	}
 
-	public static JSONObject cookiesToJson(HttpServletRequest request) {
-		JSONObject j = new JSONObject();
+	public static Map<String, Cookie> getCookieMap(HttpServletRequest request) {
+		Map<String, Cookie> cookieMap = new LinkedHashMap<String, Cookie>();
 		Cookie[] cookies = request.getCookies();
-		if (cookies == null)
-			return j;
+		if (cookies == null || cookies.length == 0)
+			return cookieMap;
 		for (int i = 0; i < cookies.length; i++) {
 			JSONObject hj = new JSONObject(true);
 			Cookie cookie = cookies[i];
-			hj.put("value", cookie.getValue());
-			hj.put("domain", cookie.getDomain());
-			hj.put("maxAge", cookie.getMaxAge());
-			hj.put("path", cookie.getPath());
-			hj.put("secure", cookie.getSecure());
-			hj.put("version", cookie.getVersion());
-			hj.put("comment", cookie.getComment());
-			j.put(cookie.getName(), hj);
+			cookieMap.put(cookie.getName(), cookie);
 		}
-		return j;
+		return cookieMap;
 	}
 
 //	public static String getParameter(HttpServletRequest request, String name) {
