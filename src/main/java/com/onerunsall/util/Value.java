@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 
-public class ValBean {
+public class Value {
 	private String name;
 	private String code;
 	private String value;
@@ -21,7 +21,7 @@ public class ValBean {
 	private Date dateValue;
 	private String[] splitArrValue;
 
-	private ValBean() {
+	private Value() {
 	}
 
 	public static CacheMap.Ccc<String, Pattern> regexCache = new CacheMap.Ccc<String, Pattern>() {
@@ -31,37 +31,37 @@ public class ValBean {
 		}
 	};
 
-	public static ValBean build(String name, String code, String value) {
-		ValBean param = new ValBean();
+	public static Value build(String name, String code, String value) {
+		Value param = new Value();
 		param.name = name;
 		param.code = code;
 		param.value = value;
 		return param;
 	}
 
-	public ValBean suffix(String suffix) {
+	public Value suffix(String suffix) {
 		if (this.value != null)
 			this.value = this.value + suffix;
 		return this;
 	}
 
-	public ValBean prefix(String prefix) {
+	public Value prefix(String prefix) {
 		if (this.value != null)
 			this.value = prefix + this.value;
 		return this;
 	}
 
-	public ValBean trim() {
+	public Value trim() {
 		this.value = this.value == null ? null : this.value.trim();
 		return this;
 	}
 
-	public ValBean trimLeft() {
+	public Value trimLeft() {
 		this.value = this.value == null ? null : this.value.trim();
 		return this;
 	}
 
-	public ValBean trimRight() {
+	public Value trimRight() {
 		this.value = this.value == null ? null : this.value.trim();
 		return this;
 	}
@@ -105,12 +105,12 @@ public class ValBean {
 		return this.dateValue;
 	}
 
-	public ValBean setDatePattern(String datePattern) {
+	public Value setDatePattern(String datePattern) {
 		this.datePattern = datePattern;
 		return this;
 	}
 
-	public ValBean setSeparator(String separator) {
+	public Value setSeparator(String separator) {
 		this.separator = separator;
 		return this;
 	}
@@ -133,103 +133,103 @@ public class ValBean {
 		System.out.println((a + "").replaceAll("\\.0*$", ""));
 	}
 
-	public ValBean vNull() {
+	public Value vNull() {
 		if (this.value == null)
 			throw new UnitBreak(1001, "\"" + this.name + "\"不能空").setErrParam(this.code);
 		return this;
 	}
 
-	public ValBean vNull(boolean todo) {
+	public Value vNull(boolean todo) {
 		if (todo)
 			this.vNull();
 		return this;
 	}
 
-	public ValBean vEmpty() {
+	public Value vEmpty() {
 		if ((this.value == null || this.value.isEmpty()))
 			throw new UnitBreak(1001, "\"" + this.name + "\"不能空").setErrParam(this.code);
 		return this;
 	}
 
-	public ValBean vEmpty(boolean todo) {
+	public Value vEmpty(boolean todo) {
 		if (todo)
 			this.vEmpty();
 		return this;
 	}
 
-	public ValBean vBlank() {
+	public Value vBlank() {
 		if ((this.value != null && this.value.isEmpty()))
 			throw new UnitBreak(1001, "\"" + this.name + "\"不能空").setErrParam(this.code);
 		return this;
 	}
 
-	public ValBean vBlank(boolean todo) {
+	public Value vBlank(boolean todo) {
 		if (todo)
 			this.vBlank();
 		return this;
 	}
 
-	public ValBean nullDef(String defaultValue) {
+	public Value nullDef(String defaultValue) {
 		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
 		if (isNull() && defaultValue != null)
 			this.value = defaultValue;
 		return this;
 	}
 
-	public ValBean nullDef(boolean todo, String defaultValue) {
+	public Value nullDef(boolean todo, String defaultValue) {
 		if (todo)
 			this.nullDef(defaultValue);
 		return this;
 	}
 
-	public ValBean blankDef(String defaultValue) {
+	public Value blankDef(String defaultValue) {
 		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
 		if (isBlank() && defaultValue != null)
 			this.value = defaultValue;
 		return this;
 	}
 
-	public ValBean blankDef(boolean todo, String defaultValue) {
+	public Value blankDef(boolean todo, String defaultValue) {
 		if (todo)
 			this.blankDef(defaultValue);
 		return this;
 	}
 
-	public ValBean emptyDef(String defaultValue) {
+	public Value emptyDef(String defaultValue) {
 		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
 		if (isEmpty() && defaultValue != null)
 			this.value = defaultValue;
 		return this;
 	}
 
-	public ValBean emptyDef(boolean todo, String defaultValue) {
+	public Value emptyDef(boolean todo, String defaultValue) {
 		if (todo)
 			this.emptyDef(defaultValue);
 		return this;
 	}
 
-	public ValBean vLen(int length) {
+	public Value vLen(int length) {
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() != length) {
 			throw new UnitBreak(1001, "\"" + this.name + "\"长度只能是" + length).setErrParam(this.code);
 		}
 		return this;
 	}
 
-	public ValBean vMaxLen(int length) {
+	public Value vMaxLen(int length) {
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() > length) {
 			throw new UnitBreak(1001, "\"" + this.name + "\"长度最大" + length).setErrParam(this.code);
 		}
 		return this;
 	}
 
-	public ValBean vMaxNum(float maxnum) {
+	public Value vMaxNum(float maxnum) {
 		if (!isEmpty() && toFloat() > maxnum) {
 			throw new UnitBreak(1001, "\"" + this.name + "\"最大" + maxnum).setErrParam(this.code);
 		}
 		return this;
 	}
 
-	public ValBean vMinNum(float minnum) {
+	public Value vMinNum(float minnum) {
 		if (!isEmpty() && toFloat() < minnum) {
 			throw new UnitBreak(1001, "\"" + this.name + "\"最小" + minnum).setErrParam(this.code);
 		}
@@ -254,24 +254,24 @@ public class ValBean {
 		return false;
 	}
 
-	public ValBean vMinLen(int length) {
+	public Value vMinLen(int length) {
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() < length) {
 			throw new UnitBreak(1001, "\"" + this.name + "\"长度最低" + length).setErrParam(this.code);
 		}
 		return this;
 	}
 
-	public ValBean vLenRange(int min, int max) {
+	public Value vLenRange(int min, int max) {
 		vMinLen(min);
 		vMaxLen(max);
 		return this;
 	}
 
-	public ValBean vReg(String regex) {
+	public Value vReg(String regex) {
 		return vReg(regex, null);
 	}
 
-	public ValBean clear() {
+	public Value clear() {
 		this.splitArrValue = null;
 		this.dateValue = null;
 		this.intValue = null;
@@ -281,13 +281,13 @@ public class ValBean {
 		return this;
 	}
 
-	public ValBean vReplace(String regex, String replace) {
+	public Value vReplace(String regex, String replace) {
 		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty() && replace != null)
 			this.value = regexCache.getWithCreate(regex).matcher(this.value).replaceAll(replace);
 		return this;
 	}
 
-	public ValBean vReg(String regex, String note) {
+	public Value vReg(String regex, String note) {
 		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty()) {
 			if (!regexCache.getWithCreate(regex).matcher(this.value).matches())
 				throw new UnitBreak(1001,
