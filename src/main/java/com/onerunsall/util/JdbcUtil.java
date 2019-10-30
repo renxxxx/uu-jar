@@ -220,43 +220,45 @@ public class JdbcUtil {
 		return keys;
 	}
 
-	public static int[] runBatch(Connection conn, String sql, List<Object> paramsBatch) throws Exception {
-		if (paramsBatch == null)
-			paramsBatch = new ArrayList<Object>();
+	public static int[] batch(Connection conn, String sql, Object... paramBatch) throws Exception {
 		PreparedStatement pst = null;
-		logger.debug(sql);
-		int[] sqlNs = new int[] {};
 		try {
 			pst = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-			for (Object params : paramsBatch) {
-				logger.debug(params);
-				if (params instanceof List) {
-					for (int i = 0; i < ((List) params).size(); i++) {
-						pst.setObject(i + 1, ((List) params).get(i));
-					}
-				} else if (params instanceof Object[]) {
-					for (int i = 0; i < ((Object[]) params).length; i++) {
-						pst.setObject(i + 1, ((Object[]) params)[i]);
-					}
-				} else if (params instanceof Object) {
-					pst.setObject(1, params);
-					pst.addBatch();
-				} else {
-					pst.setObject(1, params);
-					pst.addBatch();
-				}
-				pst.addBatch();
-			}
-			long s = System.nanoTime();
-			sqlNs = pst.executeBatch();
-			long e = System.nanoTime();
-			logger.debug("takes: " + (e - s));
-		} catch (SQLException e) {
-			throw new Exception(e.getMessage() + " sql: " + sql, e);
+			return batch(pst, sql, paramBatch);
+		} catch (Exception e) {
+			throw new Exception(e);
 		} finally {
 			if (pst != null)
 				pst.close();
 		}
+	}
+
+	public static int[] batch(PreparedStatement pst, String sql, Object... paramBatch) throws Exception {
+		if (paramBatch == null)
+			paramBatch = new Object[] {};
+		logger.debug(sql);
+		int[] sqlNs = new int[] {};
+		for (Object param : paramBatch) {
+			logger.debug(param);
+			if (param instanceof List) {
+				for (int i = 0; i < ((List) param).size(); i++) {
+					pst.setObject(i + 1, ((List) param).get(i));
+				}
+			} else if (param instanceof Object[]) {
+				for (int i = 0; i < ((Object[]) param).length; i++) {
+					pst.setObject(i + 1, ((Object[]) param)[i]);
+				}
+			} else if (param instanceof Object) {
+				pst.setObject(1, param);
+			} else {
+				pst.setObject(1, param);
+			}
+			pst.addBatch();
+		}
+		long s = System.nanoTime();
+		sqlNs = pst.executeBatch();
+		long e = System.nanoTime();
+		logger.debug("takes: " + (e - s));
 		logger.debug("affected : " + Arrays.toString(sqlNs));
 		return sqlNs;
 	}
