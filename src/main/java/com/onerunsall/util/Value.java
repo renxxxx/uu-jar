@@ -14,6 +14,7 @@ public class Value {
 	private String separator = ",";
 	private String datePattern = "yyyy-MM-dd HH:mm:ss";
 
+	boolean todo = true;
 	private Integer intValue;
 	private Float floatValue;
 	private Long longValue;
@@ -31,6 +32,16 @@ public class Value {
 		}
 	};
 
+	public Value clear() {
+		this.splitArrValue = null;
+		this.dateValue = null;
+		this.intValue = null;
+		this.floatValue = null;
+		this.longValue = null;
+		this.decimalValue = null;
+		return this;
+	}
+
 	public static Value build(String name, String code, String value) {
 		Value param = new Value();
 		param.name = name;
@@ -40,33 +51,312 @@ public class Value {
 	}
 
 	public Value suffix(String suffix) {
+		if (!this.todo)
+			return this;
 		if (this.value != null)
 			this.value = this.value + suffix;
 		return this;
 	}
 
 	public Value prefix(String prefix) {
+		if (!this.todo)
+			return this;
 		if (this.value != null)
 			this.value = prefix + this.value;
 		return this;
 	}
 
 	public Value trim() {
+		if (!this.todo)
+			return this;
 		this.value = this.value == null ? null : this.value.trim();
 		return this;
 	}
 
 	public Value trimLeft() {
+		if (!this.todo)
+			return this;
 		this.value = this.value == null ? null : this.value.trim();
 		return this;
 	}
 
 	public Value trimRight() {
+		if (!this.todo)
+			return this;
 		this.value = this.value == null ? null : this.value.trim();
 		return this;
 	}
 
+	public Value setDatePattern(String datePattern) {
+		this.datePattern = datePattern;
+		return this;
+	}
+
+	public Value setSeparator(String separator) {
+		this.separator = separator;
+		return this;
+	}
+
+	public Value nullDef(String defaultValue) {
+		if (!this.todo)
+			return this;
+		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
+		if (isNull() && defaultValue != null)
+			this.value = defaultValue;
+		return this;
+	}
+
+	public Value nullDef(boolean todo, String defaultValue) {
+		if (!this.todo)
+			return this;
+		if (todo)
+			this.nullDef(defaultValue);
+		return this;
+	}
+
+	public Value blankDef(String defaultValue) {
+		if (!this.todo)
+			return this;
+		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
+		if (isBlank() && defaultValue != null)
+			this.value = defaultValue;
+		return this;
+	}
+
+	public Value blankDef(boolean todo, String defaultValue) {
+		if (!this.todo)
+			return this;
+		if (todo)
+			this.blankDef(defaultValue);
+		return this;
+	}
+
+	public Value emptyDef(String defaultValue) {
+		if (!this.todo)
+			return this;
+		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
+		if (isEmpty() && defaultValue != null)
+			this.value = defaultValue;
+		return this;
+	}
+
+	public Value emptyDef(boolean todo, String defaultValue) {
+		if (!this.todo)
+			return this;
+		if (todo)
+			this.emptyDef(defaultValue);
+		return this;
+	}
+
+	public static void main(String[] args) {
+		float a = 1.000000f;
+		System.out.println((a + "").replaceAll("\\.0*$", ""));
+	}
+
+	public Value todo(boolean todo) {
+		this.todo = todo;
+		return this;
+	}
+
+	public Value vNull() {
+		if (!this.todo)
+			return this;
+		if (this.value == null)
+			throw new UnitBreak(1001, "\"" + this.name + "\"不能空").setErrParam(this.code);
+		return this;
+	}
+
+	public Value vNull(boolean todo) {
+		if (!this.todo)
+			return this;
+		if (todo)
+			this.vNull();
+		return this;
+	}
+
+	public Value vEmpty() {
+		if (!this.todo)
+			return this;
+		if ((this.value == null || this.value.isEmpty()))
+			throw new UnitBreak(1001, "\"" + this.name + "\"不能空").setErrParam(this.code);
+		return this;
+	}
+
+	public Value vEmpty(boolean todo) {
+		if (!this.todo)
+			return this;
+		if (todo)
+			this.vEmpty();
+		return this;
+	}
+
+	public Value vBlank() {
+		if (!this.todo)
+			return this;
+		if ((this.value != null && this.value.isEmpty()))
+			throw new UnitBreak(1001, "\"" + this.name + "\"不能空").setErrParam(this.code);
+		return this;
+	}
+
+	public Value vBlank(boolean todo) {
+		if (!this.todo)
+			return this;
+		if (todo)
+			this.vBlank();
+		return this;
+	}
+
+	public Value vLen(int length) {
+		if (!this.todo)
+			return this;
+		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() != length) {
+			throw new UnitBreak(1001, "\"" + this.name + "\"长度只能是" + length).setErrParam(this.code);
+		}
+		return this;
+	}
+
+	public Value vLen(boolean todo, int length) {
+		if (!this.todo)
+			return this;
+		if (todo)
+			this.vLen(length);
+		return this;
+	}
+
+	public Value vMinLen(int length) {
+		if (!this.todo)
+			return this;
+		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() < length) {
+			throw new UnitBreak(1001, "\"" + this.name + "\"长度最低" + length).setErrParam(this.code);
+		}
+		return this;
+	}
+
+	public Value vMinLen(boolean todo, int length) {
+		if (!this.todo)
+			return this;
+		if (todo)
+			this.vMinLen(length);
+		return this;
+	}
+
+	public Value vMaxLen(int length) {
+		if (!this.todo)
+			return this;
+		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() > length) {
+			throw new UnitBreak(1001, "\"" + this.name + "\"长度最大" + length).setErrParam(this.code);
+		}
+		return this;
+	}
+
+	public Value vMaxLen(boolean todo, int length) {
+		if (!this.todo)
+			return this;
+		if (todo)
+			this.vMaxLen(length);
+		return this;
+	}
+
+	public Value vMaxNum(float maxnum) {
+		if (!this.todo)
+			return this;
+		if (!isEmpty() && toFloat() > maxnum) {
+			throw new UnitBreak(1001, "\"" + this.name + "\"最大" + maxnum).setErrParam(this.code);
+		}
+		return this;
+	}
+
+	public Value vMaxNum(boolean todo, float maxnum) {
+		if (!this.todo)
+			return this;
+		if (todo)
+			this.vMaxNum(maxnum);
+		return this;
+	}
+
+	public Value vMinNum(float minnum) {
+		if (!this.todo)
+			return this;
+		if (!isEmpty() && toFloat() < minnum) {
+			throw new UnitBreak(1001, "\"" + this.name + "\"最小" + minnum).setErrParam(this.code);
+		}
+		return this;
+	}
+
+	public Value vMinNum(boolean todo, float minnum) {
+		if (!this.todo)
+			return this;
+		if (todo)
+			this.vMinNum(minnum);
+		return this;
+	}
+
+	public boolean isEmpty() {
+		if (this.value == null || this.value.isEmpty())
+			return true;
+		return false;
+	}
+
+	public boolean isNull() {
+		if (this.value == null)
+			return true;
+		return false;
+	}
+
+	public boolean isBlank() {
+		if (this.value != null && this.value.isEmpty())
+			return true;
+		return false;
+	}
+
+	public Value vLenRange(int min, int max) {
+		if (!this.todo)
+			return this;
+		vMinLen(min);
+		vMaxLen(max);
+		return this;
+	}
+
+	public Value vReg(String regex) {
+		if (!this.todo)
+			return this;
+		return vReg(regex, null);
+	}
+
+	public Value vReplace(String regex, String replace) {
+		if (!this.todo)
+			return this;
+		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty() && replace != null)
+			this.value = regexCache.getWithCreate(regex).matcher(this.value).replaceAll(replace);
+		return this;
+	}
+
+	public Value vReg(String regex, String note) {
+		if (!this.todo)
+			return this;
+		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty()) {
+			if (!regexCache.getWithCreate(regex).matcher(this.value).matches())
+				throw new UnitBreak(1001,
+						"\"" + this.name + "\"有误" + (note == null || note.isEmpty() ? "" : ",要求：" + note))
+								.setErrParam(this.code);
+		}
+		return this;
+	}
+
 	public String val() {
+		return this.value;
+	}
+
+	public String[] toSplitArr() {
+		if (this.splitArrValue != null)
+			return this.splitArrValue;
+		this.splitArrValue = isNull() ? null
+				: StringUtils.splitByWholeSeparatorPreserveAllTokens(this.value, this.separator);
+		return this.splitArrValue;
+	}
+
+	@Override
+	public String toString() {
 		return this.value;
 	}
 
@@ -103,198 +393,6 @@ public class Value {
 			return this.dateValue;
 		this.dateValue = isEmpty() ? null : toDate(this.value, this.datePattern);
 		return this.dateValue;
-	}
-
-	public Value setDatePattern(String datePattern) {
-		this.datePattern = datePattern;
-		return this;
-	}
-
-	public Value setSeparator(String separator) {
-		this.separator = separator;
-		return this;
-	}
-
-	public String[] toSplitArr() {
-		if (this.splitArrValue != null)
-			return this.splitArrValue;
-		this.splitArrValue = isNull() ? null
-				: StringUtils.splitByWholeSeparatorPreserveAllTokens(this.value, this.separator);
-		return this.splitArrValue;
-	}
-
-	@Override
-	public String toString() {
-		return this.value;
-	}
-
-	public static void main(String[] args) {
-		float a = 1.000000f;
-		System.out.println((a + "").replaceAll("\\.0*$", ""));
-	}
-
-	public Value vNull() {
-		if (this.value == null)
-			throw new UnitBreak(1001, "\"" + this.name + "\"不能空").setErrParam(this.code);
-		return this;
-	}
-
-	public Value vNull(boolean todo) {
-		if (todo)
-			this.vNull();
-		return this;
-	}
-
-	public Value vEmpty() {
-		if ((this.value == null || this.value.isEmpty()))
-			throw new UnitBreak(1001, "\"" + this.name + "\"不能空").setErrParam(this.code);
-		return this;
-	}
-
-	public Value vEmpty(boolean todo) {
-		if (todo)
-			this.vEmpty();
-		return this;
-	}
-
-	public Value vBlank() {
-		if ((this.value != null && this.value.isEmpty()))
-			throw new UnitBreak(1001, "\"" + this.name + "\"不能空").setErrParam(this.code);
-		return this;
-	}
-
-	public Value vBlank(boolean todo) {
-		if (todo)
-			this.vBlank();
-		return this;
-	}
-
-	public Value nullDef(String defaultValue) {
-		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
-		if (isNull() && defaultValue != null)
-			this.value = defaultValue;
-		return this;
-	}
-
-	public Value nullDef(boolean todo, String defaultValue) {
-		if (todo)
-			this.nullDef(defaultValue);
-		return this;
-	}
-
-	public Value blankDef(String defaultValue) {
-		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
-		if (isBlank() && defaultValue != null)
-			this.value = defaultValue;
-		return this;
-	}
-
-	public Value blankDef(boolean todo, String defaultValue) {
-		if (todo)
-			this.blankDef(defaultValue);
-		return this;
-	}
-
-	public Value emptyDef(String defaultValue) {
-		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
-		if (isEmpty() && defaultValue != null)
-			this.value = defaultValue;
-		return this;
-	}
-
-	public Value emptyDef(boolean todo, String defaultValue) {
-		if (todo)
-			this.emptyDef(defaultValue);
-		return this;
-	}
-
-	public Value vLen(int length) {
-		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() != length) {
-			throw new UnitBreak(1001, "\"" + this.name + "\"长度只能是" + length).setErrParam(this.code);
-		}
-		return this;
-	}
-
-	public Value vMaxLen(int length) {
-		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() > length) {
-			throw new UnitBreak(1001, "\"" + this.name + "\"长度最大" + length).setErrParam(this.code);
-		}
-		return this;
-	}
-
-	public Value vMaxNum(float maxnum) {
-		if (!isEmpty() && toFloat() > maxnum) {
-			throw new UnitBreak(1001, "\"" + this.name + "\"最大" + maxnum).setErrParam(this.code);
-		}
-		return this;
-	}
-
-	public Value vMinNum(float minnum) {
-		if (!isEmpty() && toFloat() < minnum) {
-			throw new UnitBreak(1001, "\"" + this.name + "\"最小" + minnum).setErrParam(this.code);
-		}
-		return this;
-	}
-
-	public boolean isEmpty() {
-		if (this.value == null || this.value.isEmpty())
-			return true;
-		return false;
-	}
-
-	public boolean isNull() {
-		if (this.value == null)
-			return true;
-		return false;
-	}
-
-	public boolean isBlank() {
-		if (this.value != null && this.value.isEmpty())
-			return true;
-		return false;
-	}
-
-	public Value vMinLen(int length) {
-		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() < length) {
-			throw new UnitBreak(1001, "\"" + this.name + "\"长度最低" + length).setErrParam(this.code);
-		}
-		return this;
-	}
-
-	public Value vLenRange(int min, int max) {
-		vMinLen(min);
-		vMaxLen(max);
-		return this;
-	}
-
-	public Value vReg(String regex) {
-		return vReg(regex, null);
-	}
-
-	public Value clear() {
-		this.splitArrValue = null;
-		this.dateValue = null;
-		this.intValue = null;
-		this.floatValue = null;
-		this.longValue = null;
-		this.decimalValue = null;
-		return this;
-	}
-
-	public Value vReplace(String regex, String replace) {
-		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty() && replace != null)
-			this.value = regexCache.getWithCreate(regex).matcher(this.value).replaceAll(replace);
-		return this;
-	}
-
-	public Value vReg(String regex, String note) {
-		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty()) {
-			if (!regexCache.getWithCreate(regex).matcher(this.value).matches())
-				throw new UnitBreak(1001,
-						"\"" + this.name + "\"有误" + (note == null || note.isEmpty() ? "" : ",要求：" + note))
-								.setErrParam(this.code);
-		}
-		return this;
 	}
 
 	public static Integer toInteger(Object value) {
