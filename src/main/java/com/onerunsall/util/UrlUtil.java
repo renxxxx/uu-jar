@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 
-public class UrlUtils {
+public class UrlUtil {
 
 	public static String buildPath(List<String> pathParts) {
 		return buildPath(pathParts.toArray(new String[] {}));
