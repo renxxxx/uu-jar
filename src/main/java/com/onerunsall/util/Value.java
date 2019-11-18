@@ -1,6 +1,7 @@
 package com.onerunsall.util;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.Pattern;
@@ -148,9 +149,8 @@ public class Value {
 		return this;
 	}
 
-	public static void main(String[] args) {
-		float a = 1.000000f;
-		System.out.println((a + "").replaceAll("\\.0*$", ""));
+	public static void main(String[] args) throws ParseException {
+		System.out.println(new SimpleDateFormat("yyyy/MM/dd").parse("2019/6/15"));
 	}
 
 	public Value todo(boolean todo) {
@@ -449,6 +449,10 @@ public class Value {
 			}
 			try {
 				return new SimpleDateFormat("yyyy-MM-dd").parse(value.toString());
+			} catch (Exception e) {
+			}
+			try {
+				return new SimpleDateFormat("yyyy/MM/dd").parse(value.toString());
 			} catch (Exception e) {
 			}
 			try {
