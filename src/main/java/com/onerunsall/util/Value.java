@@ -418,6 +418,10 @@ public class Value {
 		return this.dateValue;
 	}
 
+	public void bomb(String message) {
+		throw new UnitBreak(1001, "\"" + this.name + "\"" + message).setErrParam(this.code);
+	}
+
 	public static Integer toInteger(Object value) {
 		if (value == null)
 			return null;
