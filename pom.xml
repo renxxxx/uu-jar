@@ -5,7 +5,7 @@
 
 	<groupId>com.onerunsall</groupId>
 	<artifactId>util</artifactId>
-	<version>1.3.1.1</version>
+	<version>201911220951-56f5be7</version>
 	<packaging>jar</packaging>
 
 	<name>util</name>
