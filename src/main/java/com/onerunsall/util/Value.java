@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
@@ -43,11 +44,16 @@ public class Value {
 		return this;
 	}
 
-	public static Value build(String name, String code, String value) {
+	public static Value build(String name, String code, String... values) {
 		Value param = new Value();
 		param.name = name;
 		param.code = code;
-		param.value = value;
+		for (String value : values) {
+			if (value != null) {
+				param.value = value;
+				break;
+			}
+		}
 		return param;
 	}
 
@@ -448,6 +454,10 @@ public class Value {
 			} catch (Exception e) {
 			}
 			try {
+				return new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").parse(value.toString());
+			} catch (Exception e) {
+			}
+			try {
 				return new SimpleDateFormat("yyyy-MM-dd").parse(value.toString());
 			} catch (Exception e) {
 			}
@@ -468,12 +478,13 @@ public class Value {
 	}
 
 	public static Date toDate(Object value, String pattern) {
-		Date date = toDate(value);
+		Date date = null;
+		try {
+			date = new SimpleDateFormat(pattern).parse(value.toString());
+		} catch (Exception e) {
+		}
 		if (date == null)
-			try {
-				date = new SimpleDateFormat(pattern).parse(value.toString());
-			} catch (Exception e) {
-			}
+			date = toDate(value);
 		return date;
 	}
 
