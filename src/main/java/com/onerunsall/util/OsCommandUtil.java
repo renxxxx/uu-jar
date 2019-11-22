@@ -20,7 +20,7 @@ public class OsCommandUtil {
 	public static Logger logger = Logger.getLogger(OsCommandUtil.class);
 
 	public static void exec(String commandLinux, String commandWindows) throws IOException, InterruptedException {
-		String command = OtherUtils.isLinux() ? commandLinux : OtherUtils.isWindows() ? commandWindows : null;
+		String command = OtherUtil.isLinux() ? commandLinux : OtherUtil.isWindows() ? commandWindows : null;
 		logger.debug(command);
 		if (command == null) {
 			logger.debug("unknown os,can`t run the command specified");

@@ -80,6 +80,23 @@ public class Value {
 		return this;
 	}
 
+	public Value trimToNull() {
+		if (!this.todo)
+			return this;
+		if (this.value != null && this.value.trim().isEmpty())
+			this.value = null;
+		return this;
+	}
+
+	public Value trimToBlank() {
+		if (!this.todo)
+			return this;
+		if (this.value == null)
+			this.value = "";
+		this.value = this.value.trim();
+		return this;
+	}
+
 	public Value trimLeft() {
 		if (!this.todo)
 			return this;
