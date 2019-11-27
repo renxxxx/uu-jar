@@ -361,7 +361,7 @@ public class Value {
 	public Value vRegNot(String regex) {
 		if (!this.todo)
 			return this;
-		return vReg(regex, null);
+		return vRegNot(regex, null);
 	}
 
 	public Value vRegNot(String regex, String note) {
