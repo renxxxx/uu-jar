@@ -346,14 +346,6 @@ public class Value {
 		return vReg(regex, null);
 	}
 
-	public Value vReplace(String regex, String replace) {
-		if (!this.todo)
-			return this;
-		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty() && replace != null)
-			this.value = regexCache.getWithCreate(regex).matcher(this.value).replaceAll(replace);
-		return this;
-	}
-
 	public Value vReg(String regex, String note) {
 		if (!this.todo)
 			return this;
@@ -363,6 +355,32 @@ public class Value {
 						"\"" + this.name + "\"有误" + (note == null || note.isEmpty() ? "" : ",要求：" + note))
 								.setErrParam(this.code);
 		}
+		return this;
+	}
+
+	public Value vRegNot(String regex) {
+		if (!this.todo)
+			return this;
+		return vReg(regex, null);
+	}
+
+	public Value vRegNot(String regex, String note) {
+		if (!this.todo)
+			return this;
+		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty()) {
+			if (regexCache.getWithCreate(regex).matcher(this.value).matches())
+				throw new UnitBreak(1001,
+						"\"" + this.name + "\"有误" + (note == null || note.isEmpty() ? "" : ",要求：" + note))
+								.setErrParam(this.code);
+		}
+		return this;
+	}
+
+	public Value vReplace(String regex, String replace) {
+		if (!this.todo)
+			return this;
+		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty() && replace != null)
+			this.value = regexCache.getWithCreate(regex).matcher(this.value).replaceAll(replace);
 		return this;
 	}
 
