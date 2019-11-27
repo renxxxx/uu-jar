@@ -422,6 +422,35 @@ public class Value {
 		throw new UnitBreak(1001, "\"" + this.name + "\"" + message).setErrParam(this.code);
 	}
 
+	public boolean equals(String object) {
+		if (this.value == object)
+			return true;
+		return this.value.equals(object);
+	}
+
+	public Value toLowerCase() {
+		if (this.value != null)
+			this.value = this.value.toLowerCase();
+		return this;
+	}
+
+	public Value toUpperCase() {
+		if (this.value != null)
+			this.value = this.value.toUpperCase();
+		return this;
+	}
+
+	public Value replaceAll(String regex, String replacement) {
+		if (this.value != null)
+			this.value = this.value.replaceAll(regex, replacement);
+		return this;
+	}
+
+	public Value set(String value) {
+		this.value = value;
+		return this;
+	}
+
 	public static Integer toInteger(Object value) {
 		if (value == null)
 			return null;
