@@ -176,8 +176,9 @@ public class Value {
 		System.out.println(new SimpleDateFormat("yyyy/MM/dd").parse("2019/6/15"));
 	}
 
-	public Value todo(boolean todo) {
-		this.todo = todo;
+	public Value stop(boolean todo) {
+		if (todo)
+			this.todo = false;
 		return this;
 	}
 
@@ -384,6 +385,14 @@ public class Value {
 		return this;
 	}
 
+	public Value vReplace(String regex, String replace, boolean todo) {
+		if (!this.todo)
+			return this;
+		if (todo)
+			return vReplace(regex, replace);
+		return this;
+	}
+
 	public String val() {
 		return this.value;
 	}
@@ -447,18 +456,24 @@ public class Value {
 	}
 
 	public Value toLowerCase() {
+		if (!this.todo)
+			return this;
 		if (this.value != null)
 			this.value = this.value.toLowerCase();
 		return this;
 	}
 
 	public Value toUpperCase() {
+		if (!this.todo)
+			return this;
 		if (this.value != null)
 			this.value = this.value.toUpperCase();
 		return this;
 	}
 
 	public Value replaceAll(String regex, String replacement) {
+		if (!this.todo)
+			return this;
 		if (this.value != null)
 			this.value = this.value.replaceAll(regex, replacement);
 		return this;
