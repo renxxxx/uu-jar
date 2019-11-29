@@ -479,6 +479,42 @@ public class Value {
 		return this;
 	}
 
+	public Value substring(int beginIndex, int endIndex) {
+		if (!this.todo)
+			return this;
+		if (this.value != null)
+			this.value = this.value.substring(beginIndex, endIndex);
+		return this;
+	}
+
+	public Value substring(int beginIndex) {
+		if (!this.todo)
+			return this;
+		if (this.value != null)
+			this.value = this.value.substring(beginIndex);
+		return this;
+	}
+
+	public Value concat(String str) {
+		if (!this.todo)
+			return this;
+		if (this.value != null)
+			this.value = this.value.concat(str);
+		return this;
+	}
+
+	public boolean startsWith(String prefix) {
+		if (this.value != null)
+			return this.value.startsWith(prefix);
+		return false;
+	}
+
+	public boolean endsWith(String suffix) {
+		if (this.value != null)
+			return this.value.endsWith(suffix);
+		return false;
+	}
+
 	public Value set(String value) {
 		this.value = value;
 		return this;
