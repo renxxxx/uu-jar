@@ -100,12 +100,12 @@ public class StrUtil {
 
 	public static String newId() {
 		return new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date())
-				+ RandomStringUtils.randomNumeric(15).replaceAll("0", "");
+				+ RandomStringUtils.randomNumeric(15).replaceAll("0", "1");
 	}
 
 	public static String newId(String suffix) {
 		return new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date())
-				+ RandomStringUtils.randomNumeric(15 - suffix.length()).replaceAll("0", "") + suffix;
+				+ RandomStringUtils.randomNumeric(15 - suffix.length()).replaceAll("0", "1") + suffix;
 	}
 
 	public static void main(String[] args) {
