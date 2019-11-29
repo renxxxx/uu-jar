@@ -1,7 +1,9 @@
 package com.onerunsall.util;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
@@ -14,18 +16,23 @@ import com.alibaba.fastjson.JSONObject;
 public class ServletUtil {
 	public static Logger logger = Logger.getLogger(ServletUtil.class);
 
-	public static JSONObject headersToJson(HttpServletRequest request) {
-		JSONObject j = new JSONObject(true);
+	public static Map<String, List<String>> headerMap(HttpServletRequest request) {
+		Map<String, List<String>> headerMap = new LinkedHashMap<String, List<String>>();
 		Enumeration<String> names = request.getHeaderNames();
 		while (names.hasMoreElements()) {
 			String name = (String) names.nextElement();
-			String value = request.getHeader(name);
-			j.put(name, value);
+			Enumeration<String> ve = request.getHeaders(name);
+
+			List<String> valueList = new ArrayList<String>();
+			while (ve.hasMoreElements()) {
+				valueList.add(ve.nextElement());
+			}
+			headerMap.put(name, valueList);
 		}
-		return j;
+		return headerMap;
 	}
 
-	public static Map<String, Cookie> getCookieMap(HttpServletRequest request) {
+	public static Map<String, Cookie> cookieMap(HttpServletRequest request) {
 		Map<String, Cookie> cookieMap = new LinkedHashMap<String, Cookie>();
 		Cookie[] cookies = request.getCookies();
 		if (cookies == null || cookies.length == 0)
@@ -59,7 +66,7 @@ public class ServletUtil {
 //		request.setAttribute("parameterMap", parameterMap);
 //	}
 
-	public static String getClientAddr(HttpServletRequest request) {
+	public static String getClientIp(HttpServletRequest request) {
 		String value = null;
 		value = request.getHeader("X-Real-IP");
 		if (value != null && !value.isEmpty())
@@ -81,7 +88,7 @@ public class ServletUtil {
 		return null;
 	}
 
-	public static String getClientDoScheme(HttpServletRequest request) {
+	public static String getClientScheme(HttpServletRequest request) {
 		String value = null;
 		value = request.getHeader("X-Forwarded-Scheme");
 		if (value != null && !value.isEmpty())
@@ -92,7 +99,7 @@ public class ServletUtil {
 		return value;
 	}
 
-	public static String getClientDoHost(HttpServletRequest request) {
+	public static String getClientHost(HttpServletRequest request) {
 		String value = null;
 		value = request.getHeader("remote-host");
 		if (value != null && !value.isEmpty())
