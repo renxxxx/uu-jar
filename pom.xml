@@ -3,10 +3,9 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-
 	<groupId>com.onerunsall</groupId>
 	<artifactId>util</artifactId>
-	<version>11291442-fed66f5</version>
+	<version>11291449-f606a97</version>
 	<packaging>jar</packaging>
 
 	<name>util</name>
