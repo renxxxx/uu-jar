@@ -49,7 +49,7 @@ public class Value {
 		param.name = name;
 		param.code = code;
 		for (String value : values) {
-			if (value != null) {
+			if (value != null && value != "null" && value != "undefined") {
 				param.value = value;
 				break;
 			}
