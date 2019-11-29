@@ -19,6 +19,8 @@ public class UrlUtil {
 	public static String buildPath(String... pathParts) {
 		String url = "";
 		for (int i = 0; i < pathParts.length; i++) {
+			if (StringUtils.isEmpty(pathParts[i]))
+				continue;
 			if (i == pathParts.length - 1)
 				url = url + pathParts[i];
 			else
