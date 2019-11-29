@@ -1,10 +1,13 @@
 package com.onerunsall.util;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.log4j.Logger;
 
 import com.alibaba.fastjson.JSON;
@@ -93,6 +96,16 @@ public class StrUtil {
 				return false;
 		}
 		return true;
+	}
+
+	public static String newId() {
+		return new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date())
+				+ RandomStringUtils.randomNumeric(15).replaceAll("0", "");
+	}
+
+	public static String newId(String suffix) {
+		return new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date())
+				+ RandomStringUtils.randomNumeric(15 - suffix.length()).replaceAll("0", "") + suffix;
 	}
 
 	public static void main(String[] args) {
