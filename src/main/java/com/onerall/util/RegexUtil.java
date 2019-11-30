@@ -1,4 +1,4 @@
-package com.onerunsall.util;
+package com.onerall.util;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

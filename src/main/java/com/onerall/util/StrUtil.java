@@ -1,4 +1,4 @@
-package com.onerunsall.util;
+package com.onerall.util;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

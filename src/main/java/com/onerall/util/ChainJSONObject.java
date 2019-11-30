@@ -1,4 +1,4 @@
-package com.onerunsall.util;
+package com.onerall.util;
 
 import com.alibaba.fastjson.JSONObject;
 

@@ -1,4 +1,4 @@
-package com.onerunsall.util;
+package com.onerall.util;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
