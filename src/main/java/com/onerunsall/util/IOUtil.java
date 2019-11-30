@@ -71,10 +71,27 @@ public class IOUtil {
 
 	}
 
-	public static int write(File in, OutputStream os) throws Exception {
+	public static void write(String string, File file) throws Exception {
+		OutputStream os = null;
+		try {
+			if (!file.getParentFile().exists())
+				file.getParentFile().mkdirs();
+			if (!file.exists())
+				file.createNewFile();
+			os = new FileOutputStream(file);
+			org.apache.commons.io.IOUtils.write(string, os);
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			if (os != null)
+				os.close();
+		}
+	}
+
+	public static int write(File file, OutputStream os) throws Exception {
 		InputStream is = null;
 		try {
-			is = new FileInputStream(in);
+			is = new FileInputStream(file);
 			return org.apache.commons.io.IOUtils.copy(is, os);
 		} catch (Exception e) {
 			throw e;
@@ -84,14 +101,14 @@ public class IOUtil {
 		}
 	}
 
-	public static int write(InputStream is, File out) throws Exception {
+	public static int write(InputStream is, File file) throws Exception {
 		OutputStream os = null;
 		try {
-			if (!out.getParentFile().exists())
-				out.getParentFile().mkdirs();
-			if (!out.exists())
-				out.createNewFile();
-			os = new FileOutputStream(out);
+			if (!file.getParentFile().exists())
+				file.getParentFile().mkdirs();
+			if (!file.exists())
+				file.createNewFile();
+			os = new FileOutputStream(file);
 			return org.apache.commons.io.IOUtils.copy(is, os);
 		} catch (Exception e) {
 			throw e;
