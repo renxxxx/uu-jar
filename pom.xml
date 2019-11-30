@@ -2,9 +2,10 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.onerunsall</groupId>
+
+	<groupId>com.oneall</groupId>
 	<artifactId>util</artifactId>
-	<version>11301503-7fd3ebe</version>
+	<version>11302208-6c95980</version>
 	<packaging>jar</packaging>
 
 	<name>util</name>
