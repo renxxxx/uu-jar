@@ -6,6 +6,8 @@ public class UnitBreak extends RuntimeException {
 	protected String codeMsg = null;
 	protected Object data = null;
 	protected String requestId = null;
+	protected String codeMsgEn = null;
+	protected String codeMsgCn = null;
 
 	public UnitBreak(int code) {
 		super(code + "");
@@ -37,6 +39,16 @@ public class UnitBreak extends RuntimeException {
 
 	public UnitBreak setCodeMsg(String codeMsg) {
 		this.codeMsg = codeMsg;
+		return this;
+	}
+
+	public UnitBreak setCodeMsgCn(String codeMsgCn) {
+		this.codeMsgCn = codeMsgCn;
+		return this;
+	}
+
+	public UnitBreak setCodeMsgEn(String codeMsgEn) {
+		this.codeMsgEn = codeMsgEn;
 		return this;
 	}
 
