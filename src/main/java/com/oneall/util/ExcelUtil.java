@@ -1,4 +1,4 @@
-package com.onerall.util;
+package com.oneall.util;
 
 import java.io.File;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package com.onerall.util;
+package com.oneall.util;
 
 import java.sql.SQLException;
 import java.util.Collections;
