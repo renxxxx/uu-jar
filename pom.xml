@@ -4,9 +4,8 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.oneall</groupId>
 	<artifactId>util</artifactId>
-	<version>11302212-ae4dcd6</version>
+	<version>11302221-1eed046</version>
 	<packaging>jar</packaging>
-
 	<name>util</name>
 	<url>http://maven.apache.org</url>
 
