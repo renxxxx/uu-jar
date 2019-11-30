@@ -52,6 +52,14 @@ public class UnitBreak extends RuntimeException {
 		return this;
 	}
 
+	public String getCodeMsgEn() {
+		return codeMsgEn;
+	}
+
+	public String getCodeMsgCn() {
+		return codeMsgCn;
+	}
+
 	public UnitBreak setCode(int code) {
 		this.code = code;
 		return this;
