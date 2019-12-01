@@ -507,6 +507,12 @@ public class Value {
 		return this;
 	}
 
+	public boolean contains(String prefix) {
+		if (this.value != null)
+			return this.value.contains(prefix);
+		return false;
+	}
+
 	public boolean startsWith(String prefix) {
 		if (this.value != null)
 			return this.value.startsWith(prefix);
