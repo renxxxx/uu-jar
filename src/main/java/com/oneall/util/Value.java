@@ -57,6 +57,10 @@ public class Value {
 		return param;
 	}
 
+	public static Value build(String... values) {
+		return build(null, null, values);
+	}
+
 	public Value suffix(String suffix) {
 		if (!this.todo)
 			return this;
