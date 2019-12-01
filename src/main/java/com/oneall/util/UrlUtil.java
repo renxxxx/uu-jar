@@ -12,6 +12,25 @@ import org.apache.commons.lang3.StringUtils;
 
 public class UrlUtil {
 
+	public static String getName(String url) {
+		return url.replaceAll("\\.[^\\.]*$", "");
+	}
+
+	public static String removeExt(String str) {
+		return str.replaceAll("\\.[^\\.]*$", "");
+	}
+
+	public static String getExt(String str) {
+		Pattern p = Pattern.compile("^.*\\.(.*)$");
+		Matcher matcher = p.matcher(getName(str));
+		matcher.matches();
+		try {
+			return matcher.group(1);
+		} catch (RuntimeException e) {
+			return "";
+		}
+	}
+
 	public static String buildPath(List<String> pathParts) {
 		return buildPath(pathParts.toArray(new String[] {}));
 	}
@@ -54,10 +73,12 @@ public class UrlUtil {
 		System.out.println(getExtName("aa"));
 	}
 
+	@Deprecated
 	public static String stripExtName(String name) {
 		return name.replaceAll("\\.[^\\.]*$", "");
 	}
 
+	@Deprecated
 	public static String getExtName(String name) {
 		Pattern p = Pattern.compile("^.*\\.(.*)$");
 		Matcher matcher = p.matcher(name);
