@@ -21,7 +21,7 @@ public class Database {
 		Database database = new Database("com.mysql.cj.jdbc.Driver",
 				"jdbc:mysql://47.110.157.60:54987/zaylt_prod?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC",
 				"prod", "wqArF1wH#qJ@erT33Y3");
-		Connection connection = database.on();
+		Connection connection = database.connect();
 		for (int j = 0; j < 4; j++) {
 			List<Map> rows = JdbcUtil.queryList(connection, "select * from t_patient ");
 			for (int i = 0; i < rows.size(); i++) {
@@ -65,24 +65,28 @@ public class Database {
 		this.dataSource = dataSource;
 	}
 
-	public Connection on(Connection connection) throws SQLException {
+	public Connection connect(Connection connection) throws SQLException {
 		if (connection == null)
 			connection = dataSource.getConnection();
 		return connection;
 	}
 
-	public Connection on() throws SQLException {
-		return on(null);
+	public Connection connect() throws SQLException {
+		return connect(null);
 	}
 
-	public boolean subBeginCommitable(Connection connection) throws SQLException {
-		if (connection == null || connection.getAutoCommit())
-			return true;
-		return false;
+	public boolean inCommitable(Connection connection) throws SQLException {
+		return connection.getAutoCommit();
+	}
+
+	public Connection in(Connection connection) throws SQLException {
+		if (connection.getAutoCommit())
+			connection.setAutoCommit(false);
+		return connection;
 	}
 
 	public Connection begin(Connection connection) throws SQLException {
-		connection = on(connection);
+		connection = connect(connection);
 		if (connection != null && connection.getAutoCommit())
 			connection.setAutoCommit(false);
 		return connection;
@@ -90,6 +94,11 @@ public class Database {
 
 	public Connection begin() throws SQLException {
 		return begin(null);
+	}
+
+	public void commit(Connection connection, boolean inCommitable) throws SQLException {
+		if (inCommitable && connection != null && !connection.getAutoCommit())
+			connection.commit();
 	}
 
 	public void commit(Connection connection) throws SQLException {
