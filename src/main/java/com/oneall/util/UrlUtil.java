@@ -12,14 +12,17 @@ import org.apache.commons.lang3.StringUtils;
 
 public class UrlUtil {
 
+	// TODO
 	public static String getName(String url) {
 		return url.replaceAll("\\.[^\\.]*$", "");
 	}
 
+	// TODO
 	public static String removeExt(String str) {
 		return str.replaceAll("\\.[^\\.]*$", "");
 	}
 
+	// TODO
 	public static String getExt(String str) {
 		Pattern p = Pattern.compile("^.*\\.(.*)$");
 		Matcher matcher = p.matcher(getName(str));
