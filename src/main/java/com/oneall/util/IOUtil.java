@@ -146,16 +146,16 @@ public class IOUtil {
 				if (!deleteRecursion(fileTmp))
 					return false;
 			}
-			logger.info("delete " + file.getAbsolutePath());
+			logger.debug("delete " + file.getAbsolutePath());
 			return file.delete();
 		} else {
-			logger.info("delete " + file.getAbsolutePath());
+			logger.debug("delete " + file.getAbsolutePath());
 			return file.delete();
 		}
 	}
 
 	public static boolean deleteFileUpEmpty(File file, File endFolder) {
-		logger.info("delete " + file.getAbsolutePath());
+		logger.debug("delete " + file.getAbsolutePath());
 		boolean success = file.delete();
 		if (file.getParentFile().list().length == 0
 				&& !file.getParentFile().getAbsolutePath().equals(endFolder.getAbsolutePath())) {

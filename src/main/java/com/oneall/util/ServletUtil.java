@@ -111,12 +111,12 @@ public class ServletUtil {
 	}
 
 //	public static void logParameters(HttpServletRequest request) {
-//		logger.info("parameters");
+//		logger.debug("parameters");
 //		Map<String, String[]> map = request.getParameterMap();
 //		Iterator<String> itr = map.keySet().iterator();
 //		while (itr.hasNext()) {
 //			String key = itr.next();
-//			logger.info(key + ":" + Arrays.toString(map.get(key)));
+//			logger.debug(key + ":" + Arrays.toString(map.get(key)));
 //		}
 //	}
 
