@@ -11,7 +11,7 @@ import javax.sql.DataSource;
 
 public class Database {
 
-	public static DataSource dataSource;
+	private static DataSource dataSource;
 
 	public static void m2() throws Exception {
 		System.out.println(StrUtil.newId());
@@ -55,7 +55,7 @@ public class Database {
 		tomcatJdbcPoolDataSource.setUsername(username);
 		tomcatJdbcPoolDataSource.setPassword(password);
 		tomcatJdbcPoolDataSource.setTestOnBorrow(true);
-		tomcatJdbcPoolDataSource.setDefaultAutoCommit(true);
+		tomcatJdbcPoolDataSource.setDefaultAutoCommit(false);
 		tomcatJdbcPoolDataSource.setRollbackOnReturn(true);
 		tomcatJdbcPoolDataSource.setValidationQuery("SELECT 1");
 		dataSource = tomcatJdbcPoolDataSource;
@@ -66,17 +66,15 @@ public class Database {
 	}
 
 	public Connection connect(Connection connection) throws SQLException {
-		if (connection == null)
+		if (connection == null) {
 			connection = dataSource.getConnection();
+			connection.setAutoCommit(false);
+		}
 		return connection;
 	}
 
 	public Connection connect() throws SQLException {
 		return connect(null);
-	}
-
-	public boolean inCommitable(Connection connection) throws SQLException {
-		return connection.getAutoCommit();
 	}
 
 	public Connection in(Connection connection) throws SQLException {
@@ -85,19 +83,8 @@ public class Database {
 		return connection;
 	}
 
-	public Connection begin(Connection connection) throws SQLException {
-		connection = connect(connection);
-		if (connection != null && connection.getAutoCommit())
-			connection.setAutoCommit(false);
-		return connection;
-	}
-
-	public Connection begin() throws SQLException {
-		return begin(null);
-	}
-
-	public void commit(Connection connection, boolean inCommitable) throws SQLException {
-		if (inCommitable && connection != null && !connection.getAutoCommit())
+	public void commit(Connection connection, boolean commitable) throws SQLException {
+		if (commitable && connection != null && !connection.getAutoCommit())
 			connection.commit();
 	}
 
