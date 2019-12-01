@@ -99,8 +99,10 @@ public class Database {
 	}
 
 	public void close(Connection connection) throws SQLException {
-		if (connection != null)
+		if (connection != null) {
+			rollback(connection);
 			connection.close();
+		}
 	}
 
 }
