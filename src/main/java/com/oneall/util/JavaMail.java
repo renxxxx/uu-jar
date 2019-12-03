@@ -8,15 +8,15 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-public class JavaMailUtil {
+public class JavaMail {
 	public static void main(String[] args) throws Exception {
-		JavaMailUtil j = new JavaMailUtil("smtp.qq.com", "smtp", "true", "413038044@qq.com", "pzivczucpondbhhh",
+		JavaMail j = new JavaMail("smtp.qq.com", "smtp", "true", "413038044@qq.com", "pzivczucpondbhhh",
 				"413038044@qq.com");
 
 		j.send("413038044@qq.com", "aq123123d", "qqqq");
 	}
 
-	public JavaMailUtil(String host, String protocol, String smtpAuth, String user, String pwd, String sender) {
+	public JavaMail(String host, String protocol, String smtpAuth, String user, String pwd, String sender) {
 		super();
 		this.host = host;
 		this.protocol = protocol;
