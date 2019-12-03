@@ -8,6 +8,7 @@ public class UnitBreak extends RuntimeException {
 	protected String requestId = null;
 	protected String codeMsgEn = null;
 	protected String codeMsgCn = null;
+	protected String debug = null;
 
 	public UnitBreak(int code) {
 		super(code + "");
@@ -58,6 +59,15 @@ public class UnitBreak extends RuntimeException {
 
 	public String getCodeMsgCn() {
 		return codeMsgCn;
+	}
+
+	public String getDebug() {
+		return debug;
+	}
+
+	public UnitBreak setDebug(String debug) {
+		this.debug = debug;
+		return this;
 	}
 
 	public UnitBreak setCode(int code) {
