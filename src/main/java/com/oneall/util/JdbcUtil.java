@@ -50,7 +50,7 @@ public class JdbcUtil {
 		}
 	}
 
-	public static InputStream queryOneStream(Connection conn, String sql, Object... params) throws Exception {
+	public static InputStream queryStream(Connection conn, String sql, Object... params) throws Exception {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
@@ -67,38 +67,38 @@ public class JdbcUtil {
 		}
 	}
 
-	public static Integer queryOneInteger(Connection conn, String sql, Object... params) throws Exception {
-		return Value.toInteger(queryOneColumn(conn, sql, params));
+	public static Integer queryInteger(Connection conn, String sql, Object... params) throws Exception {
+		return Value.toInteger(queryColumn(conn, sql, params));
 	}
 
-	public static String queryOneString(Connection conn, String sql, Object... params) throws Exception {
-		return Value.toString(queryOneColumn(conn, sql, params));
+	public static String queryString(Connection conn, String sql, Object... params) throws Exception {
+		return Value.toString(queryColumn(conn, sql, params));
 	}
 
-	public static BigDecimal queryOneDecimal(Connection conn, String sql, Object... params) throws Exception {
-		return Value.toDecimal(queryOneColumn(conn, sql, params));
+	public static BigDecimal queryDecimal(Connection conn, String sql, Object... params) throws Exception {
+		return Value.toDecimal(queryColumn(conn, sql, params));
 	}
 
-	public static Long queryOneLong(Connection conn, String sql, Object... params) throws Exception {
-		return Value.toLong(queryOneColumn(conn, sql, params));
+	public static Long queryLong(Connection conn, String sql, Object... params) throws Exception {
+		return Value.toLong(queryColumn(conn, sql, params));
 	}
 
-	public static Float queryOneFloat(Connection conn, String sql, Object... params) throws Exception {
-		return Value.toFloat(queryOneColumn(conn, sql, params));
+	public static Float queryFloat(Connection conn, String sql, Object... params) throws Exception {
+		return Value.toFloat(queryColumn(conn, sql, params));
 	}
 
-	public static Date queryOneDate(Connection conn, String sql, Object... params) throws Exception {
-		return Value.toDate(queryOneColumn(conn, sql, params));
+	public static Date queryDate(Connection conn, String sql, Object... params) throws Exception {
+		return Value.toDate(queryColumn(conn, sql, params));
 	}
 
-	public static Object queryOneColumn(Connection conn, String sql, Object... params) throws Exception {
-		Map row = queryOne(conn, sql, params);
+	public static Object queryColumn(Connection conn, String sql, Object... params) throws Exception {
+		Map row = query(conn, sql, params);
 		if (row == null)
 			return null;
 		return row.get(row.keySet().iterator().next());
 	}
 
-	public static Map queryOne(Connection conn, String sql, Object... params) throws Exception {
+	public static Map query(Connection conn, String sql, Object... params) throws Exception {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
