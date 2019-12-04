@@ -345,6 +345,42 @@ public class Value {
 		return this;
 	}
 
+	public Value vReg(Pattern regex) {
+		if (!this.todo)
+			return this;
+		return vReg(regex, null);
+	}
+
+	public Value vReg(Pattern regex, String note) {
+		if (!this.todo)
+			return this;
+		if (this.value != null && !this.value.isEmpty() && regex != null) {
+			if (!regex.matcher(this.value).matches())
+				throw new UnitBreak(1001,
+						"\"" + this.name + "\"有误" + (note == null || note.isEmpty() ? "" : ",要求：" + note))
+								.setErrParam(this.code);
+		}
+		return this;
+	}
+
+	public Value vRegNot(Pattern regex) {
+		if (!this.todo)
+			return this;
+		return vRegNot(regex, null);
+	}
+
+	public Value vRegNot(Pattern regex, String note) {
+		if (!this.todo)
+			return this;
+		if (this.value != null && !this.value.isEmpty() && regex != null) {
+			if (regex.matcher(this.value).matches())
+				throw new UnitBreak(1001,
+						"\"" + this.name + "\"有误" + (note == null || note.isEmpty() ? "" : ",要求：" + note))
+								.setErrParam(this.code);
+		}
+		return this;
+	}
+
 	public Value vReg(String regex) {
 		if (!this.todo)
 			return this;
