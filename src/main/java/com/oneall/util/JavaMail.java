@@ -10,15 +10,17 @@ import javax.mail.internet.MimeMessage;
 
 public class JavaMail {
 	public static void main(String[] args) throws Exception {
-		JavaMail j = new JavaMail("smtp.qq.com", "smtp", "true", "413038044@qq.com", "pzivczucpondbhhh",
+		JavaMail j = new JavaMail("smtp.qq.com", 25, "smtp", "true", "413038044@qq.com", "pzivczucpondbhhh",
 				"413038044@qq.com");
 
 		j.send("413038044@qq.com", "aq123123d", "qqqq");
 	}
 
-	public JavaMail(String host, String protocol, String smtpAuth, String user, String pwd, String sender) {
+	public JavaMail(String host, Integer port, String protocol, String smtpAuth, String user, String pwd,
+			String sender) {
 		super();
 		this.host = host;
+		this.port = port;
 		this.protocol = protocol;
 		this.smtpAuth = smtpAuth;
 		this.user = user;
@@ -27,6 +29,7 @@ public class JavaMail {
 	}
 
 	private String host;
+	private Integer port;
 	private String protocol;
 	private String smtpAuth;
 	private String user;
@@ -38,6 +41,7 @@ public class JavaMail {
 		prop.setProperty("mail.host", host);
 		prop.setProperty("mail.transport.protocol", protocol);
 		prop.setProperty("mail.smtp.auth", smtpAuth);
+		prop.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 		// 使用JavaMail发送邮件的5个步骤
 		// 1、创建session
 		Session session = Session.getInstance(prop);
@@ -46,7 +50,10 @@ public class JavaMail {
 		// 2、通过session得到transport对象
 		Transport ts = session.getTransport();
 		// 3、连上邮件服务器
-		ts.connect(host, user, pwd);
+		if (port == null)
+			ts.connect(host, user, pwd);
+		else
+			ts.connect(host, port, user, pwd);
 
 		// 4、创建邮件
 		// 创建邮件对象
