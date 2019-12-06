@@ -492,6 +492,8 @@ public class Value {
 	public boolean equals(String object) {
 		if (this.value == object)
 			return true;
+		if (this.value == null && object != null)
+			return false;
 		return this.value.equals(object);
 	}
 
