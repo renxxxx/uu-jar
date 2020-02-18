@@ -68,27 +68,27 @@ public class JdbcUtil {
 	}
 
 	public static Integer queryInteger(Connection conn, String sql, Object... sqlParams) throws Exception {
-		return Value.toInteger(queryColumn(conn, sql, sqlParams));
+		return Param.toInteger(queryColumn(conn, sql, sqlParams));
 	}
 
 	public static String queryString(Connection conn, String sql, Object... sqlParams) throws Exception {
-		return Value.toString(queryColumn(conn, sql, sqlParams));
+		return Param.toString(queryColumn(conn, sql, sqlParams));
 	}
 
 	public static BigDecimal queryDecimal(Connection conn, String sql, Object... sqlParams) throws Exception {
-		return Value.toDecimal(queryColumn(conn, sql, sqlParams));
+		return Param.toDecimal(queryColumn(conn, sql, sqlParams));
 	}
 
 	public static Long queryLong(Connection conn, String sql, Object... sqlParams) throws Exception {
-		return Value.toLong(queryColumn(conn, sql, sqlParams));
+		return Param.toLong(queryColumn(conn, sql, sqlParams));
 	}
 
 	public static Float queryFloat(Connection conn, String sql, Object... sqlParams) throws Exception {
-		return Value.toFloat(queryColumn(conn, sql, sqlParams));
+		return Param.toFloat(queryColumn(conn, sql, sqlParams));
 	}
 
 	public static Date queryDate(Connection conn, String sql, Object... sqlParams) throws Exception {
-		return Value.toDate(queryColumn(conn, sql, sqlParams));
+		return Param.toDate(queryColumn(conn, sql, sqlParams));
 	}
 
 	public static Object queryColumn(Connection conn, String sql, Object... sqlParams) throws Exception {
