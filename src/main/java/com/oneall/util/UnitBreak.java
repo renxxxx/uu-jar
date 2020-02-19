@@ -1,6 +1,7 @@
 package com.oneall.util;
 
 public class UnitBreak extends RuntimeException {
+
 	protected int code = 0;
 	protected String errParam = null;
 	protected String codeMsg = null;
@@ -10,37 +11,19 @@ public class UnitBreak extends RuntimeException {
 	protected String codeMsgCn = null;
 	protected String debug = null;
 
+	public UnitBreak(int code, String codeMsg) {
+		super(code + " - " + codeMsg);
+		this.code = code;
+		this.codeMsg = codeMsg;
+	}
+
 	public UnitBreak(int code) {
 		super(code + "");
 		this.code = code;
 	}
 
-	public UnitBreak(int code, String codeMsg) {
-		super(code + "-" + codeMsg);
-		this.code = code;
-		this.codeMsg = codeMsg;
-	}
-
-	public UnitBreak(int code, String codeMsg, Object data) {
-		super(code + "-" + codeMsg);
-		this.code = code;
-		this.codeMsg = codeMsg;
-		this.data = data;
-	}
-
-	public UnitBreak(int code, Object data) {
-		super(code + "");
-		this.code = code;
-		this.data = data;
-	}
-
 	public String getCodeMsg() {
 		return codeMsg;
-	}
-
-	public UnitBreak setCodeMsg(String codeMsg) {
-		this.codeMsg = codeMsg;
-		return this;
 	}
 
 	public UnitBreak setCodeMsgCn(String codeMsgCn) {
@@ -67,11 +50,6 @@ public class UnitBreak extends RuntimeException {
 
 	public UnitBreak setDebug(String debug) {
 		this.debug = debug;
-		return this;
-	}
-
-	public UnitBreak setCode(int code) {
-		this.code = code;
 		return this;
 	}
 
