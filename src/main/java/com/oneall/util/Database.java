@@ -14,7 +14,7 @@ public class Database {
 	private static DataSource dataSource;
 
 	public static void m2() throws Exception {
-		System.out.println(StrUtil.newId());
+		System.out.println(StringUtil.newId());
 	}
 
 	public static void m1() throws Exception {
@@ -26,7 +26,7 @@ public class Database {
 			List<Map> rows = JdbcUtil.queryList(connection, "select * from t_patient ");
 			for (int i = 0; i < rows.size(); i++) {
 				Map row = rows.get(i);
-				row.put("id", StrUtil.newId());
+				row.put("id", StringUtil.newId());
 				Map cR = JdbcUtil.query(connection,
 						"select id clinicId,hospitalId from t_hospital_clinic where id != ? order by rand()",
 						row.get("clinicId"));

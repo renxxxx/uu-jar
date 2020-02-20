@@ -1,6 +1,6 @@
 package com.oneall.util;
 
-public class UnitBreak extends RuntimeException {
+public class ModuleBreak extends RuntimeException {
 
 	protected int code = 0;
 	protected String errParam = null;
@@ -11,13 +11,13 @@ public class UnitBreak extends RuntimeException {
 	protected String codeMsgCn = null;
 	protected String debug = null;
 
-	public UnitBreak(int code, String codeMsg) {
+	public ModuleBreak(int code, String codeMsg) {
 		super(code + " - " + codeMsg);
 		this.code = code;
 		this.codeMsg = codeMsg;
 	}
 
-	public UnitBreak(int code) {
+	public ModuleBreak(int code) {
 		super(code + "");
 		this.code = code;
 	}
@@ -26,17 +26,17 @@ public class UnitBreak extends RuntimeException {
 		return codeMsg;
 	}
 
-	public UnitBreak setCodeMsg(String codeMsg) {
+	public ModuleBreak setCodeMsg(String codeMsg) {
 		this.codeMsg = codeMsg;
 		return this;
 	}
 
-	public UnitBreak setCodeMsgCn(String codeMsgCn) {
+	public ModuleBreak setCodeMsgCn(String codeMsgCn) {
 		this.codeMsgCn = codeMsgCn;
 		return this;
 	}
 
-	public UnitBreak setCodeMsgEn(String codeMsgEn) {
+	public ModuleBreak setCodeMsgEn(String codeMsgEn) {
 		this.codeMsgEn = codeMsgEn;
 		return this;
 	}
@@ -53,17 +53,17 @@ public class UnitBreak extends RuntimeException {
 		return debug;
 	}
 
-	public UnitBreak setDebug(String debug) {
+	public ModuleBreak setDebug(String debug) {
 		this.debug = debug;
 		return this;
 	}
 
-	public UnitBreak setErrParam(String errParam) {
+	public ModuleBreak setErrParam(String errParam) {
 		this.errParam = errParam;
 		return this;
 	}
 
-	public UnitBreak setData(Object data) {
+	public ModuleBreak setData(Object data) {
 		this.data = data;
 		return this;
 	}
@@ -84,7 +84,7 @@ public class UnitBreak extends RuntimeException {
 		return requestId;
 	}
 
-	public UnitBreak setRequestId(String requestId) {
+	public ModuleBreak setRequestId(String requestId) {
 		this.requestId = requestId;
 		return this;
 	}
