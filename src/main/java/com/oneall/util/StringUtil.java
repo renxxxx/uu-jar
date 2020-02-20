@@ -32,6 +32,20 @@ public class StringUtil {
 //		return offUrls;
 //	}
 
+	public static void main(String[] args) {
+		System.out.println(replaceRange("sdfsadf", 1, 3, "$"));
+	}
+
+	public static String replaceRange(String str, int startIndex, int length, String replacement) {
+		int end = str.length() - startIndex - length;
+		if (end < 0)
+			end = 0;
+		if (end == 0 && startIndex == 0)
+			startIndex = 1;
+		str = str.replaceAll("(?<=.{" + startIndex + "}).(?=.{" + end + "})", replacement);
+		return str;
+	}
+
 	public static JSONObject isJSON(String str) {
 		try {
 			return JSON.parseObject(str);
@@ -108,8 +122,4 @@ public class StringUtil {
 				+ RandomStringUtils.randomNumeric(15 - suffix.length()).replaceAll("0", "1") + suffix;
 	}
 
-	public static void main(String[] args) {
-		System.out
-				.println(Pattern.matches("^[!@#$%^&*()_-`=+~{}\\[\\];:'\\\",.<>?/a-zA-Z0-9]{6,20}$", "12{1``[\"`~``3"));
-	}
 }
