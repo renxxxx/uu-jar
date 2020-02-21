@@ -6,8 +6,8 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 
-public class DateUtil {
-	public static Logger logger = Logger.getLogger(DateUtil.class);
+public class DateUtils {
+	public static Logger logger = Logger.getLogger(DateUtils.class);
 
 	public static Date parseLong(String longtime) throws ParseException {
 		if (longtime == null)

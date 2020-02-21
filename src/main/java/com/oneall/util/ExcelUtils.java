@@ -14,8 +14,8 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-public class ExcelUtil {
-	public static Logger logger = Logger.getLogger(ExcelUtil.class);
+public class ExcelUtils {
+	public static Logger logger = Logger.getLogger(ExcelUtils.class);
 
 	public static void main(String[] args) throws IOException {
 		Workbook wb = null;

@@ -13,8 +13,8 @@ import org.apache.log4j.Logger;
 
 import com.alibaba.fastjson.JSONObject;
 
-public class ServletUtil {
-	public static Logger logger = Logger.getLogger(ServletUtil.class);
+public class ServletUtils {
+	public static Logger logger = Logger.getLogger(ServletUtils.class);
 
 	public static Map<String, List<String>> headerMap(HttpServletRequest request) {
 		Map<String, List<String>> headerMap = new LinkedHashMap<String, List<String>>();

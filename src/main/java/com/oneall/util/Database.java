@@ -14,7 +14,7 @@ public class Database {
 	private static DataSource dataSource;
 
 	public static void m2() throws Exception {
-		System.out.println(StringUtil.newId());
+		System.out.println(StringUtils.newId());
 	}
 
 	public static void m1() throws Exception {
@@ -23,11 +23,11 @@ public class Database {
 				"prod", "wqArF1wH#qJ@erT33Y3");
 		Connection connection = database.connect();
 		for (int j = 0; j < 4; j++) {
-			List<Map> rows = JdbcUtil.queryList(connection, "select * from t_patient ");
+			List<Map> rows = JdbcUtils.queryList(connection, "select * from t_patient ");
 			for (int i = 0; i < rows.size(); i++) {
 				Map row = rows.get(i);
-				row.put("id", StringUtil.newId());
-				Map cR = JdbcUtil.query(connection,
+				row.put("id", StringUtils.newId());
+				Map cR = JdbcUtils.query(connection,
 						"select id clinicId,hospitalId from t_hospital_clinic where id != ? order by rand()",
 						row.get("clinicId"));
 				row.put("clinicId", cR.get("clinicId"));
@@ -36,8 +36,8 @@ public class Database {
 				List values = new ArrayList(row.values());
 				System.out.println(values);
 
-				JdbcUtil.update(connection,
-						"insert into t_patient values(" + JdbcUtil.buildSql_placeholderList(values.size()) + ")",
+				JdbcUtils.update(connection,
+						"insert into t_patient values(" + JdbcUtils.buildSql_placeholderList(values.size()) + ")",
 						values);
 			}
 		}
