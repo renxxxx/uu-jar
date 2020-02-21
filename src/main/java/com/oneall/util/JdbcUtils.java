@@ -425,14 +425,14 @@ public class JdbcUtils {
 			if (n > -1)
 				sqlB.append(sortColumnListPool.get(n));
 			else
-				throw new ModuleBreak("排序字段有误");
+				throw ModuleBreak.failure("排序字段有误");
 			sqlB.append(" ");
 			if (orders[i].equals("desc"))
 				sqlB.append("desc");
 			else if (orders[i].equals("asc"))
 				sqlB.append("asc");
 			else
-				throw new ModuleBreak("排序顺序有误");
+				throw ModuleBreak.failure("排序顺序有误");
 			sqlB.append(sorts.length == 0 ? "" : ",");
 		}
 		sqlB.append(baseSort).append(" ").append(baseOrder);

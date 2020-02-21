@@ -2,7 +2,7 @@ package com.oneall.util;
 
 public class ModuleBreak extends RuntimeException {
 
-	protected int code = 0;
+	protected int code;
 	protected String errParam = null;
 	protected String codeMsg = null;
 	protected Object data = null;
@@ -11,24 +11,45 @@ public class ModuleBreak extends RuntimeException {
 	protected String codeMsgCn = null;
 	protected String debug = null;
 
-	public ModuleBreak(int code, String codeMsg) {
+	public static ModuleBreak success(String codeMsg) {
+		return success(codeMsg, null);
+	}
+
+	public static ModuleBreak success(String codeMsg, Object data) {
+		ModuleBreak moduleBreak = new ModuleBreak(0, codeMsg);
+		moduleBreak.code = 0;
+		moduleBreak.codeMsg = codeMsg;
+		moduleBreak.data = data;
+		return moduleBreak;
+	}
+
+	public static ModuleBreak failure(String codeMsg) {
+		return failure(codeMsg, null);
+	}
+
+	public static ModuleBreak failure(String codeMsg, Object data) {
+		ModuleBreak moduleBreak = new ModuleBreak(99, codeMsg);
+		moduleBreak.code = 99;
+		moduleBreak.codeMsg = codeMsg;
+		moduleBreak.data = data;
+		return moduleBreak;
+	}
+
+	public static ModuleBreak todo(int code, String codeMsg) {
+		return todo(code, codeMsg, null);
+	}
+
+	public static ModuleBreak todo(int code, String codeMsg, Object data) {
+		ModuleBreak moduleBreak = new ModuleBreak(code, codeMsg);
+		moduleBreak.code = code;
+		moduleBreak.codeMsg = codeMsg;
+		moduleBreak.data = data;
+		return moduleBreak;
+	}
+
+	private ModuleBreak(int code, String codeMsg) {
 		super(code + " - " + codeMsg);
 		this.code = code;
-		this.codeMsg = codeMsg;
-	}
-
-	public ModuleBreak(int code) {
-		super(code + "");
-		this.code = code;
-	}
-
-	public ModuleBreak() {
-		super();
-	}
-
-	public ModuleBreak(String codeMsg) {
-		super(99 + " - " + codeMsg);
-		this.code = 99;
 		this.codeMsg = codeMsg;
 	}
 
