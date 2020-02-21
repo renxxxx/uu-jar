@@ -11,6 +11,10 @@ public class ModuleBreak extends RuntimeException {
 	protected String codeMsgCn = null;
 	protected String debug = null;
 
+	public static ModuleBreak success() {
+		return success(null, null);
+	}
+
 	public static ModuleBreak success(String codeMsg) {
 		return success(codeMsg, null);
 	}
@@ -23,6 +27,10 @@ public class ModuleBreak extends RuntimeException {
 		return moduleBreak;
 	}
 
+	public static ModuleBreak failure() {
+		return failure(null, null);
+	}
+
 	public static ModuleBreak failure(String codeMsg) {
 		return failure(codeMsg, null);
 	}
@@ -33,6 +41,10 @@ public class ModuleBreak extends RuntimeException {
 		moduleBreak.codeMsg = codeMsg;
 		moduleBreak.data = data;
 		return moduleBreak;
+	}
+
+	public static ModuleBreak todo(int code) {
+		return todo(code, null, null);
 	}
 
 	public static ModuleBreak todo(int code, String codeMsg) {
