@@ -22,6 +22,16 @@ public class ModuleBreak extends RuntimeException {
 		this.code = code;
 	}
 
+	public ModuleBreak() {
+		super();
+	}
+
+	public ModuleBreak(String codeMsg) {
+		super(99 + " - " + codeMsg);
+		this.code = 99;
+		this.codeMsg = codeMsg;
+	}
+
 	public String getCodeMsg() {
 		return codeMsg;
 	}
