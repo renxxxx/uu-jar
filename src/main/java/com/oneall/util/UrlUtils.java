@@ -14,7 +14,7 @@ public class UrlUtils {
 
 	// TODO
 	public static String getName(String url) {
-		return url.replaceAll("\\.[^\\.]*$", "");
+		return url.replaceAll("^.*/", "");
 	}
 
 	// TODO
@@ -73,7 +73,7 @@ public class UrlUtils {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(getExtName("aa"));
+		System.out.println(getExt("sadf.er"));
 	}
 
 	@Deprecated
