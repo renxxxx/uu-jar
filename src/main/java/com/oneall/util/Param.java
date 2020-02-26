@@ -3,8 +3,9 @@ package com.oneall.util;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
@@ -14,7 +15,9 @@ public class Param {
 	private String code;
 	private String value;
 	private String separator = ",";
-	private String datePattern = "yyyy-MM-dd HH:mm:ss";
+	private static List<String> datePatterns = new ListChain(new ArrayList()).add("yyyy-MM-dd HH:mm:ss")
+			.add("MM/dd/yyyy HH:mm:ss").add("yyyy-MM-dd").add("HH:mm:ss").add("yyyy/MM/dd HH:mm:ss")
+			.add("yyyy/MM/dd").list;
 
 	boolean todo = true;
 	private Integer intValue;
@@ -116,7 +119,7 @@ public class Param {
 	}
 
 	public Param setDatePattern(String datePattern) {
-		this.datePattern = datePattern;
+		this.datePatterns.add(0, datePattern);
 		return this;
 	}
 
@@ -481,7 +484,7 @@ public class Param {
 	public Date toDate() {
 		if (this.dateValue != null)
 			return this.dateValue;
-		this.dateValue = isEmpty() ? null : toDate(this.value, this.datePattern);
+		this.dateValue = isEmpty() ? null : toDate(this.value);
 		return this.dateValue;
 	}
 
@@ -605,6 +608,7 @@ public class Param {
 	}
 
 	public static Date toDate(Object value) {
+		Date date = null;
 		if (value == null)
 			return null;
 		if (value instanceof Date)
@@ -616,42 +620,19 @@ public class Param {
 				return new Date(Long.parseLong(value.toString().trim()));
 			if (value.toString().trim().length() == 10 && StringUtils.isNumeric(value.toString()))
 				return new Date(Long.parseLong(value.toString().trim()) * 1000);
-			try {
-				return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(value.toString());
-			} catch (Exception e) {
-			}
-			try {
-				return new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").parse(value.toString());
-			} catch (Exception e) {
-			}
-			try {
-				return new SimpleDateFormat("yyyy-MM-dd").parse(value.toString());
-			} catch (Exception e) {
-			}
-			try {
-				return new SimpleDateFormat("yyyy/MM/dd").parse(value.toString());
-			} catch (Exception e) {
-			}
-			try {
-				return new SimpleDateFormat("HH:mm:ss").parse(value.toString());
-			} catch (Exception e) {
-			}
 		}
 		if (value instanceof Long)
 			return new Date((Long) value);
 		if (value instanceof Integer)
 			return new Date((Long) value * 1000);
-		return null;
-	}
-
-	public static Date toDate(Object value, String pattern) {
-		Date date = null;
-		try {
-			date = new SimpleDateFormat(pattern).parse(value.toString());
-		} catch (Exception e) {
+		for (int i = 0; i < datePatterns.size(); i++) {
+			try {
+				date = new SimpleDateFormat(datePatterns.get(i)).parse(value.toString());
+				if (date != null)
+					return date;
+			} catch (Exception e) {
+			}
 		}
-		if (date == null)
-			date = toDate(value);
 		return date;
 	}
 
