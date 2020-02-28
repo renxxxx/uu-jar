@@ -51,20 +51,16 @@ public class ModuleBreak extends RuntimeException {
 		return moduleBreak;
 	}
 
-	public static ModuleBreak todo(int code) {
-		return todo(code, null, null);
+	public ModuleBreak(int code) {
+		super(code + "");
+		this.code = code;
 	}
 
-	public static ModuleBreak todo(int code, String codeMsg) {
-		return todo(code, codeMsg, null);
-	}
-
-	public static ModuleBreak todo(int code, String codeMsg, Object data) {
-		ModuleBreak moduleBreak = new ModuleBreak(code, codeMsg);
-		moduleBreak.code = code;
-		moduleBreak.codeMsg = codeMsg;
-		moduleBreak.data = data;
-		return moduleBreak;
+	public ModuleBreak(int code, String codeMsg, Object data) {
+		super(code + " - " + codeMsg);
+		this.code = code;
+		this.codeMsg = codeMsg;
+		this.data = data;
 	}
 
 	public ModuleBreak(int code, String codeMsg) {

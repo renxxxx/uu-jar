@@ -193,7 +193,7 @@ public class Param {
 		if (!this.todo)
 			return this;
 		if (this.value == null)
-			throw ModuleBreak.todo(1001, "\"" + this.name + "\"不能空").setErrParam(this.code);
+			throw new ModuleBreak(1001, "\"" + this.name + "\"不能空").setErrParam(this.code);
 		return this;
 	}
 
@@ -209,7 +209,7 @@ public class Param {
 		if (!this.todo)
 			return this;
 		if ((this.value == null || this.value.isEmpty()))
-			throw ModuleBreak.todo(1001, "\"" + this.name + "\"不能空").setErrParam(this.code);
+			throw new ModuleBreak(1001, "\"" + this.name + "\"不能空").setErrParam(this.code);
 		return this;
 	}
 
@@ -225,7 +225,7 @@ public class Param {
 		if (!this.todo)
 			return this;
 		if ((this.value != null && this.value.isEmpty()))
-			throw ModuleBreak.todo(1001, "\"" + this.name + "\"不能空").setErrParam(this.code);
+			throw new ModuleBreak(1001, "\"" + this.name + "\"不能空").setErrParam(this.code);
 		return this;
 	}
 
@@ -241,7 +241,7 @@ public class Param {
 		if (!this.todo)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() != length) {
-			throw ModuleBreak.todo(1001, "\"" + this.name + "\"长度只能是" + length).setErrParam(this.code);
+			throw new ModuleBreak(1001, "\"" + this.name + "\"长度只能是" + length).setErrParam(this.code);
 		}
 		return this;
 	}
@@ -258,7 +258,7 @@ public class Param {
 		if (!this.todo)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() < length) {
-			throw ModuleBreak.todo(1001, "\"" + this.name + "\"长度最低" + length).setErrParam(this.code);
+			throw new ModuleBreak(1001, "\"" + this.name + "\"长度最低" + length).setErrParam(this.code);
 		}
 		return this;
 	}
@@ -275,7 +275,7 @@ public class Param {
 		if (!this.todo)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() > length) {
-			throw ModuleBreak.todo(1001, "\"" + this.name + "\"长度最大" + length).setErrParam(this.code);
+			throw new ModuleBreak(1001, "\"" + this.name + "\"长度最大" + length).setErrParam(this.code);
 		}
 		return this;
 	}
@@ -292,7 +292,7 @@ public class Param {
 		if (!this.todo)
 			return this;
 		if (!isEmpty() && toFloat() > maxnum) {
-			throw ModuleBreak.todo(1001, "\"" + this.name + "\"最大" + maxnum).setErrParam(this.code);
+			throw new ModuleBreak(1001, "\"" + this.name + "\"最大" + maxnum).setErrParam(this.code);
 		}
 		return this;
 	}
@@ -309,7 +309,7 @@ public class Param {
 		if (!this.todo)
 			return this;
 		if (!isEmpty() && toFloat() < minnum) {
-			throw ModuleBreak.todo(1001, "\"" + this.name + "\"最小" + minnum).setErrParam(this.code);
+			throw new ModuleBreak(1001, "\"" + this.name + "\"最小" + minnum).setErrParam(this.code);
 		}
 		return this;
 	}
@@ -359,9 +359,9 @@ public class Param {
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null) {
 			if (!regex.matcher(this.value).matches())
-				throw ModuleBreak
-						.todo(1001, "\"" + this.name + "\"有误" + (note == null || note.isEmpty() ? "" : ",要求：" + note))
-						.setErrParam(this.code);
+				throw new ModuleBreak(1001,
+						"\"" + this.name + "\"有误" + (note == null || note.isEmpty() ? "" : ",要求：" + note))
+								.setErrParam(this.code);
 		}
 		return this;
 	}
@@ -377,9 +377,9 @@ public class Param {
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null) {
 			if (regex.matcher(this.value).matches())
-				throw ModuleBreak
-						.todo(1001, "\"" + this.name + "\"有误" + (note == null || note.isEmpty() ? "" : ",要求：" + note))
-						.setErrParam(this.code);
+				throw new ModuleBreak(1001,
+						"\"" + this.name + "\"有误" + (note == null || note.isEmpty() ? "" : ",要求：" + note))
+								.setErrParam(this.code);
 		}
 		return this;
 	}
@@ -395,9 +395,9 @@ public class Param {
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty()) {
 			if (!regexCache.getWithCreate(regex).matcher(this.value).matches())
-				throw ModuleBreak
-						.todo(1001, "\"" + this.name + "\"有误" + (note == null || note.isEmpty() ? "" : ",要求：" + note))
-						.setErrParam(this.code);
+				throw new ModuleBreak(1001,
+						"\"" + this.name + "\"有误" + (note == null || note.isEmpty() ? "" : ",要求：" + note))
+								.setErrParam(this.code);
 		}
 		return this;
 	}
@@ -413,9 +413,9 @@ public class Param {
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty()) {
 			if (regexCache.getWithCreate(regex).matcher(this.value).matches())
-				throw ModuleBreak
-						.todo(1001, "\"" + this.name + "\"有误" + (note == null || note.isEmpty() ? "" : ",要求：" + note))
-						.setErrParam(this.code);
+				throw new ModuleBreak(1001,
+						"\"" + this.name + "\"有误" + (note == null || note.isEmpty() ? "" : ",要求：" + note))
+								.setErrParam(this.code);
 		}
 		return this;
 	}
@@ -489,7 +489,7 @@ public class Param {
 	}
 
 	public void bomb(String message) {
-		throw ModuleBreak.todo(1001, "\"" + this.name + "\"" + message).setErrParam(this.code);
+		throw new ModuleBreak(1001, "\"" + this.name + "\"" + message).setErrParam(this.code);
 	}
 
 	public boolean equals(String object) {
