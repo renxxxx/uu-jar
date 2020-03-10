@@ -23,7 +23,7 @@ public class MapChain<K, V> {
 	}
 
 	public MapChain<K, V> putAll(Map map) {
-		map.putAll(map);
+		this.map.putAll(map);
 		return this;
 	}
 
