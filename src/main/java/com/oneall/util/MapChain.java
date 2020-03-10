@@ -22,6 +22,11 @@ public class MapChain<K, V> {
 		return this;
 	}
 
+	public MapChain<K, V> putAll(Map map) {
+		map.putAll(map);
+		return this;
+	}
+
 	public V get(K key) {
 		return map.get(key);
 	}
