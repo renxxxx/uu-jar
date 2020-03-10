@@ -37,6 +37,8 @@ public class StringUtils {
 	}
 
 	public static String replaceRange(String str, int startIndex, int length, String replacement) {
+		if(str == null)
+			return str;
 		int end = str.length() - startIndex - length;
 		if (end < 0)
 			end = 0;
