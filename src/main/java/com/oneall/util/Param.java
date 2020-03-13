@@ -57,6 +57,9 @@ public class Param {
 				break;
 			}
 		}
+		
+		if(param.value.matches(".*<(s|S)(c|C)(r|R)(i|I)(p|P)(t|T)>.*"))
+			throw new ModuleBreak(1001, "\"" + param.name + "\"值有误").setErrParam(param.code);
 		return param;
 	}
 
@@ -180,7 +183,7 @@ public class Param {
 	}
 
 	public static void main(String[] args) throws ParseException {
-		System.out.println(new SimpleDateFormat("yyyy/MM/dd").parse("2019/6/15"));
+		System.out.println("<scRipt>123213".matches(".*<(s|S)(c|C)(r|R)(i|I)(p|P)(t|T)>.*"));
 	}
 
 	public Param stop(boolean todo) {
