@@ -60,6 +60,9 @@ public class Param {
 		
 		if(param.value!=null && !param.value.isEmpty() && param.value.matches(".*<(s|S)(c|C)(r|R)(i|I)(p|P)(t|T)>.*"))
 			throw new ModuleBreak(1001, "\"" + param.name + "\"值有误").setErrParam(param.code);
+		
+		if(param.value!=null && !param.value.isEmpty() && param.value.matches(".*\\.write.*"))
+			throw new ModuleBreak(1001, "\"" + param.name + "\"值有误").setErrParam(param.code);
 		return param;
 	}
 
@@ -183,7 +186,8 @@ public class Param {
 	}
 
 	public static void main(String[] args) throws ParseException {
-		System.out.println("<scRipt>123213".matches(".*<(s|S)(c|C)(r|R)(i|I)(p|P)(t|T)>.*"));
+		System.out.println("a=document.write".matches(".*\\.write.*"));
+		
 	}
 
 	public Param stop(boolean todo) {
