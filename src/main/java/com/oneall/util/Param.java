@@ -52,17 +52,19 @@ public class Param {
 		param.name = name;
 		param.code = code;
 		for (String value : values) {
-			if (value != null && !"null".equals(value) && !"undefined".equals(value)) {
+			if (value != null) {
 				param.value = value;
 				break;
 			}
 		}
-		
-		if(param.value!=null && !param.value.isEmpty() && param.value.matches(".*<(s|S)(c|C)(r|R)(i|I)(p|P)(t|T)>.*"))
+
+		if (param.value != null && !param.value.isEmpty()
+				&& param.value.matches(".*<(s|S)(c|C)(r|R)(i|I)(p|P)(t|T)>.*"))
 			throw new ModuleBreak(1001, "\"" + param.name + "\"值有误").setErrParam(param.code);
-		
-		if(param.value!=null && !param.value.isEmpty() && param.value.matches(".*\\.write.*"))
+
+		if (param.value != null && !param.value.isEmpty() && param.value.matches(".*\\.write.*"))
 			throw new ModuleBreak(1001, "\"" + param.name + "\"值有误").setErrParam(param.code);
+
 		return param;
 	}
 
@@ -187,7 +189,7 @@ public class Param {
 
 	public static void main(String[] args) throws ParseException {
 		System.out.println("a=document.write".matches(".*\\.write.*"));
-		
+
 	}
 
 	public Param stop(boolean todo) {
