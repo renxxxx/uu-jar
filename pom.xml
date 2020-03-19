@@ -5,7 +5,7 @@
            
 	<groupId>com.oneall</groupId>
 	<artifactId>util</artifactId>
-	<version>2003191129-52725b2</version>
+	<version>2003191132-b24fabe</version>
 	<packaging>jar</packaging>
 	<name>util</name>
 	<url>http://maven.apache.org</url>
