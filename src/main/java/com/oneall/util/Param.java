@@ -62,9 +62,6 @@ public class Param {
 				&& param.value.matches(".*<(s|S)(c|C)(r|R)(i|I)(p|P)(t|T)>.*"))
 			throw new ModuleBreak(1001, "\"" + param.name + "\"值有误").setErrParam(param.code);
 
-		if (param.value != null && !param.value.isEmpty() && param.value.matches(".*\\.write.*"))
-			throw new ModuleBreak(1001, "\"" + param.name + "\"值有误").setErrParam(param.code);
-
 		return param;
 	}
 
