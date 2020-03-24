@@ -328,6 +328,16 @@ public class Param {
 		return this;
 	}
 
+	public Param vMaxCount(int count) {
+		if (!this.todo)
+			return this;
+		if (this.value != null && !this.value.isEmpty() && this.toSplitArr() != null
+				&& this.toSplitArr().length > count) {
+			throw new ModuleBreak(1001, "\"" + this.name + "\"最多" + count+"个").setErrParam(this.code);
+		}
+		return this;
+	}
+
 	public boolean isEmpty() {
 		if (this.value == null || this.value.isEmpty())
 			return true;
