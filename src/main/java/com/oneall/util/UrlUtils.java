@@ -73,7 +73,7 @@ public class UrlUtils {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(getExt("sadf.er"));
+		System.out.println(removeExt("sadf.er"));
 	}
 
 	@Deprecated
