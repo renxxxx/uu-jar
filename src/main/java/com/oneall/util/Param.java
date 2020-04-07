@@ -60,7 +60,7 @@ public class Param {
 
 		if (param.value != null && !param.value.isEmpty()
 				&& param.value.matches(".*<(s|S)(c|C)(r|R)(i|I)(p|P)(t|T)>.*"))
-			throw new ModuleBreak(1001, "\"" + param.name + "\"值有误").setErrParam(param.code);
+			throw new ModuleBreak(1001, "\"" + param.name + "\"有误").setErrParam(param.code);
 
 		return param;
 	}
@@ -337,39 +337,55 @@ public class Param {
 		}
 		return this;
 	}
+
 	public Param vInteger() {
+		if (!this.todo)
+			return this;
+		if (this.value != null && !this.value.isEmpty()) {
+			Integer l = null;
+			try {
+				l = Integer.parseInt(this.value);
+			} catch (Exception e) {
+
+			}
+			if (l == null)
+				throw new ModuleBreak(1001, "\"" + this.name + "\"有误").setErrParam(this.code);
+		}
+		return this;
+	}
+
+	public Param vLong() {
 		if (!this.todo)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
 			Long l = null;
 			try {
-				l=	Long.parseLong(this.value);
-			}catch(Exception e) {
-				
+				l = Long.parseLong(this.value);
+			} catch (Exception e) {
+
 			}
-			if(l== null)
-				throw new ModuleBreak(1001, "\"" + this.name + "\"只能输入整数").setErrParam(this.code);
+			if (l == null)
+				throw new ModuleBreak(1001, "\"" + this.name + "\"有误").setErrParam(this.code);
 		}
 		return this;
 	}
-	
+
 	public Param vDouble() {
 		if (!this.todo)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
 			Double l = null;
 			try {
-				l=	Double.parseDouble(this.value);
-			}catch(Exception e) {
-				
+				l = Double.parseDouble(this.value);
+			} catch (Exception e) {
+
 			}
-			if(l== null)
+			if (l == null)
 				throw new ModuleBreak(1001, "\"" + this.name + "\"只能输入数字").setErrParam(this.code);
 		}
 		return this;
 	}
-	
-	
+
 	public boolean isEmpty() {
 		if (this.value == null || this.value.isEmpty())
 			return true;
