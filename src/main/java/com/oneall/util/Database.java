@@ -36,9 +36,9 @@ public class Database {
 				List values = new ArrayList(row.values());
 				System.out.println(values);
 
-				JdbcUtils.update(connection,
-						"insert into t_patient values(" + JdbcUtils.buildSql_placeholderList(values.size()) + ")",
-						values);
+//				JdbcUtils.update(connection,
+//						"insert into t_patient values(" + JdbcUtils.buildSql_placeholderList(values.size()) + ")",
+//						values);
 			}
 		}
 	}
@@ -75,17 +75,6 @@ public class Database {
 
 	public Connection connect() throws SQLException {
 		return connect(null);
-	}
-
-	public Connection in(Connection connection) throws SQLException {
-		if (connection.getAutoCommit())
-			connection.setAutoCommit(false);
-		return connection;
-	}
-
-	public void commit(Connection connection, boolean commitable) throws SQLException {
-		if (commitable && connection != null && !connection.getAutoCommit())
-			connection.commit();
 	}
 
 	public void commit(Connection connection) throws SQLException {

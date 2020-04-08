@@ -133,9 +133,9 @@ public class JdbcUtils {
 		}
 	}
 
-	public static String toLikePart(String columnValue) {
-		return new StringBuilder("%").append(columnValue).append("%").toString();
-	}
+//	public static String toLikePart(String columnValue) {
+//		return new StringBuilder("%").append(columnValue).append("%").toString();
+//	}
 
 	public static int update(Connection conn, String sql, Object... sqlParams) throws Exception {
 		PreparedStatement pst = null;
@@ -185,45 +185,45 @@ public class JdbcUtils {
 		return sqlN;
 	}
 
-	public static Integer runInsertOneGenKey(Connection conn, String sql, Object... sqlParams) throws Exception {
-		PreparedStatement pst = null;
-		try {
-			pst = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-			update(pst, sql, sqlParams);
-			return returnGeneratedKey(pst);
-		} catch (Exception e) {
-			throw e;
-		} finally {
-			if (pst != null)
-				pst.close();
-		}
-	}
-
-	public static Integer returnGeneratedKey(PreparedStatement pst) throws SQLException {
-		ResultSet rs = pst.getGeneratedKeys();
-		if (rs.next()) {
-			int id = rs.getInt(1);
-			rs.close();
-			return id;
-		} else
-			return null;
-	}
-
-	public static List<Integer> returnGeneratedKeys(PreparedStatement pst) throws SQLException {
-		ResultSet rs = pst.getGeneratedKeys();
-		List<Integer> keys = new ArrayList();
-		while (rs.next()) {
-			int key = rs.getInt(1);
-			keys.add(key);
-		}
-		rs.close();
-		return keys;
-	}
+//	public static Integer runInsertOneGenKey(Connection conn, String sql, Object... sqlParams) throws Exception {
+//		PreparedStatement pst = null;
+//		try {
+//			pst = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+//			update(pst, sql, sqlParams);
+//			return returnGeneratedKey(pst);
+//		} catch (Exception e) {
+//			throw e;
+//		} finally {
+//			if (pst != null)
+//				pst.close();
+//		}
+//	}
+//
+//	public static Integer returnGeneratedKey(PreparedStatement pst) throws SQLException {
+//		ResultSet rs = pst.getGeneratedKeys();
+//		if (rs.next()) {
+//			int id = rs.getInt(1);
+//			rs.close();
+//			return id;
+//		} else
+//			return null;
+//	}
+//
+//	public static List<Integer> returnGeneratedKeys(PreparedStatement pst) throws SQLException {
+//		ResultSet rs = pst.getGeneratedKeys();
+//		List<Integer> keys = new ArrayList();
+//		while (rs.next()) {
+//			int key = rs.getInt(1);
+//			keys.add(key);
+//		}
+//		rs.close();
+//		return keys;
+//	}
 
 	public static int[] batch(Connection conn, String sql, Object... sqlParamBatches) throws Exception {
 		PreparedStatement pst = null;
 		try {
-			pst = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+			pst = conn.prepareStatement(sql);
 			return batch(pst, sql, sqlParamBatches);
 		} catch (Exception e) {
 			throw new Exception(e);
@@ -359,85 +359,85 @@ public class JdbcUtils {
 			return new Integer(value.toString());
 		}
 	}
+//
+//	public static String buildSql_phraseListByOr(String partSql, int count) {
+//		if (count == 0)
+//			return "";
+//		String sqlPart = " ";
+//		for (int i = 0; i < count; i++) {
+//			if (i == 0)
+//				sqlPart += partSql;
+//			else
+//				sqlPart += " or " + partSql;
+//		}
+//		sqlPart += " ";
+//		return sqlPart;
+//	}
+//
+//	public static String buildSql_sqlParamsplit(String... sqlParams) {
+//		if (sqlParams == null || sqlParams.length == 0)
+//			return "";
+//		String sqlPart = "  ";
+//		for (int i = 0; i < sqlParams.length; i++) {
+//			if (i == 0)
+//				sqlPart += "'" + sqlParams[i] + "'";
+//			else
+//				sqlPart += " , '" + sqlParams[i] + "'";
+//		}
+//		sqlPart += " ";
+//		return sqlPart;
+//	}
+//
+//	public static String buildSql_placeholderList(int count) {
+//		if (count == 0)
+//			return "";
+//		String sqlPart = "";
+//		for (int i = 0; i < count; i++) {
+//			if (i == 0)
+//				sqlPart += " ?";
+//			else
+//				sqlPart += ",?";
+//		}
+//		sqlPart += " ";
+//		return sqlPart;
+//	}
 
-	public static String buildSql_phraseListByOr(String partSql, int count) {
-		if (count == 0)
-			return "";
-		String sqlPart = " ";
-		for (int i = 0; i < count; i++) {
-			if (i == 0)
-				sqlPart += partSql;
-			else
-				sqlPart += " or " + partSql;
-		}
-		sqlPart += " ";
-		return sqlPart;
-	}
-
-	public static String buildSql_sqlParamsplit(String... sqlParams) {
-		if (sqlParams == null || sqlParams.length == 0)
-			return "";
-		String sqlPart = "  ";
-		for (int i = 0; i < sqlParams.length; i++) {
-			if (i == 0)
-				sqlPart += "'" + sqlParams[i] + "'";
-			else
-				sqlPart += " , '" + sqlParams[i] + "'";
-		}
-		sqlPart += " ";
-		return sqlPart;
-	}
-
-	public static String buildSql_placeholderList(int count) {
-		if (count == 0)
-			return "";
-		String sqlPart = "";
-		for (int i = 0; i < count; i++) {
-			if (i == 0)
-				sqlPart += " ?";
-			else
-				sqlPart += ",?";
-		}
-		sqlPart += " ";
-		return sqlPart;
-	}
-
-	public static String buildSql_orderBy(String[] sorts, String[] orders, String[] sortPool, String[] sortColumnPool,
-			String baseSort, String baseOrder) {
-		StringBuilder sqlB = new StringBuilder(" order by ");
-		if (sorts == null || sorts.length == 0)
-			sorts = new String[] {};
-		if (orders == null || sorts.length == 0) {
-			orders = new String[sorts.length];
-			for (int i = 0; i < orders.length; i++) {
-				orders[i] = "desc";
-			}
-		}
-
-		List<String> sortListPool = sortPool == null ? new ArrayList<String>()
-				: new ArrayList<String>(Arrays.asList(sortPool));
-		List<String> sortColumnListPool = sortColumnPool == null ? new ArrayList<String>()
-				: new ArrayList<String>(Arrays.asList(sortColumnPool));
-		for (int i = 0; i < sorts.length; i++) {
-			if (sorts[i] == null || sorts[i].trim().isEmpty())
-				continue;
-			int n = sortListPool.indexOf(sorts[i]);
-			if (n > -1)
-				sqlB.append(sortColumnListPool.get(n));
-			else
-				throw ModuleBreak.failure("排序字段有误");
-			sqlB.append(" ");
-			if (orders[i].equals("desc"))
-				sqlB.append("desc");
-			else if (orders[i].equals("asc"))
-				sqlB.append("asc");
-			else
-				throw ModuleBreak.failure("排序顺序有误");
-			sqlB.append(sorts.length == 0 ? "" : ",");
-		}
-		sqlB.append(baseSort).append(" ").append(baseOrder);
-		return sqlB.toString();
-	}
+//	public static String buildSql_orderBy(String[] sorts, String[] orders, String[] sortPool, String[] sortColumnPool,
+//			String baseSort, String baseOrder) {
+//		StringBuilder sqlB = new StringBuilder(" order by ");
+//		if (sorts == null || sorts.length == 0)
+//			sorts = new String[] {};
+//		if (orders == null || sorts.length == 0) {
+//			orders = new String[sorts.length];
+//			for (int i = 0; i < orders.length; i++) {
+//				orders[i] = "desc";
+//			}
+//		}
+//
+//		List<String> sortListPool = sortPool == null ? new ArrayList<String>()
+//				: new ArrayList<String>(Arrays.asList(sortPool));
+//		List<String> sortColumnListPool = sortColumnPool == null ? new ArrayList<String>()
+//				: new ArrayList<String>(Arrays.asList(sortColumnPool));
+//		for (int i = 0; i < sorts.length; i++) {
+//			if (sorts[i] == null || sorts[i].trim().isEmpty())
+//				continue;
+//			int n = sortListPool.indexOf(sorts[i]);
+//			if (n > -1)
+//				sqlB.append(sortColumnListPool.get(n));
+//			else
+//				throw ModuleBreak.failure("排序字段有误");
+//			sqlB.append(" ");
+//			if (orders[i].equals("desc"))
+//				sqlB.append("desc");
+//			else if (orders[i].equals("asc"))
+//				sqlB.append("asc");
+//			else
+//				throw ModuleBreak.failure("排序顺序有误");
+//			sqlB.append(sorts.length == 0 ? "" : ",");
+//		}
+//		sqlB.append(baseSort).append(" ").append(baseOrder);
+//		return sqlB.toString();
+//	}
 
 //	public static List addsqlParams(List sqlParams, String insSplit) {
 //		if (insSplit == null)
