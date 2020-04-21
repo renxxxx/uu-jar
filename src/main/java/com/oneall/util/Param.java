@@ -386,6 +386,38 @@ public class Param {
 		return this;
 	}
 
+	public Param vFloat() {
+		if (!this.todo)
+			return this;
+		if (this.value != null && !this.value.isEmpty()) {
+			Float l = null;
+			try {
+				l = Float.parseFloat(this.value);
+			} catch (Exception e) {
+
+			}
+			if (l == null)
+				throw new ModuleBreak(1001, "\"" + this.name + "\"只能输入数字").setErrParam(this.code);
+		}
+		return this;
+	}
+
+	public Param vDecimal() {
+		if (!this.todo)
+			return this;
+		if (this.value != null && !this.value.isEmpty()) {
+			BigDecimal l = null;
+			try {
+				l = new BigDecimal(this.value);
+			} catch (Exception e) {
+
+			}
+			if (l == null)
+				throw new ModuleBreak(1001, "\"" + this.name + "\"只能输入数字").setErrParam(this.code);
+		}
+		return this;
+	}
+
 	public boolean isEmpty() {
 		if (this.value == null || this.value.isEmpty())
 			return true;
