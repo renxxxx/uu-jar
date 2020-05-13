@@ -18,7 +18,7 @@ public class Param {
 	private static List<String> datePatterns = new ListChain(new ArrayList()).add("yyyy-MM-dd HH:mm:ss")
 			.add("MM/dd/yyyy HH:mm:ss").add("yyyy-MM-dd").add("HH:mm:ss").add("yyyy/MM/dd HH:mm:ss")
 			.add("yyyy/MM/dd").list;
-
+	private String datePattern = null;
 	boolean todo = true;
 	private Integer intValue;
 	private Float floatValue;
@@ -444,6 +444,14 @@ public class Param {
 		return this;
 	}
 
+	public Param vNumRange(float min, float max) {
+		if (!this.todo)
+			return this;
+		vMinNum(min);
+		vMaxNum(max);
+		return this;
+	}
+
 	public Param vReg(Pattern regex) {
 		if (!this.todo)
 			return this;
@@ -581,6 +589,11 @@ public class Param {
 		return this.decimalValue;
 	}
 
+	public String formatDate(String pattern) {
+		Date data = this.toDate();
+		return new SimpleDateFormat(pattern).format(data);
+	}
+
 	public Date toDate() {
 		if (this.dateValue != null)
 			return this.dateValue;
@@ -590,6 +603,11 @@ public class Param {
 
 	public void bomb(String message) {
 		throw ModuleResponse.response(1001, "\"" + this.name + "\"" + message).setErrParam(this.code);
+	}
+
+	public void bomb(boolean todo, String message) {
+		if (todo)
+			throw ModuleResponse.response(1001, "\"" + this.name + "\"" + message).setErrParam(this.code);
 	}
 
 	public boolean equals(String object) {
@@ -728,8 +746,9 @@ public class Param {
 		for (int i = 0; i < datePatterns.size(); i++) {
 			try {
 				date = new SimpleDateFormat(datePatterns.get(i)).parse(value.toString());
-				if (date != null)
+				if (date != null) {
 					return date;
+				}
 			} catch (Exception e) {
 			}
 		}
