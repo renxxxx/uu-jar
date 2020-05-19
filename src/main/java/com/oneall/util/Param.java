@@ -4,13 +4,17 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 
 public class Param {
+	private static Logger logger = Logger.getLogger(Param.class);
+
 	private String name;
 	private String code;
 	private String value;
@@ -28,6 +32,7 @@ public class Param {
 	private String[] splitArrValue;
 
 	private Param() {
+
 	}
 
 	public static CacheMap.Ccc<String, Pattern> regexCache = new CacheMap.Ccc<String, Pattern>() {
@@ -48,6 +53,7 @@ public class Param {
 	}
 
 	public static Param build(String name, String code, String... values) {
+		logger.info("in -> name : " + name + " code : " + code + " values : " + Arrays.toString(values));
 		Param param = new Param();
 		param.name = name;
 		param.code = code;
