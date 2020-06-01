@@ -57,12 +57,13 @@ public class Param {
 		Param param = new Param();
 		param.name = name;
 		param.code = code;
-		for (String value : values) {
-			if (value != null) {
-				param.value = value;
-				break;
+		if (values != null)
+			for (String value : values) {
+				if (value != null) {
+					param.value = value;
+					break;
+				}
 			}
-		}
 
 		if (param.value != null && !param.value.isEmpty()
 				&& param.value.matches(".*<(s|S)(c|C)(r|R)(i|I)(p|P)(t|T)>.*"))
