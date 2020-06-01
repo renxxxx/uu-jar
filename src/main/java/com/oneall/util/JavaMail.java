@@ -46,7 +46,7 @@ public class JavaMail {
 		// 1、创建session
 		Session session = Session.getInstance(prop);
 		// 开启Session的debug模式，这样就可以查看到程序发送Email的运行状态
-		session.setDebug(true);
+		session.setDebug(false);
 		// 2、通过session得到transport对象
 		Transport ts = session.getTransport();
 		// 3、连上邮件服务器
