@@ -20,7 +20,10 @@ public class Param {
 	private String value;
 	private String separator = ",";
 	private static List<String> datePatterns = new ListChain(new ArrayList()).add("yyyy-MM-dd HH:mm:ss")
-			.add("MM/dd/yyyy HH:mm:ss").add("yyyy-MM-dd").add("HH:mm:ss").add("yyyy/MM/dd HH:mm:ss")
+			.add("yyyy-MM-dd HH:mm:ss.SSS")
+			.add("MM/dd/yyyy HH:mm:ss")
+			.add("MM/dd/yyyy HH:mm:ss.SSS").add("yyyy-MM-dd").add("HH:mm:ss").add("yyyy/MM/dd HH:mm:ss")
+			.add("yyyy/MM/dd HH:mm:ss.SSS")
 			.add("yyyy/MM/dd").list;
 	private String datePattern = null;
 	boolean todo = true;
@@ -192,7 +195,9 @@ public class Param {
 	}
 
 	public static void main(String[] args) throws ParseException {
-		System.out.println("a=document.write".matches(".*\\.write.*"));
+		Param p = Param.build("123456789");
+		p.vDate();
+		System.out.println(p.val());
 
 	}
 
@@ -565,7 +570,7 @@ public class Param {
 
 	@Override
 	public String toString() {
-		return this.value;
+		return this.val();
 	}
 
 	public Integer toInteger() {
@@ -601,6 +606,16 @@ public class Param {
 		return new SimpleDateFormat(pattern).format(data);
 	}
 
+	public Param vDate() {
+		toDate();
+		if(this.dateValue == null)
+			throw ModuleResponse.response(1001, "\"" + this.name + "\"请输入日期").setErrParam(this.code);
+		else {
+			this.value = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(this.dateValue);
+		}
+		return this;
+	}
+	
 	public Date toDate() {
 		if (this.dateValue != null)
 			return this.dateValue;
@@ -741,10 +756,8 @@ public class Param {
 		if (value instanceof String) {
 			if (value.toString().trim().isEmpty())
 				return null;
-			if (value.toString().trim().length() == 13 && StringUtils.isNumeric(value.toString()))
+			if (StringUtils.isNumeric(value.toString()))
 				return new Date(Long.parseLong(value.toString().trim()));
-			if (value.toString().trim().length() == 10 && StringUtils.isNumeric(value.toString()))
-				return new Date(Long.parseLong(value.toString().trim()) * 1000);
 		}
 		if (value instanceof Long)
 			return new Date((Long) value);
@@ -785,4 +798,5 @@ public class Param {
 		else
 			return new BigDecimal(valueStr);
 	}
+	
 }
