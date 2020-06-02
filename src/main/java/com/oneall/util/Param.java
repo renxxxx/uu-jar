@@ -1,12 +1,15 @@
 package com.oneall.util;
 
+import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
@@ -20,11 +23,8 @@ public class Param {
 	private String value;
 	private String separator = ",";
 	private static List<String> datePatterns = new ListChain(new ArrayList()).add("yyyy-MM-dd HH:mm:ss")
-			.add("yyyy-MM-dd HH:mm:ss.SSS")
-			.add("MM/dd/yyyy HH:mm:ss")
-			.add("MM/dd/yyyy HH:mm:ss.SSS").add("yyyy-MM-dd").add("HH:mm:ss").add("yyyy/MM/dd HH:mm:ss")
-			.add("yyyy/MM/dd HH:mm:ss.SSS")
-			.add("yyyy/MM/dd").list;
+			.add("yyyy-MM-dd HH:mm:ss.SSS").add("MM/dd/yyyy HH:mm:ss").add("MM/dd/yyyy HH:mm:ss.SSS").add("yyyy-MM-dd")
+			.add("HH:mm:ss").add("yyyy/MM/dd HH:mm:ss").add("yyyy/MM/dd HH:mm:ss.SSS").add("yyyy/MM/dd").list;
 	private String datePattern = null;
 	boolean todo = true;
 	private Integer intValue;
@@ -194,10 +194,20 @@ public class Param {
 		return this;
 	}
 
-	public static void main(String[] args) throws ParseException {
-		Param p = Param.build("123456789");
-		p.vDate();
-		System.out.println(p.val());
+	public static void main(String[] args) throws ParseException, NoSuchFieldException, SecurityException,
+			IllegalArgumentException, IllegalAccessException {
+		Map m = new HashMap();
+		m.put("saf", "123");
+
+		Map m1 = new HashMap();
+		m1.put("saf2222", "123");
+		m.put("m1", m1);
+
+		Map m2 = new HashMap();
+		m2.put(2, "333");
+		m1.put("m2", m2);
+
+		System.out.println(Param.attr(m, "m1", "saf2222", 2));
 
 	}
 
@@ -608,14 +618,14 @@ public class Param {
 
 	public Param vDate() {
 		toDate();
-		if(this.dateValue == null)
+		if (this.dateValue == null)
 			throw ModuleResponse.response(1001, "\"" + this.name + "\"请输入日期").setErrParam(this.code);
 		else {
 			this.value = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(this.dateValue);
 		}
 		return this;
 	}
-	
+
 	public Date toDate() {
 		if (this.dateValue != null)
 			return this.dateValue;
@@ -798,5 +808,24 @@ public class Param {
 		else
 			return new BigDecimal(valueStr);
 	}
-	
+
+	public static Object attr(Object target, Object... keyArray)
+			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		for (int i = 0; i < keyArray.length; i++) {
+			if (target instanceof Map) {
+				target = ((Map) target).get(keyArray[i]);
+			} else if (target instanceof String) {
+
+			} else if (target instanceof Object) {
+				Field f = Object.class.getDeclaredField(keyArray[i].toString());
+				f.setAccessible(true);
+				target = f.get(target);
+			}
+
+			if (target == null)
+				break;
+		}
+		return target;
+	}
+
 }
