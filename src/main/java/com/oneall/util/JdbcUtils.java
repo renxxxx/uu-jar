@@ -121,7 +121,11 @@ public class JdbcUtils {
 		logger.debug(Arrays.toString(sqlParams));
 		try {
 			for (int i = 0; i < sqlParams.length; i++) {
-				pst.setObject(i + 1, sqlParams[i]);
+				Object sqlParam = sqlParams[i];
+				if(sqlParam instanceof Param) {
+					sqlParam = ((Param)sqlParam).val();
+				}
+				pst.setObject(i + 1, sqlParam);
 			}
 			long s = System.nanoTime();
 			ResultSet rs = pst.executeQuery();
@@ -172,7 +176,11 @@ public class JdbcUtils {
 		int sqlN = 0;
 		try {
 			for (int i = 0; i < sqlParams.length; i++) {
-				pst.setObject(i + 1, sqlParams[i]);
+				Object sqlParam = sqlParams[i];
+				if(sqlParam instanceof Param) {
+					sqlParam = ((Param)sqlParam).val();
+				}
+				pst.setObject(i + 1, sqlParam);
 			}
 			long s = System.nanoTime();
 			sqlN = pst.executeUpdate();
