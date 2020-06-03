@@ -631,6 +631,8 @@ public class Value {
 	}
 
 	public Value vDate() {
+		if (this.value == null || this.value.isEmpty())
+			return this;
 		toDate();
 		if (this.dateValue == null)
 			throw ModuleResponse.response(1001, "\"" + this.name + "\"请输入日期").setErrParam(this.code);
@@ -731,6 +733,7 @@ public class Value {
 	}
 
 	public Value set(String value) {
+		clear();
 		this.value = value;
 		return this;
 	}
