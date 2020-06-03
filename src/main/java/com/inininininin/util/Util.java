@@ -1,15 +1,15 @@
 package com.inininininin.util;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 public class Util {
@@ -97,4 +97,17 @@ public class Util {
 		return true;
 	}
 
+	public static void main(String[] args) {
+		System.out.println(getTodayRemainSecond());
+	}
+	public static Integer getTodayRemainSecond() {
+		Date now = new Date();
+	    LocalDateTime midnight = LocalDateTime.ofInstant(now.toInstant(),
+	        ZoneId.systemDefault()).plusDays(1).withHour(0).withMinute(0)
+	        .withSecond(0).withNano(0);
+	    LocalDateTime currentDateTime = LocalDateTime.ofInstant(now.toInstant(),
+	        ZoneId.systemDefault());
+	    long seconds = ChronoUnit.SECONDS.between(currentDateTime, midnight);
+	    return (int) seconds;
+	  }
 }
