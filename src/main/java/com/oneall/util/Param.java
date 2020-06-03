@@ -196,18 +196,8 @@ public class Param {
 
 	public static void main(String[] args) throws ParseException, NoSuchFieldException, SecurityException,
 			IllegalArgumentException, IllegalAccessException {
-		Map m = new HashMap();
-		m.put("saf", "123");
 
-		Map m1 = new HashMap();
-		m1.put("saf2222", "123");
-		m.put("m1", m1);
-
-		Map m2 = new HashMap();
-		m2.put(2, "333");
-		m1.put("m2", m2);
-
-		System.out.println(Param.attr(m, "m1", "saf2222", 2));
+		System.out.println(Param.build("", "", "1").vBoolean());
 
 	}
 
@@ -372,6 +362,15 @@ public class Param {
 			}
 			if (l == null)
 				throw ModuleResponse.response(1001, "\"" + this.name + "\"有误").setErrParam(this.code);
+		}
+		return this;
+	}
+
+	public Param vBoolean() {
+		if (!this.todo)
+			return this;
+		if (this.value != null && !this.value.isEmpty() && !"1".equals(this.value) && !"0".equals(this.value)) {
+			throw ModuleResponse.response(1001, "\"" + this.name + "\"有误").setErrParam(this.code);
 		}
 		return this;
 	}
