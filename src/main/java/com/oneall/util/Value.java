@@ -15,8 +15,8 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
-public class Param {
-	private static Logger logger = Logger.getLogger(Param.class);
+public class Value {
+	private static Logger logger = Logger.getLogger(Value.class);
 
 	private String name;
 	private String code;
@@ -34,7 +34,7 @@ public class Param {
 	private Date dateValue;
 	private String[] splitArrValue;
 
-	private Param() {
+	private Value() {
 
 	}
 
@@ -45,7 +45,7 @@ public class Param {
 		}
 	};
 
-	public Param clear() {
+	public Value clear() {
 		this.splitArrValue = null;
 		this.dateValue = null;
 		this.intValue = null;
@@ -55,9 +55,9 @@ public class Param {
 		return this;
 	}
 
-	public static Param build(String name, String code, String... values) {
+	public static Value build(String name, String code, String... values) {
 		logger.info("in -> name : " + name + " code : " + code + " values : " + Arrays.toString(values));
-		Param param = new Param();
+		Value param = new Value();
 		param.name = name;
 		param.code = code;
 		if (values != null)
@@ -75,11 +75,11 @@ public class Param {
 		return param;
 	}
 
-	public static Param build(String... values) {
+	public static Value build(String... values) {
 		return build(null, null, values);
 	}
 
-	public Param suffix(String suffix) {
+	public Value suffix(String suffix) {
 		if (!this.todo)
 			return this;
 		if (this.value != null)
@@ -87,7 +87,7 @@ public class Param {
 		return this;
 	}
 
-	public Param prefix(String prefix) {
+	public Value prefix(String prefix) {
 		if (!this.todo)
 			return this;
 		if (this.value != null)
@@ -95,14 +95,14 @@ public class Param {
 		return this;
 	}
 
-	public Param trim() {
+	public Value trim() {
 		if (!this.todo)
 			return this;
 		this.value = this.value == null ? null : this.value.trim();
 		return this;
 	}
 
-	public Param trimToNull() {
+	public Value trimToNull() {
 		if (!this.todo)
 			return this;
 		if (this.value != null && this.value.trim().isEmpty())
@@ -110,7 +110,7 @@ public class Param {
 		return this;
 	}
 
-	public Param trimToBlank() {
+	public Value trimToBlank() {
 		if (!this.todo)
 			return this;
 		if (this.value == null)
@@ -119,31 +119,31 @@ public class Param {
 		return this;
 	}
 
-	public Param trimLeft() {
+	public Value trimLeft() {
 		if (!this.todo)
 			return this;
 		this.value = this.value == null ? null : this.value.trim();
 		return this;
 	}
 
-	public Param trimRight() {
+	public Value trimRight() {
 		if (!this.todo)
 			return this;
 		this.value = this.value == null ? null : this.value.trim();
 		return this;
 	}
 
-	public Param setDatePattern(String datePattern) {
+	public Value setDatePattern(String datePattern) {
 		this.datePatterns.add(0, datePattern);
 		return this;
 	}
 
-	public Param setSeparator(String separator) {
+	public Value setSeparator(String separator) {
 		this.separator = separator;
 		return this;
 	}
 
-	public Param nullDef(String defaultValue) {
+	public Value nullDef(String defaultValue) {
 		if (!this.todo)
 			return this;
 		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
@@ -152,7 +152,7 @@ public class Param {
 		return this;
 	}
 
-	public Param nullDef(boolean todo, String defaultValue) {
+	public Value nullDef(boolean todo, String defaultValue) {
 		if (!this.todo)
 			return this;
 		if (todo)
@@ -160,7 +160,7 @@ public class Param {
 		return this;
 	}
 
-	public Param blankDef(String defaultValue) {
+	public Value blankDef(String defaultValue) {
 		if (!this.todo)
 			return this;
 		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
@@ -169,7 +169,7 @@ public class Param {
 		return this;
 	}
 
-	public Param blankDef(boolean todo, String defaultValue) {
+	public Value blankDef(boolean todo, String defaultValue) {
 		if (!this.todo)
 			return this;
 		if (todo)
@@ -177,7 +177,7 @@ public class Param {
 		return this;
 	}
 
-	public Param emptyDef(String defaultValue) {
+	public Value emptyDef(String defaultValue) {
 		if (!this.todo)
 			return this;
 		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
@@ -186,7 +186,7 @@ public class Param {
 		return this;
 	}
 
-	public Param emptyDef(boolean todo, String defaultValue) {
+	public Value emptyDef(boolean todo, String defaultValue) {
 		if (!this.todo)
 			return this;
 		if (todo)
@@ -197,17 +197,17 @@ public class Param {
 	public static void main(String[] args) throws ParseException, NoSuchFieldException, SecurityException,
 			IllegalArgumentException, IllegalAccessException {
 
-		System.out.println(Param.build("", "", "1").vBoolean());
+		System.out.println(Value.build("", "", "1").vBoolean());
 
 	}
 
-	public Param stop(boolean todo) {
+	public Value stop(boolean todo) {
 		if (todo)
 			this.todo = false;
 		return this;
 	}
 
-	public Param vNull() {
+	public Value vNull() {
 		if (!this.todo)
 			return this;
 		if (this.value == null)
@@ -215,7 +215,7 @@ public class Param {
 		return this;
 	}
 
-	public Param vNull(boolean todo) {
+	public Value vNull(boolean todo) {
 		if (!this.todo)
 			return this;
 		if (todo)
@@ -223,7 +223,7 @@ public class Param {
 		return this;
 	}
 
-	public Param vEmpty() {
+	public Value vEmpty() {
 		if (!this.todo)
 			return this;
 		if ((this.value == null || this.value.isEmpty()))
@@ -231,7 +231,7 @@ public class Param {
 		return this;
 	}
 
-	public Param vEmpty(boolean todo) {
+	public Value vEmpty(boolean todo) {
 		if (!this.todo)
 			return this;
 		if (todo)
@@ -239,7 +239,7 @@ public class Param {
 		return this;
 	}
 
-	public Param vBlank() {
+	public Value vBlank() {
 		if (!this.todo)
 			return this;
 		if ((this.value != null && this.value.isEmpty()))
@@ -247,7 +247,7 @@ public class Param {
 		return this;
 	}
 
-	public Param vBlank(boolean todo) {
+	public Value vBlank(boolean todo) {
 		if (!this.todo)
 			return this;
 		if (todo)
@@ -255,7 +255,7 @@ public class Param {
 		return this;
 	}
 
-	public Param vLen(int length) {
+	public Value vLen(int length) {
 		if (!this.todo)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() != length) {
@@ -264,7 +264,7 @@ public class Param {
 		return this;
 	}
 
-	public Param vLen(boolean todo, int length) {
+	public Value vLen(boolean todo, int length) {
 		if (!this.todo)
 			return this;
 		if (todo)
@@ -272,7 +272,7 @@ public class Param {
 		return this;
 	}
 
-	public Param vMinLen(int length) {
+	public Value vMinLen(int length) {
 		if (!this.todo)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() < length) {
@@ -281,7 +281,7 @@ public class Param {
 		return this;
 	}
 
-	public Param vMinLen(boolean todo, int length) {
+	public Value vMinLen(boolean todo, int length) {
 		if (!this.todo)
 			return this;
 		if (todo)
@@ -289,7 +289,7 @@ public class Param {
 		return this;
 	}
 
-	public Param vMaxLen(int length) {
+	public Value vMaxLen(int length) {
 		if (!this.todo)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() > length) {
@@ -298,7 +298,7 @@ public class Param {
 		return this;
 	}
 
-	public Param vMaxLen(boolean todo, int length) {
+	public Value vMaxLen(boolean todo, int length) {
 		if (!this.todo)
 			return this;
 		if (todo)
@@ -306,7 +306,7 @@ public class Param {
 		return this;
 	}
 
-	public Param vMaxNum(float maxnum) {
+	public Value vMaxNum(float maxnum) {
 		if (!this.todo)
 			return this;
 		if (!isEmpty() && toFloat() > maxnum) {
@@ -315,7 +315,7 @@ public class Param {
 		return this;
 	}
 
-	public Param vMaxNum(boolean todo, float maxnum) {
+	public Value vMaxNum(boolean todo, float maxnum) {
 		if (!this.todo)
 			return this;
 		if (todo)
@@ -323,7 +323,7 @@ public class Param {
 		return this;
 	}
 
-	public Param vMinNum(float minnum) {
+	public Value vMinNum(float minnum) {
 		if (!this.todo)
 			return this;
 		if (!isEmpty() && toFloat() < minnum) {
@@ -332,7 +332,7 @@ public class Param {
 		return this;
 	}
 
-	public Param vMinNum(boolean todo, float minnum) {
+	public Value vMinNum(boolean todo, float minnum) {
 		if (!this.todo)
 			return this;
 		if (todo)
@@ -340,7 +340,7 @@ public class Param {
 		return this;
 	}
 
-	public Param vMaxCount(int count) {
+	public Value vMaxCount(int count) {
 		if (!this.todo)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && this.toSplitArr() != null
@@ -350,7 +350,7 @@ public class Param {
 		return this;
 	}
 
-	public Param vInteger() {
+	public Value vInteger() {
 		if (!this.todo)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
@@ -366,7 +366,7 @@ public class Param {
 		return this;
 	}
 
-	public Param vBoolean() {
+	public Value vBoolean() {
 		if (!this.todo)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && !"1".equals(this.value) && !"0".equals(this.value)) {
@@ -375,7 +375,7 @@ public class Param {
 		return this;
 	}
 
-	public Param vLong() {
+	public Value vLong() {
 		if (!this.todo)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
@@ -391,7 +391,7 @@ public class Param {
 		return this;
 	}
 
-	public Param vDouble() {
+	public Value vDouble() {
 		if (!this.todo)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
@@ -407,7 +407,7 @@ public class Param {
 		return this;
 	}
 
-	public Param vFloat() {
+	public Value vFloat() {
 		if (!this.todo)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
@@ -423,7 +423,7 @@ public class Param {
 		return this;
 	}
 
-	public Param vDecimal() {
+	public Value vDecimal() {
 		if (!this.todo)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
@@ -457,7 +457,7 @@ public class Param {
 		return false;
 	}
 
-	public Param vLenRange(int min, int max) {
+	public Value vLenRange(int min, int max) {
 		if (!this.todo)
 			return this;
 		vMinLen(min);
@@ -465,7 +465,7 @@ public class Param {
 		return this;
 	}
 
-	public Param vNumRange(float min, float max) {
+	public Value vNumRange(float min, float max) {
 		if (!this.todo)
 			return this;
 		vMinNum(min);
@@ -473,13 +473,13 @@ public class Param {
 		return this;
 	}
 
-	public Param vReg(Pattern regex) {
+	public Value vReg(Pattern regex) {
 		if (!this.todo)
 			return this;
 		return vReg(regex, null);
 	}
 
-	public Param vReg(Pattern regex, String note) {
+	public Value vReg(Pattern regex, String note) {
 		if (!this.todo)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null) {
@@ -492,13 +492,13 @@ public class Param {
 		return this;
 	}
 
-	public Param vRegNot(Pattern regex) {
+	public Value vRegNot(Pattern regex) {
 		if (!this.todo)
 			return this;
 		return vRegNot(regex, null);
 	}
 
-	public Param vRegNot(Pattern regex, String note) {
+	public Value vRegNot(Pattern regex, String note) {
 		if (!this.todo)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null) {
@@ -511,13 +511,13 @@ public class Param {
 		return this;
 	}
 
-	public Param vReg(String regex) {
+	public Value vReg(String regex) {
 		if (!this.todo)
 			return this;
 		return vReg(regex, null);
 	}
 
-	public Param vReg(String regex, String note) {
+	public Value vReg(String regex, String note) {
 		if (!this.todo)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty()) {
@@ -530,13 +530,13 @@ public class Param {
 		return this;
 	}
 
-	public Param vRegNot(String regex) {
+	public Value vRegNot(String regex) {
 		if (!this.todo)
 			return this;
 		return vRegNot(regex, null);
 	}
 
-	public Param vRegNot(String regex, String note) {
+	public Value vRegNot(String regex, String note) {
 		if (!this.todo)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty()) {
@@ -549,7 +549,7 @@ public class Param {
 		return this;
 	}
 
-	public Param vReplace(String regex, String replace) {
+	public Value vReplace(String regex, String replace) {
 		if (!this.todo)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty() && replace != null)
@@ -557,7 +557,7 @@ public class Param {
 		return this;
 	}
 
-	public Param vReplace(String regex, String replace, boolean todo) {
+	public Value vReplace(String regex, String replace, boolean todo) {
 		if (!this.todo)
 			return this;
 		if (todo)
@@ -615,7 +615,7 @@ public class Param {
 		return new SimpleDateFormat(pattern).format(data);
 	}
 
-	public Param vDate() {
+	public Value vDate() {
 		toDate();
 		if (this.dateValue == null)
 			throw ModuleResponse.response(1001, "\"" + this.name + "\"请输入日期").setErrParam(this.code);
@@ -649,7 +649,7 @@ public class Param {
 		return this.value.equals(object);
 	}
 
-	public Param toLowerCase() {
+	public Value toLowerCase() {
 		if (!this.todo)
 			return this;
 		if (this.value != null)
@@ -657,7 +657,7 @@ public class Param {
 		return this;
 	}
 
-	public Param toUpperCase() {
+	public Value toUpperCase() {
 		if (!this.todo)
 			return this;
 		if (this.value != null)
@@ -665,7 +665,7 @@ public class Param {
 		return this;
 	}
 
-	public Param replaceAll(String regex, String replacement) {
+	public Value replaceAll(String regex, String replacement) {
 		if (!this.todo)
 			return this;
 		if (this.value != null)
@@ -673,7 +673,7 @@ public class Param {
 		return this;
 	}
 
-	public Param substring(int beginIndex, int endIndex) {
+	public Value substring(int beginIndex, int endIndex) {
 		if (!this.todo)
 			return this;
 		if (this.value != null)
@@ -681,7 +681,7 @@ public class Param {
 		return this;
 	}
 
-	public Param substring(int beginIndex) {
+	public Value substring(int beginIndex) {
 		if (!this.todo)
 			return this;
 		if (this.value != null)
@@ -689,7 +689,7 @@ public class Param {
 		return this;
 	}
 
-	public Param concat(String str) {
+	public Value concat(String str) {
 		if (!this.todo)
 			return this;
 		if (this.value != null)
@@ -715,7 +715,7 @@ public class Param {
 		return false;
 	}
 
-	public Param set(String value) {
+	public Value set(String value) {
 		this.value = value;
 		return this;
 	}
