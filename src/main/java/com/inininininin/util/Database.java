@@ -1,4 +1,4 @@
-package com.oneall.util;
+package com.inininininin.util;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -14,7 +14,7 @@ public class Database {
 	private static DataSource dataSource;
 
 	public static void m2() throws Exception {
-		System.out.println(StringUtils.newId());
+		System.out.println(StringUtil.newId());
 	}
 
 	public static void m1() throws Exception {
@@ -23,11 +23,11 @@ public class Database {
 				"prod", "wqArF1wH#qJ@erT33Y3");
 		Connection connection = database.connect();
 		for (int j = 0; j < 4; j++) {
-			List<Map> rows = JdbcUtils.queryList(connection, "select * from t_patient ");
+			List<Map> rows = JdbcUtil.queryList(connection, "select * from t_patient ");
 			for (int i = 0; i < rows.size(); i++) {
 				Map row = rows.get(i);
-				row.put("id", StringUtils.newId());
-				Map cR = JdbcUtils.query(connection,
+				row.put("id", StringUtil.newId());
+				Map cR = JdbcUtil.query(connection,
 						"select id clinicId,hospitalId from t_hospital_clinic where id != ? order by rand()",
 						row.get("clinicId"));
 				row.put("clinicId", cR.get("clinicId"));

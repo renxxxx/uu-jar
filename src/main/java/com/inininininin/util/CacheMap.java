@@ -1,4 +1,4 @@
-package com.oneall.util;
+package com.inininininin.util;
 
 import java.util.AbstractMap;
 import java.util.HashMap;

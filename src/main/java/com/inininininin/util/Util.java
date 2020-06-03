@@ -1,4 +1,4 @@
-package com.oneall.util;
+package com.inininininin.util;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -12,8 +12,8 @@ import java.util.Properties;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
-public class Utils {
-	public static Logger logger = Logger.getLogger(Utils.class);
+public class Util {
+	public static Logger logger = Logger.getLogger(Util.class);
 
 	public static boolean isLinux() {
 		Properties prop = System.getProperties();

@@ -1,4 +1,4 @@
-package com.oneall.util;
+package com.inininininin.util;
 
 import java.sql.SQLException;
 import java.util.Collections;
@@ -7,9 +7,9 @@ import org.apache.log4j.Logger;
 
 import redis.clients.jedis.Jedis;
 
-public class LockUtils {
+public class LockUtil {
 
-	public static Logger logger = Logger.getLogger(LockUtils.class);
+	public static Logger logger = Logger.getLogger(LockUtil.class);
 
 	public static boolean distributedLock(Jedis jedis, String lock, String locker, long period)
 			throws SQLException, InterruptedException {

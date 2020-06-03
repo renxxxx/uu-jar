@@ -1,4 +1,4 @@
-package com.oneall.util;
+package com.inininininin.util;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -9,8 +9,8 @@ import org.apache.log4j.Logger;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
-public class RegexUtils {
-	public static Logger logger = Logger.getLogger(RegexUtils.class);
+public class RegexUtil {
+	public static Logger logger = Logger.getLogger(RegexUtil.class);
 
 	
 	public static String group(String regex, String str, int group) {

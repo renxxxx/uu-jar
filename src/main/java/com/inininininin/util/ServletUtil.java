@@ -1,4 +1,4 @@
-package com.oneall.util;
+package com.inininininin.util;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -13,8 +13,8 @@ import org.apache.log4j.Logger;
 
 import com.alibaba.fastjson.JSONObject;
 
-public class ServletUtils {
-	public static Logger logger = Logger.getLogger(ServletUtils.class);
+public class ServletUtil {
+	public static Logger logger = Logger.getLogger(ServletUtil.class);
 
 	public static Map<String, List<String>> headerMap(HttpServletRequest request) {
 		Map<String, List<String>> headerMap = new LinkedHashMap<String, List<String>>();

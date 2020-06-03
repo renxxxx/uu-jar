@@ -1,4 +1,4 @@
-package com.oneall.util;
+package com.inininininin.util;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -16,11 +16,11 @@ import java.util.List;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.log4j.Logger;
 
-public class OsCommandUtils {
-	public static Logger logger = Logger.getLogger(OsCommandUtils.class);
+public class OsCommandUtil {
+	public static Logger logger = Logger.getLogger(OsCommandUtil.class);
 
 	public static void exec(String commandLinux, String commandWindows) throws IOException, InterruptedException {
-		String command = Utils.isLinux() ? commandLinux : Utils.isWindows() ? commandWindows : null;
+		String command = Util.isLinux() ? commandLinux : Util.isWindows() ? commandWindows : null;
 		logger.debug(command);
 		if (command == null) {
 			logger.debug("unknown os,can`t run the command specified");

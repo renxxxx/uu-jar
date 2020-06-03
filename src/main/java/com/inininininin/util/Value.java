@@ -1,4 +1,4 @@
-package com.oneall.util;
+package com.inininininin.util;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
@@ -7,7 +7,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -73,10 +72,6 @@ public class Value {
 			throw ModuleResponse.response(1001, "\"" + param.name + "\"有误").setErrParam(param.code);
 
 		return param;
-	}
-
-	public static Value build(String... values) {
-		return build(null, null, values);
 	}
 
 	public Value suffix(String suffix) {
@@ -197,7 +192,7 @@ public class Value {
 	public static void main(String[] args) throws ParseException, NoSuchFieldException, SecurityException,
 			IllegalArgumentException, IllegalAccessException {
 
-		System.out.println(Value.build("", "", "1").vBoolean());
+		System.out.println(Value.build("3", "4", "1").vBoolean());
 
 	}
 
