@@ -192,7 +192,7 @@ public class Value {
 	public static void main(String[] args) throws ParseException, NoSuchFieldException, SecurityException,
 			IllegalArgumentException, IllegalAccessException {
 
-		System.out.println(Value.build("3", "4", "1").vBoolean());
+		System.out.println(Value.build(null, null, "5").vEnum("3", "4", "5"));
 
 	}
 
@@ -368,6 +368,26 @@ public class Value {
 			throw ModuleResponse.response(1001, "\"" + this.name + "\"有误").setErrParam(this.code);
 		}
 		return this;
+	}
+
+	public Value vEnum(String... values) {
+		if (!this.todo)
+			return this;
+		boolean v = false;
+		if (this.value != null && !this.value.isEmpty()) {
+			for (int i = 0; i < values.length; i++) {
+				String value = values[i];
+				if (value == this.value)
+					v = true;
+				else if (value != null && value.equals(this.value)) {
+					v = true;
+				}
+			}
+		}
+		if (!v)
+			throw ModuleResponse.response(1001, "\"" + this.name + "\"有误").setErrParam(this.code);
+		else
+			return this;
 	}
 
 	public Value vLong() {
