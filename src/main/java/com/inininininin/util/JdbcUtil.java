@@ -14,6 +14,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
@@ -25,6 +26,7 @@ public class JdbcUtil {
 	}
 
 	public static List<Map> queryList(Connection conn, String sql, Object... sqlParams) throws Exception {
+		logger.info("in " + RandomStringUtils.randomNumeric(5));
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
@@ -34,6 +36,7 @@ public class JdbcUtil {
 		} finally {
 			if (pst != null)
 				pst.close();
+			logger.info("out " + RandomStringUtils.randomNumeric(5));
 		}
 	}
 
@@ -98,20 +101,33 @@ public class JdbcUtil {
 		return row.get(row.keySet().iterator().next());
 	}
 
+//	public static Map query(Connection conn, String sql, Object... sqlParams) throws Exception {
+//		logger.info("in " + RandomStringUtils.randomNumeric(5));
+//		PreparedStatement pst = null;
+//		try {
+//			pst = conn.prepareStatement(sql);
+//			List<Map> list = parseResultSetOfList(query(pst, sql, sqlParams));
+//			if (list == null || list.isEmpty())
+//				return null;
+//			return list.get(0);
+//		} catch (Exception e) {
+//			throw e;
+//		} finally {
+//			if (pst != null)
+//				pst.close();
+//			logger.info("out " + RandomStringUtils.randomNumeric(5));
+//		}
+//	}
+
 	public static Map query(Connection conn, String sql, Object... sqlParams) throws Exception {
-		PreparedStatement pst = null;
-		try {
-			pst = conn.prepareStatement(sql);
-			List<Map> list = parseResultSetOfList(query(pst, sql, sqlParams));
-			if (list == null || list.isEmpty())
-				return null;
-			return list.get(0);
-		} catch (Exception e) {
-			throw e;
-		} finally {
-			if (pst != null)
-				pst.close();
+		logger.info("in " + RandomStringUtils.randomNumeric(5));
+		Map item = null;
+		List<Map> itemList = queryList(conn, sql, sqlParams);
+		if (itemList != null && itemList.size() >= 0) {
+			item = itemList.get(0);
 		}
+		logger.info("out " + RandomStringUtils.randomNumeric(5));
+		return item;
 	}
 
 	public static ResultSet query(PreparedStatement pst, String sql, Object... sqlParams) throws SQLException {
@@ -122,8 +138,8 @@ public class JdbcUtil {
 		try {
 			for (int i = 0; i < sqlParams.length; i++) {
 				Object sqlParam = sqlParams[i];
-				if(sqlParam instanceof Value) {
-					sqlParam = ((Value)sqlParam).val();
+				if (sqlParam instanceof Value) {
+					sqlParam = ((Value) sqlParam).val();
 				}
 				pst.setObject(i + 1, sqlParam);
 			}
@@ -142,6 +158,7 @@ public class JdbcUtil {
 //	}
 
 	public static int update(Connection conn, String sql, Object... sqlParams) throws Exception {
+		logger.info("in " + RandomStringUtils.randomNumeric(5));
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
@@ -151,7 +168,9 @@ public class JdbcUtil {
 		} finally {
 			if (pst != null)
 				pst.close();
+			logger.info("out " + RandomStringUtils.randomNumeric(5));
 		}
+
 	}
 
 	public static int updateGentle(Connection conn, String sql, Object... sqlParams) throws Exception {
@@ -177,8 +196,8 @@ public class JdbcUtil {
 		try {
 			for (int i = 0; i < sqlParams.length; i++) {
 				Object sqlParam = sqlParams[i];
-				if(sqlParam instanceof Value) {
-					sqlParam = ((Value)sqlParam).val();
+				if (sqlParam instanceof Value) {
+					sqlParam = ((Value) sqlParam).val();
 				}
 				pst.setObject(i + 1, sqlParam);
 			}
