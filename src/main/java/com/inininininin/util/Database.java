@@ -9,7 +9,10 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.apache.log4j.Logger;
+
 public class Database {
+	private static Logger logger = Logger.getLogger(Database.class);
 
 	private static DataSource dataSource;
 
@@ -49,6 +52,7 @@ public class Database {
 
 	public Database(String driver, String connectURI, String username, String password)
 			throws IOException, SQLException {
+		logger.info("in");
 		org.apache.tomcat.jdbc.pool.DataSource tomcatJdbcPoolDataSource = new org.apache.tomcat.jdbc.pool.DataSource();
 		tomcatJdbcPoolDataSource.setDriverClassName(driver);
 		tomcatJdbcPoolDataSource.setUrl(connectURI);
@@ -59,6 +63,7 @@ public class Database {
 		tomcatJdbcPoolDataSource.setRollbackOnReturn(true);
 		tomcatJdbcPoolDataSource.setValidationQuery("SELECT 1");
 		dataSource = tomcatJdbcPoolDataSource;
+		logger.info("out");
 	}
 
 	public Database(DataSource dataSource) throws IOException, SQLException {
@@ -66,10 +71,12 @@ public class Database {
 	}
 
 	public Connection connect(Connection connection) throws SQLException {
+		logger.info("in");
 		if (connection == null) {
 			connection = dataSource.getConnection();
 			connection.setAutoCommit(false);
 		}
+		logger.info("out");
 		return connection;
 	}
 
