@@ -123,7 +123,7 @@ public class JdbcUtil {
 		logger.info("in " + RandomStringUtils.randomNumeric(5));
 		Map item = null;
 		List<Map> itemList = queryList(conn, sql, sqlParams);
-		if (itemList != null && itemList.size() >= 0) {
+		if (itemList != null && itemList.size() > 0) {
 			item = itemList.get(0);
 		}
 		logger.info("out " + RandomStringUtils.randomNumeric(5));
