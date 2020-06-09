@@ -383,8 +383,8 @@ public class Value {
 					v = true;
 				}
 			}
-		}else {
-			v=true;
+		} else {
+			v = true;
 		}
 		if (!v)
 			throw ModuleResponse.response(1001, "\"" + this.name + "\"有误").setErrParam(this.code);

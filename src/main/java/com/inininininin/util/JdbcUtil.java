@@ -133,8 +133,8 @@ public class JdbcUtil {
 	public static ResultSet query(PreparedStatement pst, String sql, Object... sqlParams) throws SQLException {
 		if (sqlParams == null)
 			sqlParams = new Object[] {};
-		logger.debug(sql);
-		logger.debug(Arrays.toString(sqlParams));
+		logger.info(sql);
+		logger.info(Arrays.toString(sqlParams));
 		try {
 			for (int i = 0; i < sqlParams.length; i++) {
 				Object sqlParam = sqlParams[i];
@@ -146,7 +146,7 @@ public class JdbcUtil {
 			long s = System.nanoTime();
 			ResultSet rs = pst.executeQuery();
 			long e = System.nanoTime();
-			logger.debug("takes: " + (e - s));
+			logger.info("takes: " + (e - s));
 			return rs;
 		} catch (Exception e) {
 			throw new SQLException(e.getMessage() + " sql: " + sql, e);
@@ -179,7 +179,7 @@ public class JdbcUtil {
 			pst = conn.prepareStatement(sql);
 			return update(pst, sql, sqlParams);
 		} catch (Exception e) {
-			logger.debug(ExceptionUtils.getStackTrace(e));
+			logger.info(ExceptionUtils.getStackTrace(e));
 			return 0;
 		} finally {
 			if (pst != null)
@@ -190,8 +190,8 @@ public class JdbcUtil {
 	public static int update(PreparedStatement pst, String sql, Object... sqlParams) throws Exception {
 		if (sqlParams == null)
 			sqlParams = new Object[] {};
-		logger.debug(sql);
-		logger.debug(Arrays.toString(sqlParams));
+		logger.info(sql);
+		logger.info(Arrays.toString(sqlParams));
 		int sqlN = 0;
 		try {
 			for (int i = 0; i < sqlParams.length; i++) {
@@ -204,11 +204,11 @@ public class JdbcUtil {
 			long s = System.nanoTime();
 			sqlN = pst.executeUpdate();
 			long e = System.nanoTime();
-			logger.debug("takes: " + (e - s));
+			logger.info("takes: " + (e - s));
 		} catch (Exception e) {
 			throw new Exception(e.getMessage() + " sql: " + sql, e);
 		}
-		logger.debug("affected: " + sqlN);
+		logger.info("affected: " + sqlN);
 		return sqlN;
 	}
 
@@ -263,10 +263,10 @@ public class JdbcUtil {
 	public static int[] batch(PreparedStatement pst, String sql, Object... sqlParamBatches) throws Exception {
 		if (sqlParamBatches == null)
 			sqlParamBatches = new Object[] {};
-		logger.debug(sql);
+		logger.info(sql);
 		int[] sqlNs = new int[] {};
 		for (Object param : sqlParamBatches) {
-			logger.debug(param);
+			logger.info(param);
 			if (param instanceof List) {
 				for (int i = 0; i < ((List) param).size(); i++) {
 					pst.setObject(i + 1, ((List) param).get(i));
@@ -285,8 +285,8 @@ public class JdbcUtil {
 		long s = System.nanoTime();
 		sqlNs = pst.executeBatch();
 		long e = System.nanoTime();
-		logger.debug("takes: " + (e - s));
-		logger.debug("affected : " + Arrays.toString(sqlNs));
+		logger.info("takes: " + (e - s));
+		logger.info("affected : " + Arrays.toString(sqlNs));
 		return sqlNs;
 	}
 
@@ -302,9 +302,9 @@ public class JdbcUtil {
 			}
 			rows.add(row);
 			if (rows.size() <= 10)
-				logger.debug(row);
+				logger.info(row);
 		}
-		logger.debug("affected : " + rows.size());
+		logger.info("affected : " + rows.size());
 		return rows;
 	}
 
@@ -324,9 +324,9 @@ public class JdbcUtil {
 			}
 			rows.add(row);
 			if (rows.size() <= 10)
-				logger.debug(row);
+				logger.info(row);
 		}
-		logger.debug("affected : " + rows.size());
+		logger.info("affected : " + rows.size());
 		return rows;
 	}
 
@@ -343,9 +343,9 @@ public class JdbcUtil {
 			}
 			valueLists.add(valueList);
 			if (valueLists.size() <= 10)
-				logger.debug(valueList);
+				logger.info(valueList);
 		}
-		logger.debug("affected : " + valueLists.size());
+		logger.info("affected : " + valueLists.size());
 		return valueLists;
 	}
 
@@ -356,9 +356,9 @@ public class JdbcUtil {
 			Object value = rs.getObject(1);
 			rows.add(value);
 			if (rows.size() <= 10)
-				logger.debug(new StringBuilder("[").append(value).append("]").toString());
+				logger.info(new StringBuilder("[").append(value).append("]").toString());
 		}
-		logger.debug("affected : " + rows.size());
+		logger.info("affected : " + rows.size());
 		return rows;
 	}
 

@@ -5,7 +5,7 @@
                   
 	<groupId>com.inininininin</groupId>
 	<artifactId>util</artifactId>
-	<version>20.0608.1521</version>
+	<version>20.0609.1749</version>
 	<packaging>jar</packaging>
 	<name>util</name>
 	<url>http://maven.apache.org</url>
