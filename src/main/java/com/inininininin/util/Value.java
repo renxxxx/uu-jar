@@ -21,10 +21,7 @@ public class Value {
 	private String code;
 	private String value;
 	private String separator = ",";
-	private static List<String> datePatterns = new ListChain(new ArrayList()).add("yyyy-MM-dd HH:mm:ss")
-			.add("yyyy-MM-dd HH:mm:ss.SSS").add("MM/dd/yyyy HH:mm:ss").add("MM/dd/yyyy HH:mm:ss.SSS").add("yyyy-MM-dd")
-			.add("HH:mm:ss").add("yyyy/MM/dd HH:mm:ss").add("yyyy/MM/dd HH:mm:ss.SSS").add("yyyy/MM/dd").list;
-	private String datePattern = null;
+	private static String datePattern = "yyyy-MM-dd HH:mm:ss.SSS Z";
 	boolean todo = true;
 	private Integer intValue;
 	private Float floatValue;
@@ -125,11 +122,6 @@ public class Value {
 		if (!this.todo)
 			return this;
 		this.value = this.value == null ? null : this.value.trim();
-		return this;
-	}
-
-	public Value setDatePattern(String datePattern) {
-		this.datePatterns.add(0, datePattern);
 		return this;
 	}
 
@@ -782,25 +774,31 @@ public class Value {
 			return null;
 		if (value instanceof Date)
 			return (Date) value;
-		if (value instanceof String) {
-			if (value.toString().trim().isEmpty())
-				return null;
-			if (StringUtils.isNumeric(value.toString()))
-				return new Date(Long.parseLong(value.toString().trim()));
-		}
-		if (value instanceof Long)
-			return new Date((Long) value);
-		if (value instanceof Integer)
-			return new Date((Long) value * 1000);
-		for (int i = 0; i < datePatterns.size(); i++) {
-			try {
-				date = new SimpleDateFormat(datePatterns.get(i)).parse(value.toString());
-				if (date != null) {
-					return date;
-				}
-			} catch (Exception e) {
+		try {
+			date = new SimpleDateFormat(datePattern).parse(value.toString());
+			if (date != null) {
+				return date;
 			}
+		} catch (Exception e) {
 		}
+		
+		try {
+			date = new Date(Long.parseLong(value.toString()));
+			if (date != null) {
+				return date;
+			}
+		} catch (Exception e) {
+		}
+		
+		try {
+			date = new Date(value.toString());
+			if (date != null) {
+				return date;
+			}
+		} catch (Exception e) {
+		}
+		
+		
 		return date;
 	}
 

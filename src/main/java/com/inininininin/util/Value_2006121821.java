@@ -14,14 +14,17 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
-public class Value2 {
-	private static Logger logger = Logger.getLogger(Value2.class);
+public class Value_2006121821 {
+	private static Logger logger = Logger.getLogger(Value_2006121821.class);
 
 	private String name;
 	private String code;
 	private String value;
 	private String separator = ",";
-	private static String datePattern = "yyyy-MM-dd HH:mm:ss.SSS Z";
+	private static List<String> datePatterns = new ListChain(new ArrayList()).add("yyyy-MM-dd HH:mm:ss")
+			.add("yyyy-MM-dd HH:mm:ss.SSS").add("MM/dd/yyyy HH:mm:ss").add("MM/dd/yyyy HH:mm:ss.SSS").add("yyyy-MM-dd")
+			.add("HH:mm:ss").add("yyyy/MM/dd HH:mm:ss").add("yyyy/MM/dd HH:mm:ss.SSS").add("yyyy/MM/dd").list;
+	private String datePattern = null;
 	boolean todo = true;
 	private Integer intValue;
 	private Float floatValue;
@@ -30,7 +33,7 @@ public class Value2 {
 	private Date dateValue;
 	private String[] splitArrValue;
 
-	private Value2() {
+	private Value_2006121821() {
 
 	}
 
@@ -41,7 +44,7 @@ public class Value2 {
 		}
 	};
 
-	public Value2 clear() {
+	public Value_2006121821 clear() {
 		this.splitArrValue = null;
 		this.dateValue = null;
 		this.intValue = null;
@@ -51,9 +54,9 @@ public class Value2 {
 		return this;
 	}
 
-	public static Value2 build(String name, String code, String... values) {
+	public static Value_2006121821 build(String name, String code, String... values) {
 		logger.info("in -> name : " + name + " code : " + code + " values : " + Arrays.toString(values));
-		Value2 param = new Value2();
+		Value_2006121821 param = new Value_2006121821();
 		param.name = name;
 		param.code = code;
 		if (values != null)
@@ -71,7 +74,7 @@ public class Value2 {
 		return param;
 	}
 
-	public Value2 suffix(String suffix) {
+	public Value_2006121821 suffix(String suffix) {
 		if (!this.todo)
 			return this;
 		if (this.value != null)
@@ -79,7 +82,7 @@ public class Value2 {
 		return this;
 	}
 
-	public Value2 prefix(String prefix) {
+	public Value_2006121821 prefix(String prefix) {
 		if (!this.todo)
 			return this;
 		if (this.value != null)
@@ -87,14 +90,14 @@ public class Value2 {
 		return this;
 	}
 
-	public Value2 trim() {
+	public Value_2006121821 trim() {
 		if (!this.todo)
 			return this;
 		this.value = this.value == null ? null : this.value.trim();
 		return this;
 	}
 
-	public Value2 trimToNull() {
+	public Value_2006121821 trimToNull() {
 		if (!this.todo)
 			return this;
 		if (this.value != null && this.value.trim().isEmpty())
@@ -102,7 +105,7 @@ public class Value2 {
 		return this;
 	}
 
-	public Value2 trimToBlank() {
+	public Value_2006121821 trimToBlank() {
 		if (!this.todo)
 			return this;
 		if (this.value == null)
@@ -111,26 +114,31 @@ public class Value2 {
 		return this;
 	}
 
-	public Value2 trimLeft() {
+	public Value_2006121821 trimLeft() {
 		if (!this.todo)
 			return this;
 		this.value = this.value == null ? null : this.value.trim();
 		return this;
 	}
 
-	public Value2 trimRight() {
+	public Value_2006121821 trimRight() {
 		if (!this.todo)
 			return this;
 		this.value = this.value == null ? null : this.value.trim();
 		return this;
 	}
 
-	public Value2 setSeparator(String separator) {
+	public Value_2006121821 setDatePattern(String datePattern) {
+		this.datePatterns.add(0, datePattern);
+		return this;
+	}
+
+	public Value_2006121821 setSeparator(String separator) {
 		this.separator = separator;
 		return this;
 	}
 
-	public Value2 nullDef(String defaultValue) {
+	public Value_2006121821 nullDef(String defaultValue) {
 		if (!this.todo)
 			return this;
 		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
@@ -139,7 +147,7 @@ public class Value2 {
 		return this;
 	}
 
-	public Value2 nullDef(boolean todo, String defaultValue) {
+	public Value_2006121821 nullDef(boolean todo, String defaultValue) {
 		if (!this.todo)
 			return this;
 		if (todo)
@@ -147,7 +155,7 @@ public class Value2 {
 		return this;
 	}
 
-	public Value2 blankDef(String defaultValue) {
+	public Value_2006121821 blankDef(String defaultValue) {
 		if (!this.todo)
 			return this;
 		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
@@ -156,7 +164,7 @@ public class Value2 {
 		return this;
 	}
 
-	public Value2 blankDef(boolean todo, String defaultValue) {
+	public Value_2006121821 blankDef(boolean todo, String defaultValue) {
 		if (!this.todo)
 			return this;
 		if (todo)
@@ -164,7 +172,7 @@ public class Value2 {
 		return this;
 	}
 
-	public Value2 emptyDef(String defaultValue) {
+	public Value_2006121821 emptyDef(String defaultValue) {
 		if (!this.todo)
 			return this;
 		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
@@ -173,7 +181,7 @@ public class Value2 {
 		return this;
 	}
 
-	public Value2 emptyDef(boolean todo, String defaultValue) {
+	public Value_2006121821 emptyDef(boolean todo, String defaultValue) {
 		if (!this.todo)
 			return this;
 		if (todo)
@@ -184,17 +192,17 @@ public class Value2 {
 	public static void main(String[] args) throws ParseException, NoSuchFieldException, SecurityException,
 			IllegalArgumentException, IllegalAccessException {
 
-		System.out.println(Value2.build(null, null, "5").vEnum("3", "4", "5"));
+		System.out.println(Value_2006121821.build(null, null, "5").vEnum("3", "4", "5"));
 
 	}
 
-	public Value2 stop(boolean todo) {
+	public Value_2006121821 stop(boolean todo) {
 		if (todo)
 			this.todo = false;
 		return this;
 	}
 
-	public Value2 vNull() {
+	public Value_2006121821 vNull() {
 		if (!this.todo)
 			return this;
 		if (this.value == null)
@@ -202,7 +210,7 @@ public class Value2 {
 		return this;
 	}
 
-	public Value2 vNull(boolean todo) {
+	public Value_2006121821 vNull(boolean todo) {
 		if (!this.todo)
 			return this;
 		if (todo)
@@ -210,7 +218,7 @@ public class Value2 {
 		return this;
 	}
 
-	public Value2 vEmpty() {
+	public Value_2006121821 vEmpty() {
 		if (!this.todo)
 			return this;
 		if ((this.value == null || this.value.isEmpty()))
@@ -218,7 +226,7 @@ public class Value2 {
 		return this;
 	}
 
-	public Value2 vEmpty(boolean todo) {
+	public Value_2006121821 vEmpty(boolean todo) {
 		if (!this.todo)
 			return this;
 		if (todo)
@@ -226,7 +234,7 @@ public class Value2 {
 		return this;
 	}
 
-	public Value2 vBlank() {
+	public Value_2006121821 vBlank() {
 		if (!this.todo)
 			return this;
 		if ((this.value != null && this.value.isEmpty()))
@@ -234,7 +242,7 @@ public class Value2 {
 		return this;
 	}
 
-	public Value2 vBlank(boolean todo) {
+	public Value_2006121821 vBlank(boolean todo) {
 		if (!this.todo)
 			return this;
 		if (todo)
@@ -242,7 +250,7 @@ public class Value2 {
 		return this;
 	}
 
-	public Value2 vLen(int length) {
+	public Value_2006121821 vLen(int length) {
 		if (!this.todo)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() != length) {
@@ -251,7 +259,7 @@ public class Value2 {
 		return this;
 	}
 
-	public Value2 vLen(boolean todo, int length) {
+	public Value_2006121821 vLen(boolean todo, int length) {
 		if (!this.todo)
 			return this;
 		if (todo)
@@ -259,7 +267,7 @@ public class Value2 {
 		return this;
 	}
 
-	public Value2 vMinLen(int length) {
+	public Value_2006121821 vMinLen(int length) {
 		if (!this.todo)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() < length) {
@@ -268,7 +276,7 @@ public class Value2 {
 		return this;
 	}
 
-	public Value2 vMinLen(boolean todo, int length) {
+	public Value_2006121821 vMinLen(boolean todo, int length) {
 		if (!this.todo)
 			return this;
 		if (todo)
@@ -276,7 +284,7 @@ public class Value2 {
 		return this;
 	}
 
-	public Value2 vMaxLen(int length) {
+	public Value_2006121821 vMaxLen(int length) {
 		if (!this.todo)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() > length) {
@@ -285,7 +293,7 @@ public class Value2 {
 		return this;
 	}
 
-	public Value2 vMaxLen(boolean todo, int length) {
+	public Value_2006121821 vMaxLen(boolean todo, int length) {
 		if (!this.todo)
 			return this;
 		if (todo)
@@ -293,7 +301,7 @@ public class Value2 {
 		return this;
 	}
 
-	public Value2 vMaxNum(float maxnum) {
+	public Value_2006121821 vMaxNum(float maxnum) {
 		if (!this.todo)
 			return this;
 		if (!isEmpty() && toFloat() > maxnum) {
@@ -302,7 +310,7 @@ public class Value2 {
 		return this;
 	}
 
-	public Value2 vMaxNum(boolean todo, float maxnum) {
+	public Value_2006121821 vMaxNum(boolean todo, float maxnum) {
 		if (!this.todo)
 			return this;
 		if (todo)
@@ -310,7 +318,7 @@ public class Value2 {
 		return this;
 	}
 
-	public Value2 vMinNum(float minnum) {
+	public Value_2006121821 vMinNum(float minnum) {
 		if (!this.todo)
 			return this;
 		if (!isEmpty() && toFloat() < minnum) {
@@ -319,7 +327,7 @@ public class Value2 {
 		return this;
 	}
 
-	public Value2 vMinNum(boolean todo, float minnum) {
+	public Value_2006121821 vMinNum(boolean todo, float minnum) {
 		if (!this.todo)
 			return this;
 		if (todo)
@@ -327,7 +335,7 @@ public class Value2 {
 		return this;
 	}
 
-	public Value2 vMaxCount(int count) {
+	public Value_2006121821 vMaxCount(int count) {
 		if (!this.todo)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && this.toSplitArr() != null
@@ -337,7 +345,7 @@ public class Value2 {
 		return this;
 	}
 
-	public Value2 vInteger() {
+	public Value_2006121821 vInteger() {
 		if (!this.todo)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
@@ -353,7 +361,7 @@ public class Value2 {
 		return this;
 	}
 
-	public Value2 vBoolean() {
+	public Value_2006121821 vBoolean() {
 		if (!this.todo)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && !"1".equals(this.value) && !"0".equals(this.value)) {
@@ -362,7 +370,7 @@ public class Value2 {
 		return this;
 	}
 
-	public Value2 vEnum(String... values) {
+	public Value_2006121821 vEnum(String... values) {
 		if (!this.todo)
 			return this;
 		boolean v = false;
@@ -384,7 +392,7 @@ public class Value2 {
 			return this;
 	}
 
-	public Value2 vLong() {
+	public Value_2006121821 vLong() {
 		if (!this.todo)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
@@ -400,7 +408,7 @@ public class Value2 {
 		return this;
 	}
 
-	public Value2 vDouble() {
+	public Value_2006121821 vDouble() {
 		if (!this.todo)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
@@ -416,7 +424,7 @@ public class Value2 {
 		return this;
 	}
 
-	public Value2 vFloat() {
+	public Value_2006121821 vFloat() {
 		if (!this.todo)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
@@ -432,7 +440,7 @@ public class Value2 {
 		return this;
 	}
 
-	public Value2 vDecimal() {
+	public Value_2006121821 vDecimal() {
 		if (!this.todo)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
@@ -466,7 +474,7 @@ public class Value2 {
 		return false;
 	}
 
-	public Value2 vLenRange(int min, int max) {
+	public Value_2006121821 vLenRange(int min, int max) {
 		if (!this.todo)
 			return this;
 		vMinLen(min);
@@ -474,7 +482,7 @@ public class Value2 {
 		return this;
 	}
 
-	public Value2 vNumRange(float min, float max) {
+	public Value_2006121821 vNumRange(float min, float max) {
 		if (!this.todo)
 			return this;
 		vMinNum(min);
@@ -482,13 +490,13 @@ public class Value2 {
 		return this;
 	}
 
-	public Value2 vReg(Pattern regex) {
+	public Value_2006121821 vReg(Pattern regex) {
 		if (!this.todo)
 			return this;
 		return vReg(regex, null);
 	}
 
-	public Value2 vReg(Pattern regex, String note) {
+	public Value_2006121821 vReg(Pattern regex, String note) {
 		if (!this.todo)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null) {
@@ -501,13 +509,13 @@ public class Value2 {
 		return this;
 	}
 
-	public Value2 vRegNot(Pattern regex) {
+	public Value_2006121821 vRegNot(Pattern regex) {
 		if (!this.todo)
 			return this;
 		return vRegNot(regex, null);
 	}
 
-	public Value2 vRegNot(Pattern regex, String note) {
+	public Value_2006121821 vRegNot(Pattern regex, String note) {
 		if (!this.todo)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null) {
@@ -520,13 +528,13 @@ public class Value2 {
 		return this;
 	}
 
-	public Value2 vReg(String regex) {
+	public Value_2006121821 vReg(String regex) {
 		if (!this.todo)
 			return this;
 		return vReg(regex, null);
 	}
 
-	public Value2 vReg(String regex, String note) {
+	public Value_2006121821 vReg(String regex, String note) {
 		if (!this.todo)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty()) {
@@ -539,13 +547,13 @@ public class Value2 {
 		return this;
 	}
 
-	public Value2 vRegNot(String regex) {
+	public Value_2006121821 vRegNot(String regex) {
 		if (!this.todo)
 			return this;
 		return vRegNot(regex, null);
 	}
 
-	public Value2 vRegNot(String regex, String note) {
+	public Value_2006121821 vRegNot(String regex, String note) {
 		if (!this.todo)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty()) {
@@ -558,7 +566,7 @@ public class Value2 {
 		return this;
 	}
 
-	public Value2 vReplace(String regex, String replace) {
+	public Value_2006121821 vReplace(String regex, String replace) {
 		if (!this.todo)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty() && replace != null)
@@ -566,7 +574,7 @@ public class Value2 {
 		return this;
 	}
 
-	public Value2 vReplace(String regex, String replace, boolean todo) {
+	public Value_2006121821 vReplace(String regex, String replace, boolean todo) {
 		if (!this.todo)
 			return this;
 		if (todo)
@@ -624,7 +632,7 @@ public class Value2 {
 		return new SimpleDateFormat(pattern).format(data);
 	}
 
-	public Value2 vDate() {
+	public Value_2006121821 vDate() {
 		if (this.value == null || this.value.isEmpty())
 			return this;
 		toDate();
@@ -660,7 +668,7 @@ public class Value2 {
 		return this.value.equals(object);
 	}
 
-	public Value2 toLowerCase() {
+	public Value_2006121821 toLowerCase() {
 		if (!this.todo)
 			return this;
 		if (this.value != null)
@@ -668,7 +676,7 @@ public class Value2 {
 		return this;
 	}
 
-	public Value2 toUpperCase() {
+	public Value_2006121821 toUpperCase() {
 		if (!this.todo)
 			return this;
 		if (this.value != null)
@@ -676,7 +684,7 @@ public class Value2 {
 		return this;
 	}
 
-	public Value2 replaceAll(String regex, String replacement) {
+	public Value_2006121821 replaceAll(String regex, String replacement) {
 		if (!this.todo)
 			return this;
 		if (this.value != null)
@@ -684,7 +692,7 @@ public class Value2 {
 		return this;
 	}
 
-	public Value2 substring(int beginIndex, int endIndex) {
+	public Value_2006121821 substring(int beginIndex, int endIndex) {
 		if (!this.todo)
 			return this;
 		if (this.value != null)
@@ -692,7 +700,7 @@ public class Value2 {
 		return this;
 	}
 
-	public Value2 substring(int beginIndex) {
+	public Value_2006121821 substring(int beginIndex) {
 		if (!this.todo)
 			return this;
 		if (this.value != null)
@@ -700,7 +708,7 @@ public class Value2 {
 		return this;
 	}
 
-	public Value2 concat(String str) {
+	public Value_2006121821 concat(String str) {
 		if (!this.todo)
 			return this;
 		if (this.value != null)
@@ -726,7 +734,7 @@ public class Value2 {
 		return false;
 	}
 
-	public Value2 set(String value) {
+	public Value_2006121821 set(String value) {
 		clear();
 		this.value = value;
 		return this;
@@ -774,12 +782,24 @@ public class Value2 {
 			return null;
 		if (value instanceof Date)
 			return (Date) value;
-		try {
-			date = new SimpleDateFormat(datePattern).parse(value.toString());
-			if (date != null) {
-				return date;
+		if (value instanceof String) {
+			if (value.toString().trim().isEmpty())
+				return null;
+			if (StringUtils.isNumeric(value.toString()))
+				return new Date(Long.parseLong(value.toString().trim()));
+		}
+		if (value instanceof Long)
+			return new Date((Long) value);
+		if (value instanceof Integer)
+			return new Date((Long) value * 1000);
+		for (int i = 0; i < datePatterns.size(); i++) {
+			try {
+				date = new SimpleDateFormat(datePatterns.get(i)).parse(value.toString());
+				if (date != null) {
+					return date;
+				}
+			} catch (Exception e) {
 			}
-		} catch (Exception e) {
 		}
 		return date;
 	}
