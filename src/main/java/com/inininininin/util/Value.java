@@ -21,7 +21,7 @@ public class Value {
 	private String code;
 	private String value;
 	private String separator = ",";
-	private static String datePattern = "yyyy-MM-dd HH:mm:ss.SSS Z";
+	public static String datePattern = "yyyy-MM-dd HH:mm:ss.SSS Z";
 	boolean todo = true;
 	private Integer intValue;
 	private Float floatValue;
