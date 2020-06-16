@@ -631,7 +631,7 @@ public class Value {
 		if (this.dateValue == null)
 			throw ModuleResponse.response(1001, "\"" + this.name + "\"请输入日期").setErrParam(this.code);
 		else {
-			this.value = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(this.dateValue);
+			this.value = new SimpleDateFormat(datePattern).format(this.dateValue);
 		}
 		return this;
 	}
@@ -781,7 +781,7 @@ public class Value {
 			}
 		} catch (Exception e) {
 		}
-		
+
 		try {
 			date = new Date(Long.parseLong(value.toString()));
 			if (date != null) {
@@ -789,7 +789,7 @@ public class Value {
 			}
 		} catch (Exception e) {
 		}
-		
+
 		try {
 			date = new Date(value.toString());
 			if (date != null) {
@@ -797,8 +797,7 @@ public class Value {
 			}
 		} catch (Exception e) {
 		}
-		
-		
+
 		return date;
 	}
 
