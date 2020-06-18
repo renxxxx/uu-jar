@@ -22,6 +22,8 @@ public class Value {
 	private String value;
 	private String separator = ",";
 	public static String datePattern = "yyyy-MM-dd HH:mm:ss.SSS Z";
+	public static String datePattern1 = "yyyy-MM-dd";
+	public static String datePattern2 = "HH:mm:ss";
 	boolean todo = true;
 	private Integer intValue;
 	private Float floatValue;
@@ -781,7 +783,23 @@ public class Value {
 			}
 		} catch (Exception e) {
 		}
-
+		
+		try {
+			date = new SimpleDateFormat(datePattern1).parse(value.toString());
+			if (date != null) {
+				return date;
+			}
+		} catch (Exception e) {
+		}
+		
+		try {
+			date = new SimpleDateFormat(datePattern2).parse(value.toString());
+			if (date != null) {
+				return date;
+			}
+		} catch (Exception e) {
+		}
+		
 		try {
 			date = new Date(Long.parseLong(value.toString()));
 			if (date != null) {
