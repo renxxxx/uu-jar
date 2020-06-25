@@ -52,7 +52,7 @@ public class Database {
 
 	public Database(String driver, String connectURI, String username, String password)
 			throws IOException, SQLException {
-		logger.info("in");
+		logger.info("into");
 		org.apache.tomcat.jdbc.pool.DataSource tomcatJdbcPoolDataSource = new org.apache.tomcat.jdbc.pool.DataSource();
 		tomcatJdbcPoolDataSource.setDriverClassName(driver);
 		tomcatJdbcPoolDataSource.setUrl(connectURI);
@@ -71,7 +71,7 @@ public class Database {
 	}
 
 	public Connection connect(Connection connection) throws SQLException {
-		logger.info("in");
+		logger.info("into");
 		if (connection == null) {
 			connection = dataSource.getConnection();
 			connection.setAutoCommit(false);
