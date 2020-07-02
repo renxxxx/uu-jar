@@ -643,6 +643,9 @@ public class Value {
 		if (this.dateValue != null)
 			return this.dateValue;
 		this.dateValue = isEmpty() ? null : toDate(this.value);
+		if(this.dateValue != null) {
+			this.value=new SimpleDateFormat(Value.datePattern1).format(this.dateValue);
+		}
 		return this.dateValue;
 	}
 
