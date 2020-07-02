@@ -634,7 +634,7 @@ public class Value {
 		if (this.dateValue == null)
 			throw ModuleResponse.response(1001, "\"" + this.name + "\"请输入日期").setErrParam(this.code);
 		else {
-			this.value = new SimpleDateFormat(datePattern).format(this.dateValue);
+			this.value = new SimpleDateFormat(datePattern1).format(this.dateValue);
 		}
 		return this;
 	}
@@ -643,9 +643,6 @@ public class Value {
 		if (this.dateValue != null)
 			return this.dateValue;
 		this.dateValue = isEmpty() ? null : toDate(this.value);
-		if(this.dateValue != null) {
-			this.value=new SimpleDateFormat(Value.datePattern1).format(this.dateValue);
-		}
 		return this.dateValue;
 	}
 
