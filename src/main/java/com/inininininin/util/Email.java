@@ -8,24 +8,13 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-public class JavaMail {
+public class Email {
+	
 	public static void main(String[] args) throws Exception {
-		JavaMail j = new JavaMail("smtp.qq.com", 25, "smtp", "true", "413038044@qq.com", "pzivczucpondbhhh",
+		Email j = new Email().start("smtp.qq.com", 25, "smtp", "true", "413038044@qq.com", "pzivczucpondbhhh",
 				"413038044@qq.com");
 
 		j.send("413038044@qq.com", "aq123123d", "qqqq");
-	}
-
-	public JavaMail(String host, Integer port, String protocol, String smtpAuth, String user, String pwd,
-			String sender) {
-		super();
-		this.host = host;
-		this.port = port;
-		this.protocol = protocol;
-		this.smtpAuth = smtpAuth;
-		this.user = user;
-		this.pwd = pwd;
-		this.sender = sender;
 	}
 
 	private String host;
@@ -35,6 +24,18 @@ public class JavaMail {
 	private String user;
 	private String pwd;
 	private String sender;
+	
+	public Email start(String host, Integer port, String protocol, String smtpAuth, String user, String pwd,
+			String sender) {
+		this.host = host;
+		this.port = port;
+		this.protocol = protocol;
+		this.smtpAuth = smtpAuth;
+		this.user = user;
+		this.pwd = pwd;
+		this.sender = sender;
+		return this;
+	}
 
 	public Message send(String receiver, String subject, String content) throws Exception {
 		Properties prop = new Properties();
