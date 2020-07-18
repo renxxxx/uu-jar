@@ -655,7 +655,7 @@ public class Value {
 			throw ModuleResponse.response(1001, "\"" + this.name + "\"" + message).setErrParam(this.code);
 	}
 
-	public boolean equals(String object) {
+	public boolean equals(Object object) {
 		if (this.value == object)
 			return true;
 		if (this.value == null && object != null)
