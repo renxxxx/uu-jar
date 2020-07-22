@@ -188,9 +188,8 @@ public class Value {
 
 	public static void main(String[] args) throws ParseException, NoSuchFieldException, SecurityException,
 			IllegalArgumentException, IllegalAccessException {
-
-		System.out.println(Value.build(null, null, "5").vEnum("3", "4", "5"));
-
+Value value = Value.build(null, null, "2020-05-06 13:23:11.123");
+System.out.println(value.toDate());
 	}
 
 	public Value stop(boolean todo) {
@@ -777,6 +776,13 @@ public class Value {
 		Date date = null;
 		if (value == null)
 			return null;
+		try {
+			date = new Date(Long.parseLong(value.toString()));
+			if (date != null) {
+				return date;
+			}
+		} catch (Exception e) {
+		}
 		if (value instanceof Date)
 			return (Date) value;
 		try {
@@ -832,13 +838,7 @@ public class Value {
 		} catch (Exception e) {
 		}
 
-		try {
-			date = new Date(value.toString());
-			if (date != null) {
-				return date;
-			}
-		} catch (Exception e) {
-		}
+		
 
 		return date;
 	}
