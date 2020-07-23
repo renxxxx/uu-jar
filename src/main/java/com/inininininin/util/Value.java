@@ -25,8 +25,7 @@ public class Value {
 	public static String datePattern1 = "yyyy-MM-dd HH:mm:ss";
 	public static String datePattern2 = "yyyy-MM-dd";
 	public static String datePattern3 = "HH:mm:ss";
-	public static String datePattern4 = "yyyyMMddHHmmss";
-	public static String datePattern5 = "yyyyMMddHHmmssSSS";
+	public static String datePattern4 = "yyyy-MM-dd HH:mm:ss.SSS";
 	boolean todo = true;
 	private Integer intValue;
 	private Float floatValue;
@@ -776,13 +775,6 @@ System.out.println(value.toDate());
 		Date date = null;
 		if (value == null)
 			return null;
-		try {
-			date = new Date(Long.parseLong(value.toString()));
-			if (date != null) {
-				return date;
-			}
-		} catch (Exception e) {
-		}
 		if (value instanceof Date)
 			return (Date) value;
 		try {
@@ -824,22 +816,13 @@ System.out.println(value.toDate());
 		} catch (Exception e) {
 		}
 		try {
-			date = new SimpleDateFormat(datePattern5).parse(value.toString());
-			if (date != null) {
-				return date;
-			}
-		} catch (Exception e) {
-		}
-		try {
 			date = new Date(Long.parseLong(value.toString()));
 			if (date != null) {
 				return date;
 			}
 		} catch (Exception e) {
 		}
-
 		
-
 		return date;
 	}
 
