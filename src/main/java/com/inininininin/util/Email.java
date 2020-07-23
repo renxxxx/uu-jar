@@ -11,7 +11,7 @@ import javax.mail.internet.MimeMessage;
 public class Email {
 	
 	public static void main(String[] args) throws Exception {
-		Email j = new Email().start("smtp.qq.com", 25, "smtp", "true", "413038044@qq.com", "pzivczucpondbhhh",
+		Email j = new Email().start("smtp.qq.com", 25, "smtp", "true", "413038044@qq.com", "zdaxslpmputscbda",
 				"413038044@qq.com");
 
 		j.send("413038044@qq.com", "aq123123d", "qqqq");
