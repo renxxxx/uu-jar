@@ -187,7 +187,7 @@ public class Value {
 
 	public static void main(String[] args) throws ParseException, NoSuchFieldException, SecurityException,
 			IllegalArgumentException, IllegalAccessException {
-Value value = Value.build(null, null, "2020-05-06 13:23:11.123");
+Value value = Value.build(null, null, "20200506132311");
 System.out.println(value.toDate());
 	}
 
