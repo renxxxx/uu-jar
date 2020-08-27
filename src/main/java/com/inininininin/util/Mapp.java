@@ -33,6 +33,10 @@ public class Mapp<K, V> {
 		return map.get(key);
 	}
 
+	public V remove(K key) {
+		return map.remove(key);
+	}
+
 	public String getString(K key) {
 		return Value.toString(map.get(key));
 	}
