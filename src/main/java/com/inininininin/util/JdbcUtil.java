@@ -78,8 +78,8 @@ public class JdbcUtil {
 		return Value.toString(queryColumn(conn, sql, sqlParams));
 	}
 
-	public static BigDecimal queryDecimal(Connection conn, String sql, Object... sqlParams) throws Exception {
-		return Value.toDecimal(queryColumn(conn, sql, sqlParams));
+	public static BigDecimal queryBigDecimal(Connection conn, String sql, Object... sqlParams) throws Exception {
+		return Value.toBigDecimal(queryColumn(conn, sql, sqlParams));
 	}
 
 	public static Long queryLong(Connection conn, String sql, Object... sqlParams) throws Exception {

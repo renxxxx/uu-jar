@@ -187,8 +187,8 @@ public class Value {
 
 	public static void main(String[] args) throws ParseException, NoSuchFieldException, SecurityException,
 			IllegalArgumentException, IllegalAccessException {
-Value value = Value.build(null, null, "20200506132311");
-System.out.println(value.toDate());
+		Value value = Value.build(null, null, "20200506132311");
+		System.out.println(value.toDate());
 	}
 
 	public Value stop(boolean todo) {
@@ -822,7 +822,7 @@ System.out.println(value.toDate());
 			}
 		} catch (Exception e) {
 		}
-		
+
 		return date;
 	}
 
@@ -838,7 +838,7 @@ System.out.println(value.toDate());
 			return new Long(valueStr);
 	}
 
-	public static BigDecimal toDecimal(Object value) {
+	public static BigDecimal toBigDecimal(Object value) {
 		if (value == null)
 			return null;
 		if (value instanceof BigDecimal)
