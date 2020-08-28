@@ -9,9 +9,11 @@ public class Mapp<K, V> {
 
 	public Map<K, V> map = null;
 
-	public Mapp(Map<K, V> map) {
-		super();
-		this.map = map;
+	public static Mapp instance(Map map) {
+		if (map == null)
+			return null;
+		else
+			return new Mapp().putAll(map);
 	}
 
 	public Mapp() {
