@@ -12,8 +12,11 @@ public class Mapp<K, V> {
 	public static Mapp instance(Map map) {
 		if (map == null)
 			return null;
-		else
-			return new Mapp().putAll(map);
+		else {
+			Mapp mapp = new Mapp();
+			mapp.map = map;
+			return mapp;
+		}
 	}
 
 	public Mapp() {
