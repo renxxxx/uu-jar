@@ -1,4 +1,4 @@
-package com.inininininin.util;
+package inininininin.util;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;

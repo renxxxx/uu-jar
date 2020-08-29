@@ -1,4 +1,4 @@
-package com.inininininin.util;
+package inininininin.util;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

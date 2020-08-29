@@ -1,4 +1,4 @@
-package com.inininininin.util;
+package inininininin.util;
 
 import java.io.BufferedReader;
 import java.io.File;

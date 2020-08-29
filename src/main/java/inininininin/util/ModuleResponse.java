@@ -1,4 +1,4 @@
-package com.inininininin.util;
+package inininininin.util;
 
 public class ModuleResponse extends RuntimeException {
 

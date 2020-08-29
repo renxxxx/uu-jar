@@ -1,4 +1,4 @@
-package com.inininininin.util;
+package inininininin.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

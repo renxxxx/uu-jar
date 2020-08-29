@@ -1,4 +1,4 @@
-package com.inininininin.util;
+package inininininin.util;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
