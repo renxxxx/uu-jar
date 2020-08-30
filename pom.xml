@@ -3,9 +3,9 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
                   
-	<groupId>com.inininininin</groupId>
+	<groupId>inininininin</groupId>
 	<artifactId>util</artifactId>
-	<version>1.0.2008292313</version>
+	<version>1.0.2008301009</version>
 
 	<packaging>jar</packaging>
 	<name>util</name>
