@@ -185,10 +185,9 @@ public class Value {
 		return this;
 	}
 
-	public static void main(String[] args) throws ParseException, NoSuchFieldException, SecurityException,
-			IllegalArgumentException, IllegalAccessException {
-		Value value = Value.build(null, null, "20200506132311");
-		System.out.println(value.toDate());
+	public Value stop() {
+		this.todo = false;
+		return this;
 	}
 
 	public Value stop(boolean todo) {
@@ -561,21 +560,32 @@ public class Value {
 		return this;
 	}
 
-	public Value vReplace(String regex, String replace) {
-		if (!this.todo)
+	public Value vDate() {
+		if (this.value == null || this.value.isEmpty())
 			return this;
-		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty() && replace != null)
-			this.value = regexCache.getWithCreate(regex).matcher(this.value).replaceAll(replace);
+		toDate();
+		if (this.dateValue == null)
+			throw ModuleResponse.response(1001, "\"" + this.name + "\"请输入日期").setErrParam(this.code);
+		else {
+			this.value = new SimpleDateFormat(datePattern1).format(this.dateValue);
+		}
 		return this;
 	}
-
-	public Value vReplace(String regex, String replace, boolean todo) {
-		if (!this.todo)
-			return this;
-		if (todo)
-			return vReplace(regex, replace);
-		return this;
-	}
+//	public Value vReplace(String regex, String replace) {
+//		if (!this.todo)
+//			return this;
+//		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty() && replace != null)
+//			this.value = regexCache.getWithCreate(regex).matcher(this.value).replaceAll(replace);
+//		return this;
+//	}
+//
+//	public Value vReplace(String regex, String replace, boolean todo) {
+//		if (!this.todo)
+//			return this;
+//		if (todo)
+//			return vReplace(regex, replace);
+//		return this;
+//	}
 
 	public String val() {
 		return this.value;
@@ -627,17 +637,7 @@ public class Value {
 		return new SimpleDateFormat(pattern).format(data);
 	}
 
-	public Value vDate() {
-		if (this.value == null || this.value.isEmpty())
-			return this;
-		toDate();
-		if (this.dateValue == null)
-			throw ModuleResponse.response(1001, "\"" + this.name + "\"请输入日期").setErrParam(this.code);
-		else {
-			this.value = new SimpleDateFormat(datePattern1).format(this.dateValue);
-		}
-		return this;
-	}
+	
 
 	public Date toDate() {
 		if (this.dateValue != null)
@@ -869,4 +869,9 @@ public class Value {
 		return target;
 	}
 
+	public static void main(String[] args) throws ParseException, NoSuchFieldException, SecurityException,
+			IllegalArgumentException, IllegalAccessException {
+		Value value = Value.build(null, null, "20200506132311");
+		System.out.println(value.toDate());
+	}
 }
