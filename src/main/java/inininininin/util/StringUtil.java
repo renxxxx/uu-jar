@@ -37,7 +37,7 @@ public class StringUtil {
 	}
 
 	public static String replaceRange(String str, int startIndex, int length, String replacement) {
-		if(str == null)
+		if (str == null)
 			return str;
 		int end = str.length() - startIndex - length;
 		if (end < 0)
@@ -115,13 +115,12 @@ public class StringUtil {
 	}
 
 	public static String newId() {
-		return new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date())
-				+ RandomStringUtils.randomNumeric(15).replaceAll("0", "1");
+		return new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + "1" + RandomStringUtils.randomNumeric(14);
 	}
 
 	public static String newId(String suffix) {
-		return new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date())
-				+ RandomStringUtils.randomNumeric(15 - suffix.length()).replaceAll("0", "1") + suffix;
+		return new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + "1"
+				+ RandomStringUtils.randomNumeric(14 - suffix.length()) + suffix;
 	}
 
 }
