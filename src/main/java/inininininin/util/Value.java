@@ -26,7 +26,7 @@ public class Value {
 	public static String datePattern2 = "yyyy-MM-dd";
 	public static String datePattern3 = "HH:mm:ss";
 	public static String datePattern4 = "yyyy-MM-dd HH:mm:ss.SSS";
-	boolean todo = true;
+	boolean go = true;
 	private Integer intValue;
 	private Float floatValue;
 	private Long longValue;
@@ -56,7 +56,8 @@ public class Value {
 	}
 
 	public static Value build(String name, String code, String... values) {
-		logger.info("in -> name : " + name + " code : " + code + " values : " + Arrays.toString(values));
+		logger.info("enter");
+		logger.info("name : " + name + " code : " + code + " values : " + Arrays.toString(values));
 		Value param = new Value();
 		param.name = name;
 		param.code = code;
@@ -70,13 +71,13 @@ public class Value {
 
 		if (param.value != null && !param.value.isEmpty()
 				&& param.value.matches(".*<(s|S)(c|C)(r|R)(i|I)(p|P)(t|T)>.*"))
-			throw Response.go(1001, "\"" + param.name + "\"有误").setErrParam(param.code);
+			throw Response.go(1001, "\"" + param.name + "\"有误").setErrParam(param.code).setErrValue(param.value);
 
 		return param;
 	}
 
 	public Value suffix(String suffix) {
-		if (!this.todo)
+		if (!this.go)
 			return this;
 		if (this.value != null)
 			this.value = this.value + suffix;
@@ -84,7 +85,7 @@ public class Value {
 	}
 
 	public Value prefix(String prefix) {
-		if (!this.todo)
+		if (!this.go)
 			return this;
 		if (this.value != null)
 			this.value = prefix + this.value;
@@ -92,14 +93,14 @@ public class Value {
 	}
 
 	public Value trim() {
-		if (!this.todo)
+		if (!this.go)
 			return this;
 		this.value = this.value == null ? null : this.value.trim();
 		return this;
 	}
 
 	public Value trimToNull() {
-		if (!this.todo)
+		if (!this.go)
 			return this;
 		if (this.value != null && this.value.trim().isEmpty())
 			this.value = null;
@@ -107,7 +108,7 @@ public class Value {
 	}
 
 	public Value trimToBlank() {
-		if (!this.todo)
+		if (!this.go)
 			return this;
 		if (this.value == null)
 			this.value = "";
@@ -116,14 +117,14 @@ public class Value {
 	}
 
 	public Value trimLeft() {
-		if (!this.todo)
+		if (!this.go)
 			return this;
 		this.value = this.value == null ? null : this.value.trim();
 		return this;
 	}
 
 	public Value trimRight() {
-		if (!this.todo)
+		if (!this.go)
 			return this;
 		this.value = this.value == null ? null : this.value.trim();
 		return this;
@@ -135,7 +136,7 @@ public class Value {
 	}
 
 	public Value nullDef(String defaultValue) {
-		if (!this.todo)
+		if (!this.go)
 			return this;
 		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
 		if (isNull() && defaultValue != null)
@@ -143,16 +144,16 @@ public class Value {
 		return this;
 	}
 
-	public Value nullDef(boolean todo, String defaultValue) {
-		if (!this.todo)
+	public Value nullDef(boolean go, String defaultValue) {
+		if (!this.go)
 			return this;
-		if (todo)
+		if (go)
 			this.nullDef(defaultValue);
 		return this;
 	}
 
 	public Value blankDef(String defaultValue) {
-		if (!this.todo)
+		if (!this.go)
 			return this;
 		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
 		if (isBlank() && defaultValue != null)
@@ -160,16 +161,16 @@ public class Value {
 		return this;
 	}
 
-	public Value blankDef(boolean todo, String defaultValue) {
-		if (!this.todo)
+	public Value blankDef(boolean go, String defaultValue) {
+		if (!this.go)
 			return this;
-		if (todo)
+		if (go)
 			this.blankDef(defaultValue);
 		return this;
 	}
 
 	public Value emptyDef(String defaultValue) {
-		if (!this.todo)
+		if (!this.go)
 			return this;
 		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
 		if (isEmpty() && defaultValue != null)
@@ -177,170 +178,174 @@ public class Value {
 		return this;
 	}
 
-	public Value emptyDef(boolean todo, String defaultValue) {
-		if (!this.todo)
+	public Value emptyDef(boolean go, String defaultValue) {
+		if (!this.go)
 			return this;
-		if (todo)
+		if (go)
 			this.emptyDef(defaultValue);
 		return this;
 	}
 
 	public Value stop() {
-		this.todo = false;
+		this.go = false;
 		return this;
 	}
 
-	public Value stop(boolean todo) {
-		if (todo)
-			this.todo = false;
+	public Value stop(boolean go) {
+		if (go)
+			this.go = false;
 		return this;
 	}
 
 	public Value vNull() {
-		if (!this.todo)
+		if (!this.go)
 			return this;
 		if (this.value == null)
-			throw Response.go(1001, "\"" + this.name + "\"不能空").setErrParam(this.code);
+			throw Response.go(1001, "\"" + this.name + "\"不能空").setErrParam(this.code).setErrParam(this.value);
 		return this;
 	}
 
-	public Value vNull(boolean todo) {
-		if (!this.todo)
+	public Value vNull(boolean go) {
+		if (!this.go)
 			return this;
-		if (todo)
+		if (go)
 			this.vNull();
 		return this;
 	}
 
 	public Value vEmpty() {
-		if (!this.todo)
+		if (!this.go)
 			return this;
 		if ((this.value == null || this.value.isEmpty()))
-			throw Response.go(1001, "\"" + this.name + "\"不能空").setErrParam(this.code);
+			throw Response.go(1001, "\"" + this.name + "\"不能空").setErrParam(this.code).setErrParam(this.value);
 		return this;
 	}
 
-	public Value vEmpty(boolean todo) {
-		if (!this.todo)
+	public Value vEmpty(boolean go) {
+		if (!this.go)
 			return this;
-		if (todo)
+		if (go)
 			this.vEmpty();
 		return this;
 	}
 
 	public Value vBlank() {
-		if (!this.todo)
+		if (!this.go)
 			return this;
 		if ((this.value != null && this.value.isEmpty()))
-			throw Response.go(1001, "\"" + this.name + "\"不能空").setErrParam(this.code);
+			throw Response.go(1001, "\"" + this.name + "\"不能空").setErrParam(this.code).setErrParam(this.value);
 		return this;
 	}
 
-	public Value vBlank(boolean todo) {
-		if (!this.todo)
+	public Value vBlank(boolean go) {
+		if (!this.go)
 			return this;
-		if (todo)
+		if (go)
 			this.vBlank();
 		return this;
 	}
 
 	public Value vLen(int length) {
-		if (!this.todo)
+		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() != length) {
-			throw Response.go(1001, "\"" + this.name + "\"长度只能是" + length).setErrParam(this.code);
+			throw Response.go(1001, "\"" + this.name + "\"长度只能是" + length).setErrParam(this.code)
+					.setErrParam(this.value);
 		}
 		return this;
 	}
 
-	public Value vLen(boolean todo, int length) {
-		if (!this.todo)
+	public Value vLen(boolean go, int length) {
+		if (!this.go)
 			return this;
-		if (todo)
+		if (go)
 			this.vLen(length);
 		return this;
 	}
 
 	public Value vMinLen(int length) {
-		if (!this.todo)
+		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() < length) {
-			throw Response.go(1001, "\"" + this.name + "\"长度最低" + length).setErrParam(this.code);
+			throw Response.go(1001, "\"" + this.name + "\"长度最低" + length).setErrParam(this.code)
+					.setErrParam(this.value);
 		}
 		return this;
 	}
 
-	public Value vMinLen(boolean todo, int length) {
-		if (!this.todo)
+	public Value vMinLen(boolean go, int length) {
+		if (!this.go)
 			return this;
-		if (todo)
+		if (go)
 			this.vMinLen(length);
 		return this;
 	}
 
 	public Value vMaxLen(int length) {
-		if (!this.todo)
+		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() > length) {
-			throw Response.go(1001, "\"" + this.name + "\"长度最大" + length).setErrParam(this.code);
+			throw Response.go(1001, "\"" + this.name + "\"长度最大" + length).setErrParam(this.code)
+					.setErrParam(this.value);
 		}
 		return this;
 	}
 
-	public Value vMaxLen(boolean todo, int length) {
-		if (!this.todo)
+	public Value vMaxLen(boolean go, int length) {
+		if (!this.go)
 			return this;
-		if (todo)
+		if (go)
 			this.vMaxLen(length);
 		return this;
 	}
 
 	public Value vMaxNum(float maxnum) {
-		if (!this.todo)
+		if (!this.go)
 			return this;
 		if (!isEmpty() && toFloat() > maxnum) {
-			throw Response.go(1001, "\"" + this.name + "\"最大" + maxnum).setErrParam(this.code);
+			throw Response.go(1001, "\"" + this.name + "\"最大" + maxnum).setErrParam(this.code).setErrParam(this.value);
 		}
 		return this;
 	}
 
-	public Value vMaxNum(boolean todo, float maxnum) {
-		if (!this.todo)
+	public Value vMaxNum(boolean go, float maxnum) {
+		if (!this.go)
 			return this;
-		if (todo)
+		if (go)
 			this.vMaxNum(maxnum);
 		return this;
 	}
 
 	public Value vMinNum(float minnum) {
-		if (!this.todo)
+		if (!this.go)
 			return this;
 		if (!isEmpty() && toFloat() < minnum) {
-			throw Response.go(1001, "\"" + this.name + "\"最小" + minnum).setErrParam(this.code);
+			throw Response.go(1001, "\"" + this.name + "\"最小" + minnum).setErrParam(this.code).setErrParam(this.value);
 		}
 		return this;
 	}
 
-	public Value vMinNum(boolean todo, float minnum) {
-		if (!this.todo)
+	public Value vMinNum(boolean go, float minnum) {
+		if (!this.go)
 			return this;
-		if (todo)
+		if (go)
 			this.vMinNum(minnum);
 		return this;
 	}
 
 	public Value vMaxCount(int count) {
-		if (!this.todo)
+		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && this.toSplitArr() != null
 				&& this.toSplitArr().length > count) {
-			throw Response.go(1001, "\"" + this.name + "\"最多" + count + "个").setErrParam(this.code);
+			throw Response.go(1001, "\"" + this.name + "\"最多" + count + "个").setErrParam(this.code)
+					.setErrParam(this.value);
 		}
 		return this;
 	}
 
 	public Value vInteger() {
-		if (!this.todo)
+		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
 			Integer l = null;
@@ -350,22 +355,22 @@ public class Value {
 
 			}
 			if (l == null)
-				throw Response.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code);
+				throw Response.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code).setErrParam(this.value);
 		}
 		return this;
 	}
 
 	public Value vBoolean() {
-		if (!this.todo)
+		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && !"1".equals(this.value) && !"0".equals(this.value)) {
-			throw Response.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code);
+			throw Response.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code).setErrParam(this.value);
 		}
 		return this;
 	}
 
 	public Value vEnum(String... values) {
-		if (!this.todo)
+		if (!this.go)
 			return this;
 		boolean v = false;
 		if (this.value != null && !this.value.isEmpty()) {
@@ -381,13 +386,13 @@ public class Value {
 			v = true;
 		}
 		if (!v)
-			throw Response.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code);
+			throw Response.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code).setErrParam(this.value);
 		else
 			return this;
 	}
 
 	public Value vLong() {
-		if (!this.todo)
+		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
 			Long l = null;
@@ -397,13 +402,13 @@ public class Value {
 
 			}
 			if (l == null)
-				throw Response.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code);
+				throw Response.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code).setErrParam(this.value);
 		}
 		return this;
 	}
 
 	public Value vDouble() {
-		if (!this.todo)
+		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
 			Double l = null;
@@ -413,13 +418,13 @@ public class Value {
 
 			}
 			if (l == null)
-				throw Response.go(1001, "\"" + this.name + "\"只能输入数字").setErrParam(this.code);
+				throw Response.go(1001, "\"" + this.name + "\"只能输入数字").setErrParam(this.code).setErrParam(this.value);
 		}
 		return this;
 	}
 
 	public Value vFloat() {
-		if (!this.todo)
+		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
 			Float l = null;
@@ -429,13 +434,13 @@ public class Value {
 
 			}
 			if (l == null)
-				throw Response.go(1001, "\"" + this.name + "\"只能输入数字").setErrParam(this.code);
+				throw Response.go(1001, "\"" + this.name + "\"只能输入数字").setErrParam(this.code).setErrParam(this.value);
 		}
 		return this;
 	}
 
 	public Value vDecimal() {
-		if (!this.todo)
+		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
 			BigDecimal l = null;
@@ -445,7 +450,7 @@ public class Value {
 
 			}
 			if (l == null)
-				throw Response.go(1001, "\"" + this.name + "\"只能输入数字").setErrParam(this.code);
+				throw Response.go(1001, "\"" + this.name + "\"只能输入数字").setErrParam(this.code).setErrParam(this.value);
 		}
 		return this;
 	}
@@ -469,7 +474,7 @@ public class Value {
 	}
 
 	public Value vLenRange(int min, int max) {
-		if (!this.todo)
+		if (!this.go)
 			return this;
 		vMinLen(min);
 		vMaxLen(max);
@@ -477,7 +482,7 @@ public class Value {
 	}
 
 	public Value vNumRange(float min, float max) {
-		if (!this.todo)
+		if (!this.go)
 			return this;
 		vMinNum(min);
 		vMaxNum(max);
@@ -485,73 +490,73 @@ public class Value {
 	}
 
 	public Value vReg(Pattern regex) {
-		if (!this.todo)
+		if (!this.go)
 			return this;
 		return vReg(regex, null);
 	}
 
 	public Value vReg(Pattern regex, String note) {
-		if (!this.todo)
+		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null) {
 			if (!regex.matcher(this.value).matches())
 				throw Response
 						.go(1001, "\"" + this.name + "\"有误" + (note == null || note.isEmpty() ? "" : ",要求：" + note))
-						.setErrParam(this.code);
+						.setErrParam(this.code).setErrParam(this.value);
 		}
 		return this;
 	}
 
 	public Value vRegNot(Pattern regex) {
-		if (!this.todo)
+		if (!this.go)
 			return this;
 		return vRegNot(regex, null);
 	}
 
 	public Value vRegNot(Pattern regex, String note) {
-		if (!this.todo)
+		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null) {
 			if (regex.matcher(this.value).matches())
 				throw Response
 						.go(1001, "\"" + this.name + "\"有误" + (note == null || note.isEmpty() ? "" : ",要求：" + note))
-						.setErrParam(this.code);
+						.setErrParam(this.code).setErrParam(this.value);
 		}
 		return this;
 	}
 
 	public Value vReg(String regex) {
-		if (!this.todo)
+		if (!this.go)
 			return this;
 		return vReg(regex, null);
 	}
 
 	public Value vReg(String regex, String note) {
-		if (!this.todo)
+		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty()) {
 			if (!regexCache.getWithCreate(regex).matcher(this.value).matches())
 				throw Response
 						.go(1001, "\"" + this.name + "\"有误" + (note == null || note.isEmpty() ? "" : ",要求：" + note))
-						.setErrParam(this.code);
+						.setErrParam(this.code).setErrParam(this.value);
 		}
 		return this;
 	}
 
 	public Value vRegNot(String regex) {
-		if (!this.todo)
+		if (!this.go)
 			return this;
 		return vRegNot(regex, null);
 	}
 
 	public Value vRegNot(String regex, String note) {
-		if (!this.todo)
+		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty()) {
 			if (regexCache.getWithCreate(regex).matcher(this.value).matches())
 				throw Response
 						.go(1001, "\"" + this.name + "\"有误" + (note == null || note.isEmpty() ? "" : ",要求：" + note))
-						.setErrParam(this.code);
+						.setErrParam(this.code).setErrParam(this.value);
 		}
 		return this;
 	}
@@ -561,24 +566,24 @@ public class Value {
 			return this;
 		toDate();
 		if (this.dateValue == null)
-			throw Response.go(1001, "\"" + this.name + "\"请输入日期").setErrParam(this.code);
+			throw Response.go(1001, "\"" + this.name + "\"请输入日期").setErrParam(this.code).setErrParam(this.value);
 		else {
 			this.value = new SimpleDateFormat(datePattern1).format(this.dateValue);
 		}
 		return this;
 	}
 //	public Value vReplace(String regex, String replace) {
-//		if (!this.todo)
+//		if (!this.go)
 //			return this;
 //		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty() && replace != null)
 //			this.value = regexCache.getWithCreate(regex).matcher(this.value).replaceAll(replace);
 //		return this;
 //	}
 //
-//	public Value vReplace(String regex, String replace, boolean todo) {
-//		if (!this.todo)
+//	public Value vReplace(String regex, String replace, boolean go) {
+//		if (!this.go)
 //			return this;
-//		if (todo)
+//		if (go)
 //			return vReplace(regex, replace);
 //		return this;
 //	}
@@ -641,12 +646,12 @@ public class Value {
 	}
 
 	public void bomb(String message) {
-		throw Response.go(1001, "\"" + this.name + "\"" + message).setErrParam(this.code);
+		throw Response.go(1001, "\"" + this.name + "\"" + message).setErrParam(this.code).setErrParam(this.value);
 	}
 
-	public void bomb(boolean todo, String message) {
-		if (todo)
-			throw Response.go(1001, "\"" + this.name + "\"" + message).setErrParam(this.code);
+	public void bomb(boolean go, String message) {
+		if (go)
+			throw Response.go(1001, "\"" + this.name + "\"" + message).setErrParam(this.code).setErrParam(this.value);
 	}
 
 	public boolean equals(Object object) {
@@ -658,7 +663,7 @@ public class Value {
 	}
 
 	public Value toLowerCase() {
-		if (!this.todo)
+		if (!this.go)
 			return this;
 		if (this.value != null)
 			this.value = this.value.toLowerCase();
@@ -666,7 +671,7 @@ public class Value {
 	}
 
 	public Value toUpperCase() {
-		if (!this.todo)
+		if (!this.go)
 			return this;
 		if (this.value != null)
 			this.value = this.value.toUpperCase();
@@ -674,7 +679,7 @@ public class Value {
 	}
 
 	public Value replaceAll(String regex, String replacement) {
-		if (!this.todo)
+		if (!this.go)
 			return this;
 		if (this.value != null)
 			this.value = this.value.replaceAll(regex, replacement);
@@ -682,7 +687,7 @@ public class Value {
 	}
 
 	public Value substring(int beginIndex, int endIndex) {
-		if (!this.todo)
+		if (!this.go)
 			return this;
 		if (this.value != null)
 			this.value = this.value.substring(beginIndex, endIndex);
@@ -690,7 +695,7 @@ public class Value {
 	}
 
 	public Value substring(int beginIndex) {
-		if (!this.todo)
+		if (!this.go)
 			return this;
 		if (this.value != null)
 			this.value = this.value.substring(beginIndex);
@@ -698,7 +703,7 @@ public class Value {
 	}
 
 	public Value concat(String str) {
-		if (!this.todo)
+		if (!this.go)
 			return this;
 		if (this.value != null)
 			this.value = this.value.concat(str);
