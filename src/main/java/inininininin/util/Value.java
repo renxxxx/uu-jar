@@ -14,6 +14,8 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
+import com.alibaba.fastjson.JSONObject;
+
 public class Value {
 	private static Logger logger = Logger.getLogger(Value.class);
 
@@ -27,8 +29,9 @@ public class Value {
 	public static String datePattern3 = "HH:mm:ss";
 	public static String datePattern4 = "yyyy-MM-dd HH:mm:ss.SSS";
 	boolean go = true;
-	private Integer intValue;
+	private Integer integerValue;
 	private Float floatValue;
+	private Double doubleValue;
 	private Long longValue;
 	private BigDecimal decimalValue;
 	private Date dateValue;
@@ -48,7 +51,7 @@ public class Value {
 	public Value clear() {
 		this.splitArrValue = null;
 		this.dateValue = null;
-		this.intValue = null;
+		this.integerValue = null;
 		this.floatValue = null;
 		this.longValue = null;
 		this.decimalValue = null;
@@ -348,13 +351,12 @@ public class Value {
 		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
-			Integer l = null;
 			try {
-				l = Integer.parseInt(this.value);
+				this.integerValue = Integer.parseInt(this.value);
 			} catch (Exception e) {
 
 			}
-			if (l == null)
+			if (this.integerValue == null)
 				throw Response.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code).setErrParam(this.value);
 		}
 		return this;
@@ -372,19 +374,7 @@ public class Value {
 	public Value vEnum(String... values) {
 		if (!this.go)
 			return this;
-		boolean v = false;
-		if (this.value != null && !this.value.isEmpty()) {
-			for (int i = 0; i < values.length; i++) {
-				String value = values[i];
-				if (value == this.value)
-					v = true;
-				else if (value != null && value.equals(this.value)) {
-					v = true;
-				}
-			}
-		} else {
-			v = true;
-		}
+		boolean v = inininininin.util.StringUtils.equalsAny(this.value, values);
 		if (!v)
 			throw Response.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code).setErrParam(this.value);
 		else
@@ -395,13 +385,12 @@ public class Value {
 		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
-			Long l = null;
 			try {
-				l = Long.parseLong(this.value);
+				this.longValue = Long.parseLong(this.value);
 			} catch (Exception e) {
 
 			}
-			if (l == null)
+			if (this.longValue == null)
 				throw Response.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code).setErrParam(this.value);
 		}
 		return this;
@@ -411,13 +400,12 @@ public class Value {
 		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
-			Double l = null;
 			try {
-				l = Double.parseDouble(this.value);
+				this.doubleValue = Double.parseDouble(this.value);
 			} catch (Exception e) {
 
 			}
-			if (l == null)
+			if (this.doubleValue == null)
 				throw Response.go(1001, "\"" + this.name + "\"只能输入数字").setErrParam(this.code).setErrParam(this.value);
 		}
 		return this;
@@ -427,13 +415,12 @@ public class Value {
 		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
-			Float l = null;
 			try {
-				l = Float.parseFloat(this.value);
+				this.floatValue = Float.parseFloat(this.value);
 			} catch (Exception e) {
 
 			}
-			if (l == null)
+			if (this.floatValue == null)
 				throw Response.go(1001, "\"" + this.name + "\"只能输入数字").setErrParam(this.code).setErrParam(this.value);
 		}
 		return this;
@@ -443,13 +430,12 @@ public class Value {
 		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
-			BigDecimal l = null;
 			try {
-				l = new BigDecimal(this.value);
+				this.decimalValue = new BigDecimal(this.value);
 			} catch (Exception e) {
 
 			}
-			if (l == null)
+			if (this.decimalValue == null)
 				throw Response.go(1001, "\"" + this.name + "\"只能输入数字").setErrParam(this.code).setErrParam(this.value);
 		}
 		return this;
@@ -566,7 +552,7 @@ public class Value {
 			return this;
 		toDate();
 		if (this.dateValue == null)
-			throw Response.go(1001, "\"" + this.name + "\"请输入日期").setErrParam(this.code).setErrParam(this.value);
+			throw Response.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code).setErrParam(this.value);
 		else {
 			this.value = new SimpleDateFormat(datePattern1).format(this.dateValue);
 		}
@@ -606,10 +592,10 @@ public class Value {
 	}
 
 	public Integer toInteger() {
-		if (this.intValue != null)
-			return this.intValue;
-		this.intValue = isEmpty() ? null : Integer.parseInt(this.value);
-		return this.intValue;
+		if (this.integerValue != null)
+			return this.integerValue;
+		this.integerValue = isEmpty() ? null : Integer.parseInt(this.value);
+		return this.integerValue;
 	}
 
 	public Float toFloat() {
@@ -847,6 +833,18 @@ public class Value {
 			return null;
 		else
 			return new BigDecimal(valueStr);
+	}
+
+	public static JSONObject toJson(Object value) {
+		if (value == null)
+			return null;
+		if (value instanceof JSONObject)
+			return (JSONObject) value;
+		String valueStr = value.toString();
+		if (valueStr.trim().isEmpty())
+			return null;
+		else
+			return JSONObject.parseObject(valueStr);
 	}
 
 	public static Object attr(Object target, Object... keyArray)

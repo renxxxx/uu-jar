@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.CharSequenceUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.log4j.Logger;
 
@@ -48,25 +49,7 @@ public class StringUtils {
 		return str;
 	}
 
-	public static JSONObject isJSON(String str) {
-		try {
-			return JSON.parseObject(str);
-		} catch (RuntimeException e) {
-			return null;
-		}
-	}
-
-	public static boolean allEqualWith(CharSequence target, CharSequence... items) {
-		for (CharSequence c : items) {
-			if (target == c)
-				continue;
-			if (target != c || !target.equals(c))
-				return false;
-		}
-		return true;
-	}
-
-	public static boolean equalsWithAny(CharSequence cs, CharSequence... css) {
+	public static boolean equalsAny(CharSequence cs, CharSequence... css) {
 		if (css == null)
 			return false;
 		for (CharSequence c : css) {
@@ -80,7 +63,7 @@ public class StringUtils {
 		return false;
 	}
 
-	public static boolean equalsIgnoreCaseWithAny(String str, String... strs) {
+	public static boolean equalsAnyIgnoreCase(String str, String... strs) {
 		if (strs == null)
 			return false;
 		for (String s : strs) {
@@ -94,21 +77,21 @@ public class StringUtils {
 		return false;
 	}
 
-	public static boolean equalsAllWith(String target, String... items) {
+	public static boolean equalsAll(String str, String... items) {
 		for (String c : items) {
-			if (target == c)
+			if (str == c)
 				continue;
-			if (target != c || !target.equals(c))
+			if (str != c || !str.equals(c))
 				return false;
 		}
 		return true;
 	}
 
-	public static boolean equalsAllIgnoreCaseWith(String target, String... items) {
+	public static boolean equalsAllIgnoreCase(String str, String... items) {
 		for (String c : items) {
-			if (target == c)
+			if (str == c)
 				continue;
-			if (target != c || !target.equalsIgnoreCase(c))
+			if (str != c || !str.equalsIgnoreCase(c))
 				return false;
 		}
 		return true;
@@ -118,9 +101,31 @@ public class StringUtils {
 		return new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + "1" + RandomStringUtils.randomNumeric(14);
 	}
 
-	public static String newId(String suffix) {
+	public static String newIdOnSuffix(String suffix) {
 		return new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + "1"
 				+ RandomStringUtils.randomNumeric(14 - suffix.length()) + suffix;
+	}
+
+	public static String newIdOnPrefix(String prefix) {
+		return prefix + new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + "1"
+				+ RandomStringUtils.randomNumeric(14 - prefix.length());
+	}
+
+	public static boolean isEmpty(CharSequence cs) {
+		return org.apache.commons.lang3.StringUtils.isEmpty(cs);
+	}
+
+	public static String trimToNull(String str) {
+		return org.apache.commons.lang3.StringUtils.trimToNull(str);
+
+	}
+
+	public static String trimToEmpty(String str) {
+		return org.apache.commons.lang3.StringUtils.trimToEmpty(str);
+	}
+
+	public static boolean equals(CharSequence cs1, CharSequence cs2) {
+		return org.apache.commons.lang3.StringUtils.equals(cs1, cs2);
 	}
 
 }
