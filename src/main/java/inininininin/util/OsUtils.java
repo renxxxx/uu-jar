@@ -16,11 +16,11 @@ import java.util.List;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.log4j.Logger;
 
-public class OsCommandUtil {
-	public static Logger logger = Logger.getLogger(OsCommandUtil.class);
+public class OsUtils {
+	public static Logger logger = Logger.getLogger(OsUtils.class);
 
 	public static void exec(String commandLinux, String commandWindows) throws IOException, InterruptedException {
-		String command = Util.isLinux() ? commandLinux : Util.isWindows() ? commandWindows : null;
+		String command = Utils.isLinux() ? commandLinux : Utils.isWindows() ? commandWindows : null;
 		logger.debug(command);
 		if (command == null) {
 			logger.debug("unknown os,can`t run the command specified");

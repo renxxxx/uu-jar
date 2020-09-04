@@ -18,8 +18,8 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
-public class JdbcUtil {
-	public static Logger logger = Logger.getLogger(JdbcUtil.class);
+public class JdbcUtils {
+	public static Logger logger = Logger.getLogger(JdbcUtils.class);
 
 	public static void main(String[] args) {
 		System.out.println(123123123);

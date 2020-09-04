@@ -16,8 +16,8 @@ import java.util.List;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.log4j.Logger;
 
-public class IOUtil {
-	public static Logger logger = Logger.getLogger(IOUtil.class);
+public class IOUtils {
+	public static Logger logger = Logger.getLogger(IOUtils.class);
 
 	public static String getMD5(File file) throws Exception {
 		FileInputStream fileInputStream = null;

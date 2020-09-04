@@ -12,8 +12,8 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
-public class Util {
-	public static Logger logger = Logger.getLogger(Util.class);
+public class Utils {
+	public static Logger logger = Logger.getLogger(Utils.class);
 
 	public static boolean isLinux() {
 		Properties prop = System.getProperties();

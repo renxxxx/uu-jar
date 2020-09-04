@@ -69,7 +69,7 @@ public class Value_2006121821 {
 
 		if (param.value != null && !param.value.isEmpty()
 				&& param.value.matches(".*<(s|S)(c|C)(r|R)(i|I)(p|P)(t|T)>.*"))
-			throw ModuleResponse.response(1001, "\"" + param.name + "\"有误").setErrParam(param.code);
+			throw Response.go(1001, "\"" + param.name + "\"有误").setErrParam(param.code);
 
 		return param;
 	}
@@ -206,7 +206,7 @@ public class Value_2006121821 {
 		if (!this.todo)
 			return this;
 		if (this.value == null)
-			throw ModuleResponse.response(1001, "\"" + this.name + "\"不能空").setErrParam(this.code);
+			throw Response.go(1001, "\"" + this.name + "\"不能空").setErrParam(this.code);
 		return this;
 	}
 
@@ -222,7 +222,7 @@ public class Value_2006121821 {
 		if (!this.todo)
 			return this;
 		if ((this.value == null || this.value.isEmpty()))
-			throw ModuleResponse.response(1001, "\"" + this.name + "\"不能空").setErrParam(this.code);
+			throw Response.go(1001, "\"" + this.name + "\"不能空").setErrParam(this.code);
 		return this;
 	}
 
@@ -238,7 +238,7 @@ public class Value_2006121821 {
 		if (!this.todo)
 			return this;
 		if ((this.value != null && this.value.isEmpty()))
-			throw ModuleResponse.response(1001, "\"" + this.name + "\"不能空").setErrParam(this.code);
+			throw Response.go(1001, "\"" + this.name + "\"不能空").setErrParam(this.code);
 		return this;
 	}
 
@@ -254,7 +254,7 @@ public class Value_2006121821 {
 		if (!this.todo)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() != length) {
-			throw ModuleResponse.response(1001, "\"" + this.name + "\"长度只能是" + length).setErrParam(this.code);
+			throw Response.go(1001, "\"" + this.name + "\"长度只能是" + length).setErrParam(this.code);
 		}
 		return this;
 	}
@@ -271,7 +271,7 @@ public class Value_2006121821 {
 		if (!this.todo)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() < length) {
-			throw ModuleResponse.response(1001, "\"" + this.name + "\"长度最低" + length).setErrParam(this.code);
+			throw Response.go(1001, "\"" + this.name + "\"长度最低" + length).setErrParam(this.code);
 		}
 		return this;
 	}
@@ -288,7 +288,7 @@ public class Value_2006121821 {
 		if (!this.todo)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() > length) {
-			throw ModuleResponse.response(1001, "\"" + this.name + "\"长度最大" + length).setErrParam(this.code);
+			throw Response.go(1001, "\"" + this.name + "\"长度最大" + length).setErrParam(this.code);
 		}
 		return this;
 	}
@@ -305,7 +305,7 @@ public class Value_2006121821 {
 		if (!this.todo)
 			return this;
 		if (!isEmpty() && toFloat() > maxnum) {
-			throw ModuleResponse.response(1001, "\"" + this.name + "\"最大" + maxnum).setErrParam(this.code);
+			throw Response.go(1001, "\"" + this.name + "\"最大" + maxnum).setErrParam(this.code);
 		}
 		return this;
 	}
@@ -322,7 +322,7 @@ public class Value_2006121821 {
 		if (!this.todo)
 			return this;
 		if (!isEmpty() && toFloat() < minnum) {
-			throw ModuleResponse.response(1001, "\"" + this.name + "\"最小" + minnum).setErrParam(this.code);
+			throw Response.go(1001, "\"" + this.name + "\"最小" + minnum).setErrParam(this.code);
 		}
 		return this;
 	}
@@ -340,7 +340,7 @@ public class Value_2006121821 {
 			return this;
 		if (this.value != null && !this.value.isEmpty() && this.toSplitArr() != null
 				&& this.toSplitArr().length > count) {
-			throw ModuleResponse.response(1001, "\"" + this.name + "\"最多" + count + "个").setErrParam(this.code);
+			throw Response.go(1001, "\"" + this.name + "\"最多" + count + "个").setErrParam(this.code);
 		}
 		return this;
 	}
@@ -356,7 +356,7 @@ public class Value_2006121821 {
 
 			}
 			if (l == null)
-				throw ModuleResponse.response(1001, "\"" + this.name + "\"有误").setErrParam(this.code);
+				throw Response.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code);
 		}
 		return this;
 	}
@@ -365,7 +365,7 @@ public class Value_2006121821 {
 		if (!this.todo)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && !"1".equals(this.value) && !"0".equals(this.value)) {
-			throw ModuleResponse.response(1001, "\"" + this.name + "\"有误").setErrParam(this.code);
+			throw Response.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code);
 		}
 		return this;
 	}
@@ -387,7 +387,7 @@ public class Value_2006121821 {
 			v = true;
 		}
 		if (!v)
-			throw ModuleResponse.response(1001, "\"" + this.name + "\"有误").setErrParam(this.code);
+			throw Response.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code);
 		else
 			return this;
 	}
@@ -403,7 +403,7 @@ public class Value_2006121821 {
 
 			}
 			if (l == null)
-				throw ModuleResponse.response(1001, "\"" + this.name + "\"有误").setErrParam(this.code);
+				throw Response.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code);
 		}
 		return this;
 	}
@@ -419,7 +419,7 @@ public class Value_2006121821 {
 
 			}
 			if (l == null)
-				throw ModuleResponse.response(1001, "\"" + this.name + "\"只能输入数字").setErrParam(this.code);
+				throw Response.go(1001, "\"" + this.name + "\"只能输入数字").setErrParam(this.code);
 		}
 		return this;
 	}
@@ -435,7 +435,7 @@ public class Value_2006121821 {
 
 			}
 			if (l == null)
-				throw ModuleResponse.response(1001, "\"" + this.name + "\"只能输入数字").setErrParam(this.code);
+				throw Response.go(1001, "\"" + this.name + "\"只能输入数字").setErrParam(this.code);
 		}
 		return this;
 	}
@@ -451,7 +451,7 @@ public class Value_2006121821 {
 
 			}
 			if (l == null)
-				throw ModuleResponse.response(1001, "\"" + this.name + "\"只能输入数字").setErrParam(this.code);
+				throw Response.go(1001, "\"" + this.name + "\"只能输入数字").setErrParam(this.code);
 		}
 		return this;
 	}
@@ -501,9 +501,8 @@ public class Value_2006121821 {
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null) {
 			if (!regex.matcher(this.value).matches())
-				throw ModuleResponse
-						.response(1001,
-								"\"" + this.name + "\"有误" + (note == null || note.isEmpty() ? "" : ",要求：" + note))
+				throw Response
+						.go(1001, "\"" + this.name + "\"有误" + (note == null || note.isEmpty() ? "" : ",要求：" + note))
 						.setErrParam(this.code);
 		}
 		return this;
@@ -520,9 +519,8 @@ public class Value_2006121821 {
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null) {
 			if (regex.matcher(this.value).matches())
-				throw ModuleResponse
-						.response(1001,
-								"\"" + this.name + "\"有误" + (note == null || note.isEmpty() ? "" : ",要求：" + note))
+				throw Response
+						.go(1001, "\"" + this.name + "\"有误" + (note == null || note.isEmpty() ? "" : ",要求：" + note))
 						.setErrParam(this.code);
 		}
 		return this;
@@ -539,9 +537,8 @@ public class Value_2006121821 {
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty()) {
 			if (!regexCache.getWithCreate(regex).matcher(this.value).matches())
-				throw ModuleResponse
-						.response(1001,
-								"\"" + this.name + "\"有误" + (note == null || note.isEmpty() ? "" : ",要求：" + note))
+				throw Response
+						.go(1001, "\"" + this.name + "\"有误" + (note == null || note.isEmpty() ? "" : ",要求：" + note))
 						.setErrParam(this.code);
 		}
 		return this;
@@ -558,9 +555,8 @@ public class Value_2006121821 {
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty()) {
 			if (regexCache.getWithCreate(regex).matcher(this.value).matches())
-				throw ModuleResponse
-						.response(1001,
-								"\"" + this.name + "\"有误" + (note == null || note.isEmpty() ? "" : ",要求：" + note))
+				throw Response
+						.go(1001, "\"" + this.name + "\"有误" + (note == null || note.isEmpty() ? "" : ",要求：" + note))
 						.setErrParam(this.code);
 		}
 		return this;
@@ -637,7 +633,7 @@ public class Value_2006121821 {
 			return this;
 		toDate();
 		if (this.dateValue == null)
-			throw ModuleResponse.response(1001, "\"" + this.name + "\"请输入日期").setErrParam(this.code);
+			throw Response.go(1001, "\"" + this.name + "\"请输入日期").setErrParam(this.code);
 		else {
 			this.value = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(this.dateValue);
 		}
@@ -652,12 +648,12 @@ public class Value_2006121821 {
 	}
 
 	public void bomb(String message) {
-		throw ModuleResponse.response(1001, "\"" + this.name + "\"" + message).setErrParam(this.code);
+		throw Response.go(1001, "\"" + this.name + "\"" + message).setErrParam(this.code);
 	}
 
 	public void bomb(boolean todo, String message) {
 		if (todo)
-			throw ModuleResponse.response(1001, "\"" + this.name + "\"" + message).setErrParam(this.code);
+			throw Response.go(1001, "\"" + this.name + "\"" + message).setErrParam(this.code);
 	}
 
 	public boolean equals(String object) {
