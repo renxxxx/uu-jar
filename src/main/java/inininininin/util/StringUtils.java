@@ -128,4 +128,11 @@ public class StringUtils {
 		return org.apache.commons.lang3.StringUtils.equals(cs1, cs2);
 	}
 
+	public static String left(String str, int len) {
+		return org.apache.commons.lang3.StringUtils.left(str, len);
+	}
+
+	public static String right(String str, int len) {
+		return org.apache.commons.lang3.StringUtils.right(str, len);
+	}
 }
