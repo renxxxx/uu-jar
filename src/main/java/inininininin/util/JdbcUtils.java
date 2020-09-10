@@ -26,7 +26,7 @@ public class JdbcUtils {
 	}
 
 	public static List<Map> queryList(Connection conn, String sql, Object... sqlParams) throws Exception {
-		logger.info("in " + RandomStringUtils.randomNumeric(5));
+		logger.debug("in " + RandomStringUtils.randomNumeric(5));
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
@@ -36,7 +36,7 @@ public class JdbcUtils {
 		} finally {
 			if (pst != null)
 				pst.close();
-			logger.info("out " + RandomStringUtils.randomNumeric(5));
+			logger.debug("out " + RandomStringUtils.randomNumeric(5));
 		}
 	}
 
@@ -102,7 +102,7 @@ public class JdbcUtils {
 	}
 
 //	public static Map query(Connection conn, String sql, Object... sqlParams) throws Exception {
-//		logger.info("in " + RandomStringUtils.randomNumeric(5));
+//		logger.debug("in " + RandomStringUtils.randomNumeric(5));
 //		PreparedStatement pst = null;
 //		try {
 //			pst = conn.prepareStatement(sql);
@@ -115,26 +115,26 @@ public class JdbcUtils {
 //		} finally {
 //			if (pst != null)
 //				pst.close();
-//			logger.info("out " + RandomStringUtils.randomNumeric(5));
+//			logger.debug("out " + RandomStringUtils.randomNumeric(5));
 //		}
 //	}
 
 	public static Map query(Connection conn, String sql, Object... sqlParams) throws Exception {
-		logger.info("in " + RandomStringUtils.randomNumeric(5));
+		logger.debug("in " + RandomStringUtils.randomNumeric(5));
 		Map item = null;
 		List<Map> itemList = queryList(conn, sql, sqlParams);
 		if (itemList != null && itemList.size() > 0) {
 			item = itemList.get(0);
 		}
-		logger.info("out " + RandomStringUtils.randomNumeric(5));
+		logger.debug("out " + RandomStringUtils.randomNumeric(5));
 		return item;
 	}
 
 	public static ResultSet query(PreparedStatement pst, String sql, Object... sqlParams) throws SQLException {
 		if (sqlParams == null)
 			sqlParams = new Object[] {};
-		logger.info(sql);
-		logger.info(Arrays.toString(sqlParams));
+		logger.debug(sql);
+		logger.debug(Arrays.toString(sqlParams));
 		try {
 			for (int i = 0; i < sqlParams.length; i++) {
 				Object sqlParam = sqlParams[i];
@@ -146,7 +146,7 @@ public class JdbcUtils {
 			long s = System.nanoTime();
 			ResultSet rs = pst.executeQuery();
 			long e = System.nanoTime();
-			logger.info("takes: " + (e - s));
+			logger.debug("takes: " + (e - s));
 			return rs;
 		} catch (Exception e) {
 			throw new SQLException(e.getMessage() + " sql: " + sql, e);
@@ -158,7 +158,7 @@ public class JdbcUtils {
 //	}
 
 	public static int update(Connection conn, String sql, Object... sqlParams) throws Exception {
-		logger.info("in " + RandomStringUtils.randomNumeric(5));
+		logger.debug("in " + RandomStringUtils.randomNumeric(5));
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
@@ -168,7 +168,7 @@ public class JdbcUtils {
 		} finally {
 			if (pst != null)
 				pst.close();
-			logger.info("out " + RandomStringUtils.randomNumeric(5));
+			logger.debug("out " + RandomStringUtils.randomNumeric(5));
 		}
 
 	}
@@ -179,7 +179,7 @@ public class JdbcUtils {
 			pst = conn.prepareStatement(sql);
 			return update(pst, sql, sqlParams);
 		} catch (Exception e) {
-			logger.info(ExceptionUtils.getStackTrace(e));
+			logger.debug(ExceptionUtils.getStackTrace(e));
 			return 0;
 		} finally {
 			if (pst != null)
@@ -190,8 +190,8 @@ public class JdbcUtils {
 	public static int update(PreparedStatement pst, String sql, Object... sqlParams) throws Exception {
 		if (sqlParams == null)
 			sqlParams = new Object[] {};
-		logger.info(sql);
-		logger.info(Arrays.toString(sqlParams));
+		logger.debug(sql);
+		logger.debug(Arrays.toString(sqlParams));
 		int sqlN = 0;
 		try {
 			for (int i = 0; i < sqlParams.length; i++) {
@@ -204,11 +204,11 @@ public class JdbcUtils {
 			long s = System.nanoTime();
 			sqlN = pst.executeUpdate();
 			long e = System.nanoTime();
-			logger.info("takes: " + (e - s));
+			logger.debug("takes: " + (e - s));
 		} catch (Exception e) {
 			throw new Exception(e.getMessage() + " sql: " + sql, e);
 		}
-		logger.info("affected: " + sqlN);
+		logger.debug("affected: " + sqlN);
 		return sqlN;
 	}
 
@@ -263,10 +263,10 @@ public class JdbcUtils {
 	public static int[] batch(PreparedStatement pst, String sql, Object... sqlParamBatches) throws Exception {
 		if (sqlParamBatches == null)
 			sqlParamBatches = new Object[] {};
-		logger.info(sql);
+		logger.debug(sql);
 		int[] sqlNs = new int[] {};
 		for (Object param : sqlParamBatches) {
-			logger.info(param);
+			logger.debug(param);
 			if (param instanceof List) {
 				for (int i = 0; i < ((List) param).size(); i++) {
 					pst.setObject(i + 1, ((List) param).get(i));
@@ -285,8 +285,8 @@ public class JdbcUtils {
 		long s = System.nanoTime();
 		sqlNs = pst.executeBatch();
 		long e = System.nanoTime();
-		logger.info("takes: " + (e - s));
-		logger.info("affected : " + Arrays.toString(sqlNs));
+		logger.debug("takes: " + (e - s));
+		logger.debug("affected : " + Arrays.toString(sqlNs));
 		return sqlNs;
 	}
 
@@ -302,9 +302,9 @@ public class JdbcUtils {
 			}
 			rows.add(row);
 			if (rows.size() <= 10)
-				logger.info(row);
+				logger.debug(row);
 		}
-		logger.info("affected : " + rows.size());
+		logger.debug("affected : " + rows.size());
 		return rows;
 	}
 
@@ -324,9 +324,9 @@ public class JdbcUtils {
 			}
 			rows.add(row);
 			if (rows.size() <= 10)
-				logger.info(row);
+				logger.debug(row);
 		}
-		logger.info("affected : " + rows.size());
+		logger.debug("affected : " + rows.size());
 		return rows;
 	}
 
@@ -343,9 +343,9 @@ public class JdbcUtils {
 			}
 			valueLists.add(valueList);
 			if (valueLists.size() <= 10)
-				logger.info(valueList);
+				logger.debug(valueList);
 		}
-		logger.info("affected : " + valueLists.size());
+		logger.debug("affected : " + valueLists.size());
 		return valueLists;
 	}
 
@@ -356,9 +356,9 @@ public class JdbcUtils {
 			Object value = rs.getObject(1);
 			rows.add(value);
 			if (rows.size() <= 10)
-				logger.info(new StringBuilder("[").append(value).append("]").toString());
+				logger.debug(new StringBuilder("[").append(value).append("]").toString());
 		}
-		logger.info("affected : " + rows.size());
+		logger.debug("affected : " + rows.size());
 		return rows;
 	}
 

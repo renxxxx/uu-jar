@@ -59,8 +59,6 @@ public class Value {
 	}
 
 	public static Value build(String name, String code, String... values) {
-		logger.info("enter");
-		logger.info("name : " + name + " code : " + code + " values : " + Arrays.toString(values));
 		Value param = new Value();
 		param.name = name;
 		param.code = code;

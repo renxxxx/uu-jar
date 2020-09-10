@@ -52,7 +52,6 @@ public class Database {
 
 	public Database(String driver, String connectURI, String username, String password)
 			throws IOException, SQLException {
-		logger.info("into");
 		org.apache.tomcat.jdbc.pool.DataSource tomcatJdbcPoolDataSource = new org.apache.tomcat.jdbc.pool.DataSource();
 		tomcatJdbcPoolDataSource.setDriverClassName(driver);
 		tomcatJdbcPoolDataSource.setUrl(connectURI);
@@ -63,7 +62,6 @@ public class Database {
 		tomcatJdbcPoolDataSource.setRollbackOnReturn(true);
 		tomcatJdbcPoolDataSource.setValidationQuery("SELECT 1");
 		dataSource = tomcatJdbcPoolDataSource;
-		logger.info("out");
 	}
 
 	public Database(DataSource dataSource) throws IOException, SQLException {
@@ -71,12 +69,10 @@ public class Database {
 	}
 
 	public Connection connect(Connection connection) throws SQLException {
-		logger.info("into");
 		if (connection == null) {
 			connection = dataSource.getConnection();
 			connection.setAutoCommit(false);
 		}
-		logger.info("out");
 		return connection;
 	}
 
