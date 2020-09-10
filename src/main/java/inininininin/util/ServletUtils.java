@@ -17,7 +17,12 @@ public class ServletUtils {
 	public static Logger logger = Logger.getLogger(ServletUtils.class);
 
 	public static Map<String, List<String>> headersMap(HttpServletRequest request) {
-		Map<String, List<String>> headersMap = new LinkedHashMap<String, List<String>>();
+		Map<String, List<String>> headersMap = (Map<String, List<String>>) request.getAttribute("headersMap-111111");
+		if (headersMap == null)
+			headersMap = new LinkedHashMap<String, List<String>>();
+		else {
+			return headersMap;
+		}
 		Enumeration<String> names = request.getHeaderNames();
 		while (names.hasMoreElements()) {
 			String name = (String) names.nextElement();
@@ -36,6 +41,9 @@ public class ServletUtils {
 		Map<String, Cookie> cookiesMap = (Map<String, Cookie>) request.getAttribute("cookiesMap-111111");
 		if (cookiesMap == null)
 			cookiesMap = new LinkedHashMap<String, Cookie>();
+		else {
+			return cookiesMap;
+		}
 		Cookie[] cookies = request.getCookies();
 		if (cookies == null || cookies.length == 0)
 			return cookiesMap;
