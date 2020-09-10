@@ -16,8 +16,8 @@ import com.alibaba.fastjson.JSONObject;
 public class ServletUtils {
 	public static Logger logger = Logger.getLogger(ServletUtils.class);
 
-	public static Map<String, List<String>> headerMap(HttpServletRequest request) {
-		Map<String, List<String>> headerMap = new LinkedHashMap<String, List<String>>();
+	public static Map<String, List<String>> headersMap(HttpServletRequest request) {
+		Map<String, List<String>> headersMap = new LinkedHashMap<String, List<String>>();
 		Enumeration<String> names = request.getHeaderNames();
 		while (names.hasMoreElements()) {
 			String name = (String) names.nextElement();
@@ -27,22 +27,25 @@ public class ServletUtils {
 			while (ve.hasMoreElements()) {
 				valueList.add(ve.nextElement());
 			}
-			headerMap.put(name, valueList);
+			headersMap.put(name, valueList);
 		}
-		return headerMap;
+		return headersMap;
 	}
 
-	public static Map<String, Cookie> cookieMap(HttpServletRequest request) {
-		Map<String, Cookie> cookieMap = new LinkedHashMap<String, Cookie>();
+	public static Map<String, Cookie> cookiesMap(HttpServletRequest request) {
+		Map<String, Cookie> cookiesMap = (Map<String, Cookie>) request.getAttribute("cookiesMap-111111");
+		if (cookiesMap == null)
+			cookiesMap = new LinkedHashMap<String, Cookie>();
 		Cookie[] cookies = request.getCookies();
 		if (cookies == null || cookies.length == 0)
-			return cookieMap;
+			return cookiesMap;
 		for (int i = 0; i < cookies.length; i++) {
 			JSONObject hj = new JSONObject(true);
 			Cookie cookie = cookies[i];
-			cookieMap.put(cookie.getName(), cookie);
+			cookiesMap.put(cookie.getName(), cookie);
 		}
-		return cookieMap;
+		request.setAttribute("cookiesMap-111111", cookiesMap);
+		return cookiesMap;
 	}
 
 //	public static String getParameter(HttpServletRequest request, String name) {
@@ -78,17 +81,13 @@ public class ServletUtils {
 	}
 
 	public static String getCookie(String key, HttpServletRequest request) {
-		Cookie[] cookies = request.getCookies();
-		if (cookies == null)
-			return null;
-		for (Cookie cookie : cookies) {
-			if (cookie.getName().equals(key))
-				return cookie.getValue();
-		}
-		return null;
+		Map<String, Cookie> cookiesMap = cookiesMap(request);
+		Cookie cookie = cookiesMap.get(key);
+		String value = cookie == null ? null : cookie.getValue();
+		return value;
 	}
 
-	public static String getClientScheme(HttpServletRequest request) {
+	public static String getOriginalScheme(HttpServletRequest request) {
 		String value = null;
 		value = request.getHeader("X-Forwarded-Scheme");
 		if (value != null && !value.isEmpty())
@@ -99,7 +98,7 @@ public class ServletUtils {
 		return value;
 	}
 
-	public static String getClientHost(HttpServletRequest request) {
+	public static String getOriginalHost(HttpServletRequest request) {
 		String value = null;
 		value = request.getHeader("remote-host");
 		if (value != null && !value.isEmpty())
