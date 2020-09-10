@@ -8,10 +8,10 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-public class Email {
+public class JavaxMail {
 	
 	public static void main(String[] args) throws Exception {
-		Email j = new Email().start("smtp.qq.com", 25, "smtp", "true", "413038044@qq.com", "euhiglgjaxribjch",
+		JavaxMail j = new JavaxMail().start("smtp.qq.com", 25, "smtp", "true", "413038044@qq.com", "euhiglgjaxribjch",
 				"413038044@qq.com");
 
 		j.send("413038044@qq.com", "aq123123d", "qqqq");
@@ -25,7 +25,7 @@ public class Email {
 	private String pwd;
 	private String sender;
 	
-	public Email start(String host, Integer port, String protocol, String smtpAuth, String user, String pwd,
+	public JavaxMail start(String host, Integer port, String protocol, String smtpAuth, String user, String pwd,
 			String sender) {
 		this.host = host;
 		this.port = port;
