@@ -30,7 +30,7 @@ public class Database {
 			for (int i = 0; i < rows.size(); i++) {
 				Map row = rows.get(i);
 				row.put("id", StringUtils.newId());
-				Map cR = JdbcUtils.query(connection,
+				Mapp cR = JdbcUtils.query(connection,
 						"select id clinicId,hospitalId from t_hospital_clinic where id != ? order by rand()",
 						row.get("clinicId"));
 				row.put("clinicId", cR.get("clinicId"));

@@ -4,24 +4,34 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class Mapp<K, V> {
 
 	public Map<K, V> map = null;
 
-	public static Mapp instance(Map map) {
+	public Set<K> keySet() {
+		if (this.map == null)
+			return null;
+		else {
+			return this.map.keySet();
+		}
+	}
+
+	public static <K, V> Mapp<K, V> instance(Map<K, V> map) {
 		if (map == null)
 			return null;
 		else {
-			Mapp mapp = new Mapp();
+			Mapp<K, V> mapp = new Mapp<K, V>();
 			mapp.map = map;
 			return mapp;
 		}
 	}
 
-	public Mapp() {
-		super();
-		this.map = new HashMap<K, V>();
+	public static <K, V> Mapp<K, V> instance() {
+		Mapp<K, V> mapp = new Mapp<K, V>();
+		mapp.map = new HashMap<K, V>();
+		return mapp;
 	}
 
 	public Mapp<K, V> put(K key, V value) {

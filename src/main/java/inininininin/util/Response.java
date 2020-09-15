@@ -80,24 +80,6 @@ public class Response extends RuntimeException {
 		return response;
 	}
 
-//	private Response(int code) {
-//		super(code + "");
-//		this.code = code;
-//	}
-//
-//	private Response(int code, String codeMsg, Object data) {
-//		super(code + " - " + codeMsg);
-//		this.code = code;
-//		this.codeMsg = codeMsg;
-//		this.data = data;
-//	}
-//
-//	private Response(int code, String codeMsg) {
-//		super(code + " - " + codeMsg);
-//		this.code = code;
-//		this.codeMsg = codeMsg;
-//	}
-
 	public Response() {
 		super();
 		// TODO Auto-generated constructor stub

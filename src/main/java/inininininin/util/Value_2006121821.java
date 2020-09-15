@@ -21,7 +21,7 @@ public class Value_2006121821 {
 	private String code;
 	private String value;
 	private String separator = ",";
-	private static List<String> datePatterns = new Listt(new ArrayList()).add("yyyy-MM-dd HH:mm:ss")
+	private static List<String> datePatterns = Listt.instance(new ArrayList<String>()).add("yyyy-MM-dd HH:mm:ss")
 			.add("yyyy-MM-dd HH:mm:ss.SSS").add("MM/dd/yyyy HH:mm:ss").add("MM/dd/yyyy HH:mm:ss.SSS").add("yyyy-MM-dd")
 			.add("HH:mm:ss").add("yyyy/MM/dd HH:mm:ss").add("yyyy/MM/dd HH:mm:ss.SSS").add("yyyy/MM/dd").list;
 	private String datePattern = null;

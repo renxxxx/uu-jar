@@ -95,8 +95,8 @@ public class JdbcUtils {
 	}
 
 	public static Object queryColumn(Connection conn, String sql, Object... sqlParams) throws Exception {
-		Map row = query(conn, sql, sqlParams);
-		if (row == null)
+		Mapp row = query(conn, sql, sqlParams);
+		if (row.map == null)
 			return null;
 		return row.get(row.keySet().iterator().next());
 	}
@@ -119,7 +119,7 @@ public class JdbcUtils {
 //		}
 //	}
 
-	public static Map query(Connection conn, String sql, Object... sqlParams) throws Exception {
+	public static Mapp query(Connection conn, String sql, Object... sqlParams) throws Exception {
 		logger.debug("in " + RandomStringUtils.randomNumeric(5));
 		Map item = null;
 		List<Map> itemList = queryList(conn, sql, sqlParams);
@@ -127,7 +127,7 @@ public class JdbcUtils {
 			item = itemList.get(0);
 		}
 		logger.debug("out " + RandomStringUtils.randomNumeric(5));
-		return item;
+		return Mapp.instance(item);
 	}
 
 	public static ResultSet query(PreparedStatement pst, String sql, Object... sqlParams) throws SQLException {
