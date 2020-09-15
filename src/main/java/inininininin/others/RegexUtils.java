@@ -1,4 +1,4 @@
-package inininininin.util;
+package inininininin.others;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

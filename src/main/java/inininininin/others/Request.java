@@ -1,4 +1,4 @@
-package inininininin.util;
+package inininininin.others;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

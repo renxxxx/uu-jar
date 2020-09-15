@@ -1,4 +1,4 @@
-package inininininin.util;
+package inininininin.others;
 
 import java.io.InputStream;
 import java.math.BigDecimal;

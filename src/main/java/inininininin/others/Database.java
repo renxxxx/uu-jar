@@ -1,4 +1,4 @@
-package inininininin.util;
+package inininininin.others;
 
 import java.io.IOException;
 import java.sql.Connection;

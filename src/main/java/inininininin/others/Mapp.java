@@ -1,4 +1,4 @@
-package inininininin.util;
+package inininininin.others;
 
 import java.math.BigDecimal;
 import java.util.Date;

@@ -1,4 +1,4 @@
-package inininininin.util;
+package inininininin.others;
 
 public class Response extends RuntimeException {
 

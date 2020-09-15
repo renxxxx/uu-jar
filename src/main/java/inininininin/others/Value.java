@@ -1,4 +1,4 @@
-package inininininin.util;
+package inininininin.others;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
@@ -14,26 +14,30 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
-public class Value_2006121821 {
-	private static Logger logger = Logger.getLogger(Value_2006121821.class);
+import com.alibaba.fastjson.JSONObject;
+
+public class Value {
+	private static Logger logger = Logger.getLogger(Value.class);
 
 	private String name;
 	private String code;
 	private String value;
 	private String separator = ",";
-	private static List<String> datePatterns = Listt.instance(new ArrayList<String>()).add("yyyy-MM-dd HH:mm:ss")
-			.add("yyyy-MM-dd HH:mm:ss.SSS").add("MM/dd/yyyy HH:mm:ss").add("MM/dd/yyyy HH:mm:ss.SSS").add("yyyy-MM-dd")
-			.add("HH:mm:ss").add("yyyy/MM/dd HH:mm:ss").add("yyyy/MM/dd HH:mm:ss.SSS").add("yyyy/MM/dd").list;
-	private String datePattern = null;
-	boolean todo = true;
-	private Integer intValue;
+	public static String datePattern = "yyyy-MM-dd HH:mm:ss.SSS Z";
+	public static String datePattern1 = "yyyy-MM-dd HH:mm:ss";
+	public static String datePattern2 = "yyyy-MM-dd";
+	public static String datePattern3 = "HH:mm:ss";
+	public static String datePattern4 = "yyyy-MM-dd HH:mm:ss.SSS";
+	boolean go = true;
+	private Integer integerValue;
 	private Float floatValue;
+	private Double doubleValue;
 	private Long longValue;
 	private BigDecimal decimalValue;
 	private Date dateValue;
 	private String[] splitArrValue;
 
-	private Value_2006121821() {
+	private Value() {
 
 	}
 
@@ -44,19 +48,18 @@ public class Value_2006121821 {
 		}
 	};
 
-	public Value_2006121821 clear() {
+	public Value clear() {
 		this.splitArrValue = null;
 		this.dateValue = null;
-		this.intValue = null;
+		this.integerValue = null;
 		this.floatValue = null;
 		this.longValue = null;
 		this.decimalValue = null;
 		return this;
 	}
 
-	public static Value_2006121821 build(String name, String code, String... values) {
-		logger.info("in -> name : " + name + " code : " + code + " values : " + Arrays.toString(values));
-		Value_2006121821 param = new Value_2006121821();
+	public static Value build(String name, String code, String... values) {
+		Value param = new Value();
 		param.name = name;
 		param.code = code;
 		if (values != null)
@@ -69,44 +72,44 @@ public class Value_2006121821 {
 
 		if (param.value != null && !param.value.isEmpty()
 				&& param.value.matches(".*<(s|S)(c|C)(r|R)(i|I)(p|P)(t|T)>.*"))
-			throw Response.go(1001, "\"" + param.name + "\"有误").setErrParam(param.code);
+			throw Response.go(1001, "\"" + param.name + "\"有误").setErrParam(param.code).setErrValue(param.value);
 
 		return param;
 	}
 
-	public Value_2006121821 suffix(String suffix) {
-		if (!this.todo)
+	public Value suffix(String suffix) {
+		if (!this.go)
 			return this;
 		if (this.value != null)
 			this.value = this.value + suffix;
 		return this;
 	}
 
-	public Value_2006121821 prefix(String prefix) {
-		if (!this.todo)
+	public Value prefix(String prefix) {
+		if (!this.go)
 			return this;
 		if (this.value != null)
 			this.value = prefix + this.value;
 		return this;
 	}
 
-	public Value_2006121821 trim() {
-		if (!this.todo)
+	public Value trim() {
+		if (!this.go)
 			return this;
 		this.value = this.value == null ? null : this.value.trim();
 		return this;
 	}
 
-	public Value_2006121821 trimToNull() {
-		if (!this.todo)
+	public Value trimToNull() {
+		if (!this.go)
 			return this;
 		if (this.value != null && this.value.trim().isEmpty())
 			this.value = null;
 		return this;
 	}
 
-	public Value_2006121821 trimToBlank() {
-		if (!this.todo)
+	public Value trimToBlank() {
+		if (!this.go)
 			return this;
 		if (this.value == null)
 			this.value = "";
@@ -114,32 +117,27 @@ public class Value_2006121821 {
 		return this;
 	}
 
-	public Value_2006121821 trimLeft() {
-		if (!this.todo)
+	public Value trimLeft() {
+		if (!this.go)
 			return this;
 		this.value = this.value == null ? null : this.value.trim();
 		return this;
 	}
 
-	public Value_2006121821 trimRight() {
-		if (!this.todo)
+	public Value trimRight() {
+		if (!this.go)
 			return this;
 		this.value = this.value == null ? null : this.value.trim();
 		return this;
 	}
 
-	public Value_2006121821 setDatePattern(String datePattern) {
-		this.datePatterns.add(0, datePattern);
-		return this;
-	}
-
-	public Value_2006121821 setSeparator(String separator) {
+	public Value setSeparator(String separator) {
 		this.separator = separator;
 		return this;
 	}
 
-	public Value_2006121821 nullDef(String defaultValue) {
-		if (!this.todo)
+	public Value nullDef(String defaultValue) {
+		if (!this.go)
 			return this;
 		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
 		if (isNull() && defaultValue != null)
@@ -147,16 +145,16 @@ public class Value_2006121821 {
 		return this;
 	}
 
-	public Value_2006121821 nullDef(boolean todo, String defaultValue) {
-		if (!this.todo)
+	public Value nullDef(boolean go, String defaultValue) {
+		if (!this.go)
 			return this;
-		if (todo)
+		if (go)
 			this.nullDef(defaultValue);
 		return this;
 	}
 
-	public Value_2006121821 blankDef(String defaultValue) {
-		if (!this.todo)
+	public Value blankDef(String defaultValue) {
+		if (!this.go)
 			return this;
 		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
 		if (isBlank() && defaultValue != null)
@@ -164,16 +162,16 @@ public class Value_2006121821 {
 		return this;
 	}
 
-	public Value_2006121821 blankDef(boolean todo, String defaultValue) {
-		if (!this.todo)
+	public Value blankDef(boolean go, String defaultValue) {
+		if (!this.go)
 			return this;
-		if (todo)
+		if (go)
 			this.blankDef(defaultValue);
 		return this;
 	}
 
-	public Value_2006121821 emptyDef(String defaultValue) {
-		if (!this.todo)
+	public Value emptyDef(String defaultValue) {
+		if (!this.go)
 			return this;
 		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
 		if (isEmpty() && defaultValue != null)
@@ -181,277 +179,262 @@ public class Value_2006121821 {
 		return this;
 	}
 
-	public Value_2006121821 emptyDef(boolean todo, String defaultValue) {
-		if (!this.todo)
+	public Value emptyDef(boolean go, String defaultValue) {
+		if (!this.go)
 			return this;
-		if (todo)
+		if (go)
 			this.emptyDef(defaultValue);
 		return this;
 	}
 
-	public static void main(String[] args) throws ParseException, NoSuchFieldException, SecurityException,
-			IllegalArgumentException, IllegalAccessException {
-
-		System.out.println(Value_2006121821.build(null, null, "5").vEnum("3", "4", "5"));
-
-	}
-
-	public Value_2006121821 stop(boolean todo) {
-		if (todo)
-			this.todo = false;
+	public Value stop() {
+		this.go = false;
 		return this;
 	}
 
-	public Value_2006121821 vNull() {
-		if (!this.todo)
+	public Value stop(boolean go) {
+		if (go)
+			this.go = false;
+		return this;
+	}
+
+	public Value vNull() {
+		if (!this.go)
 			return this;
 		if (this.value == null)
-			throw Response.go(1001, "\"" + this.name + "\"不能空").setErrParam(this.code);
+			throw Response.go(1001, "\"" + this.name + "\"不能空").setErrParam(this.code).setErrParam(this.value);
 		return this;
 	}
 
-	public Value_2006121821 vNull(boolean todo) {
-		if (!this.todo)
+	public Value vNull(boolean go) {
+		if (!this.go)
 			return this;
-		if (todo)
+		if (go)
 			this.vNull();
 		return this;
 	}
 
-	public Value_2006121821 vEmpty() {
-		if (!this.todo)
+	public Value vEmpty() {
+		if (!this.go)
 			return this;
 		if ((this.value == null || this.value.isEmpty()))
-			throw Response.go(1001, "\"" + this.name + "\"不能空").setErrParam(this.code);
+			throw Response.go(1001, "\"" + this.name + "\"不能空").setErrParam(this.code).setErrParam(this.value);
 		return this;
 	}
 
-	public Value_2006121821 vEmpty(boolean todo) {
-		if (!this.todo)
+	public Value vEmpty(boolean go) {
+		if (!this.go)
 			return this;
-		if (todo)
+		if (go)
 			this.vEmpty();
 		return this;
 	}
 
-	public Value_2006121821 vBlank() {
-		if (!this.todo)
+	public Value vBlank() {
+		if (!this.go)
 			return this;
 		if ((this.value != null && this.value.isEmpty()))
-			throw Response.go(1001, "\"" + this.name + "\"不能空").setErrParam(this.code);
+			throw Response.go(1001, "\"" + this.name + "\"不能空").setErrParam(this.code).setErrParam(this.value);
 		return this;
 	}
 
-	public Value_2006121821 vBlank(boolean todo) {
-		if (!this.todo)
+	public Value vBlank(boolean go) {
+		if (!this.go)
 			return this;
-		if (todo)
+		if (go)
 			this.vBlank();
 		return this;
 	}
 
-	public Value_2006121821 vLen(int length) {
-		if (!this.todo)
+	public Value vLen(int length) {
+		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() != length) {
-			throw Response.go(1001, "\"" + this.name + "\"长度只能是" + length).setErrParam(this.code);
+			throw Response.go(1001, "\"" + this.name + "\"长度只能是" + length).setErrParam(this.code)
+					.setErrParam(this.value);
 		}
 		return this;
 	}
 
-	public Value_2006121821 vLen(boolean todo, int length) {
-		if (!this.todo)
+	public Value vLen(boolean go, int length) {
+		if (!this.go)
 			return this;
-		if (todo)
+		if (go)
 			this.vLen(length);
 		return this;
 	}
 
-	public Value_2006121821 vMinLen(int length) {
-		if (!this.todo)
+	public Value vMinLen(int length) {
+		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() < length) {
-			throw Response.go(1001, "\"" + this.name + "\"长度最低" + length).setErrParam(this.code);
+			throw Response.go(1001, "\"" + this.name + "\"长度最低" + length).setErrParam(this.code)
+					.setErrParam(this.value);
 		}
 		return this;
 	}
 
-	public Value_2006121821 vMinLen(boolean todo, int length) {
-		if (!this.todo)
+	public Value vMinLen(boolean go, int length) {
+		if (!this.go)
 			return this;
-		if (todo)
+		if (go)
 			this.vMinLen(length);
 		return this;
 	}
 
-	public Value_2006121821 vMaxLen(int length) {
-		if (!this.todo)
+	public Value vMaxLen(int length) {
+		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() > length) {
-			throw Response.go(1001, "\"" + this.name + "\"长度最大" + length).setErrParam(this.code);
+			throw Response.go(1001, "\"" + this.name + "\"长度最大" + length).setErrParam(this.code)
+					.setErrParam(this.value);
 		}
 		return this;
 	}
 
-	public Value_2006121821 vMaxLen(boolean todo, int length) {
-		if (!this.todo)
+	public Value vMaxLen(boolean go, int length) {
+		if (!this.go)
 			return this;
-		if (todo)
+		if (go)
 			this.vMaxLen(length);
 		return this;
 	}
 
-	public Value_2006121821 vMaxNum(float maxnum) {
-		if (!this.todo)
+	public Value vMaxNum(float maxnum) {
+		if (!this.go)
 			return this;
 		if (!isEmpty() && toFloat() > maxnum) {
-			throw Response.go(1001, "\"" + this.name + "\"最大" + maxnum).setErrParam(this.code);
+			throw Response.go(1001, "\"" + this.name + "\"最大" + maxnum).setErrParam(this.code).setErrParam(this.value);
 		}
 		return this;
 	}
 
-	public Value_2006121821 vMaxNum(boolean todo, float maxnum) {
-		if (!this.todo)
+	public Value vMaxNum(boolean go, float maxnum) {
+		if (!this.go)
 			return this;
-		if (todo)
+		if (go)
 			this.vMaxNum(maxnum);
 		return this;
 	}
 
-	public Value_2006121821 vMinNum(float minnum) {
-		if (!this.todo)
+	public Value vMinNum(float minnum) {
+		if (!this.go)
 			return this;
 		if (!isEmpty() && toFloat() < minnum) {
-			throw Response.go(1001, "\"" + this.name + "\"最小" + minnum).setErrParam(this.code);
+			throw Response.go(1001, "\"" + this.name + "\"最小" + minnum).setErrParam(this.code).setErrParam(this.value);
 		}
 		return this;
 	}
 
-	public Value_2006121821 vMinNum(boolean todo, float minnum) {
-		if (!this.todo)
+	public Value vMinNum(boolean go, float minnum) {
+		if (!this.go)
 			return this;
-		if (todo)
+		if (go)
 			this.vMinNum(minnum);
 		return this;
 	}
 
-	public Value_2006121821 vMaxCount(int count) {
-		if (!this.todo)
+	public Value vMaxCount(int count) {
+		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && this.toSplitArr() != null
 				&& this.toSplitArr().length > count) {
-			throw Response.go(1001, "\"" + this.name + "\"最多" + count + "个").setErrParam(this.code);
+			throw Response.go(1001, "\"" + this.name + "\"最多" + count + "个").setErrParam(this.code)
+					.setErrParam(this.value);
 		}
 		return this;
 	}
 
-	public Value_2006121821 vInteger() {
-		if (!this.todo)
+	public Value vInteger() {
+		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
-			Integer l = null;
 			try {
-				l = Integer.parseInt(this.value);
+				this.integerValue = Integer.parseInt(this.value);
 			} catch (Exception e) {
 
 			}
-			if (l == null)
-				throw Response.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code);
+			if (this.integerValue == null)
+				throw Response.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code).setErrParam(this.value);
 		}
 		return this;
 	}
 
-	public Value_2006121821 vBoolean() {
-		if (!this.todo)
+	public Value vBoolean() {
+		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && !"1".equals(this.value) && !"0".equals(this.value)) {
-			throw Response.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code);
+			throw Response.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code).setErrParam(this.value);
 		}
 		return this;
 	}
 
-	public Value_2006121821 vEnum(String... values) {
-		if (!this.todo)
+	public Value vEnum(String... values) {
+		if (!this.go)
 			return this;
-		boolean v = false;
-		if (this.value != null && !this.value.isEmpty()) {
-			for (int i = 0; i < values.length; i++) {
-				String value = values[i];
-				if (value == this.value)
-					v = true;
-				else if (value != null && value.equals(this.value)) {
-					v = true;
-				}
-			}
-		} else {
-			v = true;
-		}
+		boolean v = inininininin.others.StringUtils.equalsAny(this.value, values);
 		if (!v)
-			throw Response.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code);
+			throw Response.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code).setErrParam(this.value);
 		else
 			return this;
 	}
 
-	public Value_2006121821 vLong() {
-		if (!this.todo)
+	public Value vLong() {
+		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
-			Long l = null;
 			try {
-				l = Long.parseLong(this.value);
+				this.longValue = Long.parseLong(this.value);
 			} catch (Exception e) {
 
 			}
-			if (l == null)
-				throw Response.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code);
+			if (this.longValue == null)
+				throw Response.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code).setErrParam(this.value);
 		}
 		return this;
 	}
 
-	public Value_2006121821 vDouble() {
-		if (!this.todo)
+	public Value vDouble() {
+		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
-			Double l = null;
 			try {
-				l = Double.parseDouble(this.value);
+				this.doubleValue = Double.parseDouble(this.value);
 			} catch (Exception e) {
 
 			}
-			if (l == null)
-				throw Response.go(1001, "\"" + this.name + "\"只能输入数字").setErrParam(this.code);
+			if (this.doubleValue == null)
+				throw Response.go(1001, "\"" + this.name + "\"只能输入数字").setErrParam(this.code).setErrParam(this.value);
 		}
 		return this;
 	}
 
-	public Value_2006121821 vFloat() {
-		if (!this.todo)
+	public Value vFloat() {
+		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
-			Float l = null;
 			try {
-				l = Float.parseFloat(this.value);
+				this.floatValue = Float.parseFloat(this.value);
 			} catch (Exception e) {
 
 			}
-			if (l == null)
-				throw Response.go(1001, "\"" + this.name + "\"只能输入数字").setErrParam(this.code);
+			if (this.floatValue == null)
+				throw Response.go(1001, "\"" + this.name + "\"只能输入数字").setErrParam(this.code).setErrParam(this.value);
 		}
 		return this;
 	}
 
-	public Value_2006121821 vDecimal() {
-		if (!this.todo)
+	public Value vDecimal() {
+		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
-			BigDecimal l = null;
 			try {
-				l = new BigDecimal(this.value);
+				this.decimalValue = new BigDecimal(this.value);
 			} catch (Exception e) {
 
 			}
-			if (l == null)
-				throw Response.go(1001, "\"" + this.name + "\"只能输入数字").setErrParam(this.code);
+			if (this.decimalValue == null)
+				throw Response.go(1001, "\"" + this.name + "\"只能输入数字").setErrParam(this.code).setErrParam(this.value);
 		}
 		return this;
 	}
@@ -474,109 +457,120 @@ public class Value_2006121821 {
 		return false;
 	}
 
-	public Value_2006121821 vLenRange(int min, int max) {
-		if (!this.todo)
+	public Value vLenRange(int min, int max) {
+		if (!this.go)
 			return this;
 		vMinLen(min);
 		vMaxLen(max);
 		return this;
 	}
 
-	public Value_2006121821 vNumRange(float min, float max) {
-		if (!this.todo)
+	public Value vNumRange(float min, float max) {
+		if (!this.go)
 			return this;
 		vMinNum(min);
 		vMaxNum(max);
 		return this;
 	}
 
-	public Value_2006121821 vReg(Pattern regex) {
-		if (!this.todo)
+	public Value vReg(Pattern regex) {
+		if (!this.go)
 			return this;
 		return vReg(regex, null);
 	}
 
-	public Value_2006121821 vReg(Pattern regex, String note) {
-		if (!this.todo)
+	public Value vReg(Pattern regex, String note) {
+		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null) {
 			if (!regex.matcher(this.value).matches())
 				throw Response
 						.go(1001, "\"" + this.name + "\"有误" + (note == null || note.isEmpty() ? "" : ",要求：" + note))
-						.setErrParam(this.code);
+						.setErrParam(this.code).setErrParam(this.value);
 		}
 		return this;
 	}
 
-	public Value_2006121821 vRegNot(Pattern regex) {
-		if (!this.todo)
+	public Value vRegNot(Pattern regex) {
+		if (!this.go)
 			return this;
 		return vRegNot(regex, null);
 	}
 
-	public Value_2006121821 vRegNot(Pattern regex, String note) {
-		if (!this.todo)
+	public Value vRegNot(Pattern regex, String note) {
+		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null) {
 			if (regex.matcher(this.value).matches())
 				throw Response
 						.go(1001, "\"" + this.name + "\"有误" + (note == null || note.isEmpty() ? "" : ",要求：" + note))
-						.setErrParam(this.code);
+						.setErrParam(this.code).setErrParam(this.value);
 		}
 		return this;
 	}
 
-	public Value_2006121821 vReg(String regex) {
-		if (!this.todo)
+	public Value vReg(String regex) {
+		if (!this.go)
 			return this;
 		return vReg(regex, null);
 	}
 
-	public Value_2006121821 vReg(String regex, String note) {
-		if (!this.todo)
+	public Value vReg(String regex, String note) {
+		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty()) {
 			if (!regexCache.getWithCreate(regex).matcher(this.value).matches())
 				throw Response
 						.go(1001, "\"" + this.name + "\"有误" + (note == null || note.isEmpty() ? "" : ",要求：" + note))
-						.setErrParam(this.code);
+						.setErrParam(this.code).setErrParam(this.value);
 		}
 		return this;
 	}
 
-	public Value_2006121821 vRegNot(String regex) {
-		if (!this.todo)
+	public Value vRegNot(String regex) {
+		if (!this.go)
 			return this;
 		return vRegNot(regex, null);
 	}
 
-	public Value_2006121821 vRegNot(String regex, String note) {
-		if (!this.todo)
+	public Value vRegNot(String regex, String note) {
+		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty()) {
 			if (regexCache.getWithCreate(regex).matcher(this.value).matches())
 				throw Response
 						.go(1001, "\"" + this.name + "\"有误" + (note == null || note.isEmpty() ? "" : ",要求：" + note))
-						.setErrParam(this.code);
+						.setErrParam(this.code).setErrParam(this.value);
 		}
 		return this;
 	}
 
-	public Value_2006121821 vReplace(String regex, String replace) {
-		if (!this.todo)
+	public Value vDate() {
+		if (this.value == null || this.value.isEmpty())
 			return this;
-		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty() && replace != null)
-			this.value = regexCache.getWithCreate(regex).matcher(this.value).replaceAll(replace);
+		toDate();
+		if (this.dateValue == null)
+			throw Response.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code).setErrParam(this.value);
+		else {
+			this.value = new SimpleDateFormat(datePattern1).format(this.dateValue);
+		}
 		return this;
 	}
-
-	public Value_2006121821 vReplace(String regex, String replace, boolean todo) {
-		if (!this.todo)
-			return this;
-		if (todo)
-			return vReplace(regex, replace);
-		return this;
-	}
+//	public Value vReplace(String regex, String replace) {
+//		if (!this.go)
+//			return this;
+//		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty() && replace != null)
+//			this.value = regexCache.getWithCreate(regex).matcher(this.value).replaceAll(replace);
+//		return this;
+//	}
+//
+//	public Value vReplace(String regex, String replace, boolean go) {
+//		if (!this.go)
+//			return this;
+//		if (go)
+//			return vReplace(regex, replace);
+//		return this;
+//	}
 
 	public String val() {
 		return this.value;
@@ -596,10 +590,10 @@ public class Value_2006121821 {
 	}
 
 	public Integer toInteger() {
-		if (this.intValue != null)
-			return this.intValue;
-		this.intValue = isEmpty() ? null : Integer.parseInt(this.value);
-		return this.intValue;
+		if (this.integerValue != null)
+			return this.integerValue;
+		this.integerValue = isEmpty() ? null : Integer.parseInt(this.value);
+		return this.integerValue;
 	}
 
 	public Float toFloat() {
@@ -628,18 +622,6 @@ public class Value_2006121821 {
 		return new SimpleDateFormat(pattern).format(data);
 	}
 
-	public Value_2006121821 vDate() {
-		if (this.value == null || this.value.isEmpty())
-			return this;
-		toDate();
-		if (this.dateValue == null)
-			throw Response.go(1001, "\"" + this.name + "\"请输入日期").setErrParam(this.code);
-		else {
-			this.value = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(this.dateValue);
-		}
-		return this;
-	}
-
 	public Date toDate() {
 		if (this.dateValue != null)
 			return this.dateValue;
@@ -648,15 +630,15 @@ public class Value_2006121821 {
 	}
 
 	public void bomb(String message) {
-		throw Response.go(1001, "\"" + this.name + "\"" + message).setErrParam(this.code);
+		throw Response.go(1001, "\"" + this.name + "\"" + message).setErrParam(this.code).setErrParam(this.value);
 	}
 
-	public void bomb(boolean todo, String message) {
-		if (todo)
-			throw Response.go(1001, "\"" + this.name + "\"" + message).setErrParam(this.code);
+	public void bomb(boolean go, String message) {
+		if (go)
+			throw Response.go(1001, "\"" + this.name + "\"" + message).setErrParam(this.code).setErrParam(this.value);
 	}
 
-	public boolean equals(String object) {
+	public boolean equals(Object object) {
 		if (this.value == object)
 			return true;
 		if (this.value == null && object != null)
@@ -664,48 +646,48 @@ public class Value_2006121821 {
 		return this.value.equals(object);
 	}
 
-	public Value_2006121821 toLowerCase() {
-		if (!this.todo)
+	public Value toLowerCase() {
+		if (!this.go)
 			return this;
 		if (this.value != null)
 			this.value = this.value.toLowerCase();
 		return this;
 	}
 
-	public Value_2006121821 toUpperCase() {
-		if (!this.todo)
+	public Value toUpperCase() {
+		if (!this.go)
 			return this;
 		if (this.value != null)
 			this.value = this.value.toUpperCase();
 		return this;
 	}
 
-	public Value_2006121821 replaceAll(String regex, String replacement) {
-		if (!this.todo)
+	public Value replaceAll(String regex, String replacement) {
+		if (!this.go)
 			return this;
 		if (this.value != null)
 			this.value = this.value.replaceAll(regex, replacement);
 		return this;
 	}
 
-	public Value_2006121821 substring(int beginIndex, int endIndex) {
-		if (!this.todo)
+	public Value substring(int beginIndex, int endIndex) {
+		if (!this.go)
 			return this;
 		if (this.value != null)
 			this.value = this.value.substring(beginIndex, endIndex);
 		return this;
 	}
 
-	public Value_2006121821 substring(int beginIndex) {
-		if (!this.todo)
+	public Value substring(int beginIndex) {
+		if (!this.go)
 			return this;
 		if (this.value != null)
 			this.value = this.value.substring(beginIndex);
 		return this;
 	}
 
-	public Value_2006121821 concat(String str) {
-		if (!this.todo)
+	public Value concat(String str) {
+		if (!this.go)
 			return this;
 		if (this.value != null)
 			this.value = this.value.concat(str);
@@ -730,7 +712,7 @@ public class Value_2006121821 {
 		return false;
 	}
 
-	public Value_2006121821 set(String value) {
+	public Value set(String value) {
 		clear();
 		this.value = value;
 		return this;
@@ -778,25 +760,52 @@ public class Value_2006121821 {
 			return null;
 		if (value instanceof Date)
 			return (Date) value;
-		if (value instanceof String) {
-			if (value.toString().trim().isEmpty())
-				return null;
-			if (StringUtils.isNumeric(value.toString()))
-				return new Date(Long.parseLong(value.toString().trim()));
-		}
-		if (value instanceof Long)
-			return new Date((Long) value);
-		if (value instanceof Integer)
-			return new Date((Long) value * 1000);
-		for (int i = 0; i < datePatterns.size(); i++) {
-			try {
-				date = new SimpleDateFormat(datePatterns.get(i)).parse(value.toString());
-				if (date != null) {
-					return date;
-				}
-			} catch (Exception e) {
+		try {
+			date = new SimpleDateFormat(datePattern).parse(value.toString());
+			if (date != null) {
+				return date;
 			}
+		} catch (Exception e) {
 		}
+
+		try {
+			date = new SimpleDateFormat(datePattern1).parse(value.toString());
+			if (date != null) {
+				return date;
+			}
+		} catch (Exception e) {
+		}
+
+		try {
+			date = new SimpleDateFormat(datePattern2).parse(value.toString());
+			if (date != null) {
+				return date;
+			}
+		} catch (Exception e) {
+		}
+
+		try {
+			date = new SimpleDateFormat(datePattern3).parse(value.toString());
+			if (date != null) {
+				return date;
+			}
+		} catch (Exception e) {
+		}
+		try {
+			date = new SimpleDateFormat(datePattern4).parse(value.toString());
+			if (date != null) {
+				return date;
+			}
+		} catch (Exception e) {
+		}
+		try {
+			date = new Date(Long.parseLong(value.toString()));
+			if (date != null) {
+				return date;
+			}
+		} catch (Exception e) {
+		}
+
 		return date;
 	}
 
@@ -812,7 +821,7 @@ public class Value_2006121821 {
 			return new Long(valueStr);
 	}
 
-	public static BigDecimal toDecimal(Object value) {
+	public static BigDecimal toBigDecimal(Object value) {
 		if (value == null)
 			return null;
 		if (value instanceof BigDecimal)
@@ -822,6 +831,18 @@ public class Value_2006121821 {
 			return null;
 		else
 			return new BigDecimal(valueStr);
+	}
+
+	public static JSONObject toJson(Object value) {
+		if (value == null)
+			return null;
+		if (value instanceof JSONObject)
+			return (JSONObject) value;
+		String valueStr = value.toString();
+		if (valueStr.trim().isEmpty())
+			return null;
+		else
+			return JSONObject.parseObject(valueStr);
 	}
 
 	public static Object attr(Object target, Object... keyArray)
@@ -843,4 +864,9 @@ public class Value_2006121821 {
 		return target;
 	}
 
+	public static void main(String[] args) throws ParseException, NoSuchFieldException, SecurityException,
+			IllegalArgumentException, IllegalAccessException {
+		Value value = Value.build(null, null, "20200506132311");
+		System.out.println(value.toDate());
+	}
 }
