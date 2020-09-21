@@ -20,7 +20,7 @@ public class Mapp<K, V> {
 
 	public static <K, V> Mapp<K, V> instance(Map<K, V> map) {
 		if (map == null)
-			return null;
+			return instance();
 		else {
 			Mapp<K, V> mapp = new Mapp<K, V>();
 			mapp.map = map;
