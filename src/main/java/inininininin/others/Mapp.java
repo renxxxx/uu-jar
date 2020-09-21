@@ -20,7 +20,7 @@ public class Mapp<K, V> {
 
 	public static <K, V> Mapp<K, V> instance(Map<K, V> map) {
 		if (map == null)
-			return instance();
+			return new Mapp<K, V>();
 		else {
 			Mapp<K, V> mapp = new Mapp<K, V>();
 			mapp.map = map;
@@ -35,20 +35,28 @@ public class Mapp<K, V> {
 	}
 
 	public Mapp<K, V> put(K key, V value) {
-		map.put(key, value);
+		if (this.map == null)
+			this.map = new HashMap<K, V>();
+		this.map.put(key, value);
 		return this;
 	}
 
 	public Mapp<K, V> putAll(Map map) {
+		if (this.map == null)
+			this.map = new HashMap<K, V>();
 		this.map.putAll(map);
 		return this;
 	}
 
 	public V get(K key) {
+		if (this.map == null)
+			return null;
 		return map.get(key);
 	}
 
 	public V remove(K key) {
+		if (this.map == null)
+			return null;
 		return map.remove(key);
 	}
 
