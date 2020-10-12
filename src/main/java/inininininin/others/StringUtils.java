@@ -101,16 +101,6 @@ public class StringUtils {
 		return new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + "1" + RandomStringUtils.randomNumeric(14);
 	}
 
-	public static String newIdOnSuffix(String suffix) {
-		return new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + "1"
-				+ RandomStringUtils.randomNumeric(14 - suffix.length()) + suffix;
-	}
-
-	public static String newIdOnPrefix(String prefix) {
-		return prefix + new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + "1"
-				+ RandomStringUtils.randomNumeric(14 - prefix.length());
-	}
-
 	public static boolean isEmpty(CharSequence cs) {
 		return org.apache.commons.lang3.StringUtils.isEmpty(cs);
 	}
