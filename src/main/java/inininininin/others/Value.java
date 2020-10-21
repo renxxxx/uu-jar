@@ -780,13 +780,6 @@ public class Value {
 		try {
 			date = new SimpleDateFormat(datePattern2).parse(value.toString());
 			if (date != null) {
-				Calendar calendar = Calendar.getInstance();
-				calendar.setTime(date);
-				calendar.set(Calendar.HOUR_OF_DAY, 23);
-				calendar.set(Calendar.MINUTE, 59);
-				calendar.set(Calendar.SECOND, 59);
-				calendar.set(Calendar.MILLISECOND, 999);
-				date = calendar.getTime();
 				return date;
 			}
 		} catch (Exception e) {
