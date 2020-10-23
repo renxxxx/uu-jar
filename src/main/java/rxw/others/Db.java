@@ -7,8 +7,8 @@ import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
 
-public class Database {
-	private static Logger logger = Logger.getLogger(Database.class);
+public class Db {
+	private static Logger logger = Logger.getLogger(Db.class);
 
 	public DataSource dataSource;
 	public String driver;
@@ -59,46 +59,6 @@ public class Database {
 			rollback(conn);
 			conn.close();
 		}
-	}
-
-	public DataSource getDataSource() {
-		return dataSource;
-	}
-
-	public void setDataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
-	}
-
-	public String getDriver() {
-		return driver;
-	}
-
-	public void setDriver(String driver) {
-		this.driver = driver;
-	}
-
-	public String getUrl() {
-		return url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	public static void main(String[] args) throws Exception {

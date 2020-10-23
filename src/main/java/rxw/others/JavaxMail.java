@@ -9,33 +9,27 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 public class JavaxMail {
-	
+
 	public static void main(String[] args) throws Exception {
-		JavaxMail j = new JavaxMail().start("smtp.qq.com", 25, "smtp", "true", "413038044@qq.com", "euhiglgjaxribjch",
-				"413038044@qq.com");
+		JavaxMail j = new JavaxMail();
+		j.host = "smtp.qq.com";
+		j.port = 25;
+		j.protocol = "smtp";
+		j.smtpAuth = "true";
+		j.user = "413038044@qq.com";
+		j.pwd = "euhiglgjaxribjch";
+		j.sender = "413038044@qq.com";
 
 		j.send("413038044@qq.com", "aq123123d", "qqqq");
 	}
 
-	private String host;
-	private Integer port;
-	private String protocol;
-	private String smtpAuth;
-	private String user;
-	private String pwd;
-	private String sender;
-	
-	public JavaxMail start(String host, Integer port, String protocol, String smtpAuth, String user, String pwd,
-			String sender) {
-		this.host = host;
-		this.port = port;
-		this.protocol = protocol;
-		this.smtpAuth = smtpAuth;
-		this.user = user;
-		this.pwd = pwd;
-		this.sender = sender;
-		return this;
-	}
+	public String host;
+	public Integer port;
+	public String protocol;
+	public String smtpAuth;
+	public String user;
+	public String pwd;
+	public String sender;
 
 	public Message send(String receiver, String subject, String content) throws Exception {
 		Properties prop = new Properties();
