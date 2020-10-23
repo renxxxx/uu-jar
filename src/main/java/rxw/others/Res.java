@@ -1,6 +1,6 @@
 package rxw.others;
 
-public class Response extends RuntimeException {
+public class Res extends RuntimeException {
 
 	protected int code;
 	protected String errParam = null;
@@ -12,95 +12,95 @@ public class Response extends RuntimeException {
 	protected String codeMsgCn = null;
 	protected String debug = null;
 
-	public static Response success() {
+	public static Res success() {
 		return success(null, null);
 	}
 
-	public static Response success(String codeMsg) {
+	public static Res success(String codeMsg) {
 		return success(codeMsg, null);
 	}
 
-	public static Response success(Object data) {
+	public static Res success(Object data) {
 		return success(null, data);
 	}
 
-	public static Response success(String codeMsg, Object data) {
-		Response response = new Response(0 + " : " + codeMsg);
+	public static Res success(String codeMsg, Object data) {
+		Res response = new Res(0 + " : " + codeMsg);
 		response.code = 0;
 		response.codeMsg = codeMsg;
 		response.data = data;
 		return response;
 	}
 
-	public static Response failure() {
+	public static Res failure() {
 		return failure(null, null);
 	}
 
-	public static Response failure(String codeMsg) {
+	public static Res failure(String codeMsg) {
 		return failure(codeMsg, null);
 	}
 
-	public static Response failure(Object data) {
+	public static Res failure(Object data) {
 		return failure(null, data);
 	}
 
-	public static Response failure(String codeMsg, Object data) {
-		Response response = new Response(99 + " : " + codeMsg);
+	public static Res failure(String codeMsg, Object data) {
+		Res response = new Res(99 + " : " + codeMsg);
 		response.code = 99;
 		response.codeMsg = codeMsg;
 		response.data = data;
 		return response;
 	}
 
-	public static Response go(int code) {
-		Response response = new Response(code + "");
+	public static Res go(int code) {
+		Res response = new Res(code + "");
 		response.code = code;
 		return response;
 	}
 
-	public static Response go(int code, String codeMsg, Object data) {
-		Response response = new Response(code + " : " + codeMsg);
+	public static Res go(int code, String codeMsg, Object data) {
+		Res response = new Res(code + " : " + codeMsg);
 		response.code = code;
 		response.codeMsg = codeMsg;
 		response.data = data;
 		return response;
 	}
 
-	public static Response go(int code, String codeMsg) {
-		Response response = new Response(code + " : " + codeMsg);
+	public static Res go(int code, String codeMsg) {
+		Res response = new Res(code + " : " + codeMsg);
 		response.code = code;
 		response.codeMsg = codeMsg;
 		return response;
 	}
 
-	public static Response go(int code, Object data) {
-		Response response = new Response(code + "");
+	public static Res go(int code, Object data) {
+		Res response = new Res(code + "");
 		response.code = code;
 		response.data = data;
 		return response;
 	}
 
-	public Response() {
+	public Res() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Response(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+	public Res(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
 		// TODO Auto-generated constructor stub
 	}
 
-	public Response(String message, Throwable cause) {
+	public Res(String message, Throwable cause) {
 		super(message, cause);
 		// TODO Auto-generated constructor stub
 	}
 
-	public Response(String message) {
+	public Res(String message) {
 		super(message);
 		// TODO Auto-generated constructor stub
 	}
 
-	public Response(Throwable cause) {
+	public Res(Throwable cause) {
 		super(cause);
 		// TODO Auto-generated constructor stub
 	}
@@ -109,17 +109,17 @@ public class Response extends RuntimeException {
 		return codeMsg;
 	}
 
-	public Response setCodeMsg(String codeMsg) {
+	public Res setCodeMsg(String codeMsg) {
 		this.codeMsg = codeMsg;
 		return this;
 	}
 
-	public Response setCodeMsgCn(String codeMsgCn) {
+	public Res setCodeMsgCn(String codeMsgCn) {
 		this.codeMsgCn = codeMsgCn;
 		return this;
 	}
 
-	public Response setCodeMsgEn(String codeMsgEn) {
+	public Res setCodeMsgEn(String codeMsgEn) {
 		this.codeMsgEn = codeMsgEn;
 		return this;
 	}
@@ -136,12 +136,12 @@ public class Response extends RuntimeException {
 		return debug;
 	}
 
-	public Response setDebug(String debug) {
+	public Res setDebug(String debug) {
 		this.debug = debug;
 		return this;
 	}
 
-	public Response setErrParam(String errParam) {
+	public Res setErrParam(String errParam) {
 		this.errParam = errParam;
 		return this;
 	}
@@ -150,17 +150,17 @@ public class Response extends RuntimeException {
 		return errValue;
 	}
 
-	public Response setErrValue(String errValue) {
+	public Res setErrValue(String errValue) {
 		this.errValue = errValue;
 		return this;
 	}
 
-	public Response setCode(int code) {
+	public Res setCode(int code) {
 		this.code = code;
 		return this;
 	}
 
-	public Response setData(Object data) {
+	public Res setData(Object data) {
 		this.data = data;
 		return this;
 	}
@@ -181,7 +181,7 @@ public class Response extends RuntimeException {
 		return requestId;
 	}
 
-	public Response setRequestId(String requestId) {
+	public Res setRequestId(String requestId) {
 		this.requestId = requestId;
 		return this;
 	}
