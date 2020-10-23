@@ -1,4 +1,4 @@
-package inininininin.others;
+package rxw.others;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;

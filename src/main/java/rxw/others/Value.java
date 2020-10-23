@@ -1,4 +1,4 @@
-package inininininin.others;
+package rxw.others;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
@@ -373,7 +373,7 @@ public class Value {
 	public Value vEnum(String... values) {
 		if (!this.go)
 			return this;
-		boolean v = inininininin.others.StringUtils.equalsAny(this.value, values);
+		boolean v = rxw.others.StringUtils.equalsAny(this.value, values);
 		if (!v)
 			throw Response.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code).setErrParam(this.value);
 		else

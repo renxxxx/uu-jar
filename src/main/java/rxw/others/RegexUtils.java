@@ -1,4 +1,4 @@
-package inininininin.others;
+package rxw.others;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

@@ -1,4 +1,4 @@
-package inininininin.others;
+package rxw.others;
 
 public class Response extends RuntimeException {
 

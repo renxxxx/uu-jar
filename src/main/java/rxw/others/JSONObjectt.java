@@ -1,4 +1,4 @@
-package inininininin.others;
+package rxw.others;
 
 import com.alibaba.fastjson.JSONObject;
 

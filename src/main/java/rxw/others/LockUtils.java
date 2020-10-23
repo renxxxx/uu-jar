@@ -1,4 +1,4 @@
-package inininininin.others;
+package rxw.others;
 
 import java.sql.SQLException;
 import java.util.Collections;
