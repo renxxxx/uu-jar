@@ -25,7 +25,7 @@ public class JdbcUtils {
 		System.out.println(123123123);
 	}
 
-	public static List<Map> queryList(Connection conn, String sql, Object... sqlParams) throws Exception {
+	public static List<Map> queryList(Connection conn, String sql, Object[] sqlParams) throws Exception {
 		logger.debug("in " + RandomStringUtils.randomNumeric(5));
 		PreparedStatement pst = null;
 		try {
@@ -40,7 +40,7 @@ public class JdbcUtils {
 		}
 	}
 
-	public static List<Object> queryThinList(Connection conn, String sql, Object... sqlParams) throws Exception {
+	public static List<Object> queryThinList(Connection conn, String sql, Object[] sqlParams) throws Exception {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
@@ -53,7 +53,7 @@ public class JdbcUtils {
 		}
 	}
 
-	public static InputStream queryStream(Connection conn, String sql, Object... sqlParams) throws Exception {
+	public static InputStream queryStream(Connection conn, String sql, Object[] sqlParams) throws Exception {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
@@ -70,38 +70,38 @@ public class JdbcUtils {
 		}
 	}
 
-	public static Integer queryInteger(Connection conn, String sql, Object... sqlParams) throws Exception {
+	public static Integer queryInteger(Connection conn, String sql, Object[] sqlParams) throws Exception {
 		return Value.toInteger(queryColumn(conn, sql, sqlParams));
 	}
 
-	public static String queryString(Connection conn, String sql, Object... sqlParams) throws Exception {
+	public static String queryString(Connection conn, String sql, Object[] sqlParams) throws Exception {
 		return Value.toString(queryColumn(conn, sql, sqlParams));
 	}
 
-	public static BigDecimal queryBigDecimal(Connection conn, String sql, Object... sqlParams) throws Exception {
+	public static BigDecimal queryBigDecimal(Connection conn, String sql, Object[] sqlParams) throws Exception {
 		return Value.toBigDecimal(queryColumn(conn, sql, sqlParams));
 	}
 
-	public static Long queryLong(Connection conn, String sql, Object... sqlParams) throws Exception {
+	public static Long queryLong(Connection conn, String sql, Object[] sqlParams) throws Exception {
 		return Value.toLong(queryColumn(conn, sql, sqlParams));
 	}
 
-	public static Float queryFloat(Connection conn, String sql, Object... sqlParams) throws Exception {
+	public static Float queryFloat(Connection conn, String sql, Object[] sqlParams) throws Exception {
 		return Value.toFloat(queryColumn(conn, sql, sqlParams));
 	}
 
-	public static Date queryDate(Connection conn, String sql, Object... sqlParams) throws Exception {
+	public static Date queryDate(Connection conn, String sql, Object[] sqlParams) throws Exception {
 		return Value.toDate(queryColumn(conn, sql, sqlParams));
 	}
 
-	public static Object queryColumn(Connection conn, String sql, Object... sqlParams) throws Exception {
+	public static Object queryColumn(Connection conn, String sql, Object[] sqlParams) throws Exception {
 		Mapp row = query(conn, sql, sqlParams);
 		if (row.map == null)
 			return null;
 		return row.get(row.keySet().iterator().next());
 	}
 
-//	public static Map query(Connection conn, String sql, Object... sqlParams) throws Exception {
+//	public static Map query(Connection conn, String sql, Object[] sqlParams) throws Exception {
 //		logger.debug("in " + RandomStringUtils.randomNumeric(5));
 //		PreparedStatement pst = null;
 //		try {
@@ -119,7 +119,7 @@ public class JdbcUtils {
 //		}
 //	}
 
-	public static Mapp query(Connection conn, String sql, Object... sqlParams) throws Exception {
+	public static Mapp query(Connection conn, String sql, Object[] sqlParams) throws Exception {
 		logger.debug("in " + RandomStringUtils.randomNumeric(5));
 		Map item = null;
 		List<Map> itemList = queryList(conn, sql, sqlParams);
@@ -130,7 +130,7 @@ public class JdbcUtils {
 		return Mapp.instance(item);
 	}
 
-	public static ResultSet query(PreparedStatement pst, String sql, Object... sqlParams) throws SQLException {
+	public static ResultSet query(PreparedStatement pst, String sql, Object[] sqlParams) throws SQLException {
 		if (sqlParams == null)
 			sqlParams = new Object[] {};
 		logger.debug(sql);
@@ -157,7 +157,7 @@ public class JdbcUtils {
 //		return new StringBuilder("%").append(columnValue).append("%").toString();
 //	}
 
-	public static int update(Connection conn, String sql, Object... sqlParams) throws Exception {
+	public static int update(Connection conn, String sql, Object[] sqlParams) throws Exception {
 		logger.debug("in " + RandomStringUtils.randomNumeric(5));
 		PreparedStatement pst = null;
 		try {
@@ -173,7 +173,7 @@ public class JdbcUtils {
 
 	}
 
-	public static int updateGentle(Connection conn, String sql, Object... sqlParams) throws Exception {
+	public static int updateGentle(Connection conn, String sql, Object[] sqlParams) throws Exception {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
@@ -187,7 +187,7 @@ public class JdbcUtils {
 		}
 	}
 
-	public static int update(PreparedStatement pst, String sql, Object... sqlParams) throws Exception {
+	public static int update(PreparedStatement pst, String sql, Object[] sqlParams) throws Exception {
 		if (sqlParams == null)
 			sqlParams = new Object[] {};
 		logger.debug(sql);
@@ -212,7 +212,7 @@ public class JdbcUtils {
 		return sqlN;
 	}
 
-//	public static Integer runInsertOneGenKey(Connection conn, String sql, Object... sqlParams) throws Exception {
+//	public static Integer runInsertOneGenKey(Connection conn, String sql, Object[] sqlParams) throws Exception {
 //		PreparedStatement pst = null;
 //		try {
 //			pst = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -247,7 +247,7 @@ public class JdbcUtils {
 //		return keys;
 //	}
 
-	public static int[] batch(Connection conn, String sql, Object... sqlParamBatches) throws Exception {
+	public static int[] batch(Connection conn, String sql, Object[] sqlParamBatches) throws Exception {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
@@ -260,7 +260,7 @@ public class JdbcUtils {
 		}
 	}
 
-	public static int[] batch(PreparedStatement pst, String sql, Object... sqlParamBatches) throws Exception {
+	public static int[] batch(PreparedStatement pst, String sql, Object[] sqlParamBatches) throws Exception {
 		if (sqlParamBatches == null)
 			sqlParamBatches = new Object[] {};
 		logger.debug(sql);
