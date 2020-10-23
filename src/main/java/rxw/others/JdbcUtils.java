@@ -25,12 +25,12 @@ public class JdbcUtils {
 		System.out.println(123123123);
 	}
 
-	public static List<Map> queryList(Connection conn, String sql, Object[] sqlParams) throws Exception {
+	public static List<Map> queryList(Connection conn, String sql, Object... params) throws Exception {
 		logger.debug("in " + RandomStringUtils.randomNumeric(5));
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
-			return parseResultSetOfList(query(pst, sql, sqlParams));
+			return parseResultSetOfList(query(pst, sql, params));
 		} catch (Exception e) {
 			throw e;
 		} finally {
@@ -40,11 +40,11 @@ public class JdbcUtils {
 		}
 	}
 
-	public static List<Object> queryThinList(Connection conn, String sql, Object[] sqlParams) throws Exception {
+	public static List<Object> queryThinList(Connection conn, String sql, Object... params) throws Exception {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
-			return parseResultSetOfThinList(query(pst, sql, sqlParams));
+			return parseResultSetOfThinList(query(pst, sql, params));
 		} catch (Exception e) {
 			throw e;
 		} finally {
@@ -53,11 +53,11 @@ public class JdbcUtils {
 		}
 	}
 
-	public static InputStream queryStream(Connection conn, String sql, Object[] sqlParams) throws Exception {
+	public static InputStream queryStream(Connection conn, String sql, Object... params) throws Exception {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
-			ResultSet rs = query(pst, sql, sqlParams);
+			ResultSet rs = query(pst, sql, params);
 			if (rs.next()) {
 				return rs.getBinaryStream(1);
 			}
@@ -70,43 +70,43 @@ public class JdbcUtils {
 		}
 	}
 
-	public static Integer queryInteger(Connection conn, String sql, Object[] sqlParams) throws Exception {
-		return Value.toInteger(queryColumn(conn, sql, sqlParams));
+	public static Integer queryInteger(Connection conn, String sql, Object... params) throws Exception {
+		return Value.toInteger(queryColumn(conn, sql, params));
 	}
 
-	public static String queryString(Connection conn, String sql, Object[] sqlParams) throws Exception {
-		return Value.toString(queryColumn(conn, sql, sqlParams));
+	public static String queryString(Connection conn, String sql, Object... params) throws Exception {
+		return Value.toString(queryColumn(conn, sql, params));
 	}
 
-	public static BigDecimal queryBigDecimal(Connection conn, String sql, Object[] sqlParams) throws Exception {
-		return Value.toBigDecimal(queryColumn(conn, sql, sqlParams));
+	public static BigDecimal queryBigDecimal(Connection conn, String sql, Object... params) throws Exception {
+		return Value.toBigDecimal(queryColumn(conn, sql, params));
 	}
 
-	public static Long queryLong(Connection conn, String sql, Object[] sqlParams) throws Exception {
-		return Value.toLong(queryColumn(conn, sql, sqlParams));
+	public static Long queryLong(Connection conn, String sql, Object... params) throws Exception {
+		return Value.toLong(queryColumn(conn, sql, params));
 	}
 
-	public static Float queryFloat(Connection conn, String sql, Object[] sqlParams) throws Exception {
-		return Value.toFloat(queryColumn(conn, sql, sqlParams));
+	public static Float queryFloat(Connection conn, String sql, Object... params) throws Exception {
+		return Value.toFloat(queryColumn(conn, sql, params));
 	}
 
-	public static Date queryDate(Connection conn, String sql, Object[] sqlParams) throws Exception {
-		return Value.toDate(queryColumn(conn, sql, sqlParams));
+	public static Date queryDate(Connection conn, String sql, Object... params) throws Exception {
+		return Value.toDate(queryColumn(conn, sql, params));
 	}
 
-	public static Object queryColumn(Connection conn, String sql, Object[] sqlParams) throws Exception {
-		Mapp row = query(conn, sql, sqlParams);
+	public static Object queryColumn(Connection conn, String sql, Object... params) throws Exception {
+		Mapp row = query(conn, sql, params);
 		if (row.map == null)
 			return null;
 		return row.get(row.keySet().iterator().next());
 	}
 
-//	public static Map query(Connection conn, String sql, Object[] sqlParams) throws Exception {
+//	public static Map query(Connection conn, String sql, Object... params) throws Exception {
 //		logger.debug("in " + RandomStringUtils.randomNumeric(5));
 //		PreparedStatement pst = null;
 //		try {
 //			pst = conn.prepareStatement(sql);
-//			List<Map> list = parseResultSetOfList(query(pst, sql, sqlParams));
+//			List<Map> list = parseResultSetOfList(query(pst, sql, params));
 //			if (list == null || list.isEmpty())
 //				return null;
 //			return list.get(0);
@@ -119,10 +119,10 @@ public class JdbcUtils {
 //		}
 //	}
 
-	public static Mapp query(Connection conn, String sql, Object[] sqlParams) throws Exception {
+	public static Mapp query(Connection conn, String sql, Object... params) throws Exception {
 		logger.debug("in " + RandomStringUtils.randomNumeric(5));
 		Map item = null;
-		List<Map> itemList = queryList(conn, sql, sqlParams);
+		List<Map> itemList = queryList(conn, sql, params);
 		if (itemList != null && itemList.size() > 0) {
 			item = itemList.get(0);
 		}
@@ -130,14 +130,14 @@ public class JdbcUtils {
 		return Mapp.instance(item);
 	}
 
-	public static ResultSet query(PreparedStatement pst, String sql, Object[] sqlParams) throws SQLException {
-		if (sqlParams == null)
-			sqlParams = new Object[] {};
+	public static ResultSet query(PreparedStatement pst, String sql, Object... params) throws SQLException {
+		if (params == null)
+			params = new Object[] {};
 		logger.debug(sql);
-		logger.debug(Arrays.toString(sqlParams));
+		logger.debug(Arrays.toString(params));
 		try {
-			for (int i = 0; i < sqlParams.length; i++) {
-				Object sqlParam = sqlParams[i];
+			for (int i = 0; i < params.length; i++) {
+				Object sqlParam = params[i];
 				if (sqlParam instanceof Value) {
 					sqlParam = ((Value) sqlParam).val();
 				}
@@ -157,12 +157,12 @@ public class JdbcUtils {
 //		return new StringBuilder("%").append(columnValue).append("%").toString();
 //	}
 
-	public static int update(Connection conn, String sql, Object[] sqlParams) throws Exception {
+	public static int update(Connection conn, String sql, Object... params) throws Exception {
 		logger.debug("in " + RandomStringUtils.randomNumeric(5));
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
-			return update(pst, sql, sqlParams);
+			return update(pst, sql, params);
 		} catch (Exception e) {
 			throw e;
 		} finally {
@@ -173,11 +173,11 @@ public class JdbcUtils {
 
 	}
 
-	public static int updateGentle(Connection conn, String sql, Object[] sqlParams) throws Exception {
+	public static int updateGentle(Connection conn, String sql, Object... params) throws Exception {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
-			return update(pst, sql, sqlParams);
+			return update(pst, sql, params);
 		} catch (Exception e) {
 			logger.debug(ExceptionUtils.getStackTrace(e));
 			return 0;
@@ -187,15 +187,15 @@ public class JdbcUtils {
 		}
 	}
 
-	public static int update(PreparedStatement pst, String sql, Object[] sqlParams) throws Exception {
-		if (sqlParams == null)
-			sqlParams = new Object[] {};
+	public static int update(PreparedStatement pst, String sql, Object... params) throws Exception {
+		if (params == null)
+			params = new Object[] {};
 		logger.debug(sql);
-		logger.debug(Arrays.toString(sqlParams));
+		logger.debug(Arrays.toString(params));
 		int sqlN = 0;
 		try {
-			for (int i = 0; i < sqlParams.length; i++) {
-				Object sqlParam = sqlParams[i];
+			for (int i = 0; i < params.length; i++) {
+				Object sqlParam = params[i];
 				if (sqlParam instanceof Value) {
 					sqlParam = ((Value) sqlParam).val();
 				}
@@ -212,11 +212,11 @@ public class JdbcUtils {
 		return sqlN;
 	}
 
-//	public static Integer runInsertOneGenKey(Connection conn, String sql, Object[] sqlParams) throws Exception {
+//	public static Integer runInsertOneGenKey(Connection conn, String sql, Object... params) throws Exception {
 //		PreparedStatement pst = null;
 //		try {
 //			pst = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-//			update(pst, sql, sqlParams);
+//			update(pst, sql, params);
 //			return returnGeneratedKey(pst);
 //		} catch (Exception e) {
 //			throw e;
@@ -247,7 +247,7 @@ public class JdbcUtils {
 //		return keys;
 //	}
 
-	public static int[] batch(Connection conn, String sql, Object[] sqlParamBatches) throws Exception {
+	public static int[] batch(Connection conn, String sql, Object... sqlParamBatches) throws Exception {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
@@ -260,7 +260,7 @@ public class JdbcUtils {
 		}
 	}
 
-	public static int[] batch(PreparedStatement pst, String sql, Object[] sqlParamBatches) throws Exception {
+	public static int[] batch(PreparedStatement pst, String sql, Object... sqlParamBatches) throws Exception {
 		if (sqlParamBatches == null)
 			sqlParamBatches = new Object[] {};
 		logger.debug(sql);
@@ -401,15 +401,15 @@ public class JdbcUtils {
 //		return sqlPart;
 //	}
 //
-//	public static String buildSql_sqlParamsplit(String... sqlParams) {
-//		if (sqlParams == null || sqlParams.length == 0)
+//	public static String buildSql_paramsplit(String... params) {
+//		if (params == null || params.length == 0)
 //			return "";
 //		String sqlPart = "  ";
-//		for (int i = 0; i < sqlParams.length; i++) {
+//		for (int i = 0; i < params.length; i++) {
 //			if (i == 0)
-//				sqlPart += "'" + sqlParams[i] + "'";
+//				sqlPart += "'" + params[i] + "'";
 //			else
-//				sqlPart += " , '" + sqlParams[i] + "'";
+//				sqlPart += " , '" + params[i] + "'";
 //		}
 //		sqlPart += " ";
 //		return sqlPart;
@@ -466,12 +466,12 @@ public class JdbcUtils {
 //		return sqlB.toString();
 //	}
 
-//	public static List addsqlParams(List sqlParams, String insSplit) {
+//	public static List addparams(List params, String insSplit) {
 //		if (insSplit == null)
-//			return sqlParams;
+//			return params;
 //		String[] ss = insSplit.split(",");
-//		sqlParams.addAll(Arrays.asList(ss));
-//		return sqlParams;
+//		params.addAll(Arrays.asList(ss));
+//		return params;
 //	}
 
 //	public static String buildConditional(String andOr, String column, String columnEq, String insSplit) {
