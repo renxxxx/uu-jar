@@ -63,37 +63,37 @@ public class Mapp<K, V> {
 	public String getString(K key) {
 		if (map == null)
 			return null;
-		return Value.toString(map.get(key));
+		return Var.toString(map.get(key));
 	}
 
 	public Integer getInteger(K key) {
 		if (map == null)
 			return null;
-		return Value.toInteger(map.get(key));
+		return Var.toInteger(map.get(key));
 	}
 
 	public Long getLong(K key) {
 		if (map == null)
 			return null;
-		return Value.toLong(map.get(key));
+		return Var.toLong(map.get(key));
 	}
 
 	public BigDecimal getDecimal(K key) {
 		if (map == null)
 			return null;
-		return Value.toBigDecimal(map.get(key));
+		return Var.toBigDecimal(map.get(key));
 	}
 
 	public Float getFloat(K key) {
 		if (map == null)
 			return null;
-		return Value.toFloat(map.get(key));
+		return Var.toFloat(map.get(key));
 	}
 
 	public Date getDate(K key) {
 		if (map == null)
 			return null;
-		return Value.toDate(map.get(key));
+		return Var.toDate(map.get(key));
 	}
 
 }

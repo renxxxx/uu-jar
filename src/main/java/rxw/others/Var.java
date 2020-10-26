@@ -17,30 +17,26 @@ import org.apache.log4j.Logger;
 
 import com.alibaba.fastjson.JSONObject;
 
-public class Value {
-	private static Logger logger = Logger.getLogger(Value.class);
+public class Var {
+	private static Logger logger = Logger.getLogger(Var.class);
 
-	private String name;
-	private String code;
-	private String value;
-	private String separator = ",";
+	public String name;
+	public String code;
+	public String value;
+	public String separator = ",";
 	public static String datePattern = "yyyy-MM-dd HH:mm:ss.SSS Z";
 	public static String datePattern1 = "yyyy-MM-dd HH:mm:ss";
 	public static String datePattern2 = "yyyy-MM-dd";
 	public static String datePattern3 = "HH:mm:ss";
 	public static String datePattern4 = "yyyy-MM-dd HH:mm:ss.SSS";
 	boolean go = true;
-	private Integer integerValue;
-	private Float floatValue;
-	private Double doubleValue;
-	private Long longValue;
-	private BigDecimal decimalValue;
-	private Date dateValue;
-	private String[] splitArrValue;
-
-	private Value() {
-
-	}
+	public Integer integerValue;
+	public Float floatValue;
+	public Double doubleValue;
+	public Long longValue;
+	public BigDecimal decimalValue;
+	public Date dateValue;
+	public String[] splitArrValue;
 
 	public static CacheMap.Ccc<String, Pattern> regexCache = new CacheMap.Ccc<String, Pattern>() {
 		@Override
@@ -49,7 +45,7 @@ public class Value {
 		}
 	};
 
-	public Value clear() {
+	public Var clear() {
 		this.splitArrValue = null;
 		this.dateValue = null;
 		this.integerValue = null;
@@ -59,26 +55,25 @@ public class Value {
 		return this;
 	}
 
-	public static Value build(String name, String code, String... values) {
-		Value param = new Value();
-		param.name = name;
-		param.code = code;
+	public static Var build(String name, String code, String... values) {
+		Var var = new Var();
+		var.name = name;
+		var.code = code;
 		if (values != null)
 			for (String value : values) {
 				if (value != null) {
-					param.value = value;
+					var.value = value;
 					break;
 				}
 			}
 
-		if (param.value != null && !param.value.isEmpty()
-				&& param.value.matches(".*<(s|S)(c|C)(r|R)(i|I)(p|P)(t|T)>.*"))
-			throw Res.go(1001, "\"" + param.name + "\"有误").setErrParam(param.code).setErrValue(param.value);
+		if (var.value != null && !var.value.isEmpty() && var.value.matches(".*<(s|S)(c|C)(r|R)(i|I)(p|P)(t|T)>.*"))
+			throw Res.go(1001, "\"" + var.name + "\"有误").setErrParam(var.code);
 
-		return param;
+		return var;
 	}
 
-	public Value suffix(String suffix) {
+	public Var suffix(String suffix) {
 		if (!this.go)
 			return this;
 		if (this.value != null)
@@ -86,7 +81,7 @@ public class Value {
 		return this;
 	}
 
-	public Value prefix(String prefix) {
+	public Var prefix(String prefix) {
 		if (!this.go)
 			return this;
 		if (this.value != null)
@@ -94,14 +89,14 @@ public class Value {
 		return this;
 	}
 
-	public Value trim() {
+	public Var trim() {
 		if (!this.go)
 			return this;
 		this.value = this.value == null ? null : this.value.trim();
 		return this;
 	}
 
-	public Value trimToNull() {
+	public Var trimToNull() {
 		if (!this.go)
 			return this;
 		if (this.value != null && this.value.trim().isEmpty())
@@ -109,7 +104,7 @@ public class Value {
 		return this;
 	}
 
-	public Value trimToBlank() {
+	public Var trimToBlank() {
 		if (!this.go)
 			return this;
 		if (this.value == null)
@@ -118,26 +113,26 @@ public class Value {
 		return this;
 	}
 
-	public Value trimLeft() {
+	public Var trimLeft() {
 		if (!this.go)
 			return this;
 		this.value = this.value == null ? null : this.value.trim();
 		return this;
 	}
 
-	public Value trimRight() {
+	public Var trimRight() {
 		if (!this.go)
 			return this;
 		this.value = this.value == null ? null : this.value.trim();
 		return this;
 	}
 
-	public Value setSeparator(String separator) {
+	public Var setSeparator(String separator) {
 		this.separator = separator;
 		return this;
 	}
 
-	public Value nullDef(String defaultValue) {
+	public Var nullDef(String defaultValue) {
 		if (!this.go)
 			return this;
 		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
@@ -146,7 +141,7 @@ public class Value {
 		return this;
 	}
 
-	public Value nullDef(boolean go, String defaultValue) {
+	public Var nullDef(boolean go, String defaultValue) {
 		if (!this.go)
 			return this;
 		if (go)
@@ -154,7 +149,7 @@ public class Value {
 		return this;
 	}
 
-	public Value blankDef(String defaultValue) {
+	public Var blankDef(String defaultValue) {
 		if (!this.go)
 			return this;
 		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
@@ -163,7 +158,7 @@ public class Value {
 		return this;
 	}
 
-	public Value blankDef(boolean go, String defaultValue) {
+	public Var blankDef(boolean go, String defaultValue) {
 		if (!this.go)
 			return this;
 		if (go)
@@ -171,7 +166,7 @@ public class Value {
 		return this;
 	}
 
-	public Value emptyDef(String defaultValue) {
+	public Var emptyDef(String defaultValue) {
 		if (!this.go)
 			return this;
 		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
@@ -180,7 +175,7 @@ public class Value {
 		return this;
 	}
 
-	public Value emptyDef(boolean go, String defaultValue) {
+	public Var emptyDef(boolean go, String defaultValue) {
 		if (!this.go)
 			return this;
 		if (go)
@@ -188,26 +183,26 @@ public class Value {
 		return this;
 	}
 
-	public Value stop() {
+	public Var stop() {
 		this.go = false;
 		return this;
 	}
 
-	public Value stop(boolean go) {
+	public Var stop(boolean go) {
 		if (go)
 			this.go = false;
 		return this;
 	}
 
-	public Value vNull() {
+	public Var vNull() {
 		if (!this.go)
 			return this;
 		if (this.value == null)
-			throw Res.go(1001, "\"" + this.name + "\"不能空").setErrParam(this.code).setErrParam(this.value);
+			throw Res.go(1001, "\"" + this.name + "\"不能空").setErrParam(this.code);
 		return this;
 	}
 
-	public Value vNull(boolean go) {
+	public Var vNull(boolean go) {
 		if (!this.go)
 			return this;
 		if (go)
@@ -215,15 +210,15 @@ public class Value {
 		return this;
 	}
 
-	public Value vEmpty() {
+	public Var vEmpty() {
 		if (!this.go)
 			return this;
 		if ((this.value == null || this.value.isEmpty()))
-			throw Res.go(1001, "\"" + this.name + "\"不能空").setErrParam(this.code).setErrParam(this.value);
+			throw Res.go(1001, "\"" + this.name + "\"不能空").setErrParam(this.code);
 		return this;
 	}
 
-	public Value vEmpty(boolean go) {
+	public Var vEmpty(boolean go) {
 		if (!this.go)
 			return this;
 		if (go)
@@ -231,15 +226,15 @@ public class Value {
 		return this;
 	}
 
-	public Value vBlank() {
+	public Var vBlank() {
 		if (!this.go)
 			return this;
 		if ((this.value != null && this.value.isEmpty()))
-			throw Res.go(1001, "\"" + this.name + "\"不能空").setErrParam(this.code).setErrParam(this.value);
+			throw Res.go(1001, "\"" + this.name + "\"不能空").setErrParam(this.code);
 		return this;
 	}
 
-	public Value vBlank(boolean go) {
+	public Var vBlank(boolean go) {
 		if (!this.go)
 			return this;
 		if (go)
@@ -247,16 +242,16 @@ public class Value {
 		return this;
 	}
 
-	public Value vLen(int length) {
+	public Var vLen(int length) {
 		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() != length) {
-			throw Res.go(1001, "\"" + this.name + "\"长度只能是" + length).setErrParam(this.code).setErrParam(this.value);
+			throw Res.go(1001, "\"" + this.name + "\"长度只能是" + length).setErrParam(this.code);
 		}
 		return this;
 	}
 
-	public Value vLen(boolean go, int length) {
+	public Var vLen(boolean go, int length) {
 		if (!this.go)
 			return this;
 		if (go)
@@ -264,16 +259,16 @@ public class Value {
 		return this;
 	}
 
-	public Value vMinLen(int length) {
+	public Var vMinLen(int length) {
 		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() < length) {
-			throw Res.go(1001, "\"" + this.name + "\"长度最低" + length).setErrParam(this.code).setErrParam(this.value);
+			throw Res.go(1001, "\"" + this.name + "\"长度最低" + length).setErrParam(this.code);
 		}
 		return this;
 	}
 
-	public Value vMinLen(boolean go, int length) {
+	public Var vMinLen(boolean go, int length) {
 		if (!this.go)
 			return this;
 		if (go)
@@ -281,16 +276,16 @@ public class Value {
 		return this;
 	}
 
-	public Value vMaxLen(int length) {
+	public Var vMaxLen(int length) {
 		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() > length) {
-			throw Res.go(1001, "\"" + this.name + "\"长度最大" + length).setErrParam(this.code).setErrParam(this.value);
+			throw Res.go(1001, "\"" + this.name + "\"长度最大" + length).setErrParam(this.code);
 		}
 		return this;
 	}
 
-	public Value vMaxLen(boolean go, int length) {
+	public Var vMaxLen(boolean go, int length) {
 		if (!this.go)
 			return this;
 		if (go)
@@ -298,16 +293,16 @@ public class Value {
 		return this;
 	}
 
-	public Value vMaxNum(float maxnum) {
+	public Var vMaxNum(float maxnum) {
 		if (!this.go)
 			return this;
 		if (!isEmpty() && toFloat() > maxnum) {
-			throw Res.go(1001, "\"" + this.name + "\"最大" + maxnum).setErrParam(this.code).setErrParam(this.value);
+			throw Res.go(1001, "\"" + this.name + "\"最大" + maxnum).setErrParam(this.code);
 		}
 		return this;
 	}
 
-	public Value vMaxNum(boolean go, float maxnum) {
+	public Var vMaxNum(boolean go, float maxnum) {
 		if (!this.go)
 			return this;
 		if (go)
@@ -315,16 +310,16 @@ public class Value {
 		return this;
 	}
 
-	public Value vMinNum(float minnum) {
+	public Var vMinNum(float minnum) {
 		if (!this.go)
 			return this;
 		if (!isEmpty() && toFloat() < minnum) {
-			throw Res.go(1001, "\"" + this.name + "\"最小" + minnum).setErrParam(this.code).setErrParam(this.value);
+			throw Res.go(1001, "\"" + this.name + "\"最小" + minnum).setErrParam(this.code);
 		}
 		return this;
 	}
 
-	public Value vMinNum(boolean go, float minnum) {
+	public Var vMinNum(boolean go, float minnum) {
 		if (!this.go)
 			return this;
 		if (go)
@@ -332,17 +327,17 @@ public class Value {
 		return this;
 	}
 
-	public Value vMaxCount(int count) {
+	public Var vMaxCount(int count) {
 		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && this.toSplitArr() != null
 				&& this.toSplitArr().length > count) {
-			throw Res.go(1001, "\"" + this.name + "\"最多" + count + "个").setErrParam(this.code).setErrParam(this.value);
+			throw Res.go(1001, "\"" + this.name + "\"最多" + count + "个").setErrParam(this.code);
 		}
 		return this;
 	}
 
-	public Value vInteger() {
+	public Var vInteger() {
 		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
@@ -352,31 +347,31 @@ public class Value {
 
 			}
 			if (this.integerValue == null)
-				throw Res.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code).setErrParam(this.value);
+				throw Res.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code);
 		}
 		return this;
 	}
 
-	public Value vBoolean() {
+	public Var vBoolean() {
 		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && !"1".equals(this.value) && !"0".equals(this.value)) {
-			throw Res.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code).setErrParam(this.value);
+			throw Res.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code);
 		}
 		return this;
 	}
 
-	public Value vEnum(String... values) {
+	public Var vEnum(String... values) {
 		if (!this.go)
 			return this;
 		boolean v = rxw.others.StringUtils.equalsAny(this.value, values);
 		if (!v)
-			throw Res.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code).setErrParam(this.value);
+			throw Res.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code);
 		else
 			return this;
 	}
 
-	public Value vLong() {
+	public Var vLong() {
 		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
@@ -386,12 +381,12 @@ public class Value {
 
 			}
 			if (this.longValue == null)
-				throw Res.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code).setErrParam(this.value);
+				throw Res.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code);
 		}
 		return this;
 	}
 
-	public Value vDouble() {
+	public Var vDouble() {
 		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
@@ -401,12 +396,12 @@ public class Value {
 
 			}
 			if (this.doubleValue == null)
-				throw Res.go(1001, "\"" + this.name + "\"只能输入数字").setErrParam(this.code).setErrParam(this.value);
+				throw Res.go(1001, "\"" + this.name + "\"只能输入数字").setErrParam(this.code);
 		}
 		return this;
 	}
 
-	public Value vFloat() {
+	public Var vFloat() {
 		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
@@ -416,12 +411,12 @@ public class Value {
 
 			}
 			if (this.floatValue == null)
-				throw Res.go(1001, "\"" + this.name + "\"只能输入数字").setErrParam(this.code).setErrParam(this.value);
+				throw Res.go(1001, "\"" + this.name + "\"只能输入数字").setErrParam(this.code);
 		}
 		return this;
 	}
 
-	public Value vDecimal() {
+	public Var vDecimal() {
 		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
@@ -431,7 +426,7 @@ public class Value {
 
 			}
 			if (this.decimalValue == null)
-				throw Res.go(1001, "\"" + this.name + "\"只能输入数字").setErrParam(this.code).setErrParam(this.value);
+				throw Res.go(1001, "\"" + this.name + "\"只能输入数字").setErrParam(this.code);
 		}
 		return this;
 	}
@@ -454,7 +449,7 @@ public class Value {
 		return false;
 	}
 
-	public Value vLenRange(int min, int max) {
+	public Var vLenRange(int min, int max) {
 		if (!this.go)
 			return this;
 		vMinLen(min);
@@ -462,7 +457,7 @@ public class Value {
 		return this;
 	}
 
-	public Value vNumRange(float min, float max) {
+	public Var vNumRange(float min, float max) {
 		if (!this.go)
 			return this;
 		vMinNum(min);
@@ -470,80 +465,80 @@ public class Value {
 		return this;
 	}
 
-	public Value vReg(Pattern regex) {
+	public Var vReg(Pattern regex) {
 		if (!this.go)
 			return this;
 		return vReg(regex, null);
 	}
 
-	public Value vReg(Pattern regex, String note) {
+	public Var vReg(Pattern regex, String note) {
 		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null) {
 			if (!regex.matcher(this.value).matches())
 				throw Res.go(1001, "\"" + this.name + "\"有误" + (note == null || note.isEmpty() ? "" : ",要求：" + note))
-						.setErrParam(this.code).setErrParam(this.value);
+						.setErrParam(this.code);
 		}
 		return this;
 	}
 
-	public Value vRegNot(Pattern regex) {
+	public Var vRegNot(Pattern regex) {
 		if (!this.go)
 			return this;
 		return vRegNot(regex, null);
 	}
 
-	public Value vRegNot(Pattern regex, String note) {
+	public Var vRegNot(Pattern regex, String note) {
 		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null) {
 			if (regex.matcher(this.value).matches())
 				throw Res.go(1001, "\"" + this.name + "\"有误" + (note == null || note.isEmpty() ? "" : ",要求：" + note))
-						.setErrParam(this.code).setErrParam(this.value);
+						.setErrParam(this.code);
 		}
 		return this;
 	}
 
-	public Value vReg(String regex) {
+	public Var vReg(String regex) {
 		if (!this.go)
 			return this;
 		return vReg(regex, null);
 	}
 
-	public Value vReg(String regex, String note) {
+	public Var vReg(String regex, String note) {
 		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty()) {
 			if (!regexCache.getWithCreate(regex).matcher(this.value).matches())
 				throw Res.go(1001, "\"" + this.name + "\"有误" + (note == null || note.isEmpty() ? "" : ",要求：" + note))
-						.setErrParam(this.code).setErrParam(this.value);
+						.setErrParam(this.code);
 		}
 		return this;
 	}
 
-	public Value vRegNot(String regex) {
+	public Var vRegNot(String regex) {
 		if (!this.go)
 			return this;
 		return vRegNot(regex, null);
 	}
 
-	public Value vRegNot(String regex, String note) {
+	public Var vRegNot(String regex, String note) {
 		if (!this.go)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty()) {
 			if (regexCache.getWithCreate(regex).matcher(this.value).matches())
 				throw Res.go(1001, "\"" + this.name + "\"有误" + (note == null || note.isEmpty() ? "" : ",要求：" + note))
-						.setErrParam(this.code).setErrParam(this.value);
+						.setErrParam(this.code);
 		}
 		return this;
 	}
 
-	public Value vDate() {
+	public Var vDate() {
 		if (this.value == null || this.value.isEmpty())
 			return this;
 		toDate();
 		if (this.dateValue == null)
-			throw Res.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code).setErrParam(this.value);
+			throw Res.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code);
 		else {
 			this.value = new SimpleDateFormat(datePattern1).format(this.dateValue);
 		}
@@ -623,12 +618,12 @@ public class Value {
 	}
 
 	public void bomb(String message) {
-		throw Res.go(1001, "\"" + this.name + "\"" + message).setErrParam(this.code).setErrParam(this.value);
+		throw Res.go(1001, "\"" + this.name + "\"" + message).setErrParam(this.code);
 	}
 
 	public void bomb(boolean go, String message) {
 		if (go)
-			throw Res.go(1001, "\"" + this.name + "\"" + message).setErrParam(this.code).setErrParam(this.value);
+			throw Res.go(1001, "\"" + this.name + "\"" + message).setErrParam(this.code);
 	}
 
 	public boolean equals(Object object) {
@@ -639,7 +634,7 @@ public class Value {
 		return this.value.equals(object);
 	}
 
-	public Value toLowerCase() {
+	public Var toLowerCase() {
 		if (!this.go)
 			return this;
 		if (this.value != null)
@@ -647,7 +642,7 @@ public class Value {
 		return this;
 	}
 
-	public Value toUpperCase() {
+	public Var toUpperCase() {
 		if (!this.go)
 			return this;
 		if (this.value != null)
@@ -655,7 +650,7 @@ public class Value {
 		return this;
 	}
 
-	public Value replaceAll(String regex, String replacement) {
+	public Var replaceAll(String regex, String replacement) {
 		if (!this.go)
 			return this;
 		if (this.value != null)
@@ -663,7 +658,7 @@ public class Value {
 		return this;
 	}
 
-	public Value substring(int beginIndex, int endIndex) {
+	public Var substring(int beginIndex, int endIndex) {
 		if (!this.go)
 			return this;
 		if (this.value != null)
@@ -671,7 +666,7 @@ public class Value {
 		return this;
 	}
 
-	public Value substring(int beginIndex) {
+	public Var substring(int beginIndex) {
 		if (!this.go)
 			return this;
 		if (this.value != null)
@@ -679,7 +674,7 @@ public class Value {
 		return this;
 	}
 
-	public Value concat(String str) {
+	public Var concat(String str) {
 		if (!this.go)
 			return this;
 		if (this.value != null)
@@ -705,7 +700,7 @@ public class Value {
 		return false;
 	}
 
-	public Value set(String value) {
+	public Var set(String value) {
 		clear();
 		this.value = value;
 		return this;
@@ -859,7 +854,7 @@ public class Value {
 
 	public static void main(String[] args) throws ParseException, NoSuchFieldException, SecurityException,
 			IllegalArgumentException, IllegalAccessException {
-		Value value = Value.build(null, null, "20200506132311");
+		Var value = Var.build(null, null, "20200506132311");
 		System.out.println(value.toDate());
 	}
 }

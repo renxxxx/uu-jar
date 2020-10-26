@@ -4,7 +4,6 @@ public class Res extends RuntimeException {
 
 	protected int code;
 	protected String errParam = null;
-	protected String errValue = null;
 	protected String codeMsg = null;
 	protected Object data = null;
 	protected String requestId = null;
@@ -143,15 +142,6 @@ public class Res extends RuntimeException {
 
 	public Res setErrParam(String errParam) {
 		this.errParam = errParam;
-		return this;
-	}
-
-	public String getErrValue() {
-		return errValue;
-	}
-
-	public Res setErrValue(String errValue) {
-		this.errValue = errValue;
 		return this;
 	}
 
