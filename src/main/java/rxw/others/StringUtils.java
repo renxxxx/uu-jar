@@ -34,7 +34,17 @@ public class StringUtils {
 //	}
 
 	public static void main(String[] args) {
-		System.out.println(replaceRange("sdfsadf", 1, 3, "$"));
+		System.out.println((System.nanoTime()+""));
+		System.out.println((System.nanoTime()+""));
+		System.out.println((System.nanoTime()+""));
+		System.out.println((System.nanoTime()+""));
+	}
+
+	public static String commaNum(String str) {
+		if (str == null)
+			return str;
+		String[] parts = str.split("\\.");
+		return str;
 	}
 
 	public static String replaceRange(String str, int startIndex, int length, String replacement) {
@@ -98,6 +108,7 @@ public class StringUtils {
 	}
 
 	public static String newId() {
+		
 		return new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + "1" + RandomStringUtils.randomNumeric(14);
 	}
 

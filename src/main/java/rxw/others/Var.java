@@ -363,6 +363,8 @@ public class Var {
 	public Var vEnum(String... values) {
 		if (!this.go)
 			return this;
+		if (isEmpty())
+			return this;
 		boolean v = rxw.others.StringUtils.equalsAny(this.value, values);
 		if (!v)
 			throw Res.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code);

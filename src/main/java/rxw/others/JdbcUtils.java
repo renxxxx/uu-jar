@@ -148,7 +148,7 @@ public class JdbcUtils {
 			long s = System.nanoTime();
 			ResultSet rs = pst.executeQuery();
 			long e = System.nanoTime();
-			logger.debug("takes: " + (e - s) + "ns");
+			logger.debug("takes: " + StringUtils.commaNum((e - s) + "") + "ns");
 			return rs;
 		} catch (Exception e) {
 			throw new SQLException(e.getMessage() + " sql: " + sql, e);
@@ -207,7 +207,7 @@ public class JdbcUtils {
 			long s = System.nanoTime();
 			cnt = pst.executeUpdate();
 			long e = System.nanoTime();
-			logger.debug("takes: " + (e - s) + "ns");
+			logger.debug("takes: " + StringUtils.commaNum((e - s) + "") + "ns");
 		} catch (Exception e) {
 			throw new Exception(e.getMessage() + " sql: " + sql, e);
 		}
@@ -288,7 +288,7 @@ public class JdbcUtils {
 		long s = System.nanoTime();
 		cnts = pst.executeBatch();
 		long e = System.nanoTime();
-		logger.debug("takes: " + (e - s) + "ns");
+		logger.debug("takes: " + StringUtils.commaNum((e - s) + "") + "ns");
 		logger.debug("affected : " + Arrays.toString(cnts));
 		return cnts;
 	}
