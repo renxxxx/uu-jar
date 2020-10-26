@@ -26,7 +26,8 @@ public class JdbcUtils {
 	}
 
 	public static List<Map> queryList(Connection conn, String sql, Object... params) throws Exception {
-		logger.debug("in " + RandomStringUtils.randomNumeric(5));
+		String reqId = StringUtils.newId();
+		logger.debug("in " + reqId);
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
@@ -36,7 +37,7 @@ public class JdbcUtils {
 		} finally {
 			if (pst != null)
 				pst.close();
-			logger.debug("out " + RandomStringUtils.randomNumeric(5));
+			logger.debug("out " + reqId);
 		}
 	}
 
@@ -120,13 +121,14 @@ public class JdbcUtils {
 //	}
 
 	public static Mapp query(Connection conn, String sql, Object... params) throws Exception {
-		logger.debug("in " + RandomStringUtils.randomNumeric(5));
+		String reqId = StringUtils.newId();
+		logger.debug("in " + reqId);
 		Map item = null;
 		List<Map> itemList = queryList(conn, sql, params);
 		if (itemList != null && itemList.size() > 0) {
 			item = itemList.get(0);
 		}
-		logger.debug("out " + RandomStringUtils.randomNumeric(5));
+		logger.debug("out " + reqId);
 		return Mapp.instance(item);
 	}
 
@@ -146,7 +148,7 @@ public class JdbcUtils {
 			long s = System.nanoTime();
 			ResultSet rs = pst.executeQuery();
 			long e = System.nanoTime();
-			logger.debug("takes: " + (e - s));
+			logger.debug("takes: " + (e - s) + "ns");
 			return rs;
 		} catch (Exception e) {
 			throw new SQLException(e.getMessage() + " sql: " + sql, e);
@@ -158,7 +160,8 @@ public class JdbcUtils {
 //	}
 
 	public static int update(Connection conn, String sql, Object... params) throws Exception {
-		logger.debug("in " + RandomStringUtils.randomNumeric(5));
+		String reqId = StringUtils.newId();
+		logger.debug("in " + reqId);
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
@@ -168,7 +171,7 @@ public class JdbcUtils {
 		} finally {
 			if (pst != null)
 				pst.close();
-			logger.debug("out " + RandomStringUtils.randomNumeric(5));
+			logger.debug("out " + reqId);
 		}
 
 	}
@@ -204,7 +207,7 @@ public class JdbcUtils {
 			long s = System.nanoTime();
 			sqlN = pst.executeUpdate();
 			long e = System.nanoTime();
-			logger.debug("takes: " + (e - s));
+			logger.debug("takes: " + (e - s) + "ns");
 		} catch (Exception e) {
 			throw new Exception(e.getMessage() + " sql: " + sql, e);
 		}
@@ -285,7 +288,7 @@ public class JdbcUtils {
 		long s = System.nanoTime();
 		sqlNs = pst.executeBatch();
 		long e = System.nanoTime();
-		logger.debug("takes: " + (e - s));
+		logger.debug("takes: " + (e - s) + "ns");
 		logger.debug("affected : " + Arrays.toString(sqlNs));
 		return sqlNs;
 	}

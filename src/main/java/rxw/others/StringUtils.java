@@ -101,6 +101,11 @@ public class StringUtils {
 		return new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + "1" + RandomStringUtils.randomNumeric(14);
 	}
 
+	public static String newId(int tailLength) {
+		return new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + "1"
+				+ RandomStringUtils.randomNumeric(tailLength);
+	}
+
 	public static boolean isEmpty(CharSequence cs) {
 		return org.apache.commons.lang3.StringUtils.isEmpty(cs);
 	}
