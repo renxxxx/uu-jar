@@ -36,7 +36,7 @@ public class Var {
 	public Long longValue;
 	public BigDecimal decimalValue;
 	public Date dateValue;
-	public String[] splitArrValue;
+	public String[] stringValues;
 
 	public static CacheMap.Ccc<String, Pattern> regexCache = new CacheMap.Ccc<String, Pattern>() {
 		@Override
@@ -46,7 +46,7 @@ public class Var {
 	};
 
 	public Var clear() {
-		this.splitArrValue = null;
+		this.stringValues = null;
 		this.dateValue = null;
 		this.integerValue = null;
 		this.floatValue = null;
@@ -330,8 +330,7 @@ public class Var {
 	public Var vMaxCount(int count) {
 		if (!this.go)
 			return this;
-		if (this.value != null && !this.value.isEmpty() && this.toSplitArr() != null
-				&& this.toSplitArr().length > count) {
+		if (!this.isEmpty() && this.toStrings() != null && this.toStrings().length > count) {
 			throw Res.go(1001, "\"" + this.name + "\"最多" + count + "个").setErrParam(this.code);
 		}
 		return this;
@@ -564,12 +563,12 @@ public class Var {
 		return this.value;
 	}
 
-	public String[] toSplitArr() {
-		if (this.splitArrValue != null)
-			return this.splitArrValue;
-		this.splitArrValue = isNull() ? null
+	public String[] toStrings() {
+		if (this.stringValues != null)
+			return this.stringValues;
+		this.stringValues = isNull() ? null
 				: StringUtils.splitByWholeSeparatorPreserveAllTokens(this.value, this.separator);
-		return this.splitArrValue;
+		return this.stringValues;
 	}
 
 	@Override
