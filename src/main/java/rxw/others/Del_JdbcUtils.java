@@ -96,7 +96,7 @@ public class Del_JdbcUtils {
 	}
 
 	public static Object queryColumn(Connection conn, String sql, Object... params) throws Exception {
-		Del_Mapp row = query(conn, sql, params);
+		MMapp row = query(conn, sql, params);
 		if (row.map == null)
 			return null;
 		return row.get(row.keySet().iterator().next());
@@ -120,7 +120,7 @@ public class Del_JdbcUtils {
 //		}
 //	}
 
-	public static Del_Mapp query(Connection conn, String sql, Object... params) throws Exception {
+	public static MMapp query(Connection conn, String sql, Object... params) throws Exception {
 		String reqId = StringUtils.newId();
 		logger.debug("in " + reqId);
 		Map item = null;
@@ -129,7 +129,7 @@ public class Del_JdbcUtils {
 			item = itemList.get(0);
 		}
 		logger.debug("out " + reqId);
-		return Del_Mapp.instance(item);
+		return MMapp.build(item);
 	}
 
 	public static ResultSet query(PreparedStatement pst, String sql, Object... params) throws SQLException {

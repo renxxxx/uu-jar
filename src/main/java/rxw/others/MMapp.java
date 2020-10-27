@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class Del_Mapp<K, V> {
+public class MMapp<K, V> {
 
 	public Map<K, V> map = null;
 
@@ -18,30 +18,30 @@ public class Del_Mapp<K, V> {
 		}
 	}
 
-	public static <K, V> Del_Mapp<K, V> instance(Map<K, V> map) {
+	public static <K, V> MMapp<K, V> build(Map<K, V> map) {
 		if (map == null)
-			return new Del_Mapp<K, V>();
+			return new MMapp<K, V>();
 		else {
-			Del_Mapp<K, V> mapp = new Del_Mapp<K, V>();
+			MMapp<K, V> mapp = new MMapp<K, V>();
 			mapp.map = map;
 			return mapp;
 		}
 	}
 
-	public static <K, V> Del_Mapp<K, V> instance() {
-		Del_Mapp<K, V> mapp = new Del_Mapp<K, V>();
+	public static <K, V> MMapp<K, V> build() {
+		MMapp<K, V> mapp = new MMapp<K, V>();
 		mapp.map = new HashMap<K, V>();
 		return mapp;
 	}
 
-	public Del_Mapp<K, V> put(K key, V value) {
+	public MMapp<K, V> put(K key, V value) {
 		if (this.map == null)
 			this.map = new HashMap<K, V>();
 		this.map.put(key, value);
 		return this;
 	}
 
-	public Del_Mapp<K, V> putAll(Map map) {
+	public MMapp<K, V> putAll(Map map) {
 		if (this.map == null)
 			this.map = new HashMap<K, V>();
 		this.map.putAll(map);
