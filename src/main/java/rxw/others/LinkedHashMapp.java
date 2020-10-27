@@ -24,4 +24,9 @@ public class LinkedHashMapp<K, V> extends LinkedHashMap<K, V> implements Mapp<K,
 	public BigDecimal getDecimal(K key) {
 		return Var.toDecimal(get(key));
 	}
+
+	public Mapp putt(K key, V value) {
+		put(key, value);
+		return this;
+	}
 }

@@ -14,4 +14,6 @@ public interface Mapp<K, V> extends Map<K, V> {
 	public Double getDouble(K key);
 
 	public BigDecimal getDecimal(K key);
+
+	Mapp putt(K key, V value);
 }
