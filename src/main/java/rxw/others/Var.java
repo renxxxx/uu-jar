@@ -37,7 +37,7 @@ public class Var {
 	public BigDecimal decimalValue;
 	public Date dateValue;
 	public String[] stringValues;
-
+	public String[] enumValues = null;
 	public static CacheMap.Ccc<String, Pattern> regexCache = new CacheMap.Ccc<String, Pattern>() {
 		@Override
 		public Pattern create(String regex) {
@@ -365,9 +365,10 @@ public class Var {
 			return this;
 		if (isEmpty())
 			return this;
+		this.enumValues = values;
 		boolean v = rxw.others.StringUtils.equalsAny(this.value, values);
 		if (!v)
-			throw Res.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code);
+			throw Res.go(1001, "\"" + this.name + "\"只能传下列值" + Arrays.toString(this.enumValues)).setErrParam(this.code);
 		else
 			return this;
 	}
