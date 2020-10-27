@@ -51,13 +51,13 @@ public class Res extends RuntimeException {
 		return response;
 	}
 
-	public static Res go(int code) {
+	public static Res build(int code) {
 		Res response = new Res(code + "");
 		response.code = code;
 		return response;
 	}
 
-	public static Res go(int code, String codeMsg, Object data) {
+	public static Res build(int code, String codeMsg, Object data) {
 		Res response = new Res(code + " : " + codeMsg);
 		response.code = code;
 		response.codeMsg = codeMsg;
@@ -65,14 +65,14 @@ public class Res extends RuntimeException {
 		return response;
 	}
 
-	public static Res go(int code, String codeMsg) {
+	public static Res build(int code, String codeMsg) {
 		Res response = new Res(code + " : " + codeMsg);
 		response.code = code;
 		response.codeMsg = codeMsg;
 		return response;
 	}
 
-	public static Res go(int code, Object data) {
+	public static Res build(int code, Object data) {
 		Res response = new Res(code + "");
 		response.code = code;
 		response.data = data;
