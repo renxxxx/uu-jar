@@ -731,6 +731,18 @@ public class Var {
 			return new Float(valueStr);
 	}
 
+	public static Double toDouble(Object value) {
+		if (value == null)
+			return null;
+		if (value instanceof Float)
+			return (Double) value;
+		String valueStr = value.toString();
+		if (valueStr.trim().isEmpty())
+			return null;
+		else
+			return new Double(valueStr);
+	}
+
 	public static String toString(Object value) {
 		if (value == null)
 			return null;
@@ -810,7 +822,7 @@ public class Var {
 			return new Long(valueStr);
 	}
 
-	public static BigDecimal toBigDecimal(Object value) {
+	public static BigDecimal toDecimal(Object value) {
 		if (value == null)
 			return null;
 		if (value instanceof BigDecimal)

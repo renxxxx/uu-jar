@@ -14,7 +14,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
@@ -25,7 +24,7 @@ public class JdbcUtils {
 		System.out.println(123123123);
 	}
 
-	public static List<Map> queryList(Connection conn, String sql, Object... params) throws Exception {
+	public static List<Mapp> queryList(Connection conn, String sql, Object... params) throws Exception {
 		String reqId = StringUtils.newId();
 		logger.debug("in " + reqId);
 		PreparedStatement pst = null;
@@ -79,8 +78,8 @@ public class JdbcUtils {
 		return Var.toString(queryColumn(conn, sql, params));
 	}
 
-	public static BigDecimal queryBigDecimal(Connection conn, String sql, Object... params) throws Exception {
-		return Var.toBigDecimal(queryColumn(conn, sql, params));
+	public static BigDecimal queryDecimal(Connection conn, String sql, Object... params) throws Exception {
+		return Var.toDecimal(queryColumn(conn, sql, params));
 	}
 
 	public static Long queryLong(Connection conn, String sql, Object... params) throws Exception {
@@ -97,17 +96,17 @@ public class JdbcUtils {
 
 	public static Object queryColumn(Connection conn, String sql, Object... params) throws Exception {
 		Mapp row = query(conn, sql, params);
-		if (row.map == null)
+		if (row == null)
 			return null;
 		return row.get(row.keySet().iterator().next());
 	}
 
-//	public static Map query(Connection conn, String sql, Object... params) throws Exception {
+//	public static Mappquery(Connection conn, String sql, Object... params) throws Exception {
 //		logger.debug("in " + RandomStringUtils.randomNumeric(5));
 //		PreparedStatement pst = null;
 //		try {
 //			pst = conn.prepareStatement(sql);
-//			List<Map> list = parseResultSetOfList(query(pst, sql, params));
+//			List<Mapp> list = parseResultSetOfList(query(pst, sql, params));
 //			if (list == null || list.isEmpty())
 //				return null;
 //			return list.get(0);
@@ -123,13 +122,13 @@ public class JdbcUtils {
 	public static Mapp query(Connection conn, String sql, Object... params) throws Exception {
 		String reqId = StringUtils.newId();
 		logger.debug("in " + reqId);
-		Map item = null;
-		List<Map> itemList = queryList(conn, sql, params);
+		Mapp item = null;
+		List<Mapp> itemList = queryList(conn, sql, params);
 		if (itemList != null && itemList.size() > 0) {
 			item = itemList.get(0);
 		}
 		logger.debug("out " + reqId);
-		return Mapp.instance(item);
+		return item;
 	}
 
 	public static ResultSet query(PreparedStatement pst, String sql, Object... params) throws SQLException {
@@ -293,12 +292,12 @@ public class JdbcUtils {
 		return cnts;
 	}
 
-	public static List<Map> parseResultSetOfList(ResultSet rs) throws SQLException {
-		List<Map> rows = new ArrayList();
+	public static List<Mapp> parseResultSetOfList(ResultSet rs) throws SQLException {
+		List<Mapp> rows = new ArrayList();
 		ResultSetMetaData metaData = rs.getMetaData();
 		int columnCnt = metaData.getColumnCount();
 		while (rs.next()) {
-			Map<String, Object> row = new LinkedHashMap();
+			Mapp<String, Object> row = new LinkedHashMapp();
 			for (int i = 1; i <= columnCnt; i++) {
 				Object value = rs.getObject(i);
 				row.put(metaData.getColumnLabel(i), value);
@@ -311,13 +310,13 @@ public class JdbcUtils {
 		return rows;
 	}
 
-	public static List<Map> parseResultSetOfList(ResultSet rs, String[] excludeColumns) throws SQLException {
+	public static List<Mapp> parseResultSetOfList(ResultSet rs, String[] excludeColumns) throws SQLException {
 		List<String> excludeColumnList = Arrays.asList(excludeColumns);
-		List<Map> rows = new ArrayList();
+		List<Mapp> rows = new ArrayList();
 		ResultSetMetaData metaData = rs.getMetaData();
 		int columnCnt = metaData.getColumnCount();
 		while (rs.next()) {
-			Map<String, Object> row = new LinkedHashMap();
+			Mapp<String, Object> row = new LinkedHashMapp();
 			for (int i = 1; i <= columnCnt; i++) {
 				String column = metaData.getColumnLabel(i);
 				if (excludeColumnList.contains(column))
@@ -365,8 +364,8 @@ public class JdbcUtils {
 		return rows;
 	}
 
-	public static Map parseResultSetOfOne(ResultSet rs) throws SQLException {
-		List<Map> rows = parseResultSetOfList(rs);
+	public static Mapp parseResultSetOfOne(ResultSet rs) throws SQLException {
+		List<Mapp> rows = parseResultSetOfList(rs);
 		if (rows.size() > 0)
 			return rows.get(0);
 		else
@@ -374,7 +373,7 @@ public class JdbcUtils {
 	}
 
 	public static Object parseResultSetOfOneColumn(ResultSet rs) throws SQLException {
-		List<Map> rows = parseResultSetOfList(rs);
+		List<Mapp> rows = parseResultSetOfList(rs);
 		if (rows.size() > 0)
 			return rows.get(0).get(rows.get(0).keySet().iterator().next());
 		else
