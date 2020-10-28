@@ -200,8 +200,12 @@ public class JdbcUtils {
 				Object param = params[i];
 				if (param instanceof Var) {
 					param = ((Var) param).val();
+					pst.setObject(i + 1, param);
+				} else if (param instanceof InputStream) {
+					pst.setBinaryStream(i + 1, (InputStream) param);
+				} else {
+					pst.setObject(i + 1, param);
 				}
-				pst.setObject(i + 1, param);
 			}
 			long s = System.nanoTime();
 			cnt = pst.executeUpdate();
