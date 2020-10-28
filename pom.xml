@@ -4,8 +4,8 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>rxw</groupId>
-	<artifactId>others</artifactId>
-	<version>20.10.28.113</version>
+	<artifactId>mess</artifactId>
+	<version>20.10.28.114</version>
 
 	<packaging>jar</packaging>
 	<name>util</name>

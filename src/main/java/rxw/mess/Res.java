@@ -1,4 +1,4 @@
-package rxw.others;
+package rxw.mess;
 
 public class Res extends RuntimeException {
 
