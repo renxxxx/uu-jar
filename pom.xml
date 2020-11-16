@@ -5,7 +5,7 @@
 
 	<groupId>rxw</groupId>
 	<artifactId>mess</artifactId>
-	<version>20.10.29.115</version>
+	<version>1.0.0</version>
 
 	<packaging>jar</packaging>
 	<name>util</name>

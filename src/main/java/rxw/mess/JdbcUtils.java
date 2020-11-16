@@ -134,6 +134,8 @@ public class JdbcUtils {
 	public static ResultSet query(PreparedStatement pst, String sql, Object... params) throws SQLException {
 		if (params == null)
 			params = new Object[] {};
+		sql = sql.replaceAll("\\s+", " ");
+		sql = sql.replaceAll("\\s+", " ");
 		logger.debug(sql);
 		logger.debug(Arrays.toString(params));
 		try {
@@ -192,6 +194,7 @@ public class JdbcUtils {
 	public static int update(PreparedStatement pst, String sql, Object... params) throws Exception {
 		if (params == null)
 			params = new Object[] {};
+		sql = sql.replaceAll("\\s+", " ");
 		logger.debug(sql);
 		logger.debug(Arrays.toString(params));
 		int cnt = 0;

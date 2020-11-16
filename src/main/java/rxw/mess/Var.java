@@ -29,6 +29,11 @@ public class Var {
 	public static String datePattern2 = "yyyy-MM-dd";
 	public static String datePattern3 = "HH:mm:ss";
 	public static String datePattern4 = "yyyy-MM-dd HH:mm:ss.SSS";
+	public static String datePattern5 = "yyyy-MM";
+	public static String datePattern6 = "HH:mm";
+	public static String datePattern7 = "HH:mm:ss.SSS";
+	public static String datePattern8 = "yyyy-MM-dd HH:mm";
+
 	boolean run = true;
 	public Integer integerValue;
 	public Float floatValue;
@@ -815,13 +820,51 @@ public class Var {
 		} catch (Exception e) {
 		}
 		try {
-			date = new Date(Long.parseLong(value.toString()));
+			date = new SimpleDateFormat(datePattern5).parse(value.toString());
 			if (date != null) {
 				return date;
 			}
 		} catch (Exception e) {
 		}
-
+		try {
+			date = new SimpleDateFormat(datePattern6).parse(value.toString());
+			if (date != null) {
+				return date;
+			}
+		} catch (Exception e) {
+		}
+		try {
+			date = new SimpleDateFormat(datePattern7).parse(value.toString());
+			if (date != null) {
+				return date;
+			}
+		} catch (Exception e) {
+		}
+		try {
+			date = new SimpleDateFormat(datePattern8).parse(value.toString());
+			if (date != null) {
+				return date;
+			}
+		} catch (Exception e) {
+		}
+		try {
+			if (value.toString().length() == 10) {
+				date = new Date(Long.parseLong(value.toString() + "000"));
+				if (date != null) {
+					return date;
+				}
+			}
+		} catch (Exception e) {
+		}
+		try {
+			if (value.toString().length() == 13) {
+				date = new Date(Long.parseLong(value.toString()));
+				if (date != null) {
+					return date;
+				}
+			}
+		} catch (Exception e) {
+		}
 		return date;
 	}
 
@@ -883,6 +926,6 @@ public class Var {
 	public static void main(String[] args) throws ParseException, NoSuchFieldException, SecurityException,
 			IllegalArgumentException, IllegalAccessException {
 		Var value = Var.build(null, null, "20200506132311");
-		System.out.println(value.toDate());
+		System.out.println(new SimpleDateFormat("yyyy-MM").parse("2020-03"));
 	}
 }
