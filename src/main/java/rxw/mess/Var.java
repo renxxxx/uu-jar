@@ -79,6 +79,22 @@ public class Var {
 		return var;
 	}
 
+	public static Var build(String... values) {
+		Var var = new Var();
+		if (values != null)
+			for (String value : values) {
+				if (value != null) {
+					var.value = value;
+					break;
+				}
+			}
+
+		if (var.value != null && !var.value.isEmpty() && var.value.matches(".*<(s|S)(c|C)(r|R)(i|I)(p|P)(t|T)>.*"))
+			throw Res.build(1001, "\"" + var.name + "\"有误").setErrParam(var.code);
+
+		return var;
+	}
+
 	public Var suffix(String suffix) {
 		if (!this.run)
 			return this;
