@@ -7,7 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -160,12 +159,16 @@ public class JdbcUtils {
 //		return new StringBuilder("%").append(columnValue).append("%").toString();
 //	}
 
-	public static int insert(Connection conn, String sql, Object... params) throws Exception {
+	public static Integer insert(Connection conn, String sql, Object... params) throws Exception {
 		PreparedStatement pst = null;
 		try {
-			pst = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			pst = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 			update(pst, sql, params);
-			return pst.getGeneratedKeys().getInt(1);
+			ResultSet rs = pst.getGeneratedKeys();
+			if (rs.next())
+				return rs.getInt(1);
+			else
+				return null;
 		} catch (Exception e) {
 			throw e;
 		} finally {
