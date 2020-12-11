@@ -1,5 +1,7 @@
 package rxw.mess;
 
+import java.util.Arrays;
+
 import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
@@ -24,21 +26,24 @@ public class PinYin {
 		format.setCaseType(HanyuPinyinCaseType.LOWERCASE);
 		format.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
 		format.setVCharType(HanyuPinyinVCharType.WITH_V);
-
 		String pys = ""; // 存放拼音字符串
 		int len = hz.length;
 
 		try {
 			for (int i = 0; i < len; i++) {
 				// 先判断是否为汉字字符
-				if (Character.toString(hz[i]).matches("[\\u4E00-\\u9FA5]+")) {
+				String c = Character.toString(hz[i]);
+				if (c.matches("[\\u4E00-\\u9FA5]+")) {
 					// 将汉字的几种全拼都存到py数组中
 					py = PinyinHelper.toHanyuPinyinStringArray(hz[i], format);
 					// 取出改汉字全拼的第一种读音，并存放到字符串pys后
-					pys += py[0];
+					pys += py[0].substring(0, 1).toUpperCase() + py[0].substring(1);
 				} else {
 					// 如果不是汉字字符，间接取出字符并连接到 pys 后
-					pys += Character.toString(hz[i]);
+					if (c.length() == 1) {
+						pys += c;
+					} else
+						pys += c.substring(0, 1).toUpperCase() + c.substring(1);
 				}
 			}
 		} catch (BadHanyuPinyinOutputFormatCombination e) {
@@ -86,7 +91,7 @@ public class PinYin {
 	 * 测试
 	 */
 	public static void main(String[] args) {
-		String str = "注册资本";
+		String str = "重庆";
 		System.out.println(getPinYin(str));
 		System.out.println(getPinYinHeadChar(str));
 		System.out.println(getCnASCII(str));
