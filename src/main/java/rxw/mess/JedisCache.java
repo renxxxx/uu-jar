@@ -15,16 +15,21 @@ public class JedisCache {
 	public String ip;
 	public int port;
 	public String auth;
+	public boolean inited;
 
-	public void setJedisPool() {
-		if (this.jedisPool == null) {
+	public void init() {
+		if (!this.inited) {
+			if (this.jedisPool != null) {
+				this.jedisPool.close();
+				this.jedisPool.destroy();
+			}
 			GenericObjectPoolConfig config = new GenericObjectPoolConfig();
 			this.jedisPool = new JedisPool(config, ip, port, 10000, auth, 0);
 		}
 	}
 
 	public Jedis connect(Jedis jedis) throws SQLException {
-		setJedisPool();
+		init();
 		if (jedis == null) {
 			jedis = jedisPool.getResource();
 		}
