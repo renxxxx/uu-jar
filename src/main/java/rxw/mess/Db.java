@@ -15,9 +15,10 @@ public class Db {
 	public String url;
 	public String username;
 	public String password;
+	public boolean inited = false;
 
-	public void setDataSource() {
-		if (this.dataSource == null) {
+	public void init() {
+		if (!this.inited) {
 			org.apache.tomcat.jdbc.pool.DataSource tomcatJdbcPoolDataSource = new org.apache.tomcat.jdbc.pool.DataSource();
 			tomcatJdbcPoolDataSource.setDriverClassName(driver);
 			tomcatJdbcPoolDataSource.setUrl(url);
@@ -29,10 +30,11 @@ public class Db {
 			tomcatJdbcPoolDataSource.setValidationQuery("SELECT 1");
 			dataSource = tomcatJdbcPoolDataSource;
 		}
+		this.inited = true;
 	}
 
 	public Connection connect(Connection conn) throws SQLException {
-		setDataSource();
+		init();
 		if (conn == null) {
 			conn = dataSource.getConnection();
 			conn.setAutoCommit(false);

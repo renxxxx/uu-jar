@@ -15,7 +15,7 @@ public class JedisCache {
 	public String ip;
 	public int port;
 	public String auth;
-	public boolean inited;
+	public boolean inited = false;
 
 	public void init() {
 		if (!this.inited) {
@@ -26,6 +26,7 @@ public class JedisCache {
 			GenericObjectPoolConfig config = new GenericObjectPoolConfig();
 			this.jedisPool = new JedisPool(config, ip, port, 10000, auth, 0);
 		}
+		this.inited = true;
 	}
 
 	public Jedis connect(Jedis jedis) throws SQLException {
