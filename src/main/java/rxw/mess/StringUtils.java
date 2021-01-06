@@ -1,18 +1,12 @@
 package rxw.mess;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
-import java.util.regex.Pattern;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.apache.commons.lang3.CharSequenceUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.log4j.Logger;
-
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 
 public class StringUtils {
 	public static Logger logger = Logger.getLogger(StringUtils.class);
@@ -34,10 +28,12 @@ public class StringUtils {
 //	}
 
 	public static void main(String[] args) {
-		System.out.println((System.nanoTime()+""));
-		System.out.println((System.nanoTime()+""));
-		System.out.println((System.nanoTime()+""));
-		System.out.println((System.nanoTime()+""));
+		Map map = new HashMap();
+		System.out.println((Integer) map.get("a"));
+		System.out.println("212".replaceFirst("^0", "1"));
+		System.out.println((System.nanoTime() + ""));
+		System.out.println((System.nanoTime() + ""));
+		System.out.println((System.nanoTime() + ""));
 	}
 
 	public static String commaNum(String str) {
@@ -108,7 +104,7 @@ public class StringUtils {
 	}
 
 	public static String newId() {
-		
+
 		return new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + "1" + RandomStringUtils.randomNumeric(14);
 	}
 

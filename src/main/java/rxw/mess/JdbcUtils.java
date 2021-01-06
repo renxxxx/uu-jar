@@ -23,7 +23,6 @@ public class JdbcUtils {
 	}
 
 	public static List<Mapp> queryList(Connection conn, String sql, Object... params) throws Exception {
-
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
@@ -33,7 +32,6 @@ public class JdbcUtils {
 		} finally {
 			if (pst != null)
 				pst.close();
-
 		}
 	}
 
