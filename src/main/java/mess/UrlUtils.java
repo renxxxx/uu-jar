@@ -1,4 +1,4 @@
-package renx.mess;
+package mess;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;

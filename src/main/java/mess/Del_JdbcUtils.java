@@ -1,4 +1,4 @@
-package renx.mess;
+package mess;
 
 import java.io.InputStream;
 import java.math.BigDecimal;

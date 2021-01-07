@@ -1,4 +1,4 @@
-package renx.mess;
+package mess;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;

@@ -1,4 +1,4 @@
-package renx.mess;
+package mess;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

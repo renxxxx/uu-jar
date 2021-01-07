@@ -1,4 +1,4 @@
-package renx.mess;
+package mess;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

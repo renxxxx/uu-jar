@@ -1,4 +1,4 @@
-package renx.mess;
+package mess;
 
 public class Res extends RuntimeException {
 

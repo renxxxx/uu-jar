@@ -1,4 +1,4 @@
-package renx.mess;
+package mess;
 
 import java.sql.SQLException;
 import java.util.Collections;

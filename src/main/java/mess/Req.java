@@ -1,4 +1,4 @@
-package renx.mess;
+package mess;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
