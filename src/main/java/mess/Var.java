@@ -79,7 +79,7 @@ public class Var {
 		return var;
 	}
 
-	public static Var build(String... values) {
+	public static Var build1(String... values) {
 		Var var = new Var();
 		if (values != null)
 			for (String value : values) {
