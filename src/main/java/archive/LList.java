@@ -1,6 +1,5 @@
 package archive;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class LList<E> {
@@ -16,13 +15,10 @@ public class LList<E> {
 			listt.list = list;
 			return listt;
 		}
-
 	}
 
 	public static <E> LList<E> build() {
-		LList<E> listt = new LList<E>();
-		listt.list = new ArrayList<E>();
-		return listt;
+		return build(null);
 	}
 
 	public LList<E> add(E e) {

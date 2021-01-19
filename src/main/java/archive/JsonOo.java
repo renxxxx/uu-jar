@@ -2,16 +2,16 @@ package archive;
 
 import com.alibaba.fastjson.JSONObject;
 
-public class JSONObjectt extends JSONObject {
+public class JsonOo extends JSONObject {
 
-	public JSONObjectt(String key, Object value) {
+	public JsonOo(String key, Object value) {
 		super.put(key, value);
 	}
 
-	public JSONObjectt() {
+	public JsonOo() {
 	}
 
-	public JSONObjectt put(String key, Object value) {
+	public JsonOo put(String key, Object value) {
 		super.put(key, value);
 		return this;
 	}

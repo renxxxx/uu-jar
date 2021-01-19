@@ -8,10 +8,10 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-public class JavaxMail {
+public class Mail {
 
 	public static void main(String[] args) throws Exception {
-		JavaxMail j = new JavaxMail();
+		Mail j = new Mail();
 		j.host = "smtp.qq.com";
 		j.port = 25;
 		j.protocol = "smtp";

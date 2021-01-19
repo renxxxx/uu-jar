@@ -29,9 +29,7 @@ public class MMap<K, V> {
 	}
 
 	public static <K, V> MMap<K, V> build() {
-		MMap<K, V> mapp = new MMap<K, V>();
-		mapp.map = new HashMap<K, V>();
-		return mapp;
+		return build(null);
 	}
 
 	public MMap<K, V> put(K key, V value) {
@@ -42,9 +40,9 @@ public class MMap<K, V> {
 	}
 
 	public MMap<K, V> putAll(Map map) {
-		if (this.map == null)
-			this.map = new HashMap<K, V>();
-		this.map.putAll(map);
+		if (this.map != null) {
+			this.map.putAll(map);
+		}
 		return this;
 	}
 

@@ -8,8 +8,8 @@ import org.apache.log4j.Logger;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
-public class JedisCache {
-	private static Logger logger = Logger.getLogger(JedisCache.class);
+public class Redis {
+	private static Logger logger = Logger.getLogger(Redis.class);
 
 	public JedisPool jedisPool;
 	public String ip;

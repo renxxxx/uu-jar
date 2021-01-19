@@ -6,16 +6,16 @@ import java.util.Arrays;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
-public class JSONArrayy extends JSONArray {
+public class JsonAa extends JSONArray {
 
-	public JSONArrayy(Object... eArr) {
+	public JsonAa(Object... eArr) {
 		super.addAll(new ArrayList<Object>(Arrays.asList(eArr)));
 	}
 
-	public JSONArrayy() {
+	public JsonAa() {
 	}
 
-	public JSONArrayy put(Object e) {
+	public JsonAa put(Object e) {
 		super.add(e);
 		return this;
 	}

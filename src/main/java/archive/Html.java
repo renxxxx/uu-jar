@@ -18,8 +18,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class HtmlUtils {
-	public static Logger logger = Logger.getLogger(HtmlUtils.class);
+public class Html {
+	public static Logger logger = Logger.getLogger(Html.class);
 
 	public static List<String> extractOffUrls(String oldHtml, String newHtml) throws InterruptedException {
 		if (oldHtml == null)
@@ -28,8 +28,8 @@ public class HtmlUtils {
 			return null;
 		if (oldHtml.equals(newHtml))
 			return new ArrayList<String>();
-		List<String> oldUrls = HtmlUtils.extractUrls(oldHtml);
-		List<String> newUrls = HtmlUtils.extractUrls(newHtml);
+		List<String> oldUrls = Html.extractUrls(oldHtml);
+		List<String> newUrls = Html.extractUrls(newHtml);
 		return ListUtils.extractOffEles(oldUrls, newUrls);
 	}
 

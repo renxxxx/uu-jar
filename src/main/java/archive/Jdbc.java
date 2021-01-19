@@ -10,14 +10,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
-public class JdbcUtils {
-	public static Logger logger = Logger.getLogger(JdbcUtils.class);
+public class Jdbc {
+	public static Logger logger = Logger.getLogger(Jdbc.class);
 
 	public static void main(String[] args) {
 		System.out.println(123123123);
@@ -27,7 +28,7 @@ public class JdbcUtils {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
-			return parseResultSetOfList(query(pst, sql, params));
+			return resultSetToList(query(pst, sql, params));
 		} catch (Exception e) {
 			throw e;
 		} finally {
@@ -40,7 +41,7 @@ public class JdbcUtils {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
-			return parseResultSetOfThinList(query(pst, sql, params));
+			return resultSetToThinList(query(pst, sql, params));
 		} catch (Exception e) {
 			throw e;
 		} finally {
@@ -144,10 +145,10 @@ public class JdbcUtils {
 				}
 				pst.setObject(i + 1, param);
 			}
-			long s = System.nanoTime();
+			long s = System.currentTimeMillis();
 			ResultSet rs = pst.executeQuery();
-			long e = System.nanoTime();
-			logger.debug("takes: " + StringUtils.commaNum((e - s) + "") + "ns");
+			long e = System.currentTimeMillis();
+			logger.debug("takes: " + StringUtils.commaNum((e - s) + "") + "ms");
 			return rs;
 		} catch (Exception e) {
 			throw new SQLException(e.getMessage() + " sql: " + sql, e);
@@ -173,9 +174,7 @@ public class JdbcUtils {
 		} finally {
 			if (pst != null)
 				pst.close();
-
 		}
-
 	}
 
 	public static int update(Connection conn, String sql, Object... params) throws Exception {
@@ -189,20 +188,6 @@ public class JdbcUtils {
 			if (pst != null)
 				pst.close();
 
-		}
-	}
-
-	public static int updateGentle(Connection conn, String sql, Object... params) throws Exception {
-		PreparedStatement pst = null;
-		try {
-			pst = conn.prepareStatement(sql);
-			return update(pst, sql, params);
-		} catch (Exception e) {
-			logger.debug(ExceptionUtils.getStackTrace(e));
-			return 0;
-		} finally {
-			if (pst != null)
-				pst.close();
 		}
 	}
 
@@ -229,10 +214,10 @@ public class JdbcUtils {
 					pst.setObject(i + 1, param);
 				}
 			}
-			long s = System.nanoTime();
+			long s = System.currentTimeMillis();
 			cnt = pst.executeUpdate();
-			long e = System.nanoTime();
-			logger.debug("takes: " + StringUtils.commaNum((e - s) + "") + "ns");
+			long e = System.currentTimeMillis();
+			logger.debug("takes: " + StringUtils.commaNum((e - s) + "") + "ms");
 		} catch (Exception e) {
 			throw new Exception(e.getMessage() + " sql: " + sql, e);
 		}
@@ -240,40 +225,26 @@ public class JdbcUtils {
 		return cnt;
 	}
 
-//	public static Integer runInsertOneGenKey(Connection conn, String sql, Object... params) throws Exception {
-//		PreparedStatement pst = null;
-//		try {
-//			pst = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-//			update(pst, sql, params);
-//			return returnGeneratedKey(pst);
-//		} catch (Exception e) {
-//			throw e;
-//		} finally {
-//			if (pst != null)
-//				pst.close();
-//		}
-//	}
-//
-//	public static Integer returnGeneratedKey(PreparedStatement pst) throws SQLException {
-//		ResultSet rs = pst.getGeneratedKeys();
-//		if (rs.next()) {
-//			int id = rs.getInt(1);
-//			rs.close();
-//			return id;
-//		} else
-//			return null;
-//	}
-//
-//	public static List<Integer> returnGeneratedKeys(PreparedStatement pst) throws SQLException {
-//		ResultSet rs = pst.getGeneratedKeys();
-//		List<Integer> keys = new ArrayList();
-//		while (rs.next()) {
-//			int key = rs.getInt(1);
-//			keys.add(key);
-//		}
-//		rs.close();
-//		return keys;
-//	}
+	public static Integer returnGeneratedKey(PreparedStatement pst) throws SQLException {
+		ResultSet rs = pst.getGeneratedKeys();
+		if (rs.next()) {
+			int id = rs.getInt(1);
+			rs.close();
+			return id;
+		} else
+			return null;
+	}
+
+	public static List<Integer> returnGeneratedKeys(PreparedStatement pst) throws SQLException {
+		ResultSet rs = pst.getGeneratedKeys();
+		List<Integer> keys = new ArrayList();
+		while (rs.next()) {
+			int key = rs.getInt(1);
+			keys.add(key);
+		}
+		rs.close();
+		return keys;
+	}
 
 	public static int[] batch(Connection conn, String sql, Object... paramBatches) throws Exception {
 		PreparedStatement pst = null;
@@ -310,20 +281,20 @@ public class JdbcUtils {
 			}
 			pst.addBatch();
 		}
-		long s = System.nanoTime();
+		long s = System.currentTimeMillis();
 		cnts = pst.executeBatch();
-		long e = System.nanoTime();
-		logger.debug("takes: " + StringUtils.commaNum((e - s) + "") + "ns");
+		long e = System.currentTimeMillis();
+		logger.debug("takes: " + StringUtils.commaNum((e - s) + "") + "ms");
 		logger.debug("affected : " + Arrays.toString(cnts));
 		return cnts;
 	}
 
-	public static List<Map> parseResultSetOfList(ResultSet rs) throws SQLException {
+	public static List<Map> resultSetToList(ResultSet rs) throws SQLException {
 		List<Map> rows = new ArrayList();
 		ResultSetMetaData metaData = rs.getMetaData();
 		int columnCnt = metaData.getColumnCount();
 		while (rs.next()) {
-			Map<String, Object> row = new LinkedHashMapp();
+			Map<String, Object> row = new LinkedHashMap();
 			for (int i = 1; i <= columnCnt; i++) {
 				Object value = rs.getObject(i);
 				row.put(metaData.getColumnLabel(i), value);
@@ -336,13 +307,13 @@ public class JdbcUtils {
 		return rows;
 	}
 
-	public static List<Map> parseResultSetOfList(ResultSet rs, String[] excludeColumns) throws SQLException {
+	public static List<Map> resultSetToList(ResultSet rs, String[] excludeColumns) throws SQLException {
 		List<String> excludeColumnList = Arrays.asList(excludeColumns);
 		List<Map> rows = new ArrayList();
 		ResultSetMetaData metaData = rs.getMetaData();
 		int columnCnt = metaData.getColumnCount();
 		while (rs.next()) {
-			Map<String, Object> row = new LinkedHashMapp();
+			Map<String, Object> row = new LinkedHashMap();
 			for (int i = 1; i <= columnCnt; i++) {
 				String column = metaData.getColumnLabel(i);
 				if (excludeColumnList.contains(column))
@@ -358,7 +329,7 @@ public class JdbcUtils {
 		return rows;
 	}
 
-	public static List<List<Object>> parseResultSetOfValueLists(ResultSet rs) throws SQLException {
+	public static List<List<Object>> resultSetToValueLists(ResultSet rs) throws SQLException {
 		ResultSetMetaData metaData = rs.getMetaData();
 		int columnCnt = metaData.getColumnCount();
 
@@ -377,7 +348,7 @@ public class JdbcUtils {
 		return valueLists;
 	}
 
-	public static List<Object> parseResultSetOfThinList(ResultSet rs) throws SQLException {
+	public static List<Object> resultSetToThinList(ResultSet rs) throws SQLException {
 		List<Object> rows = new ArrayList();
 		ResultSetMetaData metaData = rs.getMetaData();
 		while (rs.next()) {
@@ -390,16 +361,16 @@ public class JdbcUtils {
 		return rows;
 	}
 
-	public static Map parseResultSetOfOne(ResultSet rs) throws SQLException {
-		List<Map> rows = parseResultSetOfList(rs);
+	public static Map resultSetToMap(ResultSet rs) throws SQLException {
+		List<Map> rows = resultSetToList(rs);
 		if (rows.size() > 0)
 			return rows.get(0);
 		else
 			return null;
 	}
 
-	public static Object parseResultSetOfOneColumn(ResultSet rs) throws SQLException {
-		List<Map> rows = parseResultSetOfList(rs);
+	public static Object resultSetToColumn(ResultSet rs) throws SQLException {
+		List<Map> rows = resultSetToList(rs);
 		if (rows.size() > 0)
 			return rows.get(0).get(rows.get(0).keySet().iterator().next());
 		else
@@ -407,7 +378,7 @@ public class JdbcUtils {
 	}
 
 	public static Integer parseResultSetOfOneInteger(ResultSet rs) throws SQLException {
-		Object value = parseResultSetOfOneColumn(rs);
+		Object value = resultSetToColumn(rs);
 		if (value == null)
 			return null;
 		else {
