@@ -15,10 +15,16 @@ public class Db {
 	public String url;
 	public String username;
 	public String password;
-	public boolean inited = false;
+	public boolean started = false;
 
-	public void init() {
-		if (!this.inited) {
+	public void start() {
+		if (started)
+			return;
+		try {
+			if (this.dataSource != null) {
+				((org.apache.tomcat.jdbc.pool.DataSource) this.dataSource).close(true);
+				this.dataSource = null;
+			}
 			org.apache.tomcat.jdbc.pool.DataSource tomcatJdbcPoolDataSource = new org.apache.tomcat.jdbc.pool.DataSource();
 			tomcatJdbcPoolDataSource.setDriverClassName(driver);
 			tomcatJdbcPoolDataSource.setUrl(url);
@@ -28,13 +34,23 @@ public class Db {
 			tomcatJdbcPoolDataSource.setDefaultAutoCommit(false);
 			tomcatJdbcPoolDataSource.setRollbackOnReturn(true);
 			tomcatJdbcPoolDataSource.setValidationQuery("SELECT 1");
-			dataSource = tomcatJdbcPoolDataSource;
+			this.dataSource = tomcatJdbcPoolDataSource;
+			started = true;
+		} catch (Exception e) {
+			started = false;
+			throw new RuntimeException(e);
 		}
-		this.inited = true;
+	}
+
+	public void stop() {
+		if (this.dataSource != null) {
+			((org.apache.tomcat.jdbc.pool.DataSource) this.dataSource).close(true);
+			this.dataSource = null;
+		}
 	}
 
 	public Connection connect(Connection conn) throws SQLException {
-		init();
+		start();
 		if (conn == null) {
 			conn = dataSource.getConnection();
 			conn.setAutoCommit(false);

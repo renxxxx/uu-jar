@@ -15,22 +15,36 @@ public class Redis {
 	public String ip;
 	public int port;
 	public String auth;
-	public boolean inited = false;
+	public boolean started = false;
 
-	public void init() {
-		if (!this.inited) {
+	public void start() {
+		if (this.started)
+			return;
+		try {
 			if (this.jedisPool != null) {
 				this.jedisPool.close();
 				this.jedisPool.destroy();
+				this.jedisPool = null;
 			}
 			GenericObjectPoolConfig config = new GenericObjectPoolConfig();
 			this.jedisPool = new JedisPool(config, ip, port, 10000, auth, 0);
+			started = true;
+		} catch (Exception e) {
+			started = false;
+			throw new RuntimeException(e);
 		}
-		this.inited = true;
+	}
+
+	public void stop() {
+		if (this.jedisPool != null) {
+			this.jedisPool.close();
+			this.jedisPool.destroy();
+			this.jedisPool = null;
+		}
 	}
 
 	public Jedis connect(Jedis jedis) throws SQLException {
-		init();
+		start();
 		if (jedis == null) {
 			jedis = jedisPool.getResource();
 		}
