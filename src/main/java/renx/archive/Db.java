@@ -1,4 +1,4 @@
-package archive;
+package renx.archive;
 
 import java.sql.Connection;
 import java.sql.SQLException;

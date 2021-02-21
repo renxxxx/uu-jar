@@ -1,4 +1,4 @@
-package archive;
+package renx.archive;
 
 public class Res extends RuntimeException {
 
