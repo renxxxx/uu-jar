@@ -5,6 +5,13 @@ import java.util.List;
 
 public class LList<E> {
 
+	public static void main(String[] args) {
+		LList llist = LList.build();
+		llist.add("1");
+		llist.add("2");
+		System.out.println(llist.list);
+	}
+
 	public List<E> list = null;
 
 	public static <E> LList<E> build(List<E> list) {
@@ -25,8 +32,7 @@ public class LList<E> {
 	public LList<E> add(E e) {
 		if (this.list == null)
 			this.list = new ArrayList<E>();
-		else
-			list.add(e);
+		this.list.add(e);
 		return this;
 	}
 
