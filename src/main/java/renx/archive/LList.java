@@ -27,7 +27,7 @@ public class LList<E> {
 	}
 
 	public E get(int index) {
-		if (this.list == null)
+		if (this.list == null || this.list.size() <= index)
 			return null;
 		else
 			return this.list.get(index);
