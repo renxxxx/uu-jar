@@ -33,4 +33,24 @@ public class LList<E> {
 			return this.list.get(index);
 	};
 
+	public int size() {
+		if (this.list == null)
+			return 0;
+		else
+			return this.list.size();
+	};
+
+	public boolean isEmpty() {
+		if (this.list == null)
+			return false;
+		else
+			return this.list.isEmpty();
+	}
+
+	public String toString() {
+		if (this.list == null)
+			return null;
+		else
+			return this.list.toString();
+	}
 }
