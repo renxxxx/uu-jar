@@ -3,6 +3,7 @@ package renx.archive;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -94,4 +95,15 @@ public class MMap<K, V> {
 		return Var.toDate(map.get(key));
 	}
 
+	public List getList(K key) {
+		if (map == null)
+			return null;
+		return (List) map.get(key);
+	}
+
+	public Map getMap(K key) {
+		if (map == null)
+			return null;
+		return (Map) map.get(key);
+	}
 }
