@@ -106,4 +106,11 @@ public class MMap<K, V> {
 			return null;
 		return (Map) map.get(key);
 	}
+
+	public boolean isEmpty() {
+		if (this.map == null)
+			return true;
+		else
+			return this.map.isEmpty();
+	}
 }

@@ -52,7 +52,7 @@ public class LList<E> {
 
 	public boolean isEmpty() {
 		if (this.list == null)
-			return false;
+			return true;
 		else
 			return this.list.isEmpty();
 	}
