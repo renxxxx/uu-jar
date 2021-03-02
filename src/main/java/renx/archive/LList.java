@@ -25,4 +25,12 @@ public class LList<E> {
 		list.add(e);
 		return this;
 	}
+
+	public E get(int index) {
+		if (this.list == null)
+			return null;
+		else
+			return this.list.get(index);
+	};
+
 }
