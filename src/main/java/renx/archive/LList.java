@@ -1,5 +1,6 @@
 package renx.archive;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LList<E> {
@@ -22,7 +23,10 @@ public class LList<E> {
 	}
 
 	public LList<E> add(E e) {
-		list.add(e);
+		if (this.list == null)
+			this.list = new ArrayList<E>();
+		else
+			list.add(e);
 		return this;
 	}
 
