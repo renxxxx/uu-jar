@@ -104,7 +104,6 @@ public class StringUtils {
 	}
 
 	public static String newId() {
-
 		return new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + "1" + RandomStringUtils.randomNumeric(14);
 	}
 

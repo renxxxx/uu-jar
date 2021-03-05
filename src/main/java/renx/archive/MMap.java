@@ -2,7 +2,7 @@ package renx.archive;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -35,7 +35,7 @@ public class MMap<K, V> {
 
 	public MMap<K, V> put(K key, V value) {
 		if (this.map == null)
-			this.map = new HashMap<K, V>();
+			this.map = new LinkedHashMap<K, V>();
 		this.map.put(key, value);
 		return this;
 	}

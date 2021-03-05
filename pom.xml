@@ -5,10 +5,10 @@
 
 	<groupId>renx</groupId>
 	<artifactId>archive</artifactId>
-	<version>2.1.2</version>
+	<version>2.2.1</version>
 	<description>all scopes to provided from none</description>
 	<packaging>jar</packaging>
-	<name>util</name>
+	<name>archive</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
