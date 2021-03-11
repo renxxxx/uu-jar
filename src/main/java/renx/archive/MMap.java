@@ -101,10 +101,10 @@ public class MMap<K, V> {
 		return (List) map.get(key);
 	}
 
-	public Map getMap(K key) {
+	public MMap getMap(K key) {
 		if (map == null)
 			return null;
-		return (Map) map.get(key);
+		return MMap.build((Map) map.get(key));
 	}
 
 	public boolean isEmpty() {
