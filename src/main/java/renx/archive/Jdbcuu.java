@@ -92,10 +92,10 @@ public class Jdbcuu {
 	}
 
 	public static Object queryColumn(Connection conn, String sql, Object... params) throws Exception {
-		Map row = query(conn, sql, params);
-		if (row == null)
+		MMap row = query(conn, sql, params);
+		if (row.map == null)
 			return null;
-		return row.get(row.keySet().iterator().next());
+		return row.get(row.map.keySet().iterator().next());
 	}
 
 //	public static Mappquery(Connection conn, String sql, Object... params) throws Exception {
@@ -116,7 +116,7 @@ public class Jdbcuu {
 //		}
 //	}
 
-	public static Map query(Connection conn, String sql, Object... params) throws Exception {
+	public static MMap query(Connection conn, String sql, Object... params) throws Exception {
 
 		Map item = null;
 		List<Map> itemList = queryList(conn, sql, params);
@@ -124,7 +124,7 @@ public class Jdbcuu {
 			item = itemList.get(0);
 		}
 
-		return item;
+		return MMap.build(item);
 	}
 
 	public static ResultSet query(PreparedStatement pst, String sql, Object... params) throws SQLException {
