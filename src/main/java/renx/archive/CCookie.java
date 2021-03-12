@@ -12,6 +12,6 @@ public class CCookie<K, V> {
 	}
 
 	public String v() {
-		return o == null ? o.getValue() : null;
+		return o != null ? o.getValue() : null;
 	}
 }
