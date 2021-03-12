@@ -69,7 +69,7 @@ public class Stringuu {
 		return false;
 	}
 
-	public static boolean equalsAnyIgnoreCase(String str, String... strs) {
+	public static boolean equalsIgnoreCaseAny(String str, String... strs) {
 		if (strs == null)
 			return false;
 		for (String s : strs) {
@@ -93,7 +93,7 @@ public class Stringuu {
 		return true;
 	}
 
-	public static boolean equalsAllIgnoreCase(String str, String... items) {
+	public static boolean equalsIgnoreCaseAll(String str, String... items) {
 		for (String c : items) {
 			if (str == c)
 				continue;
@@ -112,13 +112,16 @@ public class Stringuu {
 				+ RandomStringUtils.randomNumeric(tailLength);
 	}
 
+	public static boolean notEmpty(CharSequence cs) {
+		return org.apache.commons.lang3.StringUtils.isNotEmpty(cs);
+	}
+
 	public static boolean isEmpty(CharSequence cs) {
 		return org.apache.commons.lang3.StringUtils.isEmpty(cs);
 	}
 
 	public static String trimToNull(String str) {
 		return org.apache.commons.lang3.StringUtils.trimToNull(str);
-
 	}
 
 	public static String trimToEmpty(String str) {
@@ -127,6 +130,10 @@ public class Stringuu {
 
 	public static boolean equals(CharSequence cs1, CharSequence cs2) {
 		return org.apache.commons.lang3.StringUtils.equals(cs1, cs2);
+	}
+
+	public static boolean equalsIgnoreCase(CharSequence cs1, CharSequence cs2) {
+		return org.apache.commons.lang3.StringUtils.equalsIgnoreCase(cs1, cs2);
 	}
 
 	public static String left(String str, int len) {
