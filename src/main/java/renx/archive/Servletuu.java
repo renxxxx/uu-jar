@@ -17,13 +17,8 @@ import org.apache.log4j.Logger;
 public class Servletuu {
 	public static Logger logger = Logger.getLogger(Servletuu.class);
 
-	public static Map<String, List<String>> resHeaderm(HttpServletRequest request, HttpServletResponse response) {
-		Map<String, List<String>> headersMap = (Map<String, List<String>>) request.getAttribute("resHeaderm-10000");
-		if (headersMap == null)
-			headersMap = new LinkedHashMap<String, List<String>>();
-		else {
-			return headersMap;
-		}
+	public static Map<String, List<String>> resHeaderm(HttpServletResponse response) {
+		Map<String, List<String>> headersMap = new LinkedHashMap<String, List<String>>();
 		Collection<String> names = response.getHeaderNames();
 		for (Iterator iterator = names.iterator(); iterator.hasNext();) {
 			String name = (String) iterator.next();
