@@ -15,37 +15,31 @@ public class Db {
 	public String url;
 	public String username;
 	public String password;
-	public boolean started = false;
 
 	public void start() {
-		if (started)
-			return;
-		try {
-			if (this.dataSource != null) {
-				((org.apache.tomcat.jdbc.pool.DataSource) this.dataSource).close(true);
-				this.dataSource = null;
-			}
-			org.apache.tomcat.jdbc.pool.DataSource tomcatJdbcPoolDataSource = new org.apache.tomcat.jdbc.pool.DataSource();
-			tomcatJdbcPoolDataSource.setDriverClassName(driver);
-			tomcatJdbcPoolDataSource.setUrl(url);
-			tomcatJdbcPoolDataSource.setUsername(username);
-			tomcatJdbcPoolDataSource.setPassword(password);
-			tomcatJdbcPoolDataSource.setTestOnBorrow(true);
-			tomcatJdbcPoolDataSource.setDefaultAutoCommit(false);
-			tomcatJdbcPoolDataSource.setRollbackOnReturn(true);
-			tomcatJdbcPoolDataSource.setValidationQuery("SELECT 1");
-			this.dataSource = tomcatJdbcPoolDataSource;
-			started = true;
-		} catch (Exception e) {
-			started = false;
-			throw new RuntimeException(e);
-		}
+		start(null);
 	}
 
-	public void stop() {
-		if (this.dataSource != null) {
-			((org.apache.tomcat.jdbc.pool.DataSource) this.dataSource).close(true);
-			this.dataSource = null;
+	public void start(DataSource dataSource) {
+		if (dataSource == null) {
+			if (this.dataSource == null) {
+				try {
+					org.apache.tomcat.jdbc.pool.DataSource tomcatJdbcPoolDataSource = new org.apache.tomcat.jdbc.pool.DataSource();
+					tomcatJdbcPoolDataSource.setDriverClassName(driver);
+					tomcatJdbcPoolDataSource.setUrl(url);
+					tomcatJdbcPoolDataSource.setUsername(username);
+					tomcatJdbcPoolDataSource.setPassword(password);
+					tomcatJdbcPoolDataSource.setTestOnBorrow(true);
+					tomcatJdbcPoolDataSource.setDefaultAutoCommit(false);
+					tomcatJdbcPoolDataSource.setRollbackOnReturn(true);
+					tomcatJdbcPoolDataSource.setValidationQuery("SELECT 1");
+					this.dataSource = tomcatJdbcPoolDataSource;
+				} catch (Exception e) {
+					throw new RuntimeException(e);
+				}
+			}
+		} else {
+			this.dataSource = dataSource;
 		}
 	}
 

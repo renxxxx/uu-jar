@@ -1,18 +1,42 @@
 package renx.archive;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
 public class ServletUtils {
 	public static Logger logger = Logger.getLogger(ServletUtils.class);
+
+	public static Map<String, List<String>> resHeadersMap(HttpServletRequest request, HttpServletResponse response) {
+		Map<String, List<String>> headersMap = (Map<String, List<String>>) request.getAttribute("resHeadersMap-10000");
+		if (headersMap == null)
+			headersMap = new LinkedHashMap<String, List<String>>();
+		else {
+			return headersMap;
+		}
+		Collection<String> names = response.getHeaderNames();
+		for (Iterator iterator = names.iterator(); iterator.hasNext();) {
+			String name = (String) iterator.next();
+			Collection<String> ve = response.getHeaders(name);
+
+			List<String> valueList = new ArrayList<String>();
+			for (int i = 0; i < valueList.size(); i++) {
+				valueList.add(valueList.get(i));
+			}
+			headersMap.put(name, valueList);
+		}
+		return headersMap;
+	}
 
 	public static Map<String, List<String>> headersMap(HttpServletRequest request) {
 		Map<String, List<String>> headersMap = (Map<String, List<String>>) request.getAttribute("headersMap-10000");
