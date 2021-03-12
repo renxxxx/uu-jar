@@ -11,13 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 
-import com.alibaba.fastjson.JSONObject;
-
 public class ServletUtils {
 	public static Logger logger = Logger.getLogger(ServletUtils.class);
 
 	public static Map<String, List<String>> headersMap(HttpServletRequest request) {
-		Map<String, List<String>> headersMap = (Map<String, List<String>>) request.getAttribute("headersMap-111111");
+		Map<String, List<String>> headersMap = (Map<String, List<String>>) request.getAttribute("headersMap-10000");
 		if (headersMap == null)
 			headersMap = new LinkedHashMap<String, List<String>>();
 		else {
@@ -38,7 +36,7 @@ public class ServletUtils {
 	}
 
 	public static Map<String, Cookie> cookiesMap(HttpServletRequest request) {
-		Map<String, Cookie> cookiesMap = (Map<String, Cookie>) request.getAttribute("cookiesMap-111111");
+		Map<String, Cookie> cookiesMap = (Map<String, Cookie>) request.getAttribute("cookiesMap-10000");
 		if (cookiesMap == null)
 			cookiesMap = new LinkedHashMap<String, Cookie>();
 		else {
@@ -48,11 +46,10 @@ public class ServletUtils {
 		if (cookies == null || cookies.length == 0)
 			return cookiesMap;
 		for (int i = 0; i < cookies.length; i++) {
-			JSONObject hj = new JSONObject(true);
 			Cookie cookie = cookies[i];
 			cookiesMap.put(cookie.getName(), cookie);
 		}
-		request.setAttribute("cookiesMap-111111", cookiesMap);
+		request.setAttribute("cookiesMap-10000", cookiesMap);
 		return cookiesMap;
 	}
 
