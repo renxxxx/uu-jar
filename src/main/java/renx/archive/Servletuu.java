@@ -17,8 +17,8 @@ import org.apache.log4j.Logger;
 public class Servletuu {
 	public static Logger logger = Logger.getLogger(Servletuu.class);
 
-	public static Map<String, List<String>> resHeadersMap(HttpServletRequest request, HttpServletResponse response) {
-		Map<String, List<String>> headersMap = (Map<String, List<String>>) request.getAttribute("resHeadersMap-10000");
+	public static Map<String, List<String>> resHeaderm(HttpServletRequest request, HttpServletResponse response) {
+		Map<String, List<String>> headersMap = (Map<String, List<String>>) request.getAttribute("resHeaderm-10000");
 		if (headersMap == null)
 			headersMap = new LinkedHashMap<String, List<String>>();
 		else {
@@ -38,8 +38,8 @@ public class Servletuu {
 		return headersMap;
 	}
 
-	public static Map<String, List<String>> headersMap(HttpServletRequest request) {
-		Map<String, List<String>> headersMap = (Map<String, List<String>>) request.getAttribute("headersMap-10000");
+	public static Map<String, List<String>> headerm(HttpServletRequest request) {
+		Map<String, List<String>> headersMap = (Map<String, List<String>>) request.getAttribute("headerm-10000");
 		if (headersMap == null)
 			headersMap = new LinkedHashMap<String, List<String>>();
 		else {
@@ -59,8 +59,8 @@ public class Servletuu {
 		return headersMap;
 	}
 
-	public static Map<String, Cookie> cookiesMap(HttpServletRequest request) {
-		Map<String, Cookie> cookiesMap = (Map<String, Cookie>) request.getAttribute("cookiesMap-10000");
+	public static Map<String, Cookie> cookiem(HttpServletRequest request) {
+		Map<String, Cookie> cookiesMap = (Map<String, Cookie>) request.getAttribute("cookiem-10000");
 		if (cookiesMap == null)
 			cookiesMap = new LinkedHashMap<String, Cookie>();
 		else {
@@ -110,7 +110,7 @@ public class Servletuu {
 	}
 
 	public static CCookie cookie(String key, HttpServletRequest request) {
-		Map<String, Cookie> cookiesMap = cookiesMap(request);
+		Map<String, Cookie> cookiesMap = cookiem(request);
 		CCookie cookie = new CCookie(cookiesMap.get(key));
 		return cookie;
 	}

@@ -43,7 +43,7 @@ public class Var {
 	public Date dateValue;
 	public String[] stringValues;
 	public String[] enumValues = null;
-	public static CacheMap.Ccc<String, Pattern> regexCache = new CacheMap.Ccc<String, Pattern>() {
+	public static Cachem.Ccc<String, Pattern> regexCache = new Cachem.Ccc<String, Pattern>() {
 		@Override
 		public Pattern create(String regex) {
 			return Pattern.compile(regex);

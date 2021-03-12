@@ -2,16 +2,16 @@ package renx.archive;
 
 import com.alibaba.fastjson.JSONObject;
 
-public class JsonOo extends JSONObject {
+public class JSONOo extends JSONObject {
 
-	public JsonOo(String key, Object value) {
+	public JSONOo(String key, Object value) {
 		super.put(key, value);
 	}
 
-	public JsonOo() {
+	public JSONOo() {
 	}
 
-	public JsonOo put(String key, Object value) {
+	public JSONOo put(String key, Object value) {
 		super.put(key, value);
 		return this;
 	}
