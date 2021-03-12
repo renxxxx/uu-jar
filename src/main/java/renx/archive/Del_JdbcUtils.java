@@ -26,7 +26,7 @@ public class Del_JdbcUtils {
 	}
 
 	public static List<Map> queryList(Connection conn, String sql, Object... params) throws Exception {
-		String reqId = StringUtils.newId();
+		String reqId = Stringuu.newId();
 		logger.debug("in " + reqId);
 		PreparedStatement pst = null;
 		try {
@@ -121,7 +121,7 @@ public class Del_JdbcUtils {
 //	}
 
 	public static MMap query(Connection conn, String sql, Object... params) throws Exception {
-		String reqId = StringUtils.newId();
+		String reqId = Stringuu.newId();
 		logger.debug("in " + reqId);
 		Map item = null;
 		List<Map> itemList = queryList(conn, sql, params);
@@ -148,7 +148,7 @@ public class Del_JdbcUtils {
 			long s = System.nanoTime();
 			ResultSet rs = pst.executeQuery();
 			long e = System.nanoTime();
-			logger.debug("takes: " + StringUtils.commaNum((e - s) + "") + "ns");
+			logger.debug("takes: " + Stringuu.commaNum((e - s) + "") + "ns");
 			return rs;
 		} catch (Exception e) {
 			throw new SQLException(e.getMessage() + " sql: " + sql, e);
@@ -160,7 +160,7 @@ public class Del_JdbcUtils {
 //	}
 
 	public static int update(Connection conn, String sql, Object... params) throws Exception {
-		String reqId = StringUtils.newId();
+		String reqId = Stringuu.newId();
 		logger.debug("in " + reqId);
 		PreparedStatement pst = null;
 		try {
@@ -207,7 +207,7 @@ public class Del_JdbcUtils {
 			long s = System.nanoTime();
 			cnt = pst.executeUpdate();
 			long e = System.nanoTime();
-			logger.debug("takes: " + StringUtils.commaNum((e - s) + "") + "ns");
+			logger.debug("takes: " + Stringuu.commaNum((e - s) + "") + "ns");
 		} catch (Exception e) {
 			throw new Exception(e.getMessage() + " sql: " + sql, e);
 		}
@@ -288,7 +288,7 @@ public class Del_JdbcUtils {
 		long s = System.nanoTime();
 		cnts = pst.executeBatch();
 		long e = System.nanoTime();
-		logger.debug("takes: " + StringUtils.commaNum((e - s) + "") + "ns");
+		logger.debug("takes: " + Stringuu.commaNum((e - s) + "") + "ns");
 		logger.debug("affected : " + Arrays.toString(cnts));
 		return cnts;
 	}

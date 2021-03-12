@@ -30,7 +30,7 @@ public class Html {
 			return new ArrayList<String>();
 		List<String> oldUrls = Html.extractUrls(oldHtml);
 		List<String> newUrls = Html.extractUrls(newHtml);
-		return ListUtils.extractOffEles(oldUrls, newUrls);
+		return Listuu.extractOffEles(oldUrls, newUrls);
 	}
 
 	public static List<String> extractOffUrls(File oldFile, File newFile) throws Exception {
@@ -49,7 +49,7 @@ public class Html {
 		List<String> oldUrls = extractUrls(oldis);
 		List<String> newUrls = extractUrls(newis);
 		List<String> oUrls = new ArrayList<String>();
-		return ListUtils.extractOffEles(oldUrls, newUrls);
+		return Listuu.extractOffEles(oldUrls, newUrls);
 	}
 
 	public static void main(String[] args) {

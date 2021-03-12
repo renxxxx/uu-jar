@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-public class ServletUtils {
-	public static Logger logger = Logger.getLogger(ServletUtils.class);
+public class Servletuu {
+	public static Logger logger = Logger.getLogger(Servletuu.class);
 
 	public static Map<String, List<String>> resHeadersMap(HttpServletRequest request, HttpServletResponse response) {
 		Map<String, List<String>> headersMap = (Map<String, List<String>>) request.getAttribute("resHeadersMap-10000");
@@ -98,7 +98,7 @@ public class ServletUtils {
 //		request.setAttribute("parameterMap", parameterMap);
 //	}
 
-	public static String getClientIp(HttpServletRequest request) {
+	public static String userIp(HttpServletRequest request) {
 		String value = null;
 		value = request.getHeader("X-Real-IP");
 		if (value != null && !value.isEmpty())
@@ -109,14 +109,13 @@ public class ServletUtils {
 		return value;
 	}
 
-	public static String getCookie(String key, HttpServletRequest request) {
+	public static CCookie cookie(String key, HttpServletRequest request) {
 		Map<String, Cookie> cookiesMap = cookiesMap(request);
-		Cookie cookie = cookiesMap.get(key);
-		String value = cookie == null ? null : cookie.getValue();
-		return value;
+		CCookie cookie = new CCookie(cookiesMap.get(key));
+		return cookie;
 	}
 
-	public static String getOriginalScheme(HttpServletRequest request) {
+	public static String originalScheme(HttpServletRequest request) {
 		String value = null;
 		value = request.getHeader("X-Forwarded-Scheme");
 		if (value != null && !value.isEmpty())
@@ -127,7 +126,7 @@ public class ServletUtils {
 		return value;
 	}
 
-	public static String getOriginalHost(HttpServletRequest request) {
+	public static String originalHost(HttpServletRequest request) {
 		String value = null;
 		value = request.getHeader("remote-host");
 		if (value != null && !value.isEmpty())

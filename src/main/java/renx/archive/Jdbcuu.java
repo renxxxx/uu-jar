@@ -17,8 +17,8 @@ import java.util.Map;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
-public class Jdbc {
-	public static Logger logger = Logger.getLogger(Jdbc.class);
+public class Jdbcuu {
+	public static Logger logger = Logger.getLogger(Jdbcuu.class);
 
 	public static void main(String[] args) {
 		System.out.println(123123123);
@@ -148,7 +148,7 @@ public class Jdbc {
 			long s = System.currentTimeMillis();
 			ResultSet rs = pst.executeQuery();
 			long e = System.currentTimeMillis();
-			logger.debug("takes: " + StringUtils.commaNum((e - s) + "") + "ms");
+			logger.debug("takes: " + Stringuu.commaNum((e - s) + "") + "ms");
 			return rs;
 		} catch (Exception e) {
 			throw new SQLException(e.getMessage() + " sql: " + sql, e);
@@ -217,7 +217,7 @@ public class Jdbc {
 			long s = System.currentTimeMillis();
 			cnt = pst.executeUpdate();
 			long e = System.currentTimeMillis();
-			logger.debug("takes: " + StringUtils.commaNum((e - s) + "") + "ms");
+			logger.debug("takes: " + Stringuu.commaNum((e - s) + "") + "ms");
 		} catch (Exception e) {
 			throw new Exception(e.getMessage() + " sql: " + sql, e);
 		}
@@ -284,7 +284,7 @@ public class Jdbc {
 		long s = System.currentTimeMillis();
 		cnts = pst.executeBatch();
 		long e = System.currentTimeMillis();
-		logger.debug("takes: " + StringUtils.commaNum((e - s) + "") + "ms");
+		logger.debug("takes: " + Stringuu.commaNum((e - s) + "") + "ms");
 		logger.debug("affected : " + Arrays.toString(cnts));
 		return cnts;
 	}

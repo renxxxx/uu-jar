@@ -78,6 +78,6 @@ public class Db {
 	}
 
 	public static void m2() throws Exception {
-		System.out.println(StringUtils.newId());
+		System.out.println(Stringuu.newId());
 	}
 }

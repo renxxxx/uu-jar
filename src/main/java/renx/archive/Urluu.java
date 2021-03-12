@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 
-public class UrlUtils {
+public class Urluu {
 
 	// TODO
 	public static String getName(String url) {

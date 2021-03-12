@@ -6,8 +6,8 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-public class ListUtils {
-	public static Logger logger = Logger.getLogger(ListUtils.class);
+public class Listuu {
+	public static Logger logger = Logger.getLogger(Listuu.class);
 
 	public static <T> List<T> extractOffEles(T[] oldArr, T[] newArr) {
 		if (oldArr == null || newArr == null)

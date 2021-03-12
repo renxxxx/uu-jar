@@ -388,7 +388,7 @@ public class Var {
 		if (isEmpty())
 			return this;
 		this.enumValues = values;
-		boolean v = renx.archive.StringUtils.equalsAny(this.value, values);
+		boolean v = renx.archive.Stringuu.equalsAny(this.value, values);
 		if (!v)
 			throw Res.build(1001, "\"" + this.name + "\"只能传下列值" + Arrays.toString(this.enumValues))
 					.setErrParam(this.code);
