@@ -4,11 +4,11 @@ public class Res extends RuntimeException {
 
 	protected int code;
 	protected String errParam = null;
-	protected String codeMsg = null;
+	protected String msg = null;
 	protected Object data = null;
 	protected String requestId = null;
-	protected String codeMsgEn = null;
-	protected String codeMsgCn = null;
+	protected String msgEn = null;
+	protected String msgCn = null;
 	protected String debug = null;
 
 	public static Res success() {
@@ -23,10 +23,10 @@ public class Res extends RuntimeException {
 		return success(null, data);
 	}
 
-	public static Res success(String codeMsg, Object data) {
-		Res response = new Res(0 + " : " + codeMsg);
+	public static Res success(String msg, Object data) {
+		Res response = new Res(0 + " : " + msg);
 		response.code = 0;
-		response.codeMsg = codeMsg;
+		response.msg = msg;
 		response.data = data;
 		return response;
 	}
@@ -43,10 +43,10 @@ public class Res extends RuntimeException {
 		return failure(null, data);
 	}
 
-	public static Res failure(String codeMsg, Object data) {
-		Res response = new Res(99 + " : " + codeMsg);
-		response.code = 99;
-		response.codeMsg = codeMsg;
+	public static Res failure(String msg, Object data) {
+		Res response = new Res(100 + " : " + msg);
+		response.code = 100;
+		response.msg = msg;
 		response.data = data;
 		return response;
 	}
@@ -57,18 +57,18 @@ public class Res extends RuntimeException {
 		return response;
 	}
 
-	public static Res build(int code, String codeMsg, Object data) {
-		Res response = new Res(code + " : " + codeMsg);
+	public static Res build(int code, String msg, Object data) {
+		Res response = new Res(code + " : " + msg);
 		response.code = code;
-		response.codeMsg = codeMsg;
+		response.msg = msg;
 		response.data = data;
 		return response;
 	}
 
-	public static Res build(int code, String codeMsg) {
-		Res response = new Res(code + " : " + codeMsg);
+	public static Res build(int code, String msg) {
+		Res response = new Res(code + " : " + msg);
 		response.code = code;
-		response.codeMsg = codeMsg;
+		response.msg = msg;
 		return response;
 	}
 
@@ -104,31 +104,31 @@ public class Res extends RuntimeException {
 		// TODO Auto-generated constructor stub
 	}
 
-	public String getCodeMsg() {
-		return codeMsg;
+	public String getMsg() {
+		return msg;
 	}
 
-	public Res setCodeMsg(String codeMsg) {
-		this.codeMsg = codeMsg;
+	public Res setMsg(String msg) {
+		this.msg = msg;
 		return this;
 	}
 
-	public Res setCodeMsgCn(String codeMsgCn) {
-		this.codeMsgCn = codeMsgCn;
+	public Res setMsgCn(String msgCn) {
+		this.msgCn = msgCn;
 		return this;
 	}
 
-	public Res setCodeMsgEn(String codeMsgEn) {
-		this.codeMsgEn = codeMsgEn;
+	public Res setMsgEn(String msgEn) {
+		this.msgEn = msgEn;
 		return this;
 	}
 
-	public String getCodeMsgEn() {
-		return codeMsgEn;
+	public String getMsgEn() {
+		return msgEn;
 	}
 
 	public String getCodeMsgCn() {
-		return codeMsgCn;
+		return msgCn;
 	}
 
 	public String getDebug() {
