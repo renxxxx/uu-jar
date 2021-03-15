@@ -1,6 +1,6 @@
 package renx.archive;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.alibaba.fastjson.JSON;
@@ -18,14 +18,12 @@ public class Res extends RuntimeException {
 	protected String debug = null;
 
 	public Map to() {
-		Map map = new HashMap();
-		map.put("code", code);
-		map.put("errParam", errParam);
-		map.put("msg", msg);
-		map.put("data", data);
+		Map map = new LinkedHashMap();
 		map.put("reqNo", reqNo);
-		map.put("msgEn", msgEn);
-		map.put("msgCn", msgCn);
+		map.put("msg", msg);
+		map.put("code", code);
+		map.put("data", data);
+		map.put("errParam", errParam);
 		return map;
 	}
 
