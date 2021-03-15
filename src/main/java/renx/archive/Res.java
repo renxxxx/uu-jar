@@ -1,15 +1,33 @@
 package renx.archive;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+
 public class Res extends RuntimeException {
 
 	protected int code;
 	protected String errParam = null;
 	protected String msg = null;
 	protected Object data = null;
-	protected String requestId = null;
+	protected String reqNo = null;
 	protected String msgEn = null;
 	protected String msgCn = null;
 	protected String debug = null;
+
+	public Map to() {
+		Map map = new HashMap();
+		map.put("code", code);
+		map.put("errParam", errParam);
+		map.put("msg", msg);
+		map.put("data", data);
+		map.put("reqNo", reqNo);
+		map.put("msgEn", msgEn);
+		map.put("msgCn", msgCn);
+		return map;
+	}
 
 	public static Res success() {
 		return success(null, null);
@@ -167,13 +185,16 @@ public class Res extends RuntimeException {
 		return data;
 	}
 
-	public String getRequestId() {
-		return requestId;
+	public String getReqNo() {
+		return reqNo;
 	}
 
-	public Res setRequestId(String requestId) {
-		this.requestId = requestId;
+	public Res setReqNo(String reqNo) {
+		this.reqNo = reqNo;
 		return this;
 	}
 
+	public static void main(String[] args) {
+		System.out.println(JSON.toJSONString(Res.failure("1212"), SerializerFeature.IgnoreNonFieldGetter));
+	}
 }
