@@ -60,8 +60,8 @@ public class Res extends RuntimeException {
 	}
 
 	public static Res failure(String msg, Object data) {
-		Res response = new Res(100 + " : " + msg);
-		response.code = 100;
+		Res response = new Res(900 + " : " + msg);
+		response.code = 900;
 		response.msg = msg;
 		response.data = data;
 		return response;
