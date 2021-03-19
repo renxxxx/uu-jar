@@ -14,23 +14,29 @@ public class Urluu {
 
 	// TODO
 	public static String getName(String url) {
+		if (url == null || url.isEmpty())
+			return null;
 		return url.replaceAll("^.*/", "");
 	}
 
 	// TODO
 	public static String removeExt(String str) {
+		if (str == null || str.isEmpty())
+			return null;
 		return str.replaceAll("\\.[^\\.]*$", "");
 	}
 
 	// TODO
 	public static String getExt(String str) {
+		if (str == null || str.isEmpty())
+			return null;
 		Pattern p = Pattern.compile("^.*\\.(.*)$");
 		Matcher matcher = p.matcher(getName(str));
 		matcher.matches();
 		try {
 			return matcher.group(1);
 		} catch (RuntimeException e) {
-			return "";
+			return null;
 		}
 	}
 
