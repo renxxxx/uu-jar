@@ -6,10 +6,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Stringuu {
-	public static Logger logger = Logger.getLogger(Stringuu.class);
+	private static Logger logger = LoggerFactory.getLogger(Stringuu.class);
 
 //	public static List<String> extractOffStrs(String[] oldStrs, String[] newStrs) {
 //		oldStrs = oldStrs == null ? new String[] {} : oldStrs;

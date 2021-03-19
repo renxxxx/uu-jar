@@ -1,23 +1,20 @@
 package renx.archive;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.RandomAccessFile;
 import java.security.MessageDigest;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.commons.codec.binary.Hex;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class IOuu {
-	public static Logger logger = Logger.getLogger(IOuu.class);
+	private static Logger logger = LoggerFactory.getLogger(IOuu.class);
 
 	public static String getMD5(File file) throws Exception {
 		FileInputStream fileInputStream = null;

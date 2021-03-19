@@ -14,12 +14,14 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.alibaba.fastjson.JSON;
 
 public class Del_JdbcUtils {
-	public static Logger logger = Logger.getLogger(Del_JdbcUtils.class);
+	private static Logger logger = LoggerFactory.getLogger(Del_JdbcUtils.class);
 
 	public static void main(String[] args) {
 		System.out.println(123123123);
@@ -269,7 +271,7 @@ public class Del_JdbcUtils {
 		logger.debug(sql);
 		int[] cnts = new int[] {};
 		for (Object param : paramBatches) {
-			logger.debug(param);
+			logger.debug((String) param);
 			if (param instanceof List) {
 				for (int i = 0; i < ((List) param).size(); i++) {
 					pst.setObject(i + 1, ((List) param).get(i));
@@ -305,7 +307,7 @@ public class Del_JdbcUtils {
 			}
 			rows.add(row);
 			if (rows.size() <= 10)
-				logger.debug(row);
+				logger.debug(JSON.toJSONString(row));
 		}
 		logger.debug("affected : " + rows.size());
 		return rows;
@@ -327,7 +329,7 @@ public class Del_JdbcUtils {
 			}
 			rows.add(row);
 			if (rows.size() <= 10)
-				logger.debug(row);
+				logger.debug(JSON.toJSONString(row));
 		}
 		logger.debug("affected : " + rows.size());
 		return rows;
@@ -346,7 +348,7 @@ public class Del_JdbcUtils {
 			}
 			valueLists.add(valueList);
 			if (valueLists.size() <= 10)
-				logger.debug(valueList);
+				logger.debug(JSON.toJSONString(valueList));
 		}
 		logger.debug("affected : " + valueLists.size());
 		return valueLists;

@@ -10,10 +10,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Uu {
-	public static Logger logger = Logger.getLogger(Uu.class);
+	private static Logger logger = LoggerFactory.getLogger(Uu.class);
 
 	public static boolean isLinux() {
 		Properties prop = System.getProperties();

@@ -12,10 +12,11 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Servletuu {
-	public static Logger logger = Logger.getLogger(Servletuu.class);
+	private static Logger logger = LoggerFactory.getLogger(Servletuu.class);
 
 	public static Map<String, List<String>> resHeaderm(HttpServletResponse response) {
 		Map<String, List<String>> headersMap = new LinkedHashMap<String, List<String>>();

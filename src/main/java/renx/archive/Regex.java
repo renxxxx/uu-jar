@@ -4,13 +4,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.apache.log4j.Logger;
-
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Regex {
-	public static Logger logger = Logger.getLogger(Regex.class);
+	private static Logger logger = LoggerFactory.getLogger(Regex.class);
 
 	public static String group(String regex, String str, int group) {
 		Pattern p = Pattern.compile(regex);

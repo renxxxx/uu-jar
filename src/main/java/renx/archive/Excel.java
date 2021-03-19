@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 
-import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DateUtil;
@@ -13,10 +12,11 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Excel {
-	public static Logger logger = Logger.getLogger(Excel.class);
-
+	private static Logger logger = LoggerFactory.getLogger(Excel.class);
 	public static void main(String[] args) throws IOException {
 		Workbook wb = null;
 		File file = new File("C:\\Users\\Administrator\\Desktop\\新建 Microsoft Excel 工作表.xlsx");

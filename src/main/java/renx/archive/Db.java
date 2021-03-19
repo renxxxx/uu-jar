@@ -5,10 +5,11 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Db {
-	private static Logger logger = Logger.getLogger(Db.class);
+	private Logger logger = LoggerFactory.getLogger(Db.class);
 
 	public DataSource dataSource;
 	public String driver;

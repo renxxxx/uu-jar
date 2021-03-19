@@ -3,13 +3,14 @@ package renx.archive;
 import java.sql.SQLException;
 
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
 public class Redis {
-	private static Logger logger = Logger.getLogger(Redis.class);
+	private static Logger logger = LoggerFactory.getLogger(Redis.class);
 
 	public JedisPool jedisPool;
 	public String ip;

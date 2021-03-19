@@ -4,10 +4,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DDate {
-	public static Logger logger = Logger.getLogger(DDate.class);
+	private Logger logger = LoggerFactory.getLogger(DDate.class);
 
 	public static Date parseLong(String longtime) throws ParseException {
 		if (longtime == null)

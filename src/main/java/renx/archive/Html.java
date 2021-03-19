@@ -1,25 +1,23 @@
 package renx.archive;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Html {
-	public static Logger logger = Logger.getLogger(Html.class);
+	private static Logger logger = LoggerFactory.getLogger(Html.class);
 
 	public static List<String> extractOffUrls(String oldHtml, String newHtml) throws InterruptedException {
 		if (oldHtml == null)

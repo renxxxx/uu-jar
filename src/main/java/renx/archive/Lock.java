@@ -3,13 +3,14 @@ package renx.archive;
 import java.sql.SQLException;
 import java.util.Collections;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import redis.clients.jedis.Jedis;
 
 public class Lock {
 
-	public static Logger logger = Logger.getLogger(Lock.class);
+	private static Logger logger = LoggerFactory.getLogger(Lock.class);
 
 	public static boolean distributedLock(Jedis jedis, String lock, String locker, long period)
 			throws SQLException, InterruptedException {

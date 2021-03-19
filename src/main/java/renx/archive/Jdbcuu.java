@@ -14,11 +14,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.alibaba.fastjson.JSON;
 
 public class Jdbcuu {
-	public static Logger logger = Logger.getLogger(Jdbcuu.class);
+	private static Logger logger = LoggerFactory.getLogger(Jdbcuu.class);
 
 	public static void main(String[] args) {
 		System.out.println(123123123);
@@ -136,7 +138,7 @@ public class Jdbcuu {
 		sql = sql.replaceAll("\\s'", "");
 		sql = sql.replaceAll("'\\s", "");
 		logger.debug(sql);
-		logger.debug(Arrays.toString(params));
+		logger.debug(JSON.toJSONString(params));
 		try {
 			for (int i = 0; i < params.length; i++) {
 				Object param = params[i];
@@ -200,7 +202,7 @@ public class Jdbcuu {
 		sql = sql.replaceAll("\\s'", "");
 		sql = sql.replaceAll("'\\s", "");
 		logger.debug(sql);
-		logger.debug(Arrays.toString(params));
+		logger.debug(JSON.toJSONString(params));
 		int cnt = 0;
 		try {
 			for (int i = 0; i < params.length; i++) {
@@ -265,7 +267,7 @@ public class Jdbcuu {
 		logger.debug(sql);
 		int[] cnts = new int[] {};
 		for (Object param : paramBatches) {
-			logger.debug(param);
+			logger.debug(JSON.toJSONString(param));
 			if (param instanceof List) {
 				for (int i = 0; i < ((List) param).size(); i++) {
 					pst.setObject(i + 1, ((List) param).get(i));
@@ -301,7 +303,7 @@ public class Jdbcuu {
 			}
 			rows.add(row);
 			if (rows.size() <= 10)
-				logger.debug(row);
+				logger.debug(JSON.toJSONString(row));
 		}
 		logger.debug("affected : " + rows.size());
 		return rows;
@@ -323,7 +325,7 @@ public class Jdbcuu {
 			}
 			rows.add(row);
 			if (rows.size() <= 10)
-				logger.debug(row);
+				logger.debug(JSON.toJSONString(row));
 		}
 		logger.debug("affected : " + rows.size());
 		return rows;
@@ -342,7 +344,7 @@ public class Jdbcuu {
 			}
 			valueLists.add(valueList);
 			if (valueLists.size() <= 10)
-				logger.debug(valueList);
+				logger.debug(JSON.toJSONString(valueList));
 		}
 		logger.debug("affected : " + valueLists.size());
 		return valueLists;
