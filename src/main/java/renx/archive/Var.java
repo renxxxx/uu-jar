@@ -746,6 +746,8 @@ public class Var {
 			return null;
 		if (value instanceof Integer)
 			return (Integer) value;
+		if (value instanceof Boolean)
+			return (Boolean) value ? 1 : 0;
 		String valueStr = value.toString();
 		if (valueStr.trim().isEmpty())
 			return null;
