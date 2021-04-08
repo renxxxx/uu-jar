@@ -26,11 +26,11 @@ public class Jdbcuu {
 		System.out.println(123123123);
 	}
 
-	public static List<Map> queryList(Connection conn, String sql, Object... params) throws Exception {
+	public static List<Map> rows(Connection conn, String sql, Object... params) throws Exception {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
-			return resultSetToList(query(pst, sql, params));
+			return resultSetToList(row(pst, sql, params));
 		} catch (Exception e) {
 			throw e;
 		} finally {
@@ -39,11 +39,11 @@ public class Jdbcuu {
 		}
 	}
 
-	public static List<Object> queryThinList(Connection conn, String sql, Object... params) throws Exception {
+	public static List<Object> thinrows(Connection conn, String sql, Object... params) throws Exception {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
-			return resultSetToThinList(query(pst, sql, params));
+			return resultSetToThinRows(row(pst, sql, params));
 		} catch (Exception e) {
 			throw e;
 		} finally {
@@ -56,7 +56,7 @@ public class Jdbcuu {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
-			ResultSet rs = query(pst, sql, params);
+			ResultSet rs = row(pst, sql, params);
 			if (rs.next()) {
 				return rs.getBinaryStream(1);
 			}
@@ -94,7 +94,7 @@ public class Jdbcuu {
 	}
 
 	public static Object queryColumn(Connection conn, String sql, Object... params) throws Exception {
-		MMap row = query(conn, sql, params);
+		MMap row = row(conn, sql, params);
 		if (row.map == null)
 			return null;
 		return row.get(row.map.keySet().iterator().next());
@@ -118,10 +118,10 @@ public class Jdbcuu {
 //		}
 //	}
 
-	public static MMap query(Connection conn, String sql, Object... params) throws Exception {
+	public static MMap row(Connection conn, String sql, Object... params) throws Exception {
 
 		Map item = null;
-		List<Map> itemList = queryList(conn, sql, params);
+		List<Map> itemList = rows(conn, sql, params);
 		if (itemList != null && itemList.size() > 0) {
 			item = itemList.get(0);
 		}
@@ -129,7 +129,7 @@ public class Jdbcuu {
 		return MMap.build(item);
 	}
 
-	public static ResultSet query(PreparedStatement pst, String sql, Object... params) throws SQLException {
+	public static ResultSet row(PreparedStatement pst, String sql, Object... params) throws SQLException {
 		if (params == null)
 			params = new Object[] {};
 		sql = sql.replaceAll("\\s+", " ");
@@ -309,7 +309,7 @@ public class Jdbcuu {
 		return rows;
 	}
 
-	public static List<Map> resultSetToList(ResultSet rs, String[] excludeColumns) throws SQLException {
+	public static List<Map> resultSetToRows(ResultSet rs, String[] excludeColumns) throws SQLException {
 		List<String> excludeColumnList = Arrays.asList(excludeColumns);
 		List<Map> rows = new ArrayList();
 		ResultSetMetaData metaData = rs.getMetaData();
@@ -331,7 +331,7 @@ public class Jdbcuu {
 		return rows;
 	}
 
-	public static List<List<Object>> resultSetToValueLists(ResultSet rs) throws SQLException {
+	public static List<List<Object>> resultSetToValueRowss(ResultSet rs) throws SQLException {
 		ResultSetMetaData metaData = rs.getMetaData();
 		int columnCnt = metaData.getColumnCount();
 
@@ -350,7 +350,7 @@ public class Jdbcuu {
 		return valueLists;
 	}
 
-	public static List<Object> resultSetToThinList(ResultSet rs) throws SQLException {
+	public static List<Object> resultSetToThinRows(ResultSet rs) throws SQLException {
 		List<Object> rows = new ArrayList();
 		ResultSetMetaData metaData = rs.getMetaData();
 		while (rs.next()) {

@@ -12,6 +12,7 @@ public class LList<E> {
 		System.out.println(llist.list);
 	}
 
+	public int index = -1;
 	public List<E> list = null;
 
 	public static <E> LList<E> build(List<E> list) {
@@ -29,6 +30,12 @@ public class LList<E> {
 		return build(null);
 	}
 
+	public LList<E> addif(E e, boolean iff) {
+		if (iff)
+			return add(e);
+		return this;
+	}
+
 	public LList<E> add(E e) {
 		if (this.list == null)
 			this.list = new ArrayList<E>();
@@ -36,11 +43,27 @@ public class LList<E> {
 		return this;
 	}
 
+	public Object[] toArray() {
+		if (this.list == null)
+			return null;
+		return this.list.toArray();
+	}
+
 	public E get(int index) {
 		if (this.list == null || this.list.size() <= index)
 			return null;
 		else
 			return this.list.get(index);
+	};
+
+	public E next() {
+		if (this.list != null && (this.list.size() - 1) >= (this.index + 1))
+			return get(++this.index);
+		return null;
+	};
+
+	public void reset() {
+		this.index = -1;
 	};
 
 	public int size() {

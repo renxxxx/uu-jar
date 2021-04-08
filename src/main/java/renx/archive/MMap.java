@@ -95,15 +95,15 @@ public class MMap<K, V> {
 		return Var.toDate(map.get(key));
 	}
 
-	public List getList(K key) {
+	public LList getList(K key) {
 		if (map == null)
-			return null;
-		return (List) map.get(key);
+			return LList.build();
+		return LList.build((List) map.get(key));
 	}
 
 	public MMap getMap(K key) {
 		if (map == null)
-			return null;
+			return MMap.build();
 		return MMap.build((Map) map.get(key));
 	}
 
