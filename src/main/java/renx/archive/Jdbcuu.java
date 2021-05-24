@@ -133,10 +133,6 @@ public class Jdbcuu {
 		if (params == null)
 			params = new Object[] {};
 		sql = sql.replaceAll("\\s+", " ");
-		sql = sql.replaceAll("\\s,", "");
-		sql = sql.replaceAll(",\\s", "");
-		sql = sql.replaceAll("\\s'", "");
-		sql = sql.replaceAll("'\\s", "");
 		logger.debug(sql);
 		logger.debug(JSON.toJSONString(params));
 		try {
@@ -197,10 +193,6 @@ public class Jdbcuu {
 		if (params == null)
 			params = new Object[] {};
 		sql = sql.replaceAll("\\s+", " ");
-		sql = sql.replaceAll("\\s,", "");
-		sql = sql.replaceAll(",\\s", "");
-		sql = sql.replaceAll("\\s'", "");
-		sql = sql.replaceAll("'\\s", "");
 		logger.debug(sql);
 		logger.debug(JSON.toJSONString(params));
 		int cnt = 0;
