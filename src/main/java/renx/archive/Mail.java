@@ -62,7 +62,7 @@ public class Mail {
 		// 邮件的文本内容
 		message.setContent(content, "text/html;charset=UTF-8");
 		// 返回创建好的邮件对象
-
+		
 		// 5、发送邮件
 		ts.sendMessage(message, message.getAllRecipients());
 		ts.close();
