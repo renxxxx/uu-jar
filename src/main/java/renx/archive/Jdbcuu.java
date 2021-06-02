@@ -139,7 +139,7 @@ public class Jdbcuu {
 			for (int i = 0; i < params.length; i++) {
 				Object param = params[i];
 				if (param instanceof Var) {
-					param = ((Var) param).val();
+					param = ((Var) param).value;
 				}
 				pst.setObject(i + 1, param);
 			}
@@ -200,7 +200,7 @@ public class Jdbcuu {
 			for (int i = 0; i < params.length; i++) {
 				Object param = params[i];
 				if (param instanceof Var) {
-					param = ((Var) param).val();
+					param = ((Var) param).value;
 					pst.setObject(i + 1, param);
 				} else if (param instanceof InputStream) {
 					pst.setBinaryStream(i + 1, (InputStream) param);
