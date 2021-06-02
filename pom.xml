@@ -5,7 +5,7 @@
 
 	<groupId>renx</groupId>
 	<artifactId>archive</artifactId>
-	<version>2.2.6.Dev.0602</version>
+	<version>2.2.6.Dev</version>
 	<description>all scopes to provided from none</description>
 	<packaging>jar</packaging>
 	<name>archive</name>
