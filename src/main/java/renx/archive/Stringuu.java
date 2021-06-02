@@ -56,18 +56,26 @@ public class Stringuu {
 		return str;
 	}
 
-	public static boolean equalsAny(CharSequence cs, CharSequence... css) {
-		if (css == null)
+	public static boolean notEqualsAny(String str, String... strs) {
+		return !equalsAny(str, strs);
+	}
+
+	public static boolean equalsAny(String str, String... strs) {
+		if (strs == null)
 			return false;
-		for (CharSequence c : css) {
-			if (cs == c)
+		for (String c : strs) {
+			if (str == c)
 				return true;
-			if (cs != null && cs.equals(c))
+			if (str != null && str.equals(c))
 				return true;
-			if (c != null && c.equals(cs))
+			if (c != null && c.equals(str))
 				return true;
 		}
 		return false;
+	}
+
+	public static boolean notEqualsIgnoreCaseAny(String str, String... strs) {
+		return !equalsIgnoreCaseAny(str, strs);
 	}
 
 	public static boolean equalsIgnoreCaseAny(String str, String... strs) {
@@ -84,6 +92,10 @@ public class Stringuu {
 		return false;
 	}
 
+	public static boolean notEqualsAll(String str, String... items) {
+		return !equalsAll(str, items);
+	}
+
 	public static boolean equalsAll(String str, String... items) {
 		for (String c : items) {
 			if (str == c)
@@ -92,6 +104,10 @@ public class Stringuu {
 				return false;
 		}
 		return true;
+	}
+
+	public static boolean notEqualsIgnoreCaseAll(String str, String... items) {
+		return !equalsIgnoreCaseAll(str, items);
 	}
 
 	public static boolean equalsIgnoreCaseAll(String str, String... items) {
