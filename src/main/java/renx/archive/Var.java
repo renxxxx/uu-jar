@@ -594,10 +594,6 @@ public class Var {
 //		return this;
 //	}
 
-	public String val() {
-		return this.value;
-	}
-
 	public String[] toStrings() {
 		if (this.stringValues != null)
 			return this.stringValues;
@@ -608,7 +604,7 @@ public class Var {
 
 	@Override
 	public String toString() {
-		return this.val();
+		return this.value;
 	}
 
 	public Integer toInteger() {
