@@ -37,6 +37,17 @@ public class Stringuu {
 		System.out.println((System.nanoTime() + ""));
 	}
 
+	public static String sizeToByte(String str) {
+		Integer size = Integer.parseInt(str.substring(0, str.length() - 2));
+		String unit = str.substring(str.length() - 2);
+		if (Stringuu.equalsIgnoreCaseAny(unit, "m", "mb")) {
+
+		} else if (Stringuu.equalsIgnoreCaseAny(unit, "k", "kb")) {
+
+		}
+		return str;
+	}
+
 	public static String commaNum(String str) {
 		if (str == null)
 			return str;
