@@ -743,11 +743,12 @@ public class Var {
 			return (Integer) value;
 		if (value instanceof Boolean)
 			return (Boolean) value ? 1 : 0;
-		String valueStr = value.toString();
-		if (valueStr.trim().isEmpty())
-			return null;
-		else
-			return new Integer(valueStr);
+		try {
+			return new Integer(value.toString());
+		} catch (Exception e) {
+		}
+		return null;
+
 	}
 
 	public static Float toFloat(Object value) {

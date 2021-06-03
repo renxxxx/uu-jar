@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,23 +30,40 @@ public class Stringuu {
 //	}
 
 	public static void main(String[] args) {
-		Map map = new HashMap();
-		System.out.println((Integer) map.get("a"));
-		System.out.println("212".replaceFirst("^0", "1"));
-		System.out.println((System.nanoTime() + ""));
-		System.out.println((System.nanoTime() + ""));
-		System.out.println((System.nanoTime() + ""));
+		System.out.println(toByte("asdfsd"));
 	}
 
-	public static String sizeToByte(String str) {
-		Integer size = Integer.parseInt(str.substring(0, str.length() - 2));
-		String unit = str.substring(str.length() - 2);
-		if (Stringuu.equalsIgnoreCaseAny(unit, "m", "mb")) {
-
-		} else if (Stringuu.equalsIgnoreCaseAny(unit, "k", "kb")) {
-
+	public static Integer toByte(String str) {
+		if (Stringuu.isEmpty(str))
+			return null;
+		String strTo = str;
+		Integer size = Var.toInteger(str);
+		String unit = null;
+		if (size == null) {
+			unit = str.substring(str.length() - 1);
+			strTo = str.substring(0, str.length() - 1);
+			size = Var.toInteger(strTo);
+			if (size == null) {
+				unit = str.substring(str.length() - 2);
+				strTo = str.substring(0, str.length() - 2);
+				size = Var.toInteger(strTo);
+			}
 		}
-		return str;
+		if (Stringuu.isEmpty(unit)) {
+			return size;
+		} else {
+			if (Stringuu.equalsIgnoreCaseAny(unit, "g", "gb")) {
+				return size * 1024 * 1024 * 1024;
+			} else if (Stringuu.equalsIgnoreCaseAny(unit, "m", "mb")) {
+				return size * 1024 * 1024;
+			} else if (Stringuu.equalsIgnoreCaseAny(unit, "k", "kb")) {
+				return size * 1024;
+			} else if (Stringuu.equalsIgnoreCaseAny(unit, "b")) {
+				return size;
+			}
+		}
+
+		return null;
 	}
 
 	public static String commaNum(String str) {
