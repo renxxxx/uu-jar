@@ -5,7 +5,7 @@
 
 	<groupId>renx</groupId>
 	<artifactId>archive</artifactId>
-	<version>3.0</version>
+	<version>${maven.build.timestamp}</version>
 	<description>all scopes to provided from none</description>
 	<packaging>jar</packaging>
 	<name>archive</name>
@@ -17,7 +17,7 @@
 	</properties>
 
 	<build>
-		<finalName>${project.artifactId}-${project.version}.${maven.build.timestamp}
+		<finalName>${project.artifactId}-${project.version}
 		</finalName>
 		<resources>
 			<resource>
