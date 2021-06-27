@@ -5,7 +5,7 @@
 
 	<groupId>renx</groupId>
 	<artifactId>archive</artifactId>
-	<version>2.2.6.Dev</version>
+	<version>3.0</version>
 	<description>all scopes to provided from none</description>
 	<packaging>jar</packaging>
 	<name>archive</name>
@@ -13,10 +13,12 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.build.timestamp.format>YYMMdd</maven.build.timestamp.format>
 	</properties>
 
 	<build>
-		<finalName>${project.groupId}-${project.artifactId}-${project.version}</finalName>
+		<finalName>${project.artifactId}-${project.version}.${maven.build.timestamp}
+		</finalName>
 		<resources>
 			<resource>
 				<directory>src/main/java</directory>

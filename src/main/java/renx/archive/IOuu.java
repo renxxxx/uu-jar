@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.RandomAccessFile;
+import java.net.URL;
+import java.net.URLConnection;
 import java.security.MessageDigest;
 
 import org.apache.commons.codec.binary.Hex;
@@ -15,6 +17,36 @@ import org.slf4j.LoggerFactory;
 
 public class IOuu {
 	private static Logger logger = LoggerFactory.getLogger(IOuu.class);
+
+	public static void downloadFile(String URL, String to) throws Exception {
+		int bytesum = 0;
+		int byteread = 0;
+		URL url = new URL(URL);
+		URLConnection conn = null;
+		InputStream inStream = null;
+		FileOutputStream fs = null;
+		try {
+			conn = url.openConnection();
+			inStream = conn.getInputStream();
+			File file = new File(to);
+			boolean ff = file.getParentFile().mkdirs();
+			fs = new FileOutputStream(to);
+
+			byte[] buffer = new byte[1204];
+			int length;
+			while ((byteread = inStream.read(buffer)) != -1) {
+				bytesum += byteread;
+				fs.write(buffer, 0, byteread);
+			}
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			if (inStream != null)
+				inStream.close();
+			if (fs != null)
+				fs.close();
+		}
+	}
 
 	public static String getMD5(File file) throws Exception {
 		FileInputStream fileInputStream = null;
