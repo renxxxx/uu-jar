@@ -18,6 +18,12 @@ public class Urluu {
 		return url.replaceAll("^.*/", "");
 	}
 
+	public static String removeParams(String url) {
+		if (url == null || url.isEmpty())
+			return null;
+		return url.substring(0, url.indexOf("?"));
+	}
+
 	// TODO
 	public static String getName(String url) {
 		if (url == null || url.isEmpty())
@@ -85,7 +91,7 @@ public class Urluu {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(getName("asf/asf/sadf.er"));
+		System.out.println(removeParams("asf/asf/sadf.er?a=1&b=2"));
 	}
 
 	@Deprecated
