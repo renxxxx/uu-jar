@@ -21,7 +21,11 @@ public class Urluu {
 	public static String removeParams(String url) {
 		if (url == null || url.isEmpty())
 			return null;
-		return url.substring(0, url.indexOf("?"));
+		int a = url.indexOf("?");
+		if (a == -1)
+			return url;
+		else
+			return url.substring(0, a);
 	}
 
 	// TODO
@@ -91,7 +95,7 @@ public class Urluu {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(removeParams("asf/asf/sadf.er?a=1&b=2"));
+		System.out.println(removeParams("asf/asf/sadf.er"));
 	}
 
 	@Deprecated
