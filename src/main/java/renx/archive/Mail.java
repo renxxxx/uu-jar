@@ -17,7 +17,7 @@ public class Mail {
 		j.protocol = "smtp";
 		j.smtpAuth = "true";
 		j.user = "413038044@qq.com";
-		j.pwd = "bvoifwxmnoqrbigb";
+		j.pwd = "gfjilukxeefgbigb";
 		j.sender = "413038044@qq.com";
 
 		j.send("413038044@qq.com", "aq123123d", "qqqq");

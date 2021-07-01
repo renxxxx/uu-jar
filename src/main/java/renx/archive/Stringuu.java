@@ -85,37 +85,33 @@ public class Stringuu {
 		return str;
 	}
 
-	public static boolean notEqualsAny(String str, String... strs) {
-		return !equalsAny(str, strs);
+	public static boolean notEqualsAny(String str, Object... params) {
+		return !equalsAny(str, params);
 	}
 
-	public static boolean equalsAny(String str, String... strs) {
-		if (strs == null)
+	public static boolean equalsAny(String str, Object... params) {
+		if (params == null)
 			return false;
-		for (String c : strs) {
+		for (Object c : params) {
 			if (str == c)
 				return true;
-			if (str != null && str.equals(c))
-				return true;
-			if (c != null && c.equals(str))
+			if (c != null && c.toString().equals(str))
 				return true;
 		}
 		return false;
 	}
 
-	public static boolean notEqualsIgnoreCaseAny(String str, String... strs) {
-		return !equalsIgnoreCaseAny(str, strs);
+	public static boolean notEqualsIgnoreCaseAny(String str, Object... params) {
+		return !equalsIgnoreCaseAny(str, params);
 	}
 
-	public static boolean equalsIgnoreCaseAny(String str, String... strs) {
-		if (strs == null)
+	public static boolean equalsIgnoreCaseAny(String str, Object... params) {
+		if (params == null)
 			return false;
-		for (String s : strs) {
-			if (str == s)
+		for (Object c : params) {
+			if (str == c)
 				return true;
-			if (str != null && str.equalsIgnoreCase(s))
-				return true;
-			if (s != null && s.equalsIgnoreCase(str))
+			if (c != null && c.toString().equalsIgnoreCase(str))
 				return true;
 		}
 		return false;
