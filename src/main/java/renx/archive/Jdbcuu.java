@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -14,6 +15,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -133,8 +135,10 @@ public class Jdbcuu {
 		if (params == null)
 			params = new Object[] {};
 		sql = sql.replaceAll("\\s+", " ");
-		logger.debug(sql);
-		logger.debug(JSON.toJSONString(params));
+		String sqlNo = new SimpleDateFormat("YYYYMMDDHHmmssSSS").format(new Date())
+				+ RandomStringUtils.randomNumeric(3);
+		logger.debug(sqlNo + " " + sql);
+		logger.debug(sqlNo + " " + JSON.toJSONString(params));
 		try {
 			for (int i = 0; i < params.length; i++) {
 				Object param = params[i];
@@ -146,10 +150,10 @@ public class Jdbcuu {
 			long s = System.currentTimeMillis();
 			ResultSet rs = pst.executeQuery();
 			long e = System.currentTimeMillis();
-			logger.debug("takes: " + Stringuu.commaNum((e - s) + "") + "ms");
+			logger.debug(sqlNo + " " + "takes: " + Stringuu.commaNum((e - s) + "") + "ms");
 			return rs;
 		} catch (Exception e) {
-			throw new SQLException(e.getMessage() + " sql: " + sql, e);
+			throw new SQLException(e.getMessage() + " " + sqlNo + " " + " sql: " + sql, e);
 		}
 	}
 
@@ -193,8 +197,10 @@ public class Jdbcuu {
 		if (params == null)
 			params = new Object[] {};
 		sql = sql.replaceAll("\\s+", " ");
-		logger.debug(sql);
-		logger.debug(JSON.toJSONString(params));
+		String sqlNo = new SimpleDateFormat("YYYYMMDDHHmmssSSS").format(new Date())
+				+ RandomStringUtils.randomNumeric(3);
+		logger.debug(sqlNo + " " + sql);
+		logger.debug(sqlNo + " " + JSON.toJSONString(params));
 		int cnt = 0;
 		try {
 			for (int i = 0; i < params.length; i++) {
@@ -211,11 +217,11 @@ public class Jdbcuu {
 			long s = System.currentTimeMillis();
 			cnt = pst.executeUpdate();
 			long e = System.currentTimeMillis();
-			logger.debug("takes: " + Stringuu.commaNum((e - s) + "") + "ms");
+			logger.debug(sqlNo + " " + "takes: " + Stringuu.commaNum((e - s) + "") + "ms");
 		} catch (Exception e) {
-			throw new Exception(e.getMessage() + " sql: " + sql, e);
+			throw new Exception(e.getMessage() + " " + sqlNo + " " + " sql: " + sql, e);
 		}
-		logger.debug("affected: " + cnt);
+		logger.debug(sqlNo + " " + "affected: " + cnt);
 		return cnt;
 	}
 
@@ -256,10 +262,12 @@ public class Jdbcuu {
 	public static int[] batch(PreparedStatement pst, String sql, Object... paramBatches) throws Exception {
 		if (paramBatches == null)
 			paramBatches = new Object[] {};
-		logger.debug(sql);
+		String sqlNo = new SimpleDateFormat("YYYYMMDDHHmmssSSS").format(new Date())
+				+ RandomStringUtils.randomNumeric(3);
+		logger.debug(sqlNo + " " + sql);
 		int[] cnts = new int[] {};
 		for (Object param : paramBatches) {
-			logger.debug(JSON.toJSONString(param));
+			logger.debug(sqlNo + " " + JSON.toJSONString(param));
 			if (param instanceof List) {
 				for (int i = 0; i < ((List) param).size(); i++) {
 					pst.setObject(i + 1, ((List) param).get(i));
@@ -278,8 +286,8 @@ public class Jdbcuu {
 		long s = System.currentTimeMillis();
 		cnts = pst.executeBatch();
 		long e = System.currentTimeMillis();
-		logger.debug("takes: " + Stringuu.commaNum((e - s) + "") + "ms");
-		logger.debug("affected : " + Arrays.toString(cnts));
+		logger.debug(sqlNo + " " + "takes: " + Stringuu.commaNum((e - s) + "") + "ms");
+		logger.debug(sqlNo + " " + "affected : " + Arrays.toString(cnts));
 		return cnts;
 	}
 
