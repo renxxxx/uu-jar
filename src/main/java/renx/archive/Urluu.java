@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang3.StringUtils;
 
 public class Urluu {
-
+	@Deprecated
 	public static String getPureName(String url) {
 		if (url == null || url.isEmpty())
 			return null;
@@ -29,7 +29,7 @@ public class Urluu {
 	}
 
 	// TODO
-	public static String getName(String url) {
+	public static String name(String url) {
 		if (url == null || url.isEmpty())
 			return null;
 		return url.replaceAll("^.*/", "");
@@ -43,11 +43,11 @@ public class Urluu {
 	}
 
 	// TODO
-	public static String getExt(String str) {
+	public static String ext(String str) {
 		if (str == null || str.isEmpty())
 			return null;
 		Pattern p = Pattern.compile("^.*\\.(.*)$");
-		Matcher matcher = p.matcher(getName(str));
+		Matcher matcher = p.matcher(name(str));
 		matcher.matches();
 		try {
 			return matcher.group(1);
@@ -56,30 +56,29 @@ public class Urluu {
 		}
 	}
 
-	public static String buildPath(List<String> pathParts) {
-		return buildPath(pathParts.toArray(new String[] {}));
+	public static String build(List<String> parts) {
+		return build(parts.toArray(new String[] {}));
 	}
 
-	public static String buildPath(String... pathParts) {
+	public static String build(String... parts) {
 		String url = "";
-		for (int i = 0; i < pathParts.length; i++) {
-			if (StringUtils.isEmpty(pathParts[i]))
+		for (int i = 0; i < parts.length; i++) {
+			if (StringUtils.isEmpty(parts[i]))
 				continue;
-			if (i == pathParts.length - 1)
-				url = url + pathParts[i];
+			if (i == parts.length - 1)
+				url = url + parts[i];
 			else
-				url = url + pathParts[i] + "/";
+				url = url + parts[i] + "/";
 		}
-		return prettyUrl(url);
+		return pretty(url);
 	}
 
-	public static String prettyUrl(String path) {
-		path = path.replaceAll("(\\\\+|/+)", "/");
-		return path;
+	public static String pretty(String url) {
+		url = url.replaceAll("(\\\\+|/+)", "/");
+		return url;
 	}
 
-	public static Map<String, String> parseQueryString(String queryString, String encode)
-			throws UnsupportedEncodingException {
+	public static Map<String, String> params(String queryString, String encode) throws UnsupportedEncodingException {
 		if (queryString == null || queryString.trim().isEmpty())
 			return null;
 		String[] params = queryString.split("&");
