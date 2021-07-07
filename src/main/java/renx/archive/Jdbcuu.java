@@ -508,4 +508,42 @@ public class Jdbcuu {
 //
 //		return sqlPart;
 //	}
+
+	@Deprecated
+	public static String buildOrderBy(String[] sorts, String[] orders, String[] sortPool, String[] sortColumnPool,
+			String baseSort, String baseOrder) {
+		StringBuilder sqlB = new StringBuilder(" order by ");
+		if (sorts == null || sorts.length == 0)
+			sorts = new String[] {};
+		if (orders == null || sorts.length == 0) {
+			orders = new String[sorts.length];
+			for (int i = 0; i < orders.length; i++) {
+				orders[i] = "desc";
+			}
+		}
+
+		List<String> sortListPool = sortPool == null ? new ArrayList<String>()
+				: new ArrayList<String>(Arrays.asList(sortPool));
+		List<String> sortColumnListPool = sortColumnPool == null ? new ArrayList<String>()
+				: new ArrayList<String>(Arrays.asList(sortColumnPool));
+		for (int i = 0; i < sorts.length; i++) {
+			if (sorts[i] == null || sorts[i].trim().isEmpty())
+				continue;
+			int n = sortListPool.indexOf(sorts[i]);
+			if (n > -1)
+				sqlB.append(sortColumnListPool.get(n));
+			else
+				throw new RuntimeException("排序字段有误");
+			sqlB.append(" ");
+			if (orders[i].equals("desc"))
+				sqlB.append("desc");
+			else if (orders[i].equals("asc"))
+				sqlB.append("asc");
+			else
+				throw new RuntimeException("排序顺序有误");
+			sqlB.append(sorts.length == 0 ? "" : ",");
+		}
+		sqlB.append(baseSort).append(" ").append(baseOrder);
+		return sqlB.toString();
+	}
 }
