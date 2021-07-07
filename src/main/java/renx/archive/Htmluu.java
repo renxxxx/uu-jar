@@ -16,8 +16,8 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Html {
-	private static Logger logger = LoggerFactory.getLogger(Html.class);
+public class Htmluu {
+	private static Logger logger = LoggerFactory.getLogger(Htmluu.class);
 
 	public static List<String> extractOffUrls(String oldHtml, String newHtml) throws InterruptedException {
 		if (oldHtml == null)
@@ -26,8 +26,8 @@ public class Html {
 			return null;
 		if (oldHtml.equals(newHtml))
 			return new ArrayList<String>();
-		List<String> oldUrls = Html.extractUrls(oldHtml);
-		List<String> newUrls = Html.extractUrls(newHtml);
+		List<String> oldUrls = Htmluu.extractUrls(oldHtml);
+		List<String> newUrls = Htmluu.extractUrls(newHtml);
 		return Listuu.extractOffEles(oldUrls, newUrls);
 	}
 
