@@ -18,15 +18,15 @@ import org.slf4j.LoggerFactory;
 public class IOuu {
 	private static Logger logger = LoggerFactory.getLogger(IOuu.class);
 
-	public static void downloadFile(String URL, String to) throws Exception {
+	public static void download(String url, String to) throws Exception {
 		int bytesum = 0;
 		int byteread = 0;
-		URL url = new URL(URL);
+		URL urll = new URL(url);
 		URLConnection conn = null;
 		InputStream inStream = null;
 		FileOutputStream fs = null;
 		try {
-			conn = url.openConnection();
+			conn = urll.openConnection();
 			inStream = conn.getInputStream();
 			File file = new File(to);
 			boolean ff = file.getParentFile().mkdirs();
@@ -48,7 +48,7 @@ public class IOuu {
 		}
 	}
 
-	public static String getMD5(File file) throws Exception {
+	public static String md5(File file) throws Exception {
 		FileInputStream fileInputStream = null;
 		try {
 			MessageDigest MD5 = MessageDigest.getInstance("MD5");
@@ -147,7 +147,7 @@ public class IOuu {
 		}
 	}
 
-	public static boolean replaceFileContent(File file, String regex, String newStr) throws IOException {
+	public static boolean replace(File file, String regex, String newStr) throws IOException {
 		RandomAccessFile raf = null;
 		try {
 			raf = new RandomAccessFile(file, "rw");
@@ -168,11 +168,11 @@ public class IOuu {
 		return true;
 	}
 
-	public static boolean deleteRecursion(File file) {
+	public static boolean delete(File file) {
 		if (file.isDirectory()) {
 			File[] files = file.listFiles();
 			for (File fileTmp : files) {
-				if (!deleteRecursion(fileTmp))
+				if (!delete(fileTmp))
 					return false;
 			}
 			logger.debug("delete " + file.getAbsolutePath());
@@ -183,12 +183,16 @@ public class IOuu {
 		}
 	}
 
-	public static boolean deleteFileUpEmpty(File file, File endFolder) {
+	public static boolean delete(String path) {
+		return delete(new File(path));
+	}
+
+	public static boolean deleteUptoEmpty(File file, File limit) {
 		logger.debug("delete " + file.getAbsolutePath());
 		boolean success = file.delete();
 		if (file.getParentFile().list().length == 0
-				&& !file.getParentFile().getAbsolutePath().equals(endFolder.getAbsolutePath())) {
-			deleteFileUpEmpty(file.getParentFile(), endFolder);
+				&& !file.getParentFile().getAbsolutePath().equals(limit.getAbsolutePath())) {
+			deleteUptoEmpty(file.getParentFile(), limit);
 		}
 		return success;
 	}
