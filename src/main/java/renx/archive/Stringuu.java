@@ -30,7 +30,7 @@ public class Stringuu {
 //	}
 
 	public static void main(String[] args) {
-		System.out.println(toByte("asdfsd"));
+		System.out.println(camel("wrwer-asfd_e234_ewr"));
 	}
 
 	public static Integer toByte(String str) {
@@ -185,4 +185,15 @@ public class Stringuu {
 	public static String right(String str, int len) {
 		return org.apache.commons.lang3.StringUtils.right(str, len);
 	}
+
+	public static String camel(String str) {
+		String[] sss = str.split("_|-");
+		for (int j = 0; j < sss.length; j++) {
+			if (j > 0)
+				sss[j] = (sss[j].charAt(0) + "").toUpperCase() + sss[j].substring(1);
+		}
+		String str1 = StringUtils.join(sss);
+		return str1;
+	}
+
 }

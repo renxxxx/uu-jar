@@ -14,8 +14,10 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +27,14 @@ public class Jdbcuu {
 	private static Logger logger = LoggerFactory.getLogger(Jdbcuu.class);
 
 	public static void main(String[] args) {
-		System.out.println(123123123);
+		String ss = "_sdf1_erwe_er";
+		String[] sss = ss.split("_");
+		for (int i = 0; i < sss.length; i++) {
+			if (i > 0)
+				sss[i] = (sss[i].charAt(0) + "").toUpperCase() + sss[i].substring(1);
+		}
+		ss = StringUtils.join(sss);
+		System.out.println(ss);
 	}
 
 	public static List<Map> rows(Connection conn, String sql, Object... params) throws Exception {
@@ -298,8 +307,9 @@ public class Jdbcuu {
 		while (rs.next()) {
 			Map<String, Object> row = new LinkedHashMap();
 			for (int i = 1; i <= columnCnt; i++) {
+				String name = metaData.getColumnLabel(i);
 				Object value = rs.getObject(i);
-				row.put(metaData.getColumnLabel(i), value);
+				row.put(Stringuu.camel(name), value);
 			}
 			rows.add(row);
 			if (rows.size() <= 10)
