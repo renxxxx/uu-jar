@@ -22,12 +22,7 @@ public class IOuu {
 	public static void download(String url, String to) throws Exception {
 		if (url == null || url.isEmpty() || to == null || to.isEmpty())
 			return;
-		if (!url.startsWith("http")) {
-			if (url.startsWith("//"))
-				url = "http:" + url;
-			else
-				url = "http://" + url;
-		}
+		url = Urluu.pretty(url);
 		int bytesum = 0;
 		int byteread = 0;
 		URL urll = new URL(url);
