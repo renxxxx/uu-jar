@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.RandomAccessFile;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.security.MessageDigest;
@@ -22,11 +23,14 @@ public class IOuu {
 		int bytesum = 0;
 		int byteread = 0;
 		URL urll = new URL(url);
-		URLConnection conn = null;
+		HttpURLConnection conn = null;
 		InputStream inStream = null;
 		FileOutputStream fs = null;
 		try {
-			conn = urll.openConnection();
+			conn = (HttpURLConnection) urll.openConnection();
+			if (conn.getResponseCode() != 200)
+				return;
+			
 			inStream = conn.getInputStream();
 			File file = new File(to);
 			boolean ff = file.getParentFile().mkdirs();
