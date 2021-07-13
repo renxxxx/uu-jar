@@ -20,6 +20,14 @@ public class IOuu {
 	private static Logger logger = LoggerFactory.getLogger(IOuu.class);
 
 	public static void download(String url, String to) throws Exception {
+		if (url == null || url.isEmpty() || to == null || to.isEmpty())
+			return;
+		if (!url.startsWith("http")) {
+			if (url.startsWith("//"))
+				url = "http:" + url;
+			else
+				url = "http://" + url;
+		}
 		int bytesum = 0;
 		int byteread = 0;
 		URL urll = new URL(url);
@@ -30,7 +38,7 @@ public class IOuu {
 			conn = (HttpURLConnection) urll.openConnection();
 			if (conn.getResponseCode() != 200)
 				return;
-			
+
 			inStream = conn.getInputStream();
 			File file = new File(to);
 			boolean ff = file.getParentFile().mkdirs();
