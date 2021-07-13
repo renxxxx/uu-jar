@@ -19,6 +19,19 @@ import org.slf4j.LoggerFactory;
 public class IOuu {
 	private static Logger logger = LoggerFactory.getLogger(IOuu.class);
 
+	public static void downloadasync(String url, String to) throws Exception {
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					download(url, to);
+				} catch (Exception e) {
+					throw new RuntimeException(e);
+				}
+			}
+		}).start();
+	}
+
 	public static void download(String url, String to) throws Exception {
 		if (url == null || url.isEmpty() || to == null || to.isEmpty())
 			return;
