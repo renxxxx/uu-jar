@@ -76,16 +76,24 @@ public class Urluu {
 	public static String pretty(String url) {
 		if (url == null || url.isEmpty())
 			return null;
+		url = url.replaceAll("(\\\\+|/+)", "/");
+
+		url = url.replaceFirst("https:/", "https://");
+		url = url.replaceFirst("http:/", "http://");
+
+		return url;
+	}
+
+	public static String makehttp(String url) {
+		if (url == null || url.isEmpty())
+			return null;
 		if (!url.startsWith("http")) {
 			if (url.startsWith("//"))
 				url = "http:" + url;
 			else
 				url = "http://" + url;
 		}
-		url = url.replaceAll("(\\\\+|/+)", "/");
-
-		url = url.replaceFirst("https:/", "https://");
-		url = url.replaceFirst("http:/", "http://");
+		url = pretty(url);
 
 		return url;
 	}
