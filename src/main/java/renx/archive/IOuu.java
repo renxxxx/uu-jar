@@ -10,7 +10,6 @@ import java.io.OutputStreamWriter;
 import java.io.RandomAccessFile;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
 
@@ -122,25 +121,19 @@ public class IOuu {
 
 	}
 
-	public static void write(String string, File file) throws Exception {
-		write(string, file, null);
+	public static void write(String string, File file, String charset) throws Exception {
+		write(string.getBytes(charset), file);
 	}
 
-	public static void write(String string, File file, Charset charset) throws Exception {
+	public static void write(byte[] data, File file) throws Exception {
 		OutputStream os = null;
-		OutputStreamWriter w = null;
 		try {
 			if (!file.getParentFile().exists())
 				file.getParentFile().mkdirs();
 			if (!file.exists())
 				file.createNewFile();
 			os = new FileOutputStream(file);
-			if (charset == null) {
-				org.apache.commons.io.IOUtils.write(string, os);
-			} else {
-				w = new OutputStreamWriter(os, charset);
-				org.apache.commons.io.IOUtils.write(string, w);
-			}
+			org.apache.commons.io.IOUtils.write(data, os);
 		} catch (Exception e) {
 			throw e;
 		} finally {
