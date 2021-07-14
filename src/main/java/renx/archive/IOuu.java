@@ -6,10 +6,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.RandomAccessFile;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.Charset;
 import java.security.MessageDigest;
 
 import org.apache.commons.codec.binary.Hex;
@@ -121,14 +123,24 @@ public class IOuu {
 	}
 
 	public static void write(String string, File file) throws Exception {
+		write(string, file, null);
+	}
+
+	public static void write(String string, File file, Charset charset) throws Exception {
 		OutputStream os = null;
+		OutputStreamWriter w = null;
 		try {
 			if (!file.getParentFile().exists())
 				file.getParentFile().mkdirs();
 			if (!file.exists())
 				file.createNewFile();
 			os = new FileOutputStream(file);
-			org.apache.commons.io.IOUtils.write(string, os);
+			if (charset == null) {
+				org.apache.commons.io.IOUtils.write(string, os);
+			} else {
+				w = new OutputStreamWriter(os, charset);
+				org.apache.commons.io.IOUtils.write(string, w);
+			}
 		} catch (Exception e) {
 			throw e;
 		} finally {
