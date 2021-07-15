@@ -108,11 +108,11 @@ public class Urluu {
 		return querystr;
 	}
 
-	public static Map<String, String> params(String querystr) throws UnsupportedEncodingException {
+	public static MMap<String, String> params(String querystr) throws UnsupportedEncodingException {
 		return params(querystr, "utf-8");
 	}
 
-	public static Map<String, String> params(String querystr, String encode) throws UnsupportedEncodingException {
+	public static MMap<String, String> params(String querystr, String encode) throws UnsupportedEncodingException {
 		if (querystr == null || querystr.trim().isEmpty())
 			return null;
 		String[] params = querystr.split("&");
@@ -124,7 +124,7 @@ public class Urluu {
 				parsedParams.put(kv[0], URLDecoder.decode(kv[1], encode));
 			}
 		}
-		return parsedParams;
+		return MMap.build(parsedParams);
 	}
 
 	public static void main(String[] args) {
