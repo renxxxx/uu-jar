@@ -37,12 +37,14 @@ public class Mail {
 		prop.setProperty("mail.transport.protocol", protocol);
 		prop.setProperty("mail.smtp.auth", smtpAuth);
 		prop.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+		prop.setProperty("mail.smtp.writetimeout", (10 * 1000) + "");
 		// 使用JavaMail发送邮件的5个步骤
 		// 1、创建session
 		Session session = Session.getInstance(prop);
 		// 开启Session的debug模式，这样就可以查看到程序发送Email的运行状态
 		session.setDebug(false);
 		// 2、通过session得到transport对象
+
 		Transport ts = session.getTransport();
 		// 3、连上邮件服务器
 		if (port == null)
@@ -62,7 +64,7 @@ public class Mail {
 		// 邮件的文本内容
 		message.setContent(content, "text/html;charset=UTF-8");
 		// 返回创建好的邮件对象
-		
+
 		// 5、发送邮件
 		ts.sendMessage(message, message.getAllRecipients());
 		ts.close();
