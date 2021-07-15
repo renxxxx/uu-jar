@@ -99,9 +99,11 @@ public class Urluu {
 	}
 
 	public static String querystr(String url) throws UnsupportedEncodingException {
+		if (url == null || url.isEmpty())
+			return null;
 		String querystr = null;
 		try {
-			querystr = url.split("?")[1].split("#")[0];
+			querystr = url.split("\\?")[1].split("#")[0];
 		} catch (Exception e) {
 
 		}
@@ -115,6 +117,7 @@ public class Urluu {
 	public static MMap<String, String> params(String querystr, String encode) throws UnsupportedEncodingException {
 		if (querystr == null || querystr.trim().isEmpty())
 			return null;
+		encode = querystr == null || querystr.trim().isEmpty() ? "utf-8" : encode;
 		String[] params = querystr.split("&");
 
 		Map<String, String> parsedParams = new HashMap<String, String>(params.length);
