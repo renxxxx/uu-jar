@@ -120,4 +120,10 @@ public class MMap<K, V> {
 		else
 			return this.map.isEmpty();
 	}
+
+	@Override
+	public String toString() {
+		return this.map == null ? null : this.map.toString();
+	}
+
 }
