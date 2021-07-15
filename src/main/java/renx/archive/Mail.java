@@ -13,9 +13,6 @@ public class Mail {
 	public static void main(String[] args) throws Exception {
 		Mail j = new Mail();
 		j.host = "smtp.qq.com";
-		j.port = 25;
-		j.protocol = "smtp";
-		j.smtpAuth = "true";
 		j.user = "413038044@qq.com";
 		j.pwd = "gfjilukxeefgbigb";
 		j.sender = "413038044@qq.com";
@@ -24,22 +21,19 @@ public class Mail {
 	}
 
 	public String host;
-	public Integer port;
-	public String protocol;
-	public String smtpAuth;
 	public String user;
 	public String pwd;
 	public String sender;
 
 	public Message send(String receiver, String subject, String content) throws Exception {
 		Properties prop = new Properties();
-		prop.setProperty("mail.host", host);
-		prop.setProperty("mail.transport.protocol", protocol);
-		prop.setProperty("mail.smtp.auth", smtpAuth);
+		prop.setProperty("mail.transport.protocol", "smtp");
+		prop.setProperty("mail.smtp.host", "smtp.qq.com");
+		prop.setProperty("mail.smtp.auth", "true");
 		prop.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-		prop.setProperty("mail.smtp.writetimeout", (10 * 1000) + "");
-		prop.setProperty("mail.smtp.timeout", (10 * 1000) + "");
-		
+		prop.setProperty("mail.smtp.socketFactory.port", "465");
+		prop.setProperty("mail.smtp.port", "465");
+
 		// 使用JavaMail发送邮件的5个步骤
 		// 1、创建session
 		Session session = Session.getInstance(prop);
@@ -49,10 +43,7 @@ public class Mail {
 
 		Transport ts = session.getTransport();
 		// 3、连上邮件服务器
-		if (port == null)
-			ts.connect(host, user, pwd);
-		else
-			ts.connect(host, port, user, pwd);
+		ts.connect(host, 465, user, pwd);
 
 		// 4、创建邮件
 		// 创建邮件对象
