@@ -98,10 +98,24 @@ public class Urluu {
 		return url;
 	}
 
-	public static Map<String, String> params(String queryString, String encode) throws UnsupportedEncodingException {
-		if (queryString == null || queryString.trim().isEmpty())
+	public static String querystr(String url) throws UnsupportedEncodingException {
+		String querystr = null;
+		try {
+			querystr = url.split("?")[1].split("#")[0];
+		} catch (Exception e) {
+
+		}
+		return querystr;
+	}
+
+	public static Map<String, String> params(String querystr) throws UnsupportedEncodingException {
+		return params(querystr, "utf-8");
+	}
+
+	public static Map<String, String> params(String querystr, String encode) throws UnsupportedEncodingException {
+		if (querystr == null || querystr.trim().isEmpty())
 			return null;
-		String[] params = queryString.split("&");
+		String[] params = querystr.split("&");
 
 		Map<String, String> parsedParams = new HashMap<String, String>(params.length);
 		for (String p : params) {
