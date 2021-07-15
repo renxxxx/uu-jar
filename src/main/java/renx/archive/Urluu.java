@@ -116,7 +116,7 @@ public class Urluu {
 
 	public static MMap<String, String> params(String querystr, String encode) throws UnsupportedEncodingException {
 		if (querystr == null || querystr.trim().isEmpty())
-			return null;
+			return MMap.build();
 		encode = querystr == null || querystr.trim().isEmpty() ? "utf-8" : encode;
 		String[] params = querystr.split("&");
 
