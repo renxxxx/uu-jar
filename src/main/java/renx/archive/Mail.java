@@ -38,6 +38,8 @@ public class Mail {
 		prop.setProperty("mail.smtp.auth", smtpAuth);
 		prop.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 		prop.setProperty("mail.smtp.writetimeout", (10 * 1000) + "");
+		prop.setProperty("mail.smtp.timeout", (10 * 1000) + "");
+		
 		// 使用JavaMail发送邮件的5个步骤
 		// 1、创建session
 		Session session = Session.getInstance(prop);
