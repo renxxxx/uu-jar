@@ -32,7 +32,9 @@ public class Urluu {
 	public static String name(String url) {
 		if (url == null || url.isEmpty())
 			return null;
-		return url.replaceAll("^.*/", "");
+		String url1 = url.replaceAll("/+$", "");
+		url1 = url1.replaceAll("^.*/", "");
+		return url1;
 	}
 
 	// TODO
@@ -131,8 +133,7 @@ public class Urluu {
 	}
 
 	public static void main(String[] args) throws UnsupportedEncodingException {
-		System.out.println(params(querystr(
-				"https://www.douyin.com/user/MS4wLjABAAAAAMfOS8daX5UcpyEgZ5_pJTPy_5cEi6xSM7KNwDDFbj4?enter_method=video_title&author_id=94496447079&group_id=6921219202086882572&log_pb=%7B%22impr_id%22%3A%22202107151729260102120370372B08FF1A%22%7D&enter_from=main_page")));
+		System.out.println(name("https://www.douyin.com/user/werwq/wer.rr"));
 	}
 
 	@Deprecated
