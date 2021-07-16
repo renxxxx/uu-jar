@@ -610,7 +610,7 @@ public class Var {
 	public Integer toInteger() {
 		if (this.integerValue != null)
 			return this.integerValue;
-		this.integerValue = isEmpty() ? null : Integer.parseInt(this.value);
+		this.integerValue = isEmpty() ? null : Integer.parseInt(this.value.split("\\.")[0]);
 		return this.integerValue;
 	}
 
@@ -744,7 +744,7 @@ public class Var {
 		if (value instanceof Boolean)
 			return (Boolean) value ? 1 : 0;
 		try {
-			return new Integer(value.toString());
+			return new Integer(value.toString().split("\\.")[0]);
 		} catch (Exception e) {
 		}
 		return null;
@@ -889,7 +889,7 @@ public class Var {
 		if (valueStr.trim().isEmpty())
 			return null;
 		else
-			return new Long(valueStr);
+			return new Long(valueStr.split("\\.")[0]);
 	}
 
 	public static BigDecimal toDecimal(Object value) {

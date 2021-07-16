@@ -80,31 +80,31 @@ public class Jdbcuu {
 		}
 	}
 
-	public static Integer queryInteger(Connection conn, String sql, Object... params) throws Exception {
-		return Var.toInteger(queryColumn(conn, sql, params));
+	public static Integer vinteger(Connection conn, String sql, Object... params) throws Exception {
+		return Var.toInteger(vcolumn(conn, sql, params));
 	}
 
-	public static String queryString(Connection conn, String sql, Object... params) throws Exception {
-		return Var.toString(queryColumn(conn, sql, params));
+	public static String vstring(Connection conn, String sql, Object... params) throws Exception {
+		return Var.toString(vcolumn(conn, sql, params));
 	}
 
-	public static BigDecimal queryDecimal(Connection conn, String sql, Object... params) throws Exception {
-		return Var.toDecimal(queryColumn(conn, sql, params));
+	public static BigDecimal vdecimal(Connection conn, String sql, Object... params) throws Exception {
+		return Var.toDecimal(vcolumn(conn, sql, params));
 	}
 
-	public static Long queryLong(Connection conn, String sql, Object... params) throws Exception {
-		return Var.toLong(queryColumn(conn, sql, params));
+	public static Long vlong(Connection conn, String sql, Object... params) throws Exception {
+		return Var.toLong(vcolumn(conn, sql, params));
 	}
 
-	public static Float queryFloat(Connection conn, String sql, Object... params) throws Exception {
-		return Var.toFloat(queryColumn(conn, sql, params));
+	public static Float vfloat(Connection conn, String sql, Object... params) throws Exception {
+		return Var.toFloat(vcolumn(conn, sql, params));
 	}
 
-	public static Date queryDate(Connection conn, String sql, Object... params) throws Exception {
-		return Var.toDate(queryColumn(conn, sql, params));
+	public static Date vdate(Connection conn, String sql, Object... params) throws Exception {
+		return Var.toDate(vcolumn(conn, sql, params));
 	}
 
-	public static Object queryColumn(Connection conn, String sql, Object... params) throws Exception {
+	public static Object vcolumn(Connection conn, String sql, Object... params) throws Exception {
 		MMap row = row(conn, sql, params);
 		if (row.map == null)
 			return null;
