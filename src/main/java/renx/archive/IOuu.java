@@ -121,11 +121,19 @@ public class IOuu {
 
 	}
 
+	public static void write(String string, File file) throws Exception {
+		write(string, file, "utf-8");
+	}
+
 	public static void write(String string, File file, String charset) throws Exception {
+		if (string == null || file == null)
+			return;
 		write(string.getBytes(charset), file);
 	}
 
 	public static void write(byte[] data, File file) throws Exception {
+		if (data == null || file == null)
+			return;
 		OutputStream os = null;
 		try {
 			if (!file.getParentFile().exists())
