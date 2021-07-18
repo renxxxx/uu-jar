@@ -316,7 +316,7 @@ public class Var {
 	public Var vMaxNum(float maxnum) {
 		if (!this.run)
 			return this;
-		if (!isEmpty() && toFloat() > maxnum) {
+		if (!isEmpty() && vfloat() > maxnum) {
 			throw Res.go(1001, "\"" + this.name + "\"最大" + maxnum).setErrParam(this.code);
 		}
 		return this;
@@ -333,7 +333,7 @@ public class Var {
 	public Var vMinNum(float minnum) {
 		if (!this.run)
 			return this;
-		if (!isEmpty() && toFloat() < minnum) {
+		if (!isEmpty() && vfloat() < minnum) {
 			throw Res.go(1001, "\"" + this.name + "\"最小" + minnum).setErrParam(this.code);
 		}
 		return this;
@@ -350,7 +350,7 @@ public class Var {
 	public Var vMaxCount(int count) {
 		if (!this.run)
 			return this;
-		if (!this.isEmpty() && this.toStrings() != null && this.toStrings().length > count) {
+		if (!this.isEmpty() && this.vstrings() != null && this.vstrings().length > count) {
 			throw Res.go(1001, "\"" + this.name + "\"最多" + count + "个").setErrParam(this.code);
 		}
 		return this;
@@ -570,7 +570,7 @@ public class Var {
 	public Var vDate() {
 		if (this.value == null || this.value.isEmpty())
 			return this;
-		toDate();
+		vdate();
 		if (this.dateValue == null)
 			throw Res.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code);
 		else {
@@ -594,7 +594,7 @@ public class Var {
 //		return this;
 //	}
 
-	public String[] toStrings() {
+	public String[] vstrings() {
 		if (this.stringValues != null)
 			return this.stringValues;
 		this.stringValues = isNull() ? null
@@ -607,28 +607,28 @@ public class Var {
 		return this.value;
 	}
 
-	public Integer toInteger() {
+	public Integer vinteger() {
 		if (this.integerValue != null)
 			return this.integerValue;
 		this.integerValue = isEmpty() ? null : Integer.parseInt(this.value.split("\\.")[0]);
 		return this.integerValue;
 	}
 
-	public Float toFloat() {
+	public Float vfloat() {
 		if (this.floatValue != null)
 			return this.floatValue;
 		this.floatValue = isEmpty() ? null : Float.parseFloat(this.value);
 		return this.floatValue;
 	}
 
-	public Long toLong() {
+	public Long vlong() {
 		if (this.longValue != null)
 			return this.longValue;
 		this.longValue = isEmpty() ? null : Long.parseLong(this.value);
 		return this.longValue;
 	}
 
-	public BigDecimal toDecimal() {
+	public BigDecimal vdecimal() {
 		if (this.decimalValue != null)
 			return this.decimalValue;
 		this.decimalValue = isEmpty() ? null : new BigDecimal(this.value);
@@ -636,11 +636,11 @@ public class Var {
 	}
 
 	public String formatDate(String pattern) {
-		Date data = this.toDate();
+		Date data = this.vdate();
 		return new SimpleDateFormat(pattern).format(data);
 	}
 
-	public Date toDate() {
+	public Date vdate() {
 		if (this.dateValue != null)
 			return this.dateValue;
 		this.dateValue = isEmpty() ? null : toDate(this.value);
