@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 public class Servletuu {
 	private static Logger logger = LoggerFactory.getLogger(Servletuu.class);
 
-	public static Map<String, List<String>> resHeaderm(HttpServletResponse response) {
+	public static Map<String, List<String>> headerm(HttpServletResponse response) {
 		Map<String, List<String>> headersMap = new LinkedHashMap<String, List<String>>();
 		Collection<String> names = response.getHeaderNames();
 		for (Iterator iterator = names.iterator(); iterator.hasNext();) {
@@ -94,7 +94,7 @@ public class Servletuu {
 //		request.setAttribute("parameterMap", parameterMap);
 //	}
 
-	public static String userIp(HttpServletRequest request) {
+	public static String ip(HttpServletRequest request) {
 		String value = null;
 		value = request.getHeader("X-Real-IP");
 		if (value != null && !value.isEmpty())
@@ -111,7 +111,7 @@ public class Servletuu {
 		return cookie;
 	}
 
-	public static String originalScheme(HttpServletRequest request) {
+	public static String scheme(HttpServletRequest request) {
 		String value = null;
 		value = request.getHeader("X-Forwarded-Scheme");
 		if (value != null && !value.isEmpty())
@@ -122,7 +122,7 @@ public class Servletuu {
 		return value;
 	}
 
-	public static String originalHost(HttpServletRequest request) {
+	public static String host(HttpServletRequest request) {
 		String value = null;
 		value = request.getHeader("remote-host");
 		if (value != null && !value.isEmpty())
