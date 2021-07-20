@@ -111,6 +111,13 @@ public class Cachem<K, V> extends AbstractMap<K, V> {
 		return entry == null ? null : entry.value;
 	}
 
+	@Override
+	public V remove(Object key) {
+		// TODO Auto-generated method stub
+		CacheEntry entry = map.remove(key);
+		return entry == null ? null : entry.value;
+	}
+
 	public int expire(Object key, long expireSeconds) {
 		CacheEntry entry = map.get(key);
 		if (entry == null)
@@ -166,4 +173,5 @@ public class Cachem<K, V> extends AbstractMap<K, V> {
 		}
 		return value;
 	}
+
 }
