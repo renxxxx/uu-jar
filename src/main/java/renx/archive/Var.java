@@ -33,14 +33,14 @@ public class Var {
 	public static String datePattern8 = "yyyy-MM-dd HH:mm";
 
 	boolean run = true;
-	public Integer integerValue;
-	public Float floatValue;
-	public Double doubleValue;
-	public Long longValue;
-	public BigDecimal decimalValue;
-	public Date dateValue;
-	public String[] stringValues;
-	public String[] enumValues = null;
+	public Integer vvinteger;
+	public Float vvfloat;
+	public Double vvdouble;
+	public Long vvlong;
+	public BigDecimal vvdecimal;
+	public Date vvdate;
+	public String[] vvstrings;
+	public String[] vvenums = null;
 	public static Cachem.Ccc<String, Pattern> regexCache = new Cachem.Ccc<String, Pattern>() {
 		@Override
 		public Pattern create(String regex) {
@@ -49,13 +49,13 @@ public class Var {
 	};
 
 	public Var clear() {
-		this.stringValues = null;
-		this.dateValue = null;
-		this.integerValue = null;
-		this.floatValue = null;
-		this.longValue = null;
-		this.decimalValue = null;
-		this.enumValues = null;
+		this.vvstrings = null;
+		this.vvdate = null;
+		this.vvinteger = null;
+		this.vvfloat = null;
+		this.vvlong = null;
+		this.vvdecimal = null;
+		this.vvenums = null;
 		return this;
 	}
 
@@ -230,19 +230,28 @@ public class Var {
 		return this;
 	}
 
+	public Var vEmpty(String msg) {
+		vEmpty(true, msg);
+		return this;
+	}
+
 	public Var vEmpty() {
+		vEmpty(true, null);
+		return this;
+	}
+
+	public Var vEmpty(boolean run, String msg) {
 		if (!this.run)
 			return this;
-		if ((this.value == null || this.value.isEmpty()))
-			throw Res.go(1001, "\"" + this.name + "\"不能空").setErrParam(this.code);
+		if (msg == null)
+			msg = "\"" + this.name + "\"不能空";
+		if (run && (this.value == null || this.value.isEmpty()))
+			throw Res.go(1001, msg).setErrParam(this.code);
 		return this;
 	}
 
 	public Var vEmpty(boolean run) {
-		if (!this.run)
-			return this;
-		if (run)
-			this.vEmpty();
+		vEmpty(run, null);
 		return this;
 	}
 
@@ -361,11 +370,11 @@ public class Var {
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
 			try {
-				this.integerValue = Integer.parseInt(this.value);
+				this.vvinteger = Integer.parseInt(this.value);
 			} catch (Exception e) {
 
 			}
-			if (this.integerValue == null)
+			if (this.vvinteger == null)
 				throw Res.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code);
 		}
 		return this;
@@ -385,10 +394,10 @@ public class Var {
 			return this;
 		if (isEmpty())
 			return this;
-		this.enumValues = values;
+		this.vvenums = values;
 		boolean v = Stringuu.equalsAny(this.value, values);
 		if (!v)
-			throw Res.go(1001, "\"" + this.name + "\"只能传下列值" + Arrays.toString(this.enumValues)).setErrParam(this.code);
+			throw Res.go(1001, "\"" + this.name + "\"只能传下列值" + Arrays.toString(this.vvenums)).setErrParam(this.code);
 		else
 			return this;
 	}
@@ -398,11 +407,11 @@ public class Var {
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
 			try {
-				this.longValue = Long.parseLong(this.value);
+				this.vvlong = Long.parseLong(this.value);
 			} catch (Exception e) {
 
 			}
-			if (this.longValue == null)
+			if (this.vvlong == null)
 				throw Res.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code);
 		}
 		return this;
@@ -413,11 +422,11 @@ public class Var {
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
 			try {
-				this.doubleValue = Double.parseDouble(this.value);
+				this.vvdouble = Double.parseDouble(this.value);
 			} catch (Exception e) {
 
 			}
-			if (this.doubleValue == null)
+			if (this.vvdouble == null)
 				throw Res.go(1001, "\"" + this.name + "\"只能输入数字").setErrParam(this.code);
 		}
 		return this;
@@ -428,11 +437,11 @@ public class Var {
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
 			try {
-				this.floatValue = Float.parseFloat(this.value);
+				this.vvfloat = Float.parseFloat(this.value);
 			} catch (Exception e) {
 
 			}
-			if (this.floatValue == null)
+			if (this.vvfloat == null)
 				throw Res.go(1001, "\"" + this.name + "\"只能输入数字").setErrParam(this.code);
 		}
 		return this;
@@ -443,11 +452,11 @@ public class Var {
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
 			try {
-				this.decimalValue = new BigDecimal(this.value);
+				this.vvdecimal = new BigDecimal(this.value);
 			} catch (Exception e) {
 
 			}
-			if (this.decimalValue == null)
+			if (this.vvdecimal == null)
 				throw Res.go(1001, "\"" + this.name + "\"只能输入数字").setErrParam(this.code);
 		}
 		return this;
@@ -571,10 +580,10 @@ public class Var {
 		if (this.value == null || this.value.isEmpty())
 			return this;
 		toDate();
-		if (this.dateValue == null)
+		if (this.vvdate == null)
 			throw Res.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code);
 		else {
-			this.value = new SimpleDateFormat(datePattern1).format(this.dateValue);
+			this.value = new SimpleDateFormat(datePattern1).format(this.vvdate);
 		}
 		return this;
 	}
@@ -595,11 +604,11 @@ public class Var {
 //	}
 
 	public String[] toStrings() {
-		if (this.stringValues != null)
-			return this.stringValues;
-		this.stringValues = isNull() ? null
+		if (this.vvstrings != null)
+			return this.vvstrings;
+		this.vvstrings = isNull() ? null
 				: StringUtils.splitByWholeSeparatorPreserveAllTokens(this.value, this.separator);
-		return this.stringValues;
+		return this.vvstrings;
 	}
 
 	@Override
@@ -608,31 +617,31 @@ public class Var {
 	}
 
 	public Integer toInteger() {
-		if (this.integerValue != null)
-			return this.integerValue;
-		this.integerValue = isEmpty() ? null : Integer.parseInt(this.value.split("\\.")[0]);
-		return this.integerValue;
+		if (this.vvinteger != null)
+			return this.vvinteger;
+		this.vvinteger = isEmpty() ? null : Integer.parseInt(this.value.split("\\.")[0]);
+		return this.vvinteger;
 	}
 
 	public Float toFloat() {
-		if (this.floatValue != null)
-			return this.floatValue;
-		this.floatValue = isEmpty() ? null : Float.parseFloat(this.value);
-		return this.floatValue;
+		if (this.vvfloat != null)
+			return this.vvfloat;
+		this.vvfloat = isEmpty() ? null : Float.parseFloat(this.value);
+		return this.vvfloat;
 	}
 
 	public Long toLong() {
-		if (this.longValue != null)
-			return this.longValue;
-		this.longValue = isEmpty() ? null : Long.parseLong(this.value);
-		return this.longValue;
+		if (this.vvlong != null)
+			return this.vvlong;
+		this.vvlong = isEmpty() ? null : Long.parseLong(this.value);
+		return this.vvlong;
 	}
 
 	public BigDecimal toDecimal() {
-		if (this.decimalValue != null)
-			return this.decimalValue;
-		this.decimalValue = isEmpty() ? null : new BigDecimal(this.value);
-		return this.decimalValue;
+		if (this.vvdecimal != null)
+			return this.vvdecimal;
+		this.vvdecimal = isEmpty() ? null : new BigDecimal(this.value);
+		return this.vvdecimal;
 	}
 
 	public String formatDate(String pattern) {
@@ -641,10 +650,10 @@ public class Var {
 	}
 
 	public Date toDate() {
-		if (this.dateValue != null)
-			return this.dateValue;
-		this.dateValue = isEmpty() ? null : toDate(this.value);
-		return this.dateValue;
+		if (this.vvdate != null)
+			return this.vvdate;
+		this.vvdate = isEmpty() ? null : toDate(this.value);
+		return this.vvdate;
 	}
 
 	public void bomb(String message) {
