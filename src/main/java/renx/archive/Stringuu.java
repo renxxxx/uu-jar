@@ -37,16 +37,16 @@ public class Stringuu {
 		if (Stringuu.isEmpty(str))
 			return null;
 		String strTo = str;
-		Integer size = Var.toInteger(str);
+		Integer size = Par.toInteger(str);
 		String unit = null;
 		if (size == null) {
 			unit = str.substring(str.length() - 1);
 			strTo = str.substring(0, str.length() - 1);
-			size = Var.toInteger(strTo);
+			size = Par.toInteger(strTo);
 			if (size == null) {
 				unit = str.substring(str.length() - 2);
 				strTo = str.substring(0, str.length() - 2);
-				size = Var.toInteger(strTo);
+				size = Par.toInteger(strTo);
 			}
 		}
 		if (Stringuu.isEmpty(unit)) {
@@ -168,6 +168,10 @@ public class Stringuu {
 
 	public static String trimToEmpty(String str) {
 		return org.apache.commons.lang3.StringUtils.trimToEmpty(str);
+	}
+
+	public static boolean notEquals(CharSequence cs1, CharSequence cs2) {
+		return !org.apache.commons.lang3.StringUtils.equals(cs1, cs2);
 	}
 
 	public static boolean equals(CharSequence cs1, CharSequence cs2) {

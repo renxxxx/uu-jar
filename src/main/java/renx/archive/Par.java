@@ -15,8 +15,8 @@ import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSONObject;
 
-public class Var {
-	private static Logger logger = LoggerFactory.getLogger(Var.class);
+public class Par {
+	private static Logger logger = LoggerFactory.getLogger(Par.class);
 
 	public String name;
 	public String code;
@@ -48,7 +48,7 @@ public class Var {
 		}
 	};
 
-	public Var clear() {
+	public Par clear() {
 		this.vvstrings = null;
 		this.vvdate = null;
 		this.vvinteger = null;
@@ -59,8 +59,8 @@ public class Var {
 		return this;
 	}
 
-	public static Var go(String name, String code, String... values) {
-		Var var = new Var();
+	public static Par go(String name, String code, String... values) {
+		Par var = new Par();
 		var.name = name;
 		var.code = code;
 		if (values != null)
@@ -71,14 +71,14 @@ public class Var {
 				}
 			}
 
-		if (var.value != null && !var.value.isEmpty() && var.value.matches(".*<(s|S)(c|C)(r|R)(i|I)(p|P)(t|T)>.*"))
+		if (var.value != null && !var.value.isEmpty() && var.value.matches(".*<(s|S)(c|C)(r|R)(i|I)(p|P)(t|T).*"))
 			throw Res.go(1001, "\"" + var.name + "\"有误").setErrParam(var.code);
 
 		return var;
 	}
 
-	public static Var go1(String... values) {
-		Var var = new Var();
+	public static Par go2(String... values) {
+		Par var = new Par();
 		if (values != null)
 			for (String value : values) {
 				if (value != null) {
@@ -87,13 +87,13 @@ public class Var {
 				}
 			}
 
-		if (var.value != null && !var.value.isEmpty() && var.value.matches(".*<(s|S)(c|C)(r|R)(i|I)(p|P)(t|T)>.*"))
+		if (var.value != null && !var.value.isEmpty() && var.value.matches(".*<(s|S)(c|C)(r|R)(i|I)(p|P)(t|T).*"))
 			throw Res.go(1001, "\"" + var.name + "\"有误").setErrParam(var.code);
 
 		return var;
 	}
 
-	public Var suffix(String suffix) {
+	public Par suffix(String suffix) {
 		if (!this.run)
 			return this;
 		if (this.value != null)
@@ -101,7 +101,7 @@ public class Var {
 		return this;
 	}
 
-	public Var prefix(String prefix) {
+	public Par prefix(String prefix) {
 		if (!this.run)
 			return this;
 		if (this.value != null)
@@ -109,14 +109,14 @@ public class Var {
 		return this;
 	}
 
-	public Var trim() {
+	public Par trim() {
 		if (!this.run)
 			return this;
 		this.value = this.value == null ? null : this.value.trim();
 		return this;
 	}
 
-	public Var trimToNull() {
+	public Par trimToNull() {
 		if (!this.run)
 			return this;
 		if (this.value != null && this.value.trim().isEmpty())
@@ -124,7 +124,7 @@ public class Var {
 		return this;
 	}
 
-	public Var trimToBlank() {
+	public Par trimToBlank() {
 		if (!this.run)
 			return this;
 		if (this.value == null)
@@ -133,26 +133,26 @@ public class Var {
 		return this;
 	}
 
-	public Var trimLeft() {
+	public Par trimLeft() {
 		if (!this.run)
 			return this;
 		this.value = this.value == null ? null : this.value.trim();
 		return this;
 	}
 
-	public Var trimRight() {
+	public Par trimRight() {
 		if (!this.run)
 			return this;
 		this.value = this.value == null ? null : this.value.trim();
 		return this;
 	}
 
-	public Var setSeparator(String separator) {
+	public Par setSeparator(String separator) {
 		this.separator = separator;
 		return this;
 	}
 
-	public Var nullDef(String defaultValue) {
+	public Par nullDef(String defaultValue) {
 		if (!this.run)
 			return this;
 		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
@@ -161,7 +161,7 @@ public class Var {
 		return this;
 	}
 
-	public Var nullDef(boolean run, String defaultValue) {
+	public Par nullDef(boolean run, String defaultValue) {
 		if (!this.run)
 			return this;
 		if (run)
@@ -169,7 +169,7 @@ public class Var {
 		return this;
 	}
 
-	public Var blankDef(String defaultValue) {
+	public Par blankDef(String defaultValue) {
 		if (!this.run)
 			return this;
 		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
@@ -178,7 +178,7 @@ public class Var {
 		return this;
 	}
 
-	public Var blankDef(boolean run, String defaultValue) {
+	public Par blankDef(boolean run, String defaultValue) {
 		if (!this.run)
 			return this;
 		if (run)
@@ -186,7 +186,7 @@ public class Var {
 		return this;
 	}
 
-	public Var emptyDef(String defaultValue) {
+	public Par emptyDef(String defaultValue) {
 		if (!this.run)
 			return this;
 		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
@@ -195,7 +195,7 @@ public class Var {
 		return this;
 	}
 
-	public Var emptyDef(boolean run, String defaultValue) {
+	public Par emptyDef(boolean run, String defaultValue) {
 		if (!this.run)
 			return this;
 		if (run)
@@ -203,18 +203,18 @@ public class Var {
 		return this;
 	}
 
-	public Var stop() {
+	public Par stop() {
 		this.run = false;
 		return this;
 	}
 
-	public Var stop(boolean run) {
+	public Par stop(boolean run) {
 		if (run)
 			this.run = false;
 		return this;
 	}
 
-	public Var vNull() {
+	public Par vNull() {
 		if (!this.run)
 			return this;
 		if (this.value == null)
@@ -222,7 +222,7 @@ public class Var {
 		return this;
 	}
 
-	public Var vNull(boolean run) {
+	public Par vNull(boolean run) {
 		if (!this.run)
 			return this;
 		if (run)
@@ -230,17 +230,17 @@ public class Var {
 		return this;
 	}
 
-	public Var vEmpty(String msg) {
+	public Par vEmpty(String msg) {
 		vEmpty(true, msg);
 		return this;
 	}
 
-	public Var vEmpty() {
+	public Par vEmpty() {
 		vEmpty(true, null);
 		return this;
 	}
 
-	public Var vEmpty(boolean run, String msg) {
+	public Par vEmpty(boolean run, String msg) {
 		if (!this.run)
 			return this;
 		if (msg == null)
@@ -250,12 +250,12 @@ public class Var {
 		return this;
 	}
 
-	public Var vEmpty(boolean run) {
+	public Par vEmpty(boolean run) {
 		vEmpty(run, null);
 		return this;
 	}
 
-	public Var vBlank() {
+	public Par vBlank() {
 		if (!this.run)
 			return this;
 		if ((this.value != null && this.value.isEmpty()))
@@ -263,7 +263,7 @@ public class Var {
 		return this;
 	}
 
-	public Var vBlank(boolean run) {
+	public Par vBlank(boolean run) {
 		if (!this.run)
 			return this;
 		if (run)
@@ -271,7 +271,7 @@ public class Var {
 		return this;
 	}
 
-	public Var vLen(int length) {
+	public Par vLen(int length) {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() != length) {
@@ -280,7 +280,7 @@ public class Var {
 		return this;
 	}
 
-	public Var vLen(boolean run, int length) {
+	public Par vLen(boolean run, int length) {
 		if (!this.run)
 			return this;
 		if (run)
@@ -288,7 +288,7 @@ public class Var {
 		return this;
 	}
 
-	public Var vMinLen(int length) {
+	public Par vMinLen(int length) {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() < length) {
@@ -297,7 +297,7 @@ public class Var {
 		return this;
 	}
 
-	public Var vMinLen(boolean run, int length) {
+	public Par vMinLen(boolean run, int length) {
 		if (!this.run)
 			return this;
 		if (run)
@@ -305,7 +305,7 @@ public class Var {
 		return this;
 	}
 
-	public Var vMaxLen(int length) {
+	public Par vMaxLen(int length) {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() > length) {
@@ -314,7 +314,7 @@ public class Var {
 		return this;
 	}
 
-	public Var vMaxLen(boolean run, int length) {
+	public Par vMaxLen(boolean run, int length) {
 		if (!this.run)
 			return this;
 		if (run)
@@ -322,7 +322,7 @@ public class Var {
 		return this;
 	}
 
-	public Var vMaxNum(float maxnum) {
+	public Par vMaxNum(float maxnum) {
 		if (!this.run)
 			return this;
 		if (!isEmpty() && toFloat() > maxnum) {
@@ -331,7 +331,7 @@ public class Var {
 		return this;
 	}
 
-	public Var vMaxNum(boolean run, float maxnum) {
+	public Par vMaxNum(boolean run, float maxnum) {
 		if (!this.run)
 			return this;
 		if (run)
@@ -339,7 +339,7 @@ public class Var {
 		return this;
 	}
 
-	public Var vMinNum(float minnum) {
+	public Par vMinNum(float minnum) {
 		if (!this.run)
 			return this;
 		if (!isEmpty() && toFloat() < minnum) {
@@ -348,7 +348,7 @@ public class Var {
 		return this;
 	}
 
-	public Var vMinNum(boolean run, float minnum) {
+	public Par vMinNum(boolean run, float minnum) {
 		if (!this.run)
 			return this;
 		if (run)
@@ -356,7 +356,7 @@ public class Var {
 		return this;
 	}
 
-	public Var vMaxCount(int count) {
+	public Par vMaxCount(int count) {
 		if (!this.run)
 			return this;
 		if (!this.isEmpty() && this.toStrings() != null && this.toStrings().length > count) {
@@ -365,7 +365,7 @@ public class Var {
 		return this;
 	}
 
-	public Var vInteger() {
+	public Par vInteger() {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
@@ -380,7 +380,7 @@ public class Var {
 		return this;
 	}
 
-	public Var vBoolean() {
+	public Par vBoolean() {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && !"1".equals(this.value) && !"0".equals(this.value)) {
@@ -389,7 +389,7 @@ public class Var {
 		return this;
 	}
 
-	public Var vEnum(String... values) {
+	public Par vEnum(String... values) {
 		if (!this.run)
 			return this;
 		if (isEmpty())
@@ -402,7 +402,7 @@ public class Var {
 			return this;
 	}
 
-	public Var vLong() {
+	public Par vLong() {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
@@ -417,7 +417,7 @@ public class Var {
 		return this;
 	}
 
-	public Var vDouble() {
+	public Par vDouble() {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
@@ -432,7 +432,7 @@ public class Var {
 		return this;
 	}
 
-	public Var vFloat() {
+	public Par vFloat() {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
@@ -447,7 +447,7 @@ public class Var {
 		return this;
 	}
 
-	public Var vDecimal() {
+	public Par vDecimal() {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
@@ -462,10 +462,18 @@ public class Var {
 		return this;
 	}
 
+	public boolean notEmpty() {
+		return !isEmpty();
+	}
+
 	public boolean isEmpty() {
 		if (this.value == null || this.value.isEmpty())
 			return true;
 		return false;
+	}
+
+	public boolean notNull() {
+		return !isNull();
 	}
 
 	public boolean isNull() {
@@ -474,13 +482,17 @@ public class Var {
 		return false;
 	}
 
+	public boolean notBlank() {
+		return !isBlank();
+	}
+
 	public boolean isBlank() {
 		if (this.value != null && this.value.isEmpty())
 			return true;
 		return false;
 	}
 
-	public Var vLenRange(int min, int max) {
+	public Par vLenRange(int min, int max) {
 		if (!this.run)
 			return this;
 		vMinLen(min);
@@ -488,7 +500,7 @@ public class Var {
 		return this;
 	}
 
-	public Var vNumRange(float min, float max) {
+	public Par vNumRange(float min, float max) {
 		if (!this.run)
 			return this;
 		vMinNum(min);
@@ -496,13 +508,13 @@ public class Var {
 		return this;
 	}
 
-	public Var vReg(Pattern regex) {
+	public Par vReg(Pattern regex) {
 		if (!this.run)
 			return this;
 		return vReg(regex, null);
 	}
 
-	public Var vReg(Pattern regex, String note) {
+	public Par vReg(Pattern regex, String note) {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null) {
@@ -516,13 +528,13 @@ public class Var {
 		return this;
 	}
 
-	public Var vRegNot(Pattern regex) {
+	public Par vRegNot(Pattern regex) {
 		if (!this.run)
 			return this;
 		return vRegNot(regex, null);
 	}
 
-	public Var vRegNot(Pattern regex, String note) {
+	public Par vRegNot(Pattern regex, String note) {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null) {
@@ -536,13 +548,13 @@ public class Var {
 		return this;
 	}
 
-	public Var vReg(String regex) {
+	public Par vReg(String regex) {
 		if (!this.run)
 			return this;
 		return vReg(regex, null);
 	}
 
-	public Var vReg(String regex, String note) {
+	public Par vReg(String regex, String note) {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty()) {
@@ -556,13 +568,13 @@ public class Var {
 		return this;
 	}
 
-	public Var vRegNot(String regex) {
+	public Par vRegNot(String regex) {
 		if (!this.run)
 			return this;
 		return vRegNot(regex, null);
 	}
 
-	public Var vRegNot(String regex, String note) {
+	public Par vRegNot(String regex, String note) {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty()) {
@@ -576,7 +588,7 @@ public class Var {
 		return this;
 	}
 
-	public Var vDate() {
+	public Par vDate() {
 		if (this.value == null || this.value.isEmpty())
 			return this;
 		toDate();
@@ -673,7 +685,7 @@ public class Var {
 		return this.value.equals(object);
 	}
 
-	public Var toLowerCase() {
+	public Par toLowerCase() {
 		if (!this.run)
 			return this;
 		if (this.value != null)
@@ -681,7 +693,7 @@ public class Var {
 		return this;
 	}
 
-	public Var toUpperCase() {
+	public Par toUpperCase() {
 		if (!this.run)
 			return this;
 		if (this.value != null)
@@ -689,7 +701,7 @@ public class Var {
 		return this;
 	}
 
-	public Var replaceAll(String regex, String replacement) {
+	public Par replaceAll(String regex, String replacement) {
 		if (!this.run)
 			return this;
 		if (this.value != null)
@@ -697,7 +709,7 @@ public class Var {
 		return this;
 	}
 
-	public Var substring(int beginIndex, int endIndex) {
+	public Par substring(int beginIndex, int endIndex) {
 		if (!this.run)
 			return this;
 		if (this.value != null)
@@ -705,7 +717,7 @@ public class Var {
 		return this;
 	}
 
-	public Var substring(int beginIndex) {
+	public Par substring(int beginIndex) {
 		if (!this.run)
 			return this;
 		if (this.value != null)
@@ -713,7 +725,7 @@ public class Var {
 		return this;
 	}
 
-	public Var concat(String str) {
+	public Par concat(String str) {
 		if (!this.run)
 			return this;
 		if (this.value != null)
@@ -739,7 +751,7 @@ public class Var {
 		return false;
 	}
 
-	public Var set(String value) {
+	public Par set(String value) {
 		clear();
 		this.value = value;
 		return this;
@@ -946,7 +958,7 @@ public class Var {
 
 	public static void main(String[] args) throws ParseException, NoSuchFieldException, SecurityException,
 			IllegalArgumentException, IllegalAccessException {
-		Var value = Var.go(null, null, "20200506132311");
+		Par value = Par.go(null, null, "20200506132311");
 		System.out.println(new SimpleDateFormat("yyyy-MM").parse("2020-03"));
 	}
 }

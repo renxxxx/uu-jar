@@ -81,27 +81,27 @@ public class Jdbcuu {
 	}
 
 	public static Integer vinteger(Connection conn, String sql, Object... params) throws Exception {
-		return Var.toInteger(vcolumn(conn, sql, params));
+		return Par.toInteger(vcolumn(conn, sql, params));
 	}
 
 	public static String vstring(Connection conn, String sql, Object... params) throws Exception {
-		return Var.toString(vcolumn(conn, sql, params));
+		return Par.toString(vcolumn(conn, sql, params));
 	}
 
 	public static BigDecimal vdecimal(Connection conn, String sql, Object... params) throws Exception {
-		return Var.toDecimal(vcolumn(conn, sql, params));
+		return Par.toDecimal(vcolumn(conn, sql, params));
 	}
 
 	public static Long vlong(Connection conn, String sql, Object... params) throws Exception {
-		return Var.toLong(vcolumn(conn, sql, params));
+		return Par.toLong(vcolumn(conn, sql, params));
 	}
 
 	public static Float vfloat(Connection conn, String sql, Object... params) throws Exception {
-		return Var.toFloat(vcolumn(conn, sql, params));
+		return Par.toFloat(vcolumn(conn, sql, params));
 	}
 
 	public static Date vdate(Connection conn, String sql, Object... params) throws Exception {
-		return Var.toDate(vcolumn(conn, sql, params));
+		return Par.toDate(vcolumn(conn, sql, params));
 	}
 
 	public static Object vcolumn(Connection conn, String sql, Object... params) throws Exception {
@@ -151,8 +151,8 @@ public class Jdbcuu {
 		try {
 			for (int i = 0; i < params.length; i++) {
 				Object param = params[i];
-				if (param instanceof Var) {
-					param = ((Var) param).value;
+				if (param instanceof Par) {
+					param = ((Par) param).value;
 				}
 				pst.setObject(i + 1, param);
 			}
@@ -214,8 +214,8 @@ public class Jdbcuu {
 		try {
 			for (int i = 0; i < params.length; i++) {
 				Object param = params[i];
-				if (param instanceof Var) {
-					param = ((Var) param).value;
+				if (param instanceof Par) {
+					param = ((Par) param).value;
 					pst.setObject(i + 1, param);
 				} else if (param instanceof InputStream) {
 					pst.setBinaryStream(i + 1, (InputStream) param);
