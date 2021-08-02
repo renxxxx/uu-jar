@@ -15,7 +15,7 @@ public class Res extends RuntimeException {
 	protected String reqNo = null;
 	protected String msgEn = null;
 	protected String msgCn = null;
-	protected String debug = null;
+	protected String error = null;
 
 	public Map to() {
 		Map map = new LinkedHashMap();
@@ -147,12 +147,12 @@ public class Res extends RuntimeException {
 		return msgCn;
 	}
 
-	public String getDebug() {
-		return debug;
+	public String getError() {
+		return error;
 	}
 
-	public Res setDebug(String debug) {
-		this.debug = debug;
+	public Res setError(String error) {
+		this.error = error;
 		return this;
 	}
 

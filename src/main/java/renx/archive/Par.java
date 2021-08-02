@@ -10,9 +10,12 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 public class Par {
@@ -389,7 +392,7 @@ public class Par {
 		return this;
 	}
 
-	public Par vEnum(String... values) {
+	public Par vEnum(String[] values, String error) {
 		if (!this.run)
 			return this;
 		if (isEmpty())
@@ -397,9 +400,13 @@ public class Par {
 		this.vvenums = values;
 		boolean v = Stringuu.equalsAny(this.value, values);
 		if (!v)
-			throw Res.go(1001, "\"" + this.name + "\"只能传下列值" + Arrays.toString(this.vvenums)).setErrParam(this.code);
+			throw Res.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code).setError(error);
 		else
 			return this;
+	}
+
+	public Par vEnum(String... values) {
+		return vEnum(values, null);
 	}
 
 	public Par vLong() {
@@ -925,16 +932,38 @@ public class Par {
 			return new BigDecimal(valueStr);
 	}
 
+	public static JSONArray toJsonArr(Object value) {
+		try {
+			if (value == null)
+				return null;
+			if (value instanceof JSONArray)
+				return (JSONArray) value;
+			String valueStr = value.toString();
+			if (valueStr.trim().isEmpty())
+				return null;
+			else
+				return JSON.parseArray(valueStr);
+		} catch (Exception e) {
+			logger.info(ExceptionUtils.getStackTrace(e));
+			return null;
+		}
+	}
+
 	public static JSONObject toJson(Object value) {
-		if (value == null)
+		try {
+			if (value == null)
+				return null;
+			if (value instanceof JSONObject)
+				return (JSONObject) value;
+			String valueStr = value.toString();
+			if (valueStr.trim().isEmpty())
+				return null;
+			else
+				return JSONObject.parseObject(valueStr);
+		} catch (Exception e) {
+			logger.info(ExceptionUtils.getStackTrace(e));
 			return null;
-		if (value instanceof JSONObject)
-			return (JSONObject) value;
-		String valueStr = value.toString();
-		if (valueStr.trim().isEmpty())
-			return null;
-		else
-			return JSONObject.parseObject(valueStr);
+		}
 	}
 
 	public static Object attr(Object target, Object... keyArray)

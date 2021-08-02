@@ -200,4 +200,8 @@ public class Stringuu {
 		return str1;
 	}
 
+	public static String[] array(String... item) {
+		return item;
+	}
+
 }
