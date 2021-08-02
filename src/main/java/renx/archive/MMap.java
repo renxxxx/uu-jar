@@ -41,14 +41,18 @@ public class MMap<K, V> {
 	}
 
 	public MMap<K, V> putAll(Map map) {
-		if (this.map != null && map != null) {
+		if (this.map == null)
+			this.map = new LinkedHashMap<K, V>();
+		if (map != null) {
 			this.map.putAll(map);
 		}
 		return this;
 	}
 
 	public MMap<K, V> putAll(MMap mmap) {
-		if (this.map != null && mmap.map != null) {
+		if (this.map == null)
+			this.map = new LinkedHashMap<K, V>();
+		if (mmap.map != null) {
 			this.map.putAll(mmap.map);
 		}
 		return this;
