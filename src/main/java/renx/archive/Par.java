@@ -76,7 +76,8 @@ public class Par {
 
 		if (var.value != null && !var.value.isEmpty() && var.value.matches(".*<(s|S)(c|C)(r|R)(i|I)(p|P)(t|T).*"))
 			throw Res.go(1001, "\"" + var.name + "\"有误").setErrParam(var.code);
-
+		if ("null".equals(var.value) || "undefined".equals(var.value))
+			var.value = null;
 		return var;
 	}
 
@@ -92,6 +93,8 @@ public class Par {
 
 		if (var.value != null && !var.value.isEmpty() && var.value.matches(".*<(s|S)(c|C)(r|R)(i|I)(p|P)(t|T).*"))
 			throw Res.go(1001, "\"" + var.name + "\"有误").setErrParam(var.code);
+		if ("null".equals(var.value) || "undefined".equals(var.value))
+			var.value = null;
 
 		return var;
 	}
