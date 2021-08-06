@@ -1,4 +1,4 @@
-package renx.archive;
+package renx.uu;
 
 import javax.servlet.http.Cookie;
 

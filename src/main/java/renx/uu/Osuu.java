@@ -1,4 +1,4 @@
-package renx.archive;
+package renx.uu;
 
 import java.io.IOException;
 
@@ -9,7 +9,7 @@ public class Osuu {
 	private static Logger logger = LoggerFactory.getLogger(Osuu.class);
 
 	public static void exec(String commandLinux, String commandWindows) throws IOException, InterruptedException {
-		String command = Uu.isLinux() ? commandLinux : Uu.isWindows() ? commandWindows : null;
+		String command = UU.isLinux() ? commandLinux : UU.isWindows() ? commandWindows : null;
 		logger.debug(command);
 		if (command == null) {
 			logger.debug("unknown os,can`t run the command specified");

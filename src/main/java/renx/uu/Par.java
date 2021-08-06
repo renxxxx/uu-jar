@@ -1,4 +1,4 @@
-package renx.archive;
+package renx.uu;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;

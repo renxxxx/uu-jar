@@ -1,4 +1,4 @@
-package renx.archive;
+package renx.uu;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -13,8 +13,9 @@ import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Uu {
-	private static Logger logger = LoggerFactory.getLogger(Uu.class);
+public class UU {
+	private static Logger logger = LoggerFactory.getLogger(UU.class);
+	public static String version = "2.2.4";
 
 	public static boolean isLinux() {
 		Properties prop = System.getProperties();
@@ -101,14 +102,13 @@ public class Uu {
 	public static void main(String[] args) {
 		System.out.println(getTodayRemainSecond());
 	}
+
 	public static Integer getTodayRemainSecond() {
 		Date now = new Date();
-	    LocalDateTime midnight = LocalDateTime.ofInstant(now.toInstant(),
-	        ZoneId.systemDefault()).plusDays(1).withHour(0).withMinute(0)
-	        .withSecond(0).withNano(0);
-	    LocalDateTime currentDateTime = LocalDateTime.ofInstant(now.toInstant(),
-	        ZoneId.systemDefault());
-	    long seconds = ChronoUnit.SECONDS.between(currentDateTime, midnight);
-	    return (int) seconds;
-	  }
+		LocalDateTime midnight = LocalDateTime.ofInstant(now.toInstant(), ZoneId.systemDefault()).plusDays(1)
+				.withHour(0).withMinute(0).withSecond(0).withNano(0);
+		LocalDateTime currentDateTime = LocalDateTime.ofInstant(now.toInstant(), ZoneId.systemDefault());
+		long seconds = ChronoUnit.SECONDS.between(currentDateTime, midnight);
+		return (int) seconds;
+	}
 }

@@ -1,4 +1,4 @@
-package renx.archive;
+package renx.uu;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;

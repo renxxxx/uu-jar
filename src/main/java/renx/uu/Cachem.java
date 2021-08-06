@@ -1,4 +1,4 @@
-package renx.archive;
+package renx.uu;
 
 import java.util.AbstractMap;
 import java.util.HashMap;

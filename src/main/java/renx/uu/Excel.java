@@ -1,4 +1,4 @@
-package renx.archive;
+package renx.uu;
 
 import java.io.File;
 import java.io.IOException;

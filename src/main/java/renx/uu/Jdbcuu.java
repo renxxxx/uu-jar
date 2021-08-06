@@ -1,4 +1,4 @@
-package renx.archive;
+package renx.uu;
 
 import java.io.InputStream;
 import java.math.BigDecimal;

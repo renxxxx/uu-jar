@@ -1,4 +1,4 @@
-package renx.archive;
+package renx.uu;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

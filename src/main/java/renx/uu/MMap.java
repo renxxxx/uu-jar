@@ -1,4 +1,4 @@
-package renx.archive;
+package renx.uu;
 
 import java.math.BigDecimal;
 import java.util.Date;
