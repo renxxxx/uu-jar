@@ -768,42 +768,53 @@ public class Par {
 	}
 
 	public static Integer toInteger(Object value) {
-		if (value == null)
-			return null;
-		if (value instanceof Integer)
-			return (Integer) value;
-		if (value instanceof Boolean)
-			return (Boolean) value ? 1 : 0;
 		try {
+			if (value == null)
+				return null;
+			if (value instanceof Integer)
+				return (Integer) value;
+			if (value instanceof Boolean)
+				return (Boolean) value ? 1 : 0;
 			return new Integer(value.toString().split("\\.")[0]);
 		} catch (Exception e) {
+			logger.debug(ExceptionUtils.getStackTrace(e));
 		}
 		return null;
 
 	}
 
 	public static Float toFloat(Object value) {
-		if (value == null)
+		try {
+			if (value == null)
+				return null;
+			if (value instanceof Float)
+				return (Float) value;
+			String valueStr = value.toString();
+			if (valueStr.trim().isEmpty())
+				return null;
+			else
+				return new Float(valueStr);
+		} catch (Exception e) {
+			logger.debug(ExceptionUtils.getStackTrace(e));
 			return null;
-		if (value instanceof Float)
-			return (Float) value;
-		String valueStr = value.toString();
-		if (valueStr.trim().isEmpty())
-			return null;
-		else
-			return new Float(valueStr);
+		}
 	}
 
 	public static Double toDouble(Object value) {
-		if (value == null)
+		try {
+			if (value == null)
+				return null;
+			if (value instanceof Float)
+				return (Double) value;
+			String valueStr = value.toString();
+			if (valueStr.trim().isEmpty())
+				return null;
+			else
+				return new Double(valueStr);
+		} catch (Exception e) {
+			logger.debug(ExceptionUtils.getStackTrace(e));
 			return null;
-		if (value instanceof Float)
-			return (Double) value;
-		String valueStr = value.toString();
-		if (valueStr.trim().isEmpty())
-			return null;
-		else
-			return new Double(valueStr);
+		}
 	}
 
 	public static String toString(Object value) {
