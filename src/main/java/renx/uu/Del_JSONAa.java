@@ -6,16 +6,16 @@ import java.util.Arrays;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
-public class JSONAa extends JSONArray {
+public class Del_JSONAa extends JSONArray {
 
-	public JSONAa(Object... eArr) {
+	public Del_JSONAa(Object... eArr) {
 		super.addAll(new ArrayList<Object>(Arrays.asList(eArr)));
 	}
 
-	public JSONAa() {
+	public Del_JSONAa() {
 	}
 
-	public JSONAa put(Object e) {
+	public Del_JSONAa put(Object e) {
 		super.add(e);
 		return this;
 	}

@@ -4,27 +4,31 @@ import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
-public class Par {
-	private static Logger logger = LoggerFactory.getLogger(Par.class);
+public class Paramm {
+	private static Logger logger = LoggerFactory.getLogger(Paramm.class);
 
 	public String name;
 	public String code;
 	public String value;
+
 	public String separator = ",";
+
 	public static String datePattern = "yyyy-MM-dd HH:mm:ss.SSS Z";
 	public static String datePattern1 = "yyyy-MM-dd HH:mm:ss";
 	public static String datePattern2 = "yyyy-MM-dd";
@@ -36,14 +40,17 @@ public class Par {
 	public static String datePattern8 = "yyyy-MM-dd HH:mm";
 
 	boolean run = true;
-	public Integer vvinteger;
-	public Float vvfloat;
-	public Double vvdouble;
-	public Long vvlong;
-	public BigDecimal vvdecimal;
-	public Date vvdate;
-	public String[] vvstrings;
-	public String[] vvenums = null;
+
+	public Integer integerv;
+	public Float floatv;
+	public Double doublev;
+	public Long longv;
+	public BigDecimal decimalv;
+	public Date datev;
+	public String[] stringsv;
+
+	public String[] enums = null;
+
 	public static Cachem.Ccc<String, Pattern> regexCache = new Cachem.Ccc<String, Pattern>() {
 		@Override
 		public Pattern create(String regex) {
@@ -51,19 +58,61 @@ public class Par {
 		}
 	};
 
-	public Par clear() {
-		this.vvstrings = null;
-		this.vvdate = null;
-		this.vvinteger = null;
-		this.vvfloat = null;
-		this.vvlong = null;
-		this.vvdecimal = null;
-		this.vvenums = null;
+	public Paramm clear() {
+		this.stringsv = null;
+		this.datev = null;
+		this.integerv = null;
+		this.floatv = null;
+		this.longv = null;
+		this.decimalv = null;
+		this.enums = null;
 		return this;
 	}
 
-	public static Par go(String name, String code, String... values) {
-		Par var = new Par();
+	public static Paramm build() {
+		Paramm var = new Paramm();
+		return var;
+	}
+
+	public Paramm name(String name) {
+		this.name = name;
+		return this;
+	}
+
+	public Paramm code(String code) {
+		this.value = value;
+		return this;
+	}
+
+	public Paramm value(HttpServletRequest from) {
+		this.value = from.getParameter(code);
+		return this;
+	}
+
+	public Paramm value(MMap from) {
+		this.value = from.getString(code);
+		return this;
+	}
+
+	public Paramm value(String... froms) {
+		if (froms != null)
+			for (String value : froms) {
+				if (value != null) {
+					this.value = value;
+					break;
+				}
+			}
+
+		if (this.value != null && !this.value.isEmpty() && this.value.matches(".*<(s|S)(c|C)(r|R)(i|I)(p|P)(t|T).*"))
+			throw Res.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code);
+		if ("null".equals(this.value) || "undefined".equals(this.value))
+			this.value = null;
+		return this;
+	}
+
+	@Deprecated
+	public static Paramm go(String name, String code, String... values) {
+		Paramm var = new Paramm();
 		var.name = name;
 		var.code = code;
 		if (values != null)
@@ -81,8 +130,9 @@ public class Par {
 		return var;
 	}
 
-	public static Par go2(String... values) {
-		Par var = new Par();
+	@Deprecated
+	public static Paramm go2(String... values) {
+		Paramm var = new Paramm();
 		if (values != null)
 			for (String value : values) {
 				if (value != null) {
@@ -99,7 +149,7 @@ public class Par {
 		return var;
 	}
 
-	public Par suffix(String suffix) {
+	public Paramm suffix(String suffix) {
 		if (!this.run)
 			return this;
 		if (this.value != null)
@@ -107,7 +157,7 @@ public class Par {
 		return this;
 	}
 
-	public Par prefix(String prefix) {
+	public Paramm prefix(String prefix) {
 		if (!this.run)
 			return this;
 		if (this.value != null)
@@ -115,14 +165,14 @@ public class Par {
 		return this;
 	}
 
-	public Par trim() {
+	public Paramm trim() {
 		if (!this.run)
 			return this;
 		this.value = this.value == null ? null : this.value.trim();
 		return this;
 	}
 
-	public Par trimToNull() {
+	public Paramm trimToNull() {
 		if (!this.run)
 			return this;
 		if (this.value != null && this.value.trim().isEmpty())
@@ -130,7 +180,7 @@ public class Par {
 		return this;
 	}
 
-	public Par trimToBlank() {
+	public Paramm trimToBlank() {
 		if (!this.run)
 			return this;
 		if (this.value == null)
@@ -139,26 +189,26 @@ public class Par {
 		return this;
 	}
 
-	public Par trimLeft() {
+	public Paramm trimLeft() {
 		if (!this.run)
 			return this;
 		this.value = this.value == null ? null : this.value.trim();
 		return this;
 	}
 
-	public Par trimRight() {
+	public Paramm trimRight() {
 		if (!this.run)
 			return this;
 		this.value = this.value == null ? null : this.value.trim();
 		return this;
 	}
 
-	public Par setSeparator(String separator) {
+	public Paramm setSeparator(String separator) {
 		this.separator = separator;
 		return this;
 	}
 
-	public Par nullDef(String defaultValue) {
+	public Paramm nullDef(String defaultValue) {
 		if (!this.run)
 			return this;
 		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
@@ -167,7 +217,7 @@ public class Par {
 		return this;
 	}
 
-	public Par nullDef(boolean run, String defaultValue) {
+	public Paramm nullDef(boolean run, String defaultValue) {
 		if (!this.run)
 			return this;
 		if (run)
@@ -175,7 +225,7 @@ public class Par {
 		return this;
 	}
 
-	public Par blankDef(String defaultValue) {
+	public Paramm blankDef(String defaultValue) {
 		if (!this.run)
 			return this;
 		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
@@ -184,7 +234,7 @@ public class Par {
 		return this;
 	}
 
-	public Par blankDef(boolean run, String defaultValue) {
+	public Paramm blankDef(boolean run, String defaultValue) {
 		if (!this.run)
 			return this;
 		if (run)
@@ -192,7 +242,7 @@ public class Par {
 		return this;
 	}
 
-	public Par emptyDef(String defaultValue) {
+	public Paramm emptyDef(String defaultValue) {
 		if (!this.run)
 			return this;
 		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
@@ -201,7 +251,7 @@ public class Par {
 		return this;
 	}
 
-	public Par emptyDef(boolean run, String defaultValue) {
+	public Paramm emptyDef(boolean run, String defaultValue) {
 		if (!this.run)
 			return this;
 		if (run)
@@ -209,18 +259,18 @@ public class Par {
 		return this;
 	}
 
-	public Par stop() {
+	public Paramm stop() {
 		this.run = false;
 		return this;
 	}
 
-	public Par stop(boolean run) {
+	public Paramm stop(boolean run) {
 		if (run)
 			this.run = false;
 		return this;
 	}
 
-	public Par vNull() {
+	public Paramm vNull() {
 		if (!this.run)
 			return this;
 		if (this.value == null)
@@ -228,7 +278,7 @@ public class Par {
 		return this;
 	}
 
-	public Par vNull(boolean run) {
+	public Paramm vNull(boolean run) {
 		if (!this.run)
 			return this;
 		if (run)
@@ -236,17 +286,17 @@ public class Par {
 		return this;
 	}
 
-	public Par vEmpty(String msg) {
+	public Paramm vEmpty(String msg) {
 		vEmpty(true, msg);
 		return this;
 	}
 
-	public Par vEmpty() {
+	public Paramm vEmpty() {
 		vEmpty(true, null);
 		return this;
 	}
 
-	public Par vEmpty(boolean run, String msg) {
+	public Paramm vEmpty(boolean run, String msg) {
 		if (!this.run)
 			return this;
 		if (msg == null)
@@ -256,12 +306,12 @@ public class Par {
 		return this;
 	}
 
-	public Par vEmpty(boolean run) {
+	public Paramm vEmpty(boolean run) {
 		vEmpty(run, null);
 		return this;
 	}
 
-	public Par vBlank() {
+	public Paramm vBlank() {
 		if (!this.run)
 			return this;
 		if ((this.value != null && this.value.isEmpty()))
@@ -269,7 +319,7 @@ public class Par {
 		return this;
 	}
 
-	public Par vBlank(boolean run) {
+	public Paramm vBlank(boolean run) {
 		if (!this.run)
 			return this;
 		if (run)
@@ -277,7 +327,7 @@ public class Par {
 		return this;
 	}
 
-	public Par vLen(int length) {
+	public Paramm vLen(int length) {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() != length) {
@@ -286,7 +336,7 @@ public class Par {
 		return this;
 	}
 
-	public Par vLen(boolean run, int length) {
+	public Paramm vLen(boolean run, int length) {
 		if (!this.run)
 			return this;
 		if (run)
@@ -294,7 +344,7 @@ public class Par {
 		return this;
 	}
 
-	public Par vMinLen(int length) {
+	public Paramm vMinLen(int length) {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() < length) {
@@ -303,7 +353,7 @@ public class Par {
 		return this;
 	}
 
-	public Par vMinLen(boolean run, int length) {
+	public Paramm vMinLen(boolean run, int length) {
 		if (!this.run)
 			return this;
 		if (run)
@@ -311,7 +361,7 @@ public class Par {
 		return this;
 	}
 
-	public Par vMaxLen(int length) {
+	public Paramm vMaxLen(int length) {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() > length) {
@@ -320,7 +370,7 @@ public class Par {
 		return this;
 	}
 
-	public Par vMaxLen(boolean run, int length) {
+	public Paramm vMaxLen(boolean run, int length) {
 		if (!this.run)
 			return this;
 		if (run)
@@ -328,7 +378,7 @@ public class Par {
 		return this;
 	}
 
-	public Par vMaxNum(float maxnum) {
+	public Paramm vMaxNum(float maxnum) {
 		if (!this.run)
 			return this;
 		if (!isEmpty() && toFloat() > maxnum) {
@@ -337,7 +387,7 @@ public class Par {
 		return this;
 	}
 
-	public Par vMaxNum(boolean run, float maxnum) {
+	public Paramm vMaxNum(boolean run, float maxnum) {
 		if (!this.run)
 			return this;
 		if (run)
@@ -345,7 +395,7 @@ public class Par {
 		return this;
 	}
 
-	public Par vMinNum(float minnum) {
+	public Paramm vMinNum(float minnum) {
 		if (!this.run)
 			return this;
 		if (!isEmpty() && toFloat() < minnum) {
@@ -354,7 +404,7 @@ public class Par {
 		return this;
 	}
 
-	public Par vMinNum(boolean run, float minnum) {
+	public Paramm vMinNum(boolean run, float minnum) {
 		if (!this.run)
 			return this;
 		if (run)
@@ -362,7 +412,7 @@ public class Par {
 		return this;
 	}
 
-	public Par vMaxCount(int count) {
+	public Paramm vMaxCount(int count) {
 		if (!this.run)
 			return this;
 		if (!this.isEmpty() && this.toStrings() != null && this.toStrings().length > count) {
@@ -371,22 +421,22 @@ public class Par {
 		return this;
 	}
 
-	public Par vInteger() {
+	public Paramm vInteger() {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
 			try {
-				this.vvinteger = Integer.parseInt(this.value);
+				this.integerv = Integer.parseInt(this.value);
 			} catch (Exception e) {
 
 			}
-			if (this.vvinteger == null)
+			if (this.integerv == null)
 				throw Res.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code);
 		}
 		return this;
 	}
 
-	public Par vBoolean() {
+	public Paramm vBoolean() {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && !"1".equals(this.value) && !"0".equals(this.value)) {
@@ -395,78 +445,78 @@ public class Par {
 		return this;
 	}
 
-	public Par vEnum(String[] values, String error) {
+	public Paramm vEnum(String[] enums, String error) {
 		if (!this.run)
 			return this;
 		if (isEmpty())
 			return this;
-		this.vvenums = values;
-		boolean v = Stringuu.equalsAny(this.value, values);
+		this.enums = enums;
+		boolean v = Stringuu.equalsAny(this.value, enums);
 		if (!v)
 			throw Res.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code).setError(error);
 		else
 			return this;
 	}
 
-	public Par vEnum(String... values) {
-		return vEnum(values, null);
+	public Paramm vEnum(String... enums) {
+		return vEnum(enums, null);
 	}
 
-	public Par vLong() {
+	public Paramm vLong() {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
 			try {
-				this.vvlong = Long.parseLong(this.value);
+				this.longv = Long.parseLong(this.value);
 			} catch (Exception e) {
 
 			}
-			if (this.vvlong == null)
+			if (this.longv == null)
 				throw Res.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code);
 		}
 		return this;
 	}
 
-	public Par vDouble() {
+	public Paramm vDouble() {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
 			try {
-				this.vvdouble = Double.parseDouble(this.value);
+				this.doublev = Double.parseDouble(this.value);
 			} catch (Exception e) {
 
 			}
-			if (this.vvdouble == null)
+			if (this.doublev == null)
 				throw Res.go(1001, "\"" + this.name + "\"只能输入数字").setErrParam(this.code);
 		}
 		return this;
 	}
 
-	public Par vFloat() {
+	public Paramm vFloat() {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
 			try {
-				this.vvfloat = Float.parseFloat(this.value);
+				this.floatv = Float.parseFloat(this.value);
 			} catch (Exception e) {
 
 			}
-			if (this.vvfloat == null)
+			if (this.floatv == null)
 				throw Res.go(1001, "\"" + this.name + "\"只能输入数字").setErrParam(this.code);
 		}
 		return this;
 	}
 
-	public Par vDecimal() {
+	public Paramm vDecimal() {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
 			try {
-				this.vvdecimal = new BigDecimal(this.value);
+				this.decimalv = new BigDecimal(this.value);
 			} catch (Exception e) {
 
 			}
-			if (this.vvdecimal == null)
+			if (this.decimalv == null)
 				throw Res.go(1001, "\"" + this.name + "\"只能输入数字").setErrParam(this.code);
 		}
 		return this;
@@ -502,7 +552,7 @@ public class Par {
 		return false;
 	}
 
-	public Par vLenRange(int min, int max) {
+	public Paramm vLenRange(int min, int max) {
 		if (!this.run)
 			return this;
 		vMinLen(min);
@@ -510,7 +560,7 @@ public class Par {
 		return this;
 	}
 
-	public Par vNumRange(float min, float max) {
+	public Paramm vNumRange(float min, float max) {
 		if (!this.run)
 			return this;
 		vMinNum(min);
@@ -518,13 +568,13 @@ public class Par {
 		return this;
 	}
 
-	public Par vReg(Pattern regex) {
+	public Paramm vReg(Pattern regex) {
 		if (!this.run)
 			return this;
 		return vReg(regex, null);
 	}
 
-	public Par vReg(Pattern regex, String note) {
+	public Paramm vReg(Pattern regex, String note) {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null) {
@@ -538,13 +588,13 @@ public class Par {
 		return this;
 	}
 
-	public Par vRegNot(Pattern regex) {
+	public Paramm vRegNot(Pattern regex) {
 		if (!this.run)
 			return this;
 		return vRegNot(regex, null);
 	}
 
-	public Par vRegNot(Pattern regex, String note) {
+	public Paramm vRegNot(Pattern regex, String note) {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null) {
@@ -558,13 +608,13 @@ public class Par {
 		return this;
 	}
 
-	public Par vReg(String regex) {
+	public Paramm vReg(String regex) {
 		if (!this.run)
 			return this;
 		return vReg(regex, null);
 	}
 
-	public Par vReg(String regex, String note) {
+	public Paramm vReg(String regex, String note) {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty()) {
@@ -578,13 +628,13 @@ public class Par {
 		return this;
 	}
 
-	public Par vRegNot(String regex) {
+	public Paramm vRegNot(String regex) {
 		if (!this.run)
 			return this;
 		return vRegNot(regex, null);
 	}
 
-	public Par vRegNot(String regex, String note) {
+	public Paramm vRegNot(String regex, String note) {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty()) {
@@ -598,14 +648,14 @@ public class Par {
 		return this;
 	}
 
-	public Par vDate() {
+	public Paramm vDate() {
 		if (this.value == null || this.value.isEmpty())
 			return this;
 		toDate();
-		if (this.vvdate == null)
+		if (this.datev == null)
 			throw Res.go(1001, "\"" + this.name + "\"有误").setErrParam(this.code);
 		else {
-			this.value = new SimpleDateFormat(datePattern1).format(this.vvdate);
+			this.value = new SimpleDateFormat(datePattern1).format(this.datev);
 		}
 		return this;
 	}
@@ -626,11 +676,11 @@ public class Par {
 //	}
 
 	public String[] toStrings() {
-		if (this.vvstrings != null)
-			return this.vvstrings;
-		this.vvstrings = isNull() ? null
+		if (this.stringsv != null)
+			return this.stringsv;
+		this.stringsv = isNull() ? null
 				: StringUtils.splitByWholeSeparatorPreserveAllTokens(this.value, this.separator);
-		return this.vvstrings;
+		return this.stringsv;
 	}
 
 	@Override
@@ -639,31 +689,31 @@ public class Par {
 	}
 
 	public Integer toInteger() {
-		if (this.vvinteger != null)
-			return this.vvinteger;
-		this.vvinteger = isEmpty() ? null : Integer.parseInt(this.value.split("\\.")[0]);
-		return this.vvinteger;
+		if (this.integerv != null)
+			return this.integerv;
+		this.integerv = isEmpty() ? null : Integer.parseInt(this.value.split("\\.")[0]);
+		return this.integerv;
 	}
 
 	public Float toFloat() {
-		if (this.vvfloat != null)
-			return this.vvfloat;
-		this.vvfloat = isEmpty() ? null : Float.parseFloat(this.value);
-		return this.vvfloat;
+		if (this.floatv != null)
+			return this.floatv;
+		this.floatv = isEmpty() ? null : Float.parseFloat(this.value);
+		return this.floatv;
 	}
 
 	public Long toLong() {
-		if (this.vvlong != null)
-			return this.vvlong;
-		this.vvlong = isEmpty() ? null : Long.parseLong(this.value);
-		return this.vvlong;
+		if (this.longv != null)
+			return this.longv;
+		this.longv = isEmpty() ? null : Long.parseLong(this.value);
+		return this.longv;
 	}
 
 	public BigDecimal toDecimal() {
-		if (this.vvdecimal != null)
-			return this.vvdecimal;
-		this.vvdecimal = isEmpty() ? null : new BigDecimal(this.value);
-		return this.vvdecimal;
+		if (this.decimalv != null)
+			return this.decimalv;
+		this.decimalv = isEmpty() ? null : new BigDecimal(this.value);
+		return this.decimalv;
 	}
 
 	public String formatDate(String pattern) {
@@ -672,10 +722,10 @@ public class Par {
 	}
 
 	public Date toDate() {
-		if (this.vvdate != null)
-			return this.vvdate;
-		this.vvdate = isEmpty() ? null : toDate(this.value);
-		return this.vvdate;
+		if (this.datev != null)
+			return this.datev;
+		this.datev = isEmpty() ? null : toDate(this.value);
+		return this.datev;
 	}
 
 	public void bomb(String message) {
@@ -695,7 +745,7 @@ public class Par {
 		return this.value.equals(object);
 	}
 
-	public Par toLowerCase() {
+	public Paramm toLowerCase() {
 		if (!this.run)
 			return this;
 		if (this.value != null)
@@ -703,7 +753,7 @@ public class Par {
 		return this;
 	}
 
-	public Par toUpperCase() {
+	public Paramm toUpperCase() {
 		if (!this.run)
 			return this;
 		if (this.value != null)
@@ -711,7 +761,7 @@ public class Par {
 		return this;
 	}
 
-	public Par replaceAll(String regex, String replacement) {
+	public Paramm replaceAll(String regex, String replacement) {
 		if (!this.run)
 			return this;
 		if (this.value != null)
@@ -719,7 +769,7 @@ public class Par {
 		return this;
 	}
 
-	public Par substring(int beginIndex, int endIndex) {
+	public Paramm substring(int beginIndex, int endIndex) {
 		if (!this.run)
 			return this;
 		if (this.value != null)
@@ -727,7 +777,7 @@ public class Par {
 		return this;
 	}
 
-	public Par substring(int beginIndex) {
+	public Paramm substring(int beginIndex) {
 		if (!this.run)
 			return this;
 		if (this.value != null)
@@ -735,7 +785,7 @@ public class Par {
 		return this;
 	}
 
-	public Par concat(String str) {
+	public Paramm concat(String str) {
 		if (!this.run)
 			return this;
 		if (this.value != null)
@@ -761,7 +811,7 @@ public class Par {
 		return false;
 	}
 
-	public Par set(String value) {
+	public Paramm set(String value) {
 		clear();
 		this.value = value;
 		return this;
@@ -946,49 +996,45 @@ public class Par {
 			return new BigDecimal(valueStr);
 	}
 
-	public static JSONArray toJsonArr(Object value) {
+	public static LList toJsonArr(Object value) {
 		try {
 			if (value == null)
-				return null;
-			if (value instanceof JSONArray)
-				return (JSONArray) value;
+				return LList.build();
 			String valueStr = value.toString();
 			if (valueStr.trim().isEmpty())
-				return null;
+				return LList.build();
 			else
-				return JSON.parseArray(valueStr);
+				return LList.build(JSONObject.parseArray(valueStr, ArrayList.class));
 		} catch (Exception e) {
 			logger.info(ExceptionUtils.getStackTrace(e));
-			return null;
+			return LList.build();
 		}
 	}
 
-	public static JSONObject toJson(Object value) {
+	public static MMap toJson(Object value) {
 		try {
 			if (value == null)
-				return null;
-			if (value instanceof JSONObject)
-				return (JSONObject) value;
+				return MMap.build();
 			String valueStr = value.toString();
 			if (valueStr.trim().isEmpty())
-				return null;
+				return MMap.build();
 			else
-				return JSONObject.parseObject(valueStr);
+				return MMap.build(JSONObject.parseObject(valueStr, LinkedHashMap.class));
 		} catch (Exception e) {
 			logger.info(ExceptionUtils.getStackTrace(e));
-			return null;
+			return MMap.build();
 		}
 	}
 
-	public static Object attr(Object target, Object... keyArray)
+	public static Object attr(Object target, Object... keys)
 			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
-		for (int i = 0; i < keyArray.length; i++) {
+		for (int i = 0; i < keys.length; i++) {
 			if (target instanceof Map) {
-				target = ((Map) target).get(keyArray[i]);
+				target = ((Map) target).get(keys[i]);
 			} else if (target instanceof String) {
 
 			} else if (target instanceof Object) {
-				Field f = Object.class.getDeclaredField(keyArray[i].toString());
+				Field f = Object.class.getDeclaredField(keys[i].toString());
 				f.setAccessible(true);
 				target = f.get(target);
 			}
@@ -1001,7 +1047,7 @@ public class Par {
 
 	public static void main(String[] args) throws ParseException, NoSuchFieldException, SecurityException,
 			IllegalArgumentException, IllegalAccessException {
-		Par value = Par.go(null, null, "20200506132311");
+		Paramm value = Paramm.go(null, null, "20200506132311");
 		System.out.println(new SimpleDateFormat("yyyy-MM").parse("2020-03"));
 	}
 }
