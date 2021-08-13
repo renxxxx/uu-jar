@@ -212,6 +212,14 @@ public class Jdbcuu {
 		}
 	}
 
+	public static int update(Connection conn, String sql, LList params) throws Exception {
+		return update(conn, sql, params.toArray());
+	}
+
+	public static int update(Connection conn, String sql, List params) throws Exception {
+		return update(conn, sql, LList.build(params));
+	}
+
 	public static int update(Connection conn, String sql, Object... params) throws Exception {
 		PreparedStatement pst = null;
 		try {
