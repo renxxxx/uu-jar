@@ -80,7 +80,9 @@ public class PParam {
 	}
 
 	public PParam code(String code) {
-		this.value = value;
+		this.code = code;
+		if (this.name == null || this.name.isEmpty())
+			this.name = code;
 		return this;
 	}
 
