@@ -6,7 +6,7 @@ import java.util.Map;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 
-public class Res extends RuntimeException {
+public class RRes extends RuntimeException {
 
 	protected int code;
 	protected String errParam = null;
@@ -27,95 +27,95 @@ public class Res extends RuntimeException {
 		return map;
 	}
 
-	public static Res success() {
+	public static RRes success() {
 		return success(null, null);
 	}
 
-	public static Res success(String codeMsg) {
+	public static RRes success(String codeMsg) {
 		return success(codeMsg, null);
 	}
 
-	public static Res success(Object data) {
+	public static RRes success(Object data) {
 		return success(null, data);
 	}
 
-	public static Res success(String msg, Object data) {
-		Res response = new Res(0 + " : " + msg);
+	public static RRes success(String msg, Object data) {
+		RRes response = new RRes(0 + " : " + msg);
 		response.code = 0;
 		response.msg = msg;
 		response.data = data;
 		return response;
 	}
 
-	public static Res failure() {
-		return failure(null, null);
+	public static RRes fail() {
+		return fail(null, null);
 	}
 
-	public static Res failure(String codeMsg) {
-		return failure(codeMsg, null);
+	public static RRes fail(String codeMsg) {
+		return fail(codeMsg, null);
 	}
 
-	public static Res failure(Object data) {
-		return failure(null, data);
+	public static RRes fail(Object data) {
+		return fail(null, data);
 	}
 
-	public static Res failure(String msg, Object data) {
-		Res response = new Res(900 + " : " + msg);
+	public static RRes fail(String msg, Object data) {
+		RRes response = new RRes(900 + " : " + msg);
 		response.code = 900;
 		response.msg = msg;
 		response.data = data;
 		return response;
 	}
 
-	public static Res build(int code) {
-		Res response = new Res(code + "");
+	public static RRes build(int code) {
+		RRes response = new RRes(code + "");
 		response.code = code;
 		return response;
 	}
 
-	public static Res build(int code, String msg, Object data) {
-		Res response = new Res(code + " : " + msg);
+	public static RRes build(int code, String msg, Object data) {
+		RRes response = new RRes(code + " : " + msg);
 		response.code = code;
 		response.msg = msg;
 		response.data = data;
 		return response;
 	}
 
-	public static Res build(int code, String msg) {
-		Res response = new Res(code + " : " + msg);
+	public static RRes build(int code, String msg) {
+		RRes response = new RRes(code + " : " + msg);
 		response.code = code;
 		response.msg = msg;
 		return response;
 	}
 
-	public static Res build(int code, Object data) {
-		Res response = new Res(code + "");
+	public static RRes build(int code, Object data) {
+		RRes response = new RRes(code + "");
 		response.code = code;
 		response.data = data;
 		return response;
 	}
 
-	public Res() {
+	public RRes() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Res(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+	public RRes(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
 		// TODO Auto-generated constructor stub
 	}
 
-	public Res(String message, Throwable cause) {
+	public RRes(String message, Throwable cause) {
 		super(message, cause);
 		// TODO Auto-generated constructor stub
 	}
 
-	public Res(String message) {
+	public RRes(String message) {
 		super(message);
 		// TODO Auto-generated constructor stub
 	}
 
-	public Res(Throwable cause) {
+	public RRes(Throwable cause) {
 		super(cause);
 		// TODO Auto-generated constructor stub
 	}
@@ -124,17 +124,17 @@ public class Res extends RuntimeException {
 		return msg;
 	}
 
-	public Res setMsg(String msg) {
+	public RRes setMsg(String msg) {
 		this.msg = msg;
 		return this;
 	}
 
-	public Res setMsgCn(String msgCn) {
+	public RRes setMsgCn(String msgCn) {
 		this.msgCn = msgCn;
 		return this;
 	}
 
-	public Res setMsgEn(String msgEn) {
+	public RRes setMsgEn(String msgEn) {
 		this.msgEn = msgEn;
 		return this;
 	}
@@ -151,22 +151,22 @@ public class Res extends RuntimeException {
 		return error;
 	}
 
-	public Res setError(String error) {
+	public RRes setError(String error) {
 		this.error = error;
 		return this;
 	}
 
-	public Res setErrParam(String errParam) {
+	public RRes setErrParam(String errParam) {
 		this.errParam = errParam;
 		return this;
 	}
 
-	public Res setCode(int code) {
+	public RRes setCode(int code) {
 		this.code = code;
 		return this;
 	}
 
-	public Res setData(Object data) {
+	public RRes setData(Object data) {
 		this.data = data;
 		return this;
 	}
@@ -187,12 +187,12 @@ public class Res extends RuntimeException {
 		return reqNo;
 	}
 
-	public Res setReqNo(String reqNo) {
+	public RRes setReqNo(String reqNo) {
 		this.reqNo = reqNo;
 		return this;
 	}
 
 	public static void main(String[] args) {
-		System.out.println(JSON.toJSONString(Res.failure("1212"), SerializerFeature.IgnoreNonFieldGetter));
+		System.out.println(JSON.toJSONString(RRes.fail("1212"), SerializerFeature.IgnoreNonFieldGetter));
 	}
 }
