@@ -7,8 +7,8 @@ import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DDate {
-	private Logger logger = LoggerFactory.getLogger(DDate.class);
+public class Dateuu {
+	private Logger logger = LoggerFactory.getLogger(Dateuu.class);
 
 	public static Date parseLong(String longtime) throws ParseException {
 		if (longtime == null)
@@ -16,7 +16,7 @@ public class DDate {
 		return new Date(new Long(longtime));
 	}
 
-	public static Date parseLong(Long time) throws ParseException {
+	public static Date parse(Long time) throws ParseException {
 		if (time == null)
 			return null;
 		return new Date(time);

@@ -7,8 +7,8 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Regex {
-	private static Logger logger = LoggerFactory.getLogger(Regex.class);
+public class Regexuu {
+	private static Logger logger = LoggerFactory.getLogger(Regexuu.class);
 
 	public static String group(String regex, String str, int group) {
 		Pattern p = Pattern.compile(regex);

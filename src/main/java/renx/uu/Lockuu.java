@@ -8,9 +8,9 @@ import org.slf4j.LoggerFactory;
 
 import redis.clients.jedis.Jedis;
 
-public class Lock {
+public class Lockuu {
 
-	private static Logger logger = LoggerFactory.getLogger(Lock.class);
+	private static Logger logger = LoggerFactory.getLogger(Lockuu.class);
 
 	public static boolean distributedLock(Jedis jedis, String lock, String locker, long period)
 			throws SQLException, InterruptedException {

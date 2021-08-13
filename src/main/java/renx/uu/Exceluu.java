@@ -15,8 +15,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Excel {
-	private static Logger logger = LoggerFactory.getLogger(Excel.class);
+public class Exceluu {
+	private static Logger logger = LoggerFactory.getLogger(Exceluu.class);
 	public static void main(String[] args) throws IOException {
 		Workbook wb = null;
 		File file = new File("C:\\Users\\Administrator\\Desktop\\新建 Microsoft Excel 工作表.xlsx");

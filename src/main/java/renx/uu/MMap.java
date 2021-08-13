@@ -73,37 +73,37 @@ public class MMap<K, V> {
 	public String getString(K key) {
 		if (map == null)
 			return null;
-		return Paramm.toString(map.get(key));
+		return PParam.toString(map.get(key));
 	}
 
 	public Integer getInteger(K key) {
 		if (map == null)
 			return null;
-		return Paramm.toInteger(map.get(key));
+		return PParam.toInteger(map.get(key));
 	}
 
 	public Long getLong(K key) {
 		if (map == null)
 			return null;
-		return Paramm.toLong(map.get(key));
+		return PParam.toLong(map.get(key));
 	}
 
 	public BigDecimal getDecimal(K key) {
 		if (map == null)
 			return null;
-		return Paramm.toDecimal(map.get(key));
+		return PParam.toDecimal(map.get(key));
 	}
 
 	public Float getFloat(K key) {
 		if (map == null)
 			return null;
-		return Paramm.toFloat(map.get(key));
+		return PParam.toFloat(map.get(key));
 	}
 
 	public Date getDate(K key) {
 		if (map == null)
 			return null;
-		return Paramm.toDate(map.get(key));
+		return PParam.toDate(map.get(key));
 	}
 
 	public LList getList(K key) {
@@ -123,6 +123,10 @@ public class MMap<K, V> {
 			return true;
 		else
 			return this.map.isEmpty();
+	}
+
+	public boolean notEmpty() {
+		return !isEmpty();
 	}
 
 	@Override

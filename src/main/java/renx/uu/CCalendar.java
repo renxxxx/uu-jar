@@ -9,7 +9,9 @@ public class CCalendar {
 
 	public static CCalendar build() {
 		CCalendar c = new CCalendar();
-		c.realsrc = c.real = Calendar.getInstance();
+		c.real = Calendar.getInstance();
+		c.realsrc = Calendar.getInstance();
+		c.realsrc.setTime(c.real.getTime());
 		return c;
 	}
 
@@ -17,7 +19,9 @@ public class CCalendar {
 		CCalendar c = new CCalendar();
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(time);
-		c.real = c.realsrc = calendar;
+		c.real = calendar;
+		c.realsrc = Calendar.getInstance();
+		c.realsrc.setTime(c.real.getTime());
 		return c;
 	}
 
@@ -39,5 +43,11 @@ public class CCalendar {
 
 	public Date time() {
 		return this.real.getTime();
+	}
+
+	public CCalendar reset() {
+		this.real = Calendar.getInstance();
+		this.real.setTime(this.realsrc.getTime());
+		return this;
 	}
 }

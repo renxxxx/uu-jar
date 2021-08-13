@@ -9,8 +9,8 @@ import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
-public class Redis {
-	private static Logger logger = LoggerFactory.getLogger(Redis.class);
+public class JJedis {
+	private static Logger logger = LoggerFactory.getLogger(JJedis.class);
 
 	public JedisPool jedisPool;
 	public String ip;

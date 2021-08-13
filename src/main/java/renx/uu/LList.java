@@ -80,6 +80,10 @@ public class LList<E> {
 			return this.list.isEmpty();
 	}
 
+	public boolean notEmpty() {
+		return !isEmpty();
+	}
+
 	public String toString() {
 		if (this.list == null)
 			return null;

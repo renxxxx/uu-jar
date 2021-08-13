@@ -106,8 +106,8 @@ public class Servletuu {
 	}
 
 	public static CCookie cookie(String key, HttpServletRequest request) {
-		Map<String, Cookie> cookiesMap = cookiem(request);
-		CCookie cookie = new CCookie(cookiesMap.get(key));
+		Map<String, Cookie> cookiem = cookiem(request);
+		CCookie cookie = CCookie.build(cookiem.get(key));
 		return cookie;
 	}
 
