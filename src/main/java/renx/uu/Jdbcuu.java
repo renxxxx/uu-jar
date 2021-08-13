@@ -37,6 +37,14 @@ public class Jdbcuu {
 		System.out.println(ss);
 	}
 
+	public static List<Map> rows(Connection conn, String sql, LList params) throws Exception {
+		return rows(conn, sql, params.toArray());
+	}
+
+	public static List<Map> rows(Connection conn, String sql, List params) throws Exception {
+		return rows(conn, sql, LList.build(params));
+	}
+
 	public static List<Map> rows(Connection conn, String sql, Object... params) throws Exception {
 		PreparedStatement pst = null;
 		try {
@@ -136,6 +144,14 @@ public class Jdbcuu {
 //			logger.debug("out " + RandomStringUtils.randomNumeric(5));
 //		}
 //	}
+
+	public static MMap row(Connection conn, String sql, LList params) throws Exception {
+		return row(conn, sql, params.toArray());
+	}
+
+	public static MMap row(Connection conn, String sql, List params) throws Exception {
+		return row(conn, sql, LList.build(params));
+	}
 
 	public static MMap row(Connection conn, String sql, Object... params) throws Exception {
 
