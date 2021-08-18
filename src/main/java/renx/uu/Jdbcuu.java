@@ -25,6 +25,7 @@ import com.alibaba.fastjson.JSON;
 
 public class Jdbcuu {
 	private static Logger logger = LoggerFactory.getLogger(Jdbcuu.class);
+	private static org.apache.log4j.Logger logger4j = org.apache.log4j.Logger.getLogger(Jdbcuu.class);
 
 	public static void main(String[] args) {
 		String ss = "_sdf1_erwe_er";
@@ -49,7 +50,7 @@ public class Jdbcuu {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
-			return resultSetToList(row(pst, sql, params));
+			return resultSetToList(select(pst, sql, params));
 		} catch (Exception e) {
 			throw e;
 		} finally {
@@ -62,7 +63,7 @@ public class Jdbcuu {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
-			return resultSetToThinRows(row(pst, sql, params));
+			return resultSetToThinRows(select(pst, sql, params));
 		} catch (Exception e) {
 			throw e;
 		} finally {
@@ -75,7 +76,7 @@ public class Jdbcuu {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
-			ResultSet rs = row(pst, sql, params);
+			ResultSet rs = select(pst, sql, params);
 			if (rs.next()) {
 				return rs.getBinaryStream(1);
 			}
@@ -164,7 +165,7 @@ public class Jdbcuu {
 		return MMap.build(item);
 	}
 
-	public static ResultSet row(PreparedStatement pst, String sql, Object... params) throws SQLException {
+	public static ResultSet select(PreparedStatement pst, String sql, Object... params) throws SQLException {
 		if (params == null)
 			params = new Object[] {};
 		sql = sql.replaceAll("\\s+", " ");
@@ -172,6 +173,9 @@ public class Jdbcuu {
 				+ RandomStringUtils.randomNumeric(3);
 		logger.debug(sqlNo + " " + sql);
 		logger.debug(sqlNo + " " + JSON.toJSONString(params));
+
+		logger4j.debug(sqlNo + " " + sql);
+		logger4j.debug(sqlNo + " " + JSON.toJSONString(params));
 		try {
 			for (int i = 0; i < params.length; i++) {
 				Object param = params[i];
@@ -184,6 +188,7 @@ public class Jdbcuu {
 			ResultSet rs = pst.executeQuery();
 			long e = System.currentTimeMillis();
 			logger.debug(sqlNo + " " + "takes: " + Stringuu.commaNum((e - s) + "") + "ms");
+			logger4j.debug(sqlNo + " " + "takes: " + Stringuu.commaNum((e - s) + "") + "ms");
 			return rs;
 		} catch (Exception e) {
 			throw new SQLException(e.getMessage() + " " + sqlNo + " " + " sql: " + sql, e);
@@ -348,6 +353,7 @@ public class Jdbcuu {
 				logger.debug(JSON.toJSONString(row));
 		}
 		logger.debug("affected : " + rows.size());
+		logger4j.debug("affected : " + rows.size());
 		return rows;
 	}
 
