@@ -40,6 +40,8 @@ public class RRes extends RuntimeException {
 	}
 
 	public static RRes success(String msg, Object data) {
+		if (data instanceof MMap)
+			data = ((MMap) data).map;
 		RRes response = new RRes(0 + " : " + msg);
 		response.code = 0;
 		response.msg = msg;
@@ -60,6 +62,8 @@ public class RRes extends RuntimeException {
 	}
 
 	public static RRes fail(String msg, Object data) {
+		if (data instanceof MMap)
+			data = ((MMap) data).map;
 		RRes response = new RRes(900 + " : " + msg);
 		response.code = 900;
 		response.msg = msg;
@@ -74,6 +78,8 @@ public class RRes extends RuntimeException {
 	}
 
 	public static RRes build(int code, String msg, Object data) {
+		if (data instanceof MMap)
+			data = ((MMap) data).map;
 		RRes response = new RRes(code + " : " + msg);
 		response.code = code;
 		response.msg = msg;
@@ -89,6 +95,8 @@ public class RRes extends RuntimeException {
 	}
 
 	public static RRes build(int code, Object data) {
+		if (data instanceof MMap)
+			data = ((MMap) data).map;
 		RRes response = new RRes(code + "");
 		response.code = code;
 		response.data = data;
@@ -167,6 +175,8 @@ public class RRes extends RuntimeException {
 	}
 
 	public RRes setData(Object data) {
+		if (data instanceof MMap)
+			data = ((MMap) data).map;
 		this.data = data;
 		return this;
 	}

@@ -30,7 +30,7 @@ public class LList<E> {
 		return build(null);
 	}
 
-	public LList<E> addif(E e, boolean iff) {
+	public LList<E> add(E e, boolean iff) {
 		if (iff)
 			return add(e);
 		return this;
