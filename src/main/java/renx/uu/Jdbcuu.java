@@ -129,7 +129,7 @@ public class Jdbcuu {
 	}
 
 //	public static Mappquery(Connection conn, String sql, Object... params) throws Exception {
-//		logger.debug("in " + RandomStringUtils.randomNumeric(5));
+//		logger.info("in " + RandomStringUtils.randomNumeric(5));
 //		PreparedStatement pst = null;
 //		try {
 //			pst = conn.prepareStatement(sql);
@@ -142,7 +142,7 @@ public class Jdbcuu {
 //		} finally {
 //			if (pst != null)
 //				pst.close();
-//			logger.debug("out " + RandomStringUtils.randomNumeric(5));
+//			logger.info("out " + RandomStringUtils.randomNumeric(5));
 //		}
 //	}
 
@@ -171,11 +171,11 @@ public class Jdbcuu {
 		sql = sql.replaceAll("\\s+", " ");
 		String sqlNo = new SimpleDateFormat("YYYYMMDDHHmmssSSS").format(new Date())
 				+ RandomStringUtils.randomNumeric(3);
-		logger.debug(sqlNo + " " + sql);
-		logger.debug(sqlNo + " " + JSON.toJSONString(params));
+		logger.info(sqlNo + " " + sql);
+		logger.info(sqlNo + " " + JSON.toJSONString(params));
 
-		logger4j.debug(sqlNo + " " + sql);
-		logger4j.debug(sqlNo + " " + JSON.toJSONString(params));
+		logger4j.info(sqlNo + " " + sql);
+		logger4j.info(sqlNo + " " + JSON.toJSONString(params));
 		try {
 			for (int i = 0; i < params.length; i++) {
 				Object param = params[i];
@@ -187,8 +187,8 @@ public class Jdbcuu {
 			long s = System.currentTimeMillis();
 			ResultSet rs = pst.executeQuery();
 			long e = System.currentTimeMillis();
-			logger.debug(sqlNo + " " + "takes: " + Stringuu.commaNum((e - s) + "") + "ms");
-			logger4j.debug(sqlNo + " " + "takes: " + Stringuu.commaNum((e - s) + "") + "ms");
+			logger.info(sqlNo + " " + "takes: " + Stringuu.commaNum((e - s) + "") + "ms");
+			logger4j.info(sqlNo + " " + "takes: " + Stringuu.commaNum((e - s) + "") + "ms");
 			return rs;
 		} catch (Exception e) {
 			throw new SQLException(e.getMessage() + " " + sqlNo + " " + " sql: " + sql, e);
@@ -245,8 +245,8 @@ public class Jdbcuu {
 		sql = sql.replaceAll("\\s+", " ");
 		String sqlNo = new SimpleDateFormat("YYYYMMDDHHmmssSSS").format(new Date())
 				+ RandomStringUtils.randomNumeric(3);
-		logger.debug(sqlNo + " " + sql);
-		logger.debug(sqlNo + " " + JSON.toJSONString(params));
+		logger.info(sqlNo + " " + sql);
+		logger.info(sqlNo + " " + JSON.toJSONString(params));
 		int cnt = 0;
 		try {
 			for (int i = 0; i < params.length; i++) {
@@ -263,11 +263,11 @@ public class Jdbcuu {
 			long s = System.currentTimeMillis();
 			cnt = pst.executeUpdate();
 			long e = System.currentTimeMillis();
-			logger.debug(sqlNo + " " + "takes: " + Stringuu.commaNum((e - s) + "") + "ms");
+			logger.info(sqlNo + " " + "takes: " + Stringuu.commaNum((e - s) + "") + "ms");
 		} catch (Exception e) {
 			throw new Exception(e.getMessage() + " " + sqlNo + " " + " sql: " + sql, e);
 		}
-		logger.debug(sqlNo + " " + "affected: " + cnt);
+		logger.info(sqlNo + " " + "affected: " + cnt);
 		return cnt;
 	}
 
@@ -310,10 +310,10 @@ public class Jdbcuu {
 			paramBatches = new Object[] {};
 		String sqlNo = new SimpleDateFormat("YYYYMMDDHHmmssSSS").format(new Date())
 				+ RandomStringUtils.randomNumeric(3);
-		logger.debug(sqlNo + " " + sql);
+		logger.info(sqlNo + " " + sql);
 		int[] cnts = new int[] {};
 		for (Object param : paramBatches) {
-			logger.debug(sqlNo + " " + JSON.toJSONString(param));
+			logger.info(sqlNo + " " + JSON.toJSONString(param));
 			if (param instanceof List) {
 				for (int i = 0; i < ((List) param).size(); i++) {
 					pst.setObject(i + 1, ((List) param).get(i));
@@ -332,8 +332,8 @@ public class Jdbcuu {
 		long s = System.currentTimeMillis();
 		cnts = pst.executeBatch();
 		long e = System.currentTimeMillis();
-		logger.debug(sqlNo + " " + "takes: " + Stringuu.commaNum((e - s) + "") + "ms");
-		logger.debug(sqlNo + " " + "affected : " + Arrays.toString(cnts));
+		logger.info(sqlNo + " " + "takes: " + Stringuu.commaNum((e - s) + "") + "ms");
+		logger.info(sqlNo + " " + "affected : " + Arrays.toString(cnts));
 		return cnts;
 	}
 
@@ -350,10 +350,10 @@ public class Jdbcuu {
 			}
 			rows.add(row);
 			if (rows.size() <= 10)
-				logger.debug(JSON.toJSONString(row));
+				logger.info(JSON.toJSONString(row));
 		}
-		logger.debug("affected : " + rows.size());
-		logger4j.debug("affected : " + rows.size());
+		logger.info("affected : " + rows.size());
+		logger4j.info("affected : " + rows.size());
 		return rows;
 	}
 
@@ -373,9 +373,9 @@ public class Jdbcuu {
 			}
 			rows.add(row);
 			if (rows.size() <= 10)
-				logger.debug(JSON.toJSONString(row));
+				logger.info(JSON.toJSONString(row));
 		}
-		logger.debug("affected : " + rows.size());
+		logger.info("affected : " + rows.size());
 		return rows;
 	}
 
@@ -392,9 +392,9 @@ public class Jdbcuu {
 			}
 			valueLists.add(valueList);
 			if (valueLists.size() <= 10)
-				logger.debug(JSON.toJSONString(valueList));
+				logger.info(JSON.toJSONString(valueList));
 		}
-		logger.debug("affected : " + valueLists.size());
+		logger.info("affected : " + valueLists.size());
 		return valueLists;
 	}
 
@@ -405,9 +405,9 @@ public class Jdbcuu {
 			Object value = rs.getObject(1);
 			rows.add(value);
 			if (rows.size() <= 10)
-				logger.debug(new StringBuilder("[").append(value).append("]").toString());
+				logger.info(new StringBuilder("[").append(value).append("]").toString());
 		}
-		logger.debug("affected : " + rows.size());
+		logger.info("affected : " + rows.size());
 		return rows;
 	}
 

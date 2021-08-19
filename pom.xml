@@ -5,7 +5,7 @@
 
 	<groupId>renx</groupId>
 	<artifactId>uu</artifactId>
-	<version>210818</version>
+	<version>210819</version>
 	<description>all scopes to provided from none</description>
 	<packaging>jar</packaging>
 	<name>archive</name>
