@@ -3,7 +3,7 @@ package renx.uu;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LList<E> {
+public class LList {
 
 	public static void main(String[] args) {
 		LList llist = LList.build();
@@ -13,33 +13,51 @@ public class LList<E> {
 	}
 
 	public int index = -1;
-	public List<E> list = null;
+	public List list = null;
 
-	public static <E> LList<E> build(List<E> list) {
+	public static LList build(List list) {
 		if (list == null) {
-			LList<E> listt = new LList<E>();
+			LList listt = new LList();
 			return listt;
 		} else {
-			LList<E> listt = new LList<E>();
+			LList listt = new LList();
 			listt.list = list;
 			return listt;
 		}
 	}
 
-	public static <E> LList<E> build() {
+	public static LList build() {
 		return build(null);
 	}
 
-	public LList<E> add(E e, boolean iff) {
+	public LList add(Object e, boolean iff) {
 		if (iff)
 			return add(e);
 		return this;
 	}
 
-	public LList<E> add(E e) {
+	public LList add(Object e) {
 		if (this.list == null)
-			this.list = new ArrayList<E>();
+			this.list = new ArrayList();
+		if (e instanceof MMap)
+			e = ((MMap) e).map;
+		else if (e instanceof LList)
+			e = ((LList) e).list;
 		this.list.add(e);
+		return this;
+	}
+
+	public LList addAll(List e) {
+		if (this.list == null)
+			this.list = new ArrayList();
+		this.list.addAll(e);
+		return this;
+	}
+
+	public LList addAll(LList e) {
+		if (this.list == null)
+			this.list = new ArrayList();
+		this.list.addAll(e.list);
 		return this;
 	}
 
@@ -49,14 +67,14 @@ public class LList<E> {
 		return this.list.toArray();
 	}
 
-	public E get(int index) {
+	public Object get(int index) {
 		if (this.list == null || this.list.size() <= index)
 			return null;
 		else
 			return this.list.get(index);
 	};
 
-	public E next() {
+	public Object next() {
 		if (this.list != null && (this.list.size() - 1) >= (this.index + 1))
 			return get(++this.index);
 		return null;
