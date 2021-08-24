@@ -38,6 +38,8 @@ public class MMap {
 			this.map = new LinkedHashMap();
 		if (value instanceof MMap)
 			value = ((MMap) value).map;
+		if (value instanceof PParam)
+			value = ((PParam) value).value;
 		this.map.put(key, value);
 		return this;
 	}
