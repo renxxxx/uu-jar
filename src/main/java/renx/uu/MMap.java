@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+
 public class MMap {
 
 	public Map map = null;
@@ -138,4 +141,11 @@ public class MMap {
 		return this.map == null ? null : this.map.toString();
 	}
 
+	public String toJSONString() {
+		return JSON.toJSONString(this.map);
+	}
+
+	public String toJSONString(SerializerFeature... features) {
+		return JSON.toJSONString(this.map, features);
+	}
 }
