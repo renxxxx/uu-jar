@@ -247,6 +247,8 @@ public class Jdbcuu {
 				+ RandomStringUtils.randomNumeric(3);
 		logger.info(sqlNo + " " + sql);
 		logger.info(sqlNo + " " + JSON.toJSONString(params));
+		logger4j.info(sqlNo + " " + sql);
+		logger4j.info(sqlNo + " " + JSON.toJSONString(params));
 		int cnt = 0;
 		try {
 			for (int i = 0; i < params.length; i++) {
@@ -264,10 +266,12 @@ public class Jdbcuu {
 			cnt = pst.executeUpdate();
 			long e = System.currentTimeMillis();
 			logger.info(sqlNo + " " + "takes: " + Stringuu.commaNum((e - s) + "") + "ms");
+			logger4j.info(sqlNo + " " + "takes: " + Stringuu.commaNum((e - s) + "") + "ms");
 		} catch (Exception e) {
 			throw new Exception(e.getMessage() + " " + sqlNo + " " + " sql: " + sql, e);
 		}
 		logger.info(sqlNo + " " + "affected: " + cnt);
+		logger4j.info(sqlNo + " " + "affected: " + cnt);
 		return cnt;
 	}
 
