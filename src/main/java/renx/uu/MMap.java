@@ -36,6 +36,13 @@ public class MMap {
 		return build(null);
 	}
 
+	public MMap put(Object key, Object value, boolean iff) {
+		if (iff) {
+			put(key, value);
+		}
+		return this;
+	}
+
 	public MMap put(Object key, Object value) {
 		if (this.map == null)
 			this.map = new LinkedHashMap();
