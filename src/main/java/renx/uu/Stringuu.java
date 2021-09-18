@@ -37,16 +37,16 @@ public class Stringuu {
 		if (Stringuu.isEmpty(str))
 			return null;
 		String strTo = str;
-		Integer size = PParam.toInteger(str);
+		Integer size = Paramm.toInteger(str);
 		String unit = null;
 		if (size == null) {
 			unit = str.substring(str.length() - 1);
 			strTo = str.substring(0, str.length() - 1);
-			size = PParam.toInteger(strTo);
+			size = Paramm.toInteger(strTo);
 			if (size == null) {
 				unit = str.substring(str.length() - 2);
 				strTo = str.substring(0, str.length() - 2);
-				size = PParam.toInteger(strTo);
+				size = Paramm.toInteger(strTo);
 			}
 		}
 		if (Stringuu.isEmpty(unit)) {

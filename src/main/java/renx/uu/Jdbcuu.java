@@ -90,35 +90,35 @@ public class Jdbcuu {
 	}
 
 	public static Integer getInteger(Connection conn, String sql, Object... params) throws Exception {
-		return PParam.toInteger(getObject(conn, sql, params));
+		return Paramm.toInteger(getObject(conn, sql, params));
 	}
 
 	public static String getString(Connection conn, String sql, Object... params) throws Exception {
-		return PParam.toString(getObject(conn, sql, params));
+		return Paramm.toString(getObject(conn, sql, params));
 	}
 
 	public static LList getJsonArr(Connection conn, String sql, Object... params) throws Exception {
-		return PParam.toJsonArr(getObject(conn, sql, params));
+		return Paramm.toJsonArr(getObject(conn, sql, params));
 	}
 
 	public static MMap getJson(Connection conn, String sql, Object... params) throws Exception {
-		return PParam.toJson(getObject(conn, sql, params));
+		return Paramm.toJson(getObject(conn, sql, params));
 	}
 
 	public static BigDecimal getDecimal(Connection conn, String sql, Object... params) throws Exception {
-		return PParam.toDecimal(getObject(conn, sql, params));
+		return Paramm.toDecimal(getObject(conn, sql, params));
 	}
 
 	public static Long getLong(Connection conn, String sql, Object... params) throws Exception {
-		return PParam.toLong(getObject(conn, sql, params));
+		return Paramm.toLong(getObject(conn, sql, params));
 	}
 
 	public static Float getFloat(Connection conn, String sql, Object... params) throws Exception {
-		return PParam.toFloat(getObject(conn, sql, params));
+		return Paramm.toFloat(getObject(conn, sql, params));
 	}
 
 	public static Date getDate(Connection conn, String sql, Object... params) throws Exception {
-		return PParam.toDate(getObject(conn, sql, params));
+		return Paramm.toDate(getObject(conn, sql, params));
 	}
 
 	public static Object getObject(Connection conn, String sql, Object... params) throws Exception {
@@ -179,8 +179,8 @@ public class Jdbcuu {
 		try {
 			for (int i = 0; i < params.length; i++) {
 				Object param = params[i];
-				if (param instanceof PParam) {
-					param = ((PParam) param).value;
+				if (param instanceof Paramm) {
+					param = ((Paramm) param).value;
 				}
 				pst.setObject(i + 1, param);
 			}
@@ -253,8 +253,8 @@ public class Jdbcuu {
 		try {
 			for (int i = 0; i < params.length; i++) {
 				Object param = params[i];
-				if (param instanceof PParam) {
-					param = ((PParam) param).value;
+				if (param instanceof Paramm) {
+					param = ((Paramm) param).value;
 					pst.setObject(i + 1, param);
 				} else if (param instanceof InputStream) {
 					pst.setBinaryStream(i + 1, (InputStream) param);

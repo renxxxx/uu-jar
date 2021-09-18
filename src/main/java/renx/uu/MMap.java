@@ -48,8 +48,8 @@ public class MMap {
 			this.map = new LinkedHashMap();
 		if (value instanceof MMap)
 			value = ((MMap) value).map;
-		if (value instanceof PParam)
-			value = ((PParam) value).value;
+		if (value instanceof Paramm)
+			value = ((Paramm) value).value;
 		this.map.put(key, value);
 		return this;
 	}
@@ -87,37 +87,37 @@ public class MMap {
 	public String getString(Object key) {
 		if (map == null)
 			return null;
-		return PParam.toString(map.get(key));
+		return Paramm.toString(map.get(key));
 	}
 
 	public Integer getInteger(Object key) {
 		if (map == null)
 			return null;
-		return PParam.toInteger(map.get(key));
+		return Paramm.toInteger(map.get(key));
 	}
 
 	public Long getLong(Object key) {
 		if (map == null)
 			return null;
-		return PParam.toLong(map.get(key));
+		return Paramm.toLong(map.get(key));
 	}
 
 	public BigDecimal getDecimal(Object key) {
 		if (map == null)
 			return null;
-		return PParam.toDecimal(map.get(key));
+		return Paramm.toDecimal(map.get(key));
 	}
 
 	public Float getFloat(Object key) {
 		if (map == null)
 			return null;
-		return PParam.toFloat(map.get(key));
+		return Paramm.toFloat(map.get(key));
 	}
 
 	public Date getDate(Object key) {
 		if (map == null)
 			return null;
-		return PParam.toDate(map.get(key));
+		return Paramm.toDate(map.get(key));
 	}
 
 	public LList getList(Object key) {
