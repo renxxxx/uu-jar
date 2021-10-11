@@ -2,6 +2,7 @@ package renx.uu;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -88,6 +89,12 @@ public class MMap {
 		if (map == null)
 			return null;
 		return Paramm.toString(map.get(key));
+	}
+
+	public Boolean getBoolean(Object key) {
+		if (map == null)
+			return null;
+		return Paramm.toBoolean(map.get(key));
 	}
 
 	public Integer getInteger(Object key) {

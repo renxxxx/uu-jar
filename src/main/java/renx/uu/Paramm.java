@@ -819,6 +819,18 @@ public class Paramm {
 		return this;
 	}
 
+	public static Boolean toBoolean(Object value) {
+		try {
+			if (value == null)
+				return null;
+			return Boolean.parseBoolean(value.toString());
+		} catch (Exception e) {
+			logger.debug(ExceptionUtils.getStackTrace(e));
+		}
+		return null;
+
+	}
+
 	public static Integer toInteger(Object value) {
 		try {
 			if (value == null)
