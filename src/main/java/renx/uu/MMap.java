@@ -150,6 +150,10 @@ public class MMap {
 		return !isEmpty();
 	}
 
+	public boolean exist() {
+		return !isEmpty();
+	}
+
 	@Override
 	public String toString() {
 		return this.map == null ? null : this.map.toString();

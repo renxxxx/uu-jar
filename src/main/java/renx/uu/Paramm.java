@@ -524,6 +524,10 @@ public class Paramm {
 		return this;
 	}
 
+	public boolean exist() {
+		return !isEmpty();
+	}
+
 	public boolean notEmpty() {
 		return !isEmpty();
 	}

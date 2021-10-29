@@ -1,6 +1,7 @@
 package renx.uu;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 
 public class CCookie {
 
@@ -12,7 +13,48 @@ public class CCookie {
 		return ccookie;
 	}
 
-	public String val() {
+	public static CCookie build(String name, String value) {
+		CCookie ccookie = new CCookie();
+		ccookie.o = new Cookie(name, value);
+		return ccookie;
+	}
+
+	public CCookie domain(String domain) {
+		o.setDomain(domain);
+		return this;
+	}
+
+	public CCookie path(String uri) {
+		o.setPath(uri);
+		return this;
+	}
+
+	public CCookie httpOnly(boolean isHttpOnly) {
+		o.setHttpOnly(isHttpOnly);
+		return this;
+	}
+
+	public CCookie maxAge(int expiry) {
+		o.setMaxAge(expiry);
+		return this;
+	}
+
+	public CCookie value(String newValue) {
+		o.setValue(newValue);
+		return this;
+	}
+
+	public CCookie secure(boolean flag) {
+		o.setSecure(flag);
+		return this;
+	}
+
+	public CCookie add(HttpServletResponse hres) {
+		hres.addCookie(o);
+		return this;
+	}
+
+	public String value() {
 		return o != null ? o.getValue() : null;
 	}
 }

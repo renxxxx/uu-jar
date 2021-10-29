@@ -154,6 +154,10 @@ public class Stringuu {
 				+ RandomStringUtils.randomNumeric(tailLength);
 	}
 
+	public static boolean exist(CharSequence cs) {
+		return org.apache.commons.lang3.StringUtils.isNotEmpty(cs);
+	}
+
 	public static boolean notEmpty(CharSequence cs) {
 		return org.apache.commons.lang3.StringUtils.isNotEmpty(cs);
 	}
