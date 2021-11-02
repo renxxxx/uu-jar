@@ -148,7 +148,7 @@ public class Stringuu {
 		return true;
 	}
 
-	public static String newId() {
+	public static String timeId() {
 		return new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + RandomStringUtils.randomNumeric(6);
 	}
 
