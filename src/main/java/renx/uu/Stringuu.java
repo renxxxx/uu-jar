@@ -29,8 +29,11 @@ public class Stringuu {
 //		return offUrls;
 //	}
 
-	public static void main(String[] args) {
-		System.out.println(camel("wrwer-asfd_e234_ewr"));
+	public static void main(String[] args) throws InterruptedException {
+		long n1 = System.nanoTime();
+		Thread.sleep(1);
+		long n2 = System.nanoTime();
+		System.out.println(n2 - n1);
 	}
 
 	public static Integer toByte(String str) {
@@ -146,7 +149,7 @@ public class Stringuu {
 	}
 
 	public static String newId() {
-		return new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + Math.abs(System.nanoTime());
+		return new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + RandomStringUtils.randomNumeric(6);
 	}
 
 	public static boolean exist(CharSequence cs) {
