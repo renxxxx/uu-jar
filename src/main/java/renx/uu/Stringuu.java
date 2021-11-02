@@ -149,11 +149,6 @@ public class Stringuu {
 		return new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + Math.abs(System.nanoTime());
 	}
 
-	public static String newId(int tailLength) {
-		return new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + "1"
-				+ RandomStringUtils.randomNumeric(tailLength);
-	}
-
 	public static boolean exist(CharSequence cs) {
 		return org.apache.commons.lang3.StringUtils.isNotEmpty(cs);
 	}
