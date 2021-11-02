@@ -146,7 +146,7 @@ public class Stringuu {
 	}
 
 	public static String newId() {
-		return new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + "1" + RandomStringUtils.randomNumeric(14);
+		return new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + Math.abs(System.nanoTime());
 	}
 
 	public static String newId(int tailLength) {
