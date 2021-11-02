@@ -8,14 +8,14 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 
 public class Result extends RuntimeException {
 
-	protected String runNo = null;
-	protected int code;
-	protected String errorParam = null;
-	protected String message = null;
-	protected Object data = null;
-	protected String messageEn = null;
-	protected String messageCn = null;
-	protected String error = null;
+	public String runNo = null;
+	public int code;
+	public String errorParam = null;
+	public String message = null;
+	public Object data = null;
+	public String messageEn = null;
+	public String messageCn = null;
+	public String error = null;
 
 	public Map to() {
 		Map map = new LinkedHashMap();
