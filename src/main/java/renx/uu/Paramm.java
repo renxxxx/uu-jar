@@ -106,7 +106,7 @@ public class Paramm {
 			}
 
 		if (this.value != null && !this.value.isEmpty() && this.value.matches(".*<(s|S)(c|C)(r|R)(i|I)(p|P)(t|T).*"))
-			throw RRes.build(1001, "\"" + this.name + "\"有误").setErrParam(this.code);
+			throw Result.build(1001, "\"" + this.name + "\"有误").errorParam(this.code);
 		if ("null".equals(this.value) || "undefined".equals(this.value))
 			this.value = null;
 		return this;
@@ -126,7 +126,7 @@ public class Paramm {
 			}
 
 		if (var.value != null && !var.value.isEmpty() && var.value.matches(".*<(s|S)(c|C)(r|R)(i|I)(p|P)(t|T).*"))
-			throw RRes.build(1001, "\"" + var.name + "\"有误").setErrParam(var.code);
+			throw Result.build(1001, "\"" + var.name + "\"有误").errorParam(var.code);
 		if ("null".equals(var.value) || "undefined".equals(var.value))
 			var.value = null;
 		return var;
@@ -144,7 +144,7 @@ public class Paramm {
 			}
 
 		if (var.value != null && !var.value.isEmpty() && var.value.matches(".*<(s|S)(c|C)(r|R)(i|I)(p|P)(t|T).*"))
-			throw RRes.build(1001, "\"" + var.name + "\"有误").setErrParam(var.code);
+			throw Result.build(1001, "\"" + var.name + "\"有误").errorParam(var.code);
 		if ("null".equals(var.value) || "undefined".equals(var.value))
 			var.value = null;
 
@@ -276,7 +276,7 @@ public class Paramm {
 		if (!this.run)
 			return this;
 		if (this.value == null)
-			throw RRes.build(1001, "\"" + this.name + "\"不能空").setErrParam(this.code);
+			throw Result.build(1001, "\"" + this.name + "\"不能空").errorParam(this.code);
 		return this;
 	}
 
@@ -304,7 +304,7 @@ public class Paramm {
 		if (msg == null)
 			msg = "\"" + this.name + "\"不能空";
 		if (run && (this.value == null || this.value.isEmpty()))
-			throw RRes.build(1001, msg).setErrParam(this.code);
+			throw Result.build(1001, msg).errorParam(this.code);
 		return this;
 	}
 
@@ -317,7 +317,7 @@ public class Paramm {
 		if (!this.run)
 			return this;
 		if ((this.value != null && this.value.isEmpty()))
-			throw RRes.build(1001, "\"" + this.name + "\"不能空").setErrParam(this.code);
+			throw Result.build(1001, "\"" + this.name + "\"不能空").errorParam(this.code);
 		return this;
 	}
 
@@ -333,7 +333,7 @@ public class Paramm {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() != length) {
-			throw RRes.build(1001, "\"" + this.name + "\"长度只能是" + length).setErrParam(this.code);
+			throw Result.build(1001, "\"" + this.name + "\"长度只能是" + length).errorParam(this.code);
 		}
 		return this;
 	}
@@ -350,7 +350,7 @@ public class Paramm {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() < length) {
-			throw RRes.build(1001, "\"" + this.name + "\"长度最低" + length).setErrParam(this.code);
+			throw Result.build(1001, "\"" + this.name + "\"长度最低" + length).errorParam(this.code);
 		}
 		return this;
 	}
@@ -367,7 +367,7 @@ public class Paramm {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() > length) {
-			throw RRes.build(1001, "\"" + this.name + "\"长度最大" + length).setErrParam(this.code);
+			throw Result.build(1001, "\"" + this.name + "\"长度最大" + length).errorParam(this.code);
 		}
 		return this;
 	}
@@ -384,7 +384,7 @@ public class Paramm {
 		if (!this.run)
 			return this;
 		if (!isEmpty() && toFloat() > maxnum) {
-			throw RRes.build(1001, "\"" + this.name + "\"最大" + maxnum).setErrParam(this.code);
+			throw Result.build(1001, "\"" + this.name + "\"最大" + maxnum).errorParam(this.code);
 		}
 		return this;
 	}
@@ -401,7 +401,7 @@ public class Paramm {
 		if (!this.run)
 			return this;
 		if (!isEmpty() && toFloat() < minnum) {
-			throw RRes.build(1001, "\"" + this.name + "\"最小" + minnum).setErrParam(this.code);
+			throw Result.build(1001, "\"" + this.name + "\"最小" + minnum).errorParam(this.code);
 		}
 		return this;
 	}
@@ -418,7 +418,7 @@ public class Paramm {
 		if (!this.run)
 			return this;
 		if (!this.isEmpty() && this.toStrings() != null && this.toStrings().length > count) {
-			throw RRes.build(1001, "\"" + this.name + "\"最多" + count + "个").setErrParam(this.code);
+			throw Result.build(1001, "\"" + this.name + "\"最多" + count + "个").errorParam(this.code);
 		}
 		return this;
 	}
@@ -433,7 +433,7 @@ public class Paramm {
 
 			}
 			if (this.integerv == null)
-				throw RRes.build(1001, "\"" + this.name + "\"有误").setErrParam(this.code);
+				throw Result.build(1001, "\"" + this.name + "\"有误").errorParam(this.code);
 		}
 		return this;
 	}
@@ -442,7 +442,7 @@ public class Paramm {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && !"1".equals(this.value) && !"0".equals(this.value)) {
-			throw RRes.build(1001, "\"" + this.name + "\"有误").setErrParam(this.code);
+			throw Result.build(1001, "\"" + this.name + "\"有误").errorParam(this.code);
 		}
 		return this;
 	}
@@ -455,7 +455,7 @@ public class Paramm {
 		this.enums = enums;
 		boolean v = Stringuu.equalsAny(this.value, enums);
 		if (!v)
-			throw RRes.build(1001, "\"" + this.name + "\"有误").setErrParam(this.code).setError(error);
+			throw Result.build(1001, "\"" + this.name + "\"有误").errorParam(this.code).error(error);
 		else
 			return this;
 	}
@@ -474,7 +474,7 @@ public class Paramm {
 
 			}
 			if (this.longv == null)
-				throw RRes.build(1001, "\"" + this.name + "\"有误").setErrParam(this.code);
+				throw Result.build(1001, "\"" + this.name + "\"有误").errorParam(this.code);
 		}
 		return this;
 	}
@@ -489,7 +489,7 @@ public class Paramm {
 
 			}
 			if (this.doublev == null)
-				throw RRes.build(1001, "\"" + this.name + "\"只能输入数字").setErrParam(this.code);
+				throw Result.build(1001, "\"" + this.name + "\"只能输入数字").errorParam(this.code);
 		}
 		return this;
 	}
@@ -504,7 +504,7 @@ public class Paramm {
 
 			}
 			if (this.floatv == null)
-				throw RRes.build(1001, "\"" + this.name + "\"只能输入数字").setErrParam(this.code);
+				throw Result.build(1001, "\"" + this.name + "\"只能输入数字").errorParam(this.code);
 		}
 		return this;
 	}
@@ -519,7 +519,7 @@ public class Paramm {
 
 			}
 			if (this.decimalv == null)
-				throw RRes.build(1001, "\"" + this.name + "\"只能输入数字").setErrParam(this.code);
+				throw Result.build(1001, "\"" + this.name + "\"只能输入数字").errorParam(this.code);
 		}
 		return this;
 	}
@@ -585,11 +585,11 @@ public class Paramm {
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null) {
 			if (!regex.matcher(this.value).matches())
-				throw RRes
+				throw Result
 						.build(1001,
 								"\"" + this.name + "\"有误"
 										+ (note == null || note.isEmpty() ? "" : ", 正确格式: " + note + "."))
-						.setErrParam(this.code);
+						.errorParam(this.code);
 		}
 		return this;
 	}
@@ -605,11 +605,11 @@ public class Paramm {
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null) {
 			if (regex.matcher(this.value).matches())
-				throw RRes
+				throw Result
 						.build(1001,
 								"\"" + this.name + "\"有误"
 										+ (note == null || note.isEmpty() ? "" : ", 正确格式: " + note + "."))
-						.setErrParam(this.code);
+						.errorParam(this.code);
 		}
 		return this;
 	}
@@ -625,11 +625,11 @@ public class Paramm {
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty()) {
 			if (!regexCache.getWithCreate(regex).matcher(this.value).matches())
-				throw RRes
+				throw Result
 						.build(1001,
 								"\"" + this.name + "\"有误"
 										+ (note == null || note.isEmpty() ? "" : ", 正确格式: " + note + "."))
-						.setErrParam(this.code);
+						.errorParam(this.code);
 		}
 		return this;
 	}
@@ -645,11 +645,11 @@ public class Paramm {
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty()) {
 			if (regexCache.getWithCreate(regex).matcher(this.value).matches())
-				throw RRes
+				throw Result
 						.build(1001,
 								"\"" + this.name + "\"有误"
 										+ (note == null || note.isEmpty() ? "" : ", 正确格式: " + note + "."))
-						.setErrParam(this.code);
+						.errorParam(this.code);
 		}
 		return this;
 	}
@@ -659,7 +659,7 @@ public class Paramm {
 			return this;
 		toDate();
 		if (this.datev == null)
-			throw RRes.build(1001, "\"" + this.name + "\"有误").setErrParam(this.code);
+			throw Result.build(1001, "\"" + this.name + "\"有误").errorParam(this.code);
 		else {
 			this.value = new SimpleDateFormat(datePattern1).format(this.datev);
 		}
@@ -735,12 +735,12 @@ public class Paramm {
 	}
 
 	public void bomb(String message) {
-		throw RRes.build(1001, "\"" + this.name + "\"" + message).setErrParam(this.code);
+		throw Result.build(1001, "\"" + this.name + "\"" + message).errorParam(this.code);
 	}
 
 	public void bomb(boolean run, String message) {
 		if (run)
-			throw RRes.build(1001, "\"" + this.name + "\"" + message).setErrParam(this.code);
+			throw Result.build(1001, "\"" + this.name + "\"" + message).errorParam(this.code);
 	}
 
 	public boolean equals(Object object) {
