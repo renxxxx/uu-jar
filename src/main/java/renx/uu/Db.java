@@ -79,6 +79,5 @@ public class Db {
 	}
 
 	public static void m2() throws Exception {
-		System.out.println(Stringuu.newId());
 	}
 }

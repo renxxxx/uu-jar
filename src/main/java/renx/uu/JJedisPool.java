@@ -60,6 +60,5 @@ public class JJedisPool {
 	}
 
 	public static void m2() throws Exception {
-		System.out.println(Stringuu.newId());
 	}
 }
