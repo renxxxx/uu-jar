@@ -22,19 +22,14 @@ public class JJedisPool {
 	public void start() {
 		if (this.started)
 			return;
-		try {
-			if (this.jedisPool != null) {
-				this.jedisPool.close();
-				this.jedisPool.destroy();
-				this.jedisPool = null;
-			}
-			JedisPoolConfig config = new JedisPoolConfig();
-			this.jedisPool = new JedisPool(config, ip, port, 2000, auth, 0);
-			started = true;
-		} catch (Exception e) {
-			started = false;
-			throw new RuntimeException(e);
+		if (this.jedisPool != null) {
+			this.jedisPool.close();
+			this.jedisPool.destroy();
+			this.jedisPool = null;
 		}
+		JedisPoolConfig config = new JedisPoolConfig();
+		this.jedisPool = new JedisPool(config, ip, port, 2000, auth, 0);
+		started = true;
 	}
 
 	public void stop() {
