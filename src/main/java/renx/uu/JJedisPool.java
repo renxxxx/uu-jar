@@ -8,13 +8,14 @@ import org.slf4j.LoggerFactory;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
 
 public class JJedisPool {
 	private static Logger logger = LoggerFactory.getLogger(JJedisPool.class);
 
 	public JedisPool jedisPool;
-	public String ip;
-	public int port;
+	public String ip = "127.0.0.1";
+	public int port = 6379;
 	public String auth;
 	public boolean started = false;
 
@@ -27,8 +28,8 @@ public class JJedisPool {
 				this.jedisPool.destroy();
 				this.jedisPool = null;
 			}
-			GenericObjectPoolConfig config = new GenericObjectPoolConfig();
-			this.jedisPool = new JedisPool(config, ip, port, 10000, auth, 0);
+			JedisPoolConfig config = new JedisPoolConfig();
+			this.jedisPool = new JedisPool(config, ip, port, 2000, auth, 0);
 			started = true;
 		} catch (Exception e) {
 			started = false;
