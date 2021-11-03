@@ -199,14 +199,14 @@ public class Jdbcuu {
 //		return new StringBuilder("%").append(columnValue).append("%").toString();
 //	}
 
-	public static Integer insert(Connection conn, String sql, Object... params) throws Exception {
+	public static String insert(Connection conn, String sql, Object... params) throws Exception {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 			update(pst, sql, params);
 			ResultSet rs = pst.getGeneratedKeys();
 			if (rs.next())
-				return rs.getInt(1);
+				return rs.getInt(1) + "";
 			else
 				return null;
 		} catch (Exception e) {
