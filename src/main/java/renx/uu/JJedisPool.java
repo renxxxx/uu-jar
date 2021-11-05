@@ -55,6 +55,11 @@ public class JJedisPool {
 		return connect(null);
 	}
 
+	public void close(JJedis jjedis) throws SQLException {
+		if (jjedis != null)
+			jjedis.close();
+	}
+
 	public static void main(String[] args) throws Exception {
 		m2();
 	}
