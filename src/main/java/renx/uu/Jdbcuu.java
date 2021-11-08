@@ -38,15 +38,15 @@ public class Jdbcuu {
 		System.out.println(ss);
 	}
 
-	public static List<Map> rows(Connection conn, String sql, LList params) throws Exception {
-		return rows(conn, sql, params.toArray());
+	public static List<Map> list(Connection conn, String sql, LList params) throws Exception {
+		return list(conn, sql, params.toArray());
 	}
 
-	public static List<Map> rows(Connection conn, String sql, List params) throws Exception {
-		return rows(conn, sql, LList.build(params));
+	public static List<Map> list(Connection conn, String sql, List params) throws Exception {
+		return list(conn, sql, LList.build(params));
 	}
 
-	public static List<Map> rows(Connection conn, String sql, Object... params) throws Exception {
+	public static List<Map> list(Connection conn, String sql, Object... params) throws Exception {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
@@ -59,7 +59,7 @@ public class Jdbcuu {
 		}
 	}
 
-	public static List<Object> thinrows(Connection conn, String sql, Object... params) throws Exception {
+	public static List<Object> thinlist(Connection conn, String sql, Object... params) throws Exception {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
@@ -157,7 +157,7 @@ public class Jdbcuu {
 	public static MMap row(Connection conn, String sql, Object... params) throws Exception {
 
 		Map item = null;
-		List<Map> itemList = rows(conn, sql, params);
+		List<Map> itemList = list(conn, sql, params);
 		if (itemList != null && itemList.size() > 0) {
 			item = itemList.get(0);
 		}
