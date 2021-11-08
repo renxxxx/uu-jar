@@ -128,12 +128,12 @@ public class Result extends RuntimeException {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Result msg(String msg) {
+	public Result message(String message) {
 		this.message = message;
 		return this;
 	}
 
-	public Result msgCn(String messageCn) {
+	public Result messageCn(String messageCn) {
 		this.messageCn = messageCn;
 		return this;
 	}
