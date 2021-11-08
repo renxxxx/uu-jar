@@ -25,6 +25,7 @@ public class Paramm {
 
 	public String name;
 	public String code;
+	public String[] codes;
 	public String value;
 
 	public String separator = ",";
@@ -79,15 +80,24 @@ public class Paramm {
 		return this;
 	}
 
-	public Paramm code(String code) {
-		this.code = code;
+	public Paramm code(String... codes) {
+		this.codes = codes;
+		if (codes != null && codes.length > 0)
+			this.code = codes[0];
 		if (this.name == null || this.name.isEmpty())
 			this.name = code;
 		return this;
 	}
 
 	public Paramm value(HttpServletRequest from) {
-		this.value = from.getParameter(code);
+		if (this.codes != null)
+			for (String code : this.codes) {
+				String value = from.getParameter(code);
+				if (value != null) {
+					this.value = value;
+					break;
+				}
+			}
 		return this;
 	}
 
