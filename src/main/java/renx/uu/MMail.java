@@ -14,7 +14,7 @@ public class MMail {
 		MMail j = new MMail();
 		j.host = "smtp.qq.com";
 		j.user = "413038044@qq.com";
-		j.pwd = "gfjilukxeefgbigb";
+		j.password = "gfjilukxeefgbigb";
 		j.sender = "413038044@qq.com";
 
 		j.send("413038044@qq.com", "aq123123d", "qqqq");
@@ -22,7 +22,7 @@ public class MMail {
 
 	public String host;
 	public String user;
-	public String pwd;
+	public String password;
 	public String sender;
 
 	public Message send(String receiver, String subject, String content) throws Exception {
@@ -43,7 +43,7 @@ public class MMail {
 
 		Transport ts = session.getTransport();
 		// 3、连上邮件服务器
-		ts.connect(host, 465, user, pwd);
+		ts.connect(host, 465, user, password);
 
 		// 4、创建邮件
 		// 创建邮件对象
