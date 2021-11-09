@@ -89,7 +89,9 @@ public class IOuu {
 		}
 	}
 
-	public static int copy(File in, File out) throws Exception {
+	public static Integer copy(File in, File out) throws Exception {
+		if (in == null || out == null)
+			return null;
 		InputStream is = null;
 		OutputStream os = null;
 		try {
@@ -105,6 +107,12 @@ public class IOuu {
 				os.close();
 		}
 
+	}
+
+	public static Integer copy(String in, String out) throws Exception {
+		if (in == null || in.isEmpty() || out == null || out.isEmpty())
+			return null;
+		return copy(new File(in), new File(out));
 	}
 
 	public static String toString(File file) throws Exception {
