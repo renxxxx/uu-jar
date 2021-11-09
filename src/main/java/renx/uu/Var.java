@@ -20,8 +20,8 @@ import org.slf4j.LoggerFactory;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
-public class Paramm {
-	private static Logger logger = LoggerFactory.getLogger(Paramm.class);
+public class Var {
+	private static Logger logger = LoggerFactory.getLogger(Var.class);
 
 	public String name;
 	public String code;
@@ -59,7 +59,7 @@ public class Paramm {
 		}
 	};
 
-	public Paramm reset() {
+	public Var reset() {
 		this.stringsv = null;
 		this.datev = null;
 		this.integerv = null;
@@ -70,17 +70,17 @@ public class Paramm {
 		return this;
 	}
 
-	public static Paramm build() {
-		Paramm var = new Paramm();
+	public static Var build() {
+		Var var = new Var();
 		return var;
 	}
 
-	public Paramm name(String name) {
+	public Var name(String name) {
 		this.name = name;
 		return this;
 	}
 
-	public Paramm code(String... codes) {
+	public Var code(String... codes) {
 		this.codes = codes;
 		if (codes != null && codes.length > 0)
 			this.code = codes[0];
@@ -89,7 +89,7 @@ public class Paramm {
 		return this;
 	}
 
-	public Paramm value(HttpServletRequest from) {
+	public Var value(HttpServletRequest from) {
 		if (this.codes != null)
 			for (String code : this.codes) {
 				String value = from.getParameter(code);
@@ -101,12 +101,12 @@ public class Paramm {
 		return this;
 	}
 
-	public Paramm value(MMap from) {
+	public Var value(MMap from) {
 		this.value = from.getString(code);
 		return this;
 	}
 
-	public Paramm value(String... froms) {
+	public Var value(String... froms) {
 		if (froms != null)
 			for (String value : froms) {
 				if (value != null) {
@@ -123,8 +123,8 @@ public class Paramm {
 	}
 
 	@Deprecated
-	public static Paramm go(String name, String code, String... values) {
-		Paramm var = new Paramm();
+	public static Var go(String name, String code, String... values) {
+		Var var = new Var();
 		var.name = name;
 		var.code = code;
 		if (values != null)
@@ -143,8 +143,8 @@ public class Paramm {
 	}
 
 	@Deprecated
-	public static Paramm go2(String... values) {
-		Paramm var = new Paramm();
+	public static Var go2(String... values) {
+		Var var = new Var();
 		if (values != null)
 			for (String value : values) {
 				if (value != null) {
@@ -161,7 +161,7 @@ public class Paramm {
 		return var;
 	}
 
-	public Paramm suffix(String suffix) {
+	public Var suffix(String suffix) {
 		if (!this.run)
 			return this;
 		if (this.value != null)
@@ -169,7 +169,7 @@ public class Paramm {
 		return this;
 	}
 
-	public Paramm prefix(String prefix) {
+	public Var prefix(String prefix) {
 		if (!this.run)
 			return this;
 		if (this.value != null)
@@ -177,14 +177,14 @@ public class Paramm {
 		return this;
 	}
 
-	public Paramm trim() {
+	public Var trim() {
 		if (!this.run)
 			return this;
 		this.value = this.value == null ? null : this.value.trim();
 		return this;
 	}
 
-	public Paramm trimToNull() {
+	public Var trimToNull() {
 		if (!this.run)
 			return this;
 		if (this.value != null && this.value.trim().isEmpty())
@@ -192,7 +192,7 @@ public class Paramm {
 		return this;
 	}
 
-	public Paramm trimToBlank() {
+	public Var trimToBlank() {
 		if (!this.run)
 			return this;
 		if (this.value == null)
@@ -201,26 +201,26 @@ public class Paramm {
 		return this;
 	}
 
-	public Paramm trimLeft() {
+	public Var trimLeft() {
 		if (!this.run)
 			return this;
 		this.value = this.value == null ? null : this.value.trim();
 		return this;
 	}
 
-	public Paramm trimRight() {
+	public Var trimRight() {
 		if (!this.run)
 			return this;
 		this.value = this.value == null ? null : this.value.trim();
 		return this;
 	}
 
-	public Paramm setSeparator(String separator) {
+	public Var setSeparator(String separator) {
 		this.separator = separator;
 		return this;
 	}
 
-	public Paramm nullDef(String defaultValue) {
+	public Var nullDef(String defaultValue) {
 		if (!this.run)
 			return this;
 		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
@@ -229,7 +229,7 @@ public class Paramm {
 		return this;
 	}
 
-	public Paramm nullDef(boolean run, String defaultValue) {
+	public Var nullDef(boolean run, String defaultValue) {
 		if (!this.run)
 			return this;
 		if (run)
@@ -237,7 +237,7 @@ public class Paramm {
 		return this;
 	}
 
-	public Paramm blankDef(String defaultValue) {
+	public Var blankDef(String defaultValue) {
 		if (!this.run)
 			return this;
 		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
@@ -246,7 +246,7 @@ public class Paramm {
 		return this;
 	}
 
-	public Paramm blankDef(boolean run, String defaultValue) {
+	public Var blankDef(boolean run, String defaultValue) {
 		if (!this.run)
 			return this;
 		if (run)
@@ -254,7 +254,7 @@ public class Paramm {
 		return this;
 	}
 
-	public Paramm emptyDef(String defaultValue) {
+	public Var emptyDef(String defaultValue) {
 		if (!this.run)
 			return this;
 		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
@@ -263,7 +263,7 @@ public class Paramm {
 		return this;
 	}
 
-	public Paramm emptyDef(boolean run, String defaultValue) {
+	public Var emptyDef(boolean run, String defaultValue) {
 		if (!this.run)
 			return this;
 		if (run)
@@ -271,18 +271,18 @@ public class Paramm {
 		return this;
 	}
 
-	public Paramm stop() {
+	public Var stop() {
 		this.run = false;
 		return this;
 	}
 
-	public Paramm stop(boolean run) {
+	public Var stop(boolean run) {
 		if (run)
 			this.run = false;
 		return this;
 	}
 
-	public Paramm vNull() {
+	public Var vNull() {
 		if (!this.run)
 			return this;
 		if (this.value == null)
@@ -290,7 +290,7 @@ public class Paramm {
 		return this;
 	}
 
-	public Paramm vNull(boolean run) {
+	public Var vNull(boolean run) {
 		if (!this.run)
 			return this;
 		if (run)
@@ -298,17 +298,17 @@ public class Paramm {
 		return this;
 	}
 
-	public Paramm vEmpty(String msg) {
+	public Var vEmpty(String msg) {
 		vEmpty(true, msg);
 		return this;
 	}
 
-	public Paramm vEmpty() {
+	public Var vEmpty() {
 		vEmpty(true, null);
 		return this;
 	}
 
-	public Paramm vEmpty(boolean run, String msg) {
+	public Var vEmpty(boolean run, String msg) {
 		if (!this.run)
 			return this;
 		if (msg == null)
@@ -318,12 +318,12 @@ public class Paramm {
 		return this;
 	}
 
-	public Paramm vEmpty(boolean run) {
+	public Var vEmpty(boolean run) {
 		vEmpty(run, null);
 		return this;
 	}
 
-	public Paramm vBlank() {
+	public Var vBlank() {
 		if (!this.run)
 			return this;
 		if ((this.value != null && this.value.isEmpty()))
@@ -331,7 +331,7 @@ public class Paramm {
 		return this;
 	}
 
-	public Paramm vBlank(boolean run) {
+	public Var vBlank(boolean run) {
 		if (!this.run)
 			return this;
 		if (run)
@@ -339,7 +339,7 @@ public class Paramm {
 		return this;
 	}
 
-	public Paramm vLen(int length) {
+	public Var vLen(int length) {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() != length) {
@@ -348,7 +348,7 @@ public class Paramm {
 		return this;
 	}
 
-	public Paramm vLen(boolean run, int length) {
+	public Var vLen(boolean run, int length) {
 		if (!this.run)
 			return this;
 		if (run)
@@ -356,7 +356,7 @@ public class Paramm {
 		return this;
 	}
 
-	public Paramm vMinLen(int length) {
+	public Var vMinLen(int length) {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() < length) {
@@ -365,7 +365,7 @@ public class Paramm {
 		return this;
 	}
 
-	public Paramm vMinLen(boolean run, int length) {
+	public Var vMinLen(boolean run, int length) {
 		if (!this.run)
 			return this;
 		if (run)
@@ -373,7 +373,7 @@ public class Paramm {
 		return this;
 	}
 
-	public Paramm vMaxLen(int length) {
+	public Var vMaxLen(int length) {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() > length) {
@@ -382,7 +382,7 @@ public class Paramm {
 		return this;
 	}
 
-	public Paramm vMaxLen(boolean run, int length) {
+	public Var vMaxLen(boolean run, int length) {
 		if (!this.run)
 			return this;
 		if (run)
@@ -390,7 +390,7 @@ public class Paramm {
 		return this;
 	}
 
-	public Paramm vMaxNum(float maxnum) {
+	public Var vMaxNum(float maxnum) {
 		if (!this.run)
 			return this;
 		if (!isEmpty() && toFloat() > maxnum) {
@@ -399,7 +399,7 @@ public class Paramm {
 		return this;
 	}
 
-	public Paramm vMaxNum(boolean run, float maxnum) {
+	public Var vMaxNum(boolean run, float maxnum) {
 		if (!this.run)
 			return this;
 		if (run)
@@ -407,7 +407,7 @@ public class Paramm {
 		return this;
 	}
 
-	public Paramm vMinNum(float minnum) {
+	public Var vMinNum(float minnum) {
 		if (!this.run)
 			return this;
 		if (!isEmpty() && toFloat() < minnum) {
@@ -416,7 +416,7 @@ public class Paramm {
 		return this;
 	}
 
-	public Paramm vMinNum(boolean run, float minnum) {
+	public Var vMinNum(boolean run, float minnum) {
 		if (!this.run)
 			return this;
 		if (run)
@@ -424,7 +424,7 @@ public class Paramm {
 		return this;
 	}
 
-	public Paramm vMaxCount(int count) {
+	public Var vMaxCount(int count) {
 		if (!this.run)
 			return this;
 		if (!this.isEmpty() && this.toStrings() != null && this.toStrings().length > count) {
@@ -433,7 +433,7 @@ public class Paramm {
 		return this;
 	}
 
-	public Paramm vInteger() {
+	public Var vInteger() {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
@@ -448,7 +448,7 @@ public class Paramm {
 		return this;
 	}
 
-	public Paramm vBoolean() {
+	public Var vBoolean() {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && !"1".equals(this.value) && !"0".equals(this.value)) {
@@ -457,7 +457,7 @@ public class Paramm {
 		return this;
 	}
 
-	public Paramm vEnum(String[] enums, String error) {
+	public Var vEnum(String[] enums, String error) {
 		if (!this.run)
 			return this;
 		if (isEmpty())
@@ -470,11 +470,11 @@ public class Paramm {
 			return this;
 	}
 
-	public Paramm vEnum(String... enums) {
+	public Var vEnum(String... enums) {
 		return vEnum(enums, null);
 	}
 
-	public Paramm vLong() {
+	public Var vLong() {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
@@ -489,7 +489,7 @@ public class Paramm {
 		return this;
 	}
 
-	public Paramm vDouble() {
+	public Var vDouble() {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
@@ -504,7 +504,7 @@ public class Paramm {
 		return this;
 	}
 
-	public Paramm vFloat() {
+	public Var vFloat() {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
@@ -519,7 +519,7 @@ public class Paramm {
 		return this;
 	}
 
-	public Paramm vDecimal() {
+	public Var vDecimal() {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty()) {
@@ -568,7 +568,7 @@ public class Paramm {
 		return false;
 	}
 
-	public Paramm vLenRange(int min, int max) {
+	public Var vLenRange(int min, int max) {
 		if (!this.run)
 			return this;
 		vMinLen(min);
@@ -576,7 +576,7 @@ public class Paramm {
 		return this;
 	}
 
-	public Paramm vNumRange(float min, float max) {
+	public Var vNumRange(float min, float max) {
 		if (!this.run)
 			return this;
 		vMinNum(min);
@@ -584,13 +584,13 @@ public class Paramm {
 		return this;
 	}
 
-	public Paramm vReg(Pattern regex) {
+	public Var vReg(Pattern regex) {
 		if (!this.run)
 			return this;
 		return vReg(regex, null);
 	}
 
-	public Paramm vReg(Pattern regex, String note) {
+	public Var vReg(Pattern regex, String note) {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null) {
@@ -604,13 +604,13 @@ public class Paramm {
 		return this;
 	}
 
-	public Paramm vRegNot(Pattern regex) {
+	public Var vRegNot(Pattern regex) {
 		if (!this.run)
 			return this;
 		return vRegNot(regex, null);
 	}
 
-	public Paramm vRegNot(Pattern regex, String note) {
+	public Var vRegNot(Pattern regex, String note) {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null) {
@@ -624,13 +624,13 @@ public class Paramm {
 		return this;
 	}
 
-	public Paramm vReg(String regex) {
+	public Var vReg(String regex) {
 		if (!this.run)
 			return this;
 		return vReg(regex, null);
 	}
 
-	public Paramm vReg(String regex, String note) {
+	public Var vReg(String regex, String note) {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty()) {
@@ -644,13 +644,13 @@ public class Paramm {
 		return this;
 	}
 
-	public Paramm vRegNot(String regex) {
+	public Var vRegNot(String regex) {
 		if (!this.run)
 			return this;
 		return vRegNot(regex, null);
 	}
 
-	public Paramm vRegNot(String regex, String note) {
+	public Var vRegNot(String regex, String note) {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty()) {
@@ -664,7 +664,7 @@ public class Paramm {
 		return this;
 	}
 
-	public Paramm vDate() {
+	public Var vDate() {
 		if (this.value == null || this.value.isEmpty())
 			return this;
 		toDate();
@@ -761,7 +761,7 @@ public class Paramm {
 		return this.value.equals(object);
 	}
 
-	public Paramm toLowerCase() {
+	public Var toLowerCase() {
 		if (!this.run)
 			return this;
 		if (this.value != null)
@@ -769,7 +769,7 @@ public class Paramm {
 		return this;
 	}
 
-	public Paramm toUpperCase() {
+	public Var toUpperCase() {
 		if (!this.run)
 			return this;
 		if (this.value != null)
@@ -777,7 +777,7 @@ public class Paramm {
 		return this;
 	}
 
-	public Paramm replaceAll(String regex, String replacement) {
+	public Var replaceAll(String regex, String replacement) {
 		if (!this.run)
 			return this;
 		if (this.value != null)
@@ -785,7 +785,7 @@ public class Paramm {
 		return this;
 	}
 
-	public Paramm substring(int beginIndex, int endIndex) {
+	public Var substring(int beginIndex, int endIndex) {
 		if (!this.run)
 			return this;
 		if (this.value != null)
@@ -793,7 +793,7 @@ public class Paramm {
 		return this;
 	}
 
-	public Paramm substring(int beginIndex) {
+	public Var substring(int beginIndex) {
 		if (!this.run)
 			return this;
 		if (this.value != null)
@@ -801,7 +801,7 @@ public class Paramm {
 		return this;
 	}
 
-	public Paramm concat(String str) {
+	public Var concat(String str) {
 		if (!this.run)
 			return this;
 		if (this.value != null)
@@ -827,7 +827,7 @@ public class Paramm {
 		return false;
 	}
 
-	public Paramm set(String value) {
+	public Var set(String value) {
 		reset();
 		this.value = value;
 		return this;
@@ -1075,7 +1075,7 @@ public class Paramm {
 
 	public static void main(String[] args) throws ParseException, NoSuchFieldException, SecurityException,
 			IllegalArgumentException, IllegalAccessException {
-		Paramm value = Paramm.go(null, null, "20200506132311");
+		Var value = Var.go(null, null, "20200506132311");
 		System.out.println(new SimpleDateFormat("yyyy-MM").parse("2020-03"));
 	}
 }

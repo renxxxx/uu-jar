@@ -28,29 +28,23 @@ public class Jdbcuu {
 	private static org.apache.log4j.Logger logger4j = org.apache.log4j.Logger.getLogger(Jdbcuu.class);
 
 	public static void main(String[] args) {
-		String ss = "_sdf1_erwe_er";
-		String[] sss = ss.split("_");
-		for (int i = 0; i < sss.length; i++) {
-			if (i > 0)
-				sss[i] = (sss[i].charAt(0) + "").toUpperCase() + sss[i].substring(1);
-		}
-		ss = StringUtils.join(sss);
-		System.out.println(ss);
+		Integer a = null;
+		System.out.println(Var.toString(a));
 	}
 
-	public static List<Map> list(Connection conn, String sql, LList params) throws Exception {
-		return list(conn, sql, params.toArray());
+	public static List<Map> rows(Connection conn, String sql, LList params) throws Exception {
+		return rows(conn, sql, params.toArray());
 	}
 
-	public static List<Map> list(Connection conn, String sql, List params) throws Exception {
-		return list(conn, sql, LList.build(params));
+	public static List<Map> rows(Connection conn, String sql, List params) throws Exception {
+		return rows(conn, sql, LList.build(params));
 	}
 
-	public static List<Map> list(Connection conn, String sql, Object... params) throws Exception {
+	public static List<Map> rows(Connection conn, String sql, Object... params) throws Exception {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
-			return list(select(pst, sql, params));
+			return rows(row(pst, sql, params));
 		} catch (Exception e) {
 			throw e;
 		} finally {
@@ -59,11 +53,11 @@ public class Jdbcuu {
 		}
 	}
 
-	public static List<Object> thinList(Connection conn, String sql, Object... params) throws Exception {
+	public static List<Object> thinRows(Connection conn, String sql, Object... params) throws Exception {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
-			return thinList(select(pst, sql, params));
+			return thinRows(row(pst, sql, params));
 		} catch (Exception e) {
 			throw e;
 		} finally {
@@ -76,7 +70,7 @@ public class Jdbcuu {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
-			ResultSet rs = select(pst, sql, params);
+			ResultSet rs = row(pst, sql, params);
 			if (rs.next()) {
 				return rs.getBinaryStream(1);
 			}
@@ -90,35 +84,35 @@ public class Jdbcuu {
 	}
 
 	public static Integer getInteger(Connection conn, String sql, Object... params) throws Exception {
-		return Paramm.toInteger(getObject(conn, sql, params));
+		return Var.toInteger(getObject(conn, sql, params));
 	}
 
 	public static String getString(Connection conn, String sql, Object... params) throws Exception {
-		return Paramm.toString(getObject(conn, sql, params));
+		return Var.toString(getObject(conn, sql, params));
 	}
 
 	public static LList getJsonArray(Connection conn, String sql, Object... params) throws Exception {
-		return Paramm.toJsonArray(getObject(conn, sql, params));
+		return Var.toJsonArray(getObject(conn, sql, params));
 	}
 
 	public static MMap getJson(Connection conn, String sql, Object... params) throws Exception {
-		return Paramm.toJson(getObject(conn, sql, params));
+		return Var.toJson(getObject(conn, sql, params));
 	}
 
 	public static BigDecimal getDecimal(Connection conn, String sql, Object... params) throws Exception {
-		return Paramm.toDecimal(getObject(conn, sql, params));
+		return Var.toDecimal(getObject(conn, sql, params));
 	}
 
 	public static Long getLong(Connection conn, String sql, Object... params) throws Exception {
-		return Paramm.toLong(getObject(conn, sql, params));
+		return Var.toLong(getObject(conn, sql, params));
 	}
 
 	public static Float getFloat(Connection conn, String sql, Object... params) throws Exception {
-		return Paramm.toFloat(getObject(conn, sql, params));
+		return Var.toFloat(getObject(conn, sql, params));
 	}
 
 	public static Date getDate(Connection conn, String sql, Object... params) throws Exception {
-		return Paramm.toDate(getObject(conn, sql, params));
+		return Var.toDate(getObject(conn, sql, params));
 	}
 
 	public static Object getObject(Connection conn, String sql, Object... params) throws Exception {
@@ -157,7 +151,7 @@ public class Jdbcuu {
 	public static MMap row(Connection conn, String sql, Object... params) throws Exception {
 
 		Map item = null;
-		List<Map> itemList = list(conn, sql, params);
+		List<Map> itemList = rows(conn, sql, params);
 		if (itemList != null && itemList.size() > 0) {
 			item = itemList.get(0);
 		}
@@ -165,7 +159,7 @@ public class Jdbcuu {
 		return MMap.build(item);
 	}
 
-	public static ResultSet select(PreparedStatement pst, String sql, Object... params) throws SQLException {
+	public static ResultSet row(PreparedStatement pst, String sql, Object... params) throws SQLException {
 		if (params == null)
 			params = new Object[] {};
 		sql = sql.replaceAll("\\s+", " ");
@@ -179,8 +173,8 @@ public class Jdbcuu {
 		try {
 			for (int i = 0; i < params.length; i++) {
 				Object param = params[i];
-				if (param instanceof Paramm) {
-					param = ((Paramm) param).value;
+				if (param instanceof Var) {
+					param = ((Var) param).value;
 				}
 				pst.setObject(i + 1, param);
 			}
@@ -199,14 +193,14 @@ public class Jdbcuu {
 //		return new StringBuilder("%").append(columnValue).append("%").toString();
 //	}
 
-	public static String insert(Connection conn, String sql, Object... params) throws Exception {
+	public static Integer insert(Connection conn, String sql, Object... params) throws Exception {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 			update(pst, sql, params);
 			ResultSet rs = pst.getGeneratedKeys();
 			if (rs.next())
-				return rs.getInt(1) + "";
+				return rs.getInt(1);
 			else
 				return null;
 		} catch (Exception e) {
@@ -253,8 +247,8 @@ public class Jdbcuu {
 		try {
 			for (int i = 0; i < params.length; i++) {
 				Object param = params[i];
-				if (param instanceof Paramm) {
-					param = ((Paramm) param).value;
+				if (param instanceof Var) {
+					param = ((Var) param).value;
 					pst.setObject(i + 1, param);
 				} else if (param instanceof InputStream) {
 					pst.setBinaryStream(i + 1, (InputStream) param);
@@ -341,7 +335,7 @@ public class Jdbcuu {
 		return cnts;
 	}
 
-	public static List<Map> list(ResultSet rs) throws SQLException {
+	public static List<Map> rows(ResultSet rs) throws SQLException {
 		List<Map> rows = new ArrayList();
 		ResultSetMetaData metaData = rs.getMetaData();
 		int columnCnt = metaData.getColumnCount();
@@ -361,7 +355,7 @@ public class Jdbcuu {
 		return rows;
 	}
 
-	public static List<Map> list(ResultSet rs, String[] excludeColumns) throws SQLException {
+	public static List<Map> rows(ResultSet rs, String[] excludeColumns) throws SQLException {
 		List<String> excludeColumnList = Arrays.asList(excludeColumns);
 		List<Map> rows = new ArrayList();
 		ResultSetMetaData metaData = rs.getMetaData();
@@ -383,7 +377,7 @@ public class Jdbcuu {
 		return rows;
 	}
 
-	public static List<List<Object>> lists(ResultSet rs) throws SQLException {
+	public static List<List<Object>> listRows(ResultSet rs) throws SQLException {
 		ResultSetMetaData metaData = rs.getMetaData();
 		int columnCnt = metaData.getColumnCount();
 
@@ -402,7 +396,7 @@ public class Jdbcuu {
 		return valueLists;
 	}
 
-	public static List<Object> thinList(ResultSet rs) throws SQLException {
+	public static List<Object> thinRows(ResultSet rs) throws SQLException {
 		List<Object> rows = new ArrayList();
 		ResultSetMetaData metaData = rs.getMetaData();
 		while (rs.next()) {
@@ -416,7 +410,7 @@ public class Jdbcuu {
 	}
 
 	public static Map row(ResultSet rs) throws SQLException {
-		List<Map> list = list(rs);
+		List<Map> list = rows(rs);
 		if (list.size() > 0)
 			return list.get(0);
 		else
@@ -424,7 +418,7 @@ public class Jdbcuu {
 	}
 
 	public static Object getColumn(ResultSet rs) throws SQLException {
-		List<Map> list = list(rs);
+		List<Map> list = rows(rs);
 		if (list.size() > 0)
 			return list.get(0).get(list.get(0).keySet().iterator().next());
 		else
