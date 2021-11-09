@@ -50,7 +50,7 @@ public class Jdbcuu {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
-			return resultSetToList(select(pst, sql, params));
+			return list(select(pst, sql, params));
 		} catch (Exception e) {
 			throw e;
 		} finally {
@@ -63,7 +63,7 @@ public class Jdbcuu {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
-			return resultSetToThinList(select(pst, sql, params));
+			return thinList(select(pst, sql, params));
 		} catch (Exception e) {
 			throw e;
 		} finally {
@@ -122,7 +122,7 @@ public class Jdbcuu {
 	}
 
 	public static Object getObject(Connection conn, String sql, Object... params) throws Exception {
-		MMap row = one(conn, sql, params);
+		MMap row = row(conn, sql, params);
 		if (row.map == null)
 			return null;
 		return row.get(row.map.keySet().iterator().next());
@@ -146,15 +146,15 @@ public class Jdbcuu {
 //		}
 //	}
 
-	public static MMap one(Connection conn, String sql, LList params) throws Exception {
-		return one(conn, sql, params.toArray());
+	public static MMap row(Connection conn, String sql, LList params) throws Exception {
+		return row(conn, sql, params.toArray());
 	}
 
-	public static MMap one(Connection conn, String sql, List params) throws Exception {
-		return one(conn, sql, LList.build(params));
+	public static MMap row(Connection conn, String sql, List params) throws Exception {
+		return row(conn, sql, LList.build(params));
 	}
 
-	public static MMap one(Connection conn, String sql, Object... params) throws Exception {
+	public static MMap row(Connection conn, String sql, Object... params) throws Exception {
 
 		Map item = null;
 		List<Map> itemList = list(conn, sql, params);
@@ -275,7 +275,7 @@ public class Jdbcuu {
 		return cnt;
 	}
 
-	public static Integer returnGeneratedKey(PreparedStatement pst) throws SQLException {
+	public static Integer generatedKey(PreparedStatement pst) throws SQLException {
 		ResultSet rs = pst.getGeneratedKeys();
 		if (rs.next()) {
 			int id = rs.getInt(1);
@@ -285,7 +285,7 @@ public class Jdbcuu {
 			return null;
 	}
 
-	public static List<Integer> returnGeneratedKeys(PreparedStatement pst) throws SQLException {
+	public static List<Integer> generatedKeys(PreparedStatement pst) throws SQLException {
 		ResultSet rs = pst.getGeneratedKeys();
 		List<Integer> keys = new ArrayList();
 		while (rs.next()) {
@@ -341,7 +341,7 @@ public class Jdbcuu {
 		return cnts;
 	}
 
-	public static List<Map> resultSetToList(ResultSet rs) throws SQLException {
+	public static List<Map> list(ResultSet rs) throws SQLException {
 		List<Map> rows = new ArrayList();
 		ResultSetMetaData metaData = rs.getMetaData();
 		int columnCnt = metaData.getColumnCount();
@@ -361,7 +361,7 @@ public class Jdbcuu {
 		return rows;
 	}
 
-	public static List<Map> resultSetToList(ResultSet rs, String[] excludeColumns) throws SQLException {
+	public static List<Map> list(ResultSet rs, String[] excludeColumns) throws SQLException {
 		List<String> excludeColumnList = Arrays.asList(excludeColumns);
 		List<Map> rows = new ArrayList();
 		ResultSetMetaData metaData = rs.getMetaData();
@@ -383,7 +383,7 @@ public class Jdbcuu {
 		return rows;
 	}
 
-	public static List<List<Object>> resultSetToLists(ResultSet rs) throws SQLException {
+	public static List<List<Object>> lists(ResultSet rs) throws SQLException {
 		ResultSetMetaData metaData = rs.getMetaData();
 		int columnCnt = metaData.getColumnCount();
 
@@ -402,7 +402,7 @@ public class Jdbcuu {
 		return valueLists;
 	}
 
-	public static List<Object> resultSetToThinList(ResultSet rs) throws SQLException {
+	public static List<Object> thinList(ResultSet rs) throws SQLException {
 		List<Object> rows = new ArrayList();
 		ResultSetMetaData metaData = rs.getMetaData();
 		while (rs.next()) {
@@ -415,24 +415,24 @@ public class Jdbcuu {
 		return rows;
 	}
 
-	public static Map resultSetToMap(ResultSet rs) throws SQLException {
-		List<Map> rows = resultSetToList(rs);
-		if (rows.size() > 0)
-			return rows.get(0);
+	public static Map row(ResultSet rs) throws SQLException {
+		List<Map> list = list(rs);
+		if (list.size() > 0)
+			return list.get(0);
 		else
 			return null;
 	}
 
-	public static Object resultSetToColumn(ResultSet rs) throws SQLException {
-		List<Map> rows = resultSetToList(rs);
-		if (rows.size() > 0)
-			return rows.get(0).get(rows.get(0).keySet().iterator().next());
+	public static Object getColumn(ResultSet rs) throws SQLException {
+		List<Map> list = list(rs);
+		if (list.size() > 0)
+			return list.get(0).get(list.get(0).keySet().iterator().next());
 		else
 			return null;
 	}
 
-	public static Integer parseResultSetOfOneInteger(ResultSet rs) throws SQLException {
-		Object value = resultSetToColumn(rs);
+	public static Integer getInteger(ResultSet rs) throws SQLException {
+		Object value = getColumn(rs);
 		if (value == null)
 			return null;
 		else {
