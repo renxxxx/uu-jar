@@ -8,7 +8,7 @@ import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 
-public class Cachem<K, V> extends AbstractMap<K, V> {
+public class CacheMap<K, V> extends AbstractMap<K, V> {
 
 	private class CacheEntry implements Entry<K, V> {
 		long insertTime;
@@ -78,11 +78,11 @@ public class Cachem<K, V> extends AbstractMap<K, V> {
 
 	private Map<K, CacheEntry> map = new HashMap<K, CacheEntry>();
 
-	public Cachem() {
+	public CacheMap() {
 		new ClearThread().start();
 	}
 
-	public static abstract class Ccc<K, V> extends Cachem<K, V> {
+	public static abstract class Ccc<K, V> extends CacheMap<K, V> {
 		public V getWithCreate(K key) {
 			V obj = this.get(key);
 			if (obj == null) {

@@ -59,11 +59,11 @@ public class Jdbcuu {
 		}
 	}
 
-	public static List<Object> thinlist(Connection conn, String sql, Object... params) throws Exception {
+	public static List<Object> thinList(Connection conn, String sql, Object... params) throws Exception {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
-			return resultSetToThinRows(select(pst, sql, params));
+			return resultSetToThinList(select(pst, sql, params));
 		} catch (Exception e) {
 			throw e;
 		} finally {
@@ -97,8 +97,8 @@ public class Jdbcuu {
 		return Paramm.toString(getObject(conn, sql, params));
 	}
 
-	public static LList getJsonArr(Connection conn, String sql, Object... params) throws Exception {
-		return Paramm.toJsonArr(getObject(conn, sql, params));
+	public static LList getJsonArray(Connection conn, String sql, Object... params) throws Exception {
+		return Paramm.toJsonArray(getObject(conn, sql, params));
 	}
 
 	public static MMap getJson(Connection conn, String sql, Object... params) throws Exception {
@@ -122,7 +122,7 @@ public class Jdbcuu {
 	}
 
 	public static Object getObject(Connection conn, String sql, Object... params) throws Exception {
-		MMap row = row(conn, sql, params);
+		MMap row = one(conn, sql, params);
 		if (row.map == null)
 			return null;
 		return row.get(row.map.keySet().iterator().next());
@@ -146,15 +146,15 @@ public class Jdbcuu {
 //		}
 //	}
 
-	public static MMap row(Connection conn, String sql, LList params) throws Exception {
-		return row(conn, sql, params.toArray());
+	public static MMap one(Connection conn, String sql, LList params) throws Exception {
+		return one(conn, sql, params.toArray());
 	}
 
-	public static MMap row(Connection conn, String sql, List params) throws Exception {
-		return row(conn, sql, LList.build(params));
+	public static MMap one(Connection conn, String sql, List params) throws Exception {
+		return one(conn, sql, LList.build(params));
 	}
 
-	public static MMap row(Connection conn, String sql, Object... params) throws Exception {
+	public static MMap one(Connection conn, String sql, Object... params) throws Exception {
 
 		Map item = null;
 		List<Map> itemList = list(conn, sql, params);
@@ -361,7 +361,7 @@ public class Jdbcuu {
 		return rows;
 	}
 
-	public static List<Map> resultSetToRows(ResultSet rs, String[] excludeColumns) throws SQLException {
+	public static List<Map> resultSetToList(ResultSet rs, String[] excludeColumns) throws SQLException {
 		List<String> excludeColumnList = Arrays.asList(excludeColumns);
 		List<Map> rows = new ArrayList();
 		ResultSetMetaData metaData = rs.getMetaData();
@@ -383,7 +383,7 @@ public class Jdbcuu {
 		return rows;
 	}
 
-	public static List<List<Object>> resultSetToValueRowss(ResultSet rs) throws SQLException {
+	public static List<List<Object>> resultSetToLists(ResultSet rs) throws SQLException {
 		ResultSetMetaData metaData = rs.getMetaData();
 		int columnCnt = metaData.getColumnCount();
 
@@ -402,7 +402,7 @@ public class Jdbcuu {
 		return valueLists;
 	}
 
-	public static List<Object> resultSetToThinRows(ResultSet rs) throws SQLException {
+	public static List<Object> resultSetToThinList(ResultSet rs) throws SQLException {
 		List<Object> rows = new ArrayList();
 		ResultSetMetaData metaData = rs.getMetaData();
 		while (rs.next()) {
@@ -560,6 +560,9 @@ public class Jdbcuu {
 //
 //		return sqlPart;
 //	}
+
+	public static void eeeeeeeeeeeeeeeeeeeeeeee() {
+	}
 
 	@Deprecated
 	public static String buildOrderBy(String[] sorts, String[] orders, String[] sortPool, String[] sortColumnPool,

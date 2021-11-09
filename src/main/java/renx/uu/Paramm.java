@@ -52,7 +52,7 @@ public class Paramm {
 
 	public String[] enums = null;
 
-	public static Cachem.Ccc<String, Pattern> regexCache = new Cachem.Ccc<String, Pattern>() {
+	public static CacheMap.Ccc<String, Pattern> regexCache = new CacheMap.Ccc<String, Pattern>() {
 		@Override
 		public Pattern create(String regex) {
 			return Pattern.compile(regex);
@@ -1024,7 +1024,7 @@ public class Paramm {
 			return new BigDecimal(valueStr);
 	}
 
-	public static LList toJsonArr(Object value) {
+	public static LList toJsonArray(Object value) {
 		try {
 			if (value == null)
 				return LList.build();
