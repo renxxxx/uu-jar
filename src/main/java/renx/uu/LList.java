@@ -67,6 +67,12 @@ public class LList {
 		return this.list.toArray();
 	}
 
+	public <T> T[] toArray(T[] a) {
+		if (this.list == null)
+			return null;
+		return (T[]) this.list.toArray(a);
+	}
+
 	public Object get(int index) {
 		if (this.list == null || this.list.size() <= index)
 			return null;
