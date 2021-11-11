@@ -90,6 +90,7 @@ public class Var {
 	}
 
 	public Var value(HttpServletRequest from) {
+		reset();
 		if (this.codes != null)
 			for (String code : this.codes) {
 				String value = from.getParameter(code);
@@ -102,11 +103,13 @@ public class Var {
 	}
 
 	public Var value(MMap from) {
+		reset();
 		this.value = from.getString(code);
 		return this;
 	}
 
 	public Var value(String... froms) {
+		reset();
 		if (froms != null)
 			for (String value : froms) {
 				if (value != null) {
@@ -825,12 +828,6 @@ public class Var {
 		if (this.value != null)
 			return this.value.endsWith(suffix);
 		return false;
-	}
-
-	public Var set(String value) {
-		reset();
-		this.value = value;
-		return this;
 	}
 
 	public static Boolean toBoolean(Object value) {
