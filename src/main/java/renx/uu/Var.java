@@ -460,7 +460,7 @@ public class Var {
 		return this;
 	}
 
-	public Var vEnum(String[] enums) {
+	public Var vEnum(String... enums) {
 		if (!this.run)
 			return this;
 		if (isEmpty())
