@@ -119,7 +119,7 @@ public class Var {
 			}
 
 		if (this.value != null && !this.value.isEmpty() && this.value.matches(".*<(s|S)(c|C)(r|R)(i|I)(p|P)(t|T).*"))
-			throw Result.build(1001, "\"" + this.name + "\"有误").errorParam(this.code);
+			throw Result.build(1001, "\"" + this.name + "\"有误").invalidParam(this.code);
 		if ("null".equals(this.value) || "undefined".equals(this.value))
 			this.value = null;
 		return this;
@@ -139,7 +139,7 @@ public class Var {
 			}
 
 		if (var.value != null && !var.value.isEmpty() && var.value.matches(".*<(s|S)(c|C)(r|R)(i|I)(p|P)(t|T).*"))
-			throw Result.build(1001, "\"" + var.name + "\"有误").errorParam(var.code);
+			throw Result.build(1001, "\"" + var.name + "\"有误").invalidParam(var.code);
 		if ("null".equals(var.value) || "undefined".equals(var.value))
 			var.value = null;
 		return var;
@@ -157,7 +157,7 @@ public class Var {
 			}
 
 		if (var.value != null && !var.value.isEmpty() && var.value.matches(".*<(s|S)(c|C)(r|R)(i|I)(p|P)(t|T).*"))
-			throw Result.build(1001, "\"" + var.name + "\"有误").errorParam(var.code);
+			throw Result.build(1001, "\"" + var.name + "\"有误").invalidParam(var.code);
 		if ("null".equals(var.value) || "undefined".equals(var.value))
 			var.value = null;
 
@@ -289,7 +289,7 @@ public class Var {
 		if (!this.run)
 			return this;
 		if (this.value == null)
-			throw Result.build(1001, "\"" + this.name + "\"不能空").errorParam(this.code);
+			throw Result.build(1001, "\"" + this.name + "\"不能空").invalidParam(this.code);
 		return this;
 	}
 
@@ -317,7 +317,7 @@ public class Var {
 		if (msg == null)
 			msg = "\"" + this.name + "\"不能空";
 		if (run && (this.value == null || this.value.isEmpty()))
-			throw Result.build(1001, msg).errorParam(this.code);
+			throw Result.build(1001, msg).invalidParam(this.code);
 		return this;
 	}
 
@@ -330,7 +330,7 @@ public class Var {
 		if (!this.run)
 			return this;
 		if ((this.value != null && this.value.isEmpty()))
-			throw Result.build(1001, "\"" + this.name + "\"不能空").errorParam(this.code);
+			throw Result.build(1001, "\"" + this.name + "\"不能空").invalidParam(this.code);
 		return this;
 	}
 
@@ -346,7 +346,7 @@ public class Var {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() != length) {
-			throw Result.build(1001, "\"" + this.name + "\"长度只能是" + length).errorParam(this.code);
+			throw Result.build(1001, "\"" + this.name + "\"长度只能是" + length).invalidParam(this.code);
 		}
 		return this;
 	}
@@ -363,7 +363,7 @@ public class Var {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() < length) {
-			throw Result.build(1001, "\"" + this.name + "\"长度最低" + length).errorParam(this.code);
+			throw Result.build(1001, "\"" + this.name + "\"长度最低" + length).invalidParam(this.code);
 		}
 		return this;
 	}
@@ -380,7 +380,7 @@ public class Var {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() > length) {
-			throw Result.build(1001, "\"" + this.name + "\"长度最大" + length).errorParam(this.code);
+			throw Result.build(1001, "\"" + this.name + "\"长度最大" + length).invalidParam(this.code);
 		}
 		return this;
 	}
@@ -397,7 +397,7 @@ public class Var {
 		if (!this.run)
 			return this;
 		if (!isEmpty() && toFloat() > maxnum) {
-			throw Result.build(1001, "\"" + this.name + "\"最大" + maxnum).errorParam(this.code);
+			throw Result.build(1001, "\"" + this.name + "\"最大" + maxnum).invalidParam(this.code);
 		}
 		return this;
 	}
@@ -414,7 +414,7 @@ public class Var {
 		if (!this.run)
 			return this;
 		if (!isEmpty() && toFloat() < minnum) {
-			throw Result.build(1001, "\"" + this.name + "\"最小" + minnum).errorParam(this.code);
+			throw Result.build(1001, "\"" + this.name + "\"最小" + minnum).invalidParam(this.code);
 		}
 		return this;
 	}
@@ -431,7 +431,7 @@ public class Var {
 		if (!this.run)
 			return this;
 		if (!this.isEmpty() && this.toStrings() != null && this.toStrings().length > count) {
-			throw Result.build(1001, "\"" + this.name + "\"最多" + count + "个").errorParam(this.code);
+			throw Result.build(1001, "\"" + this.name + "\"最多" + count + "个").invalidParam(this.code);
 		}
 		return this;
 	}
@@ -446,7 +446,7 @@ public class Var {
 
 			}
 			if (this.integerv == null)
-				throw Result.build(1001, "\"" + this.name + "\"有误").errorParam(this.code);
+				throw Result.build(1001, "\"" + this.name + "\"有误").invalidParam(this.code);
 		}
 		return this;
 	}
@@ -455,12 +455,12 @@ public class Var {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && !"1".equals(this.value) && !"0".equals(this.value)) {
-			throw Result.build(1001, "\"" + this.name + "\"有误").errorParam(this.code);
+			throw Result.build(1001, "\"" + this.name + "\"有误").invalidParam(this.code);
 		}
 		return this;
 	}
 
-	public Var vEnum(String[] enums, String error) {
+	public Var vEnum(String[] enums) {
 		if (!this.run)
 			return this;
 		if (isEmpty())
@@ -468,13 +468,9 @@ public class Var {
 		this.enums = enums;
 		boolean v = Stringuu.equalsAny(this.value, enums);
 		if (!v)
-			throw Result.build(1001, "\"" + this.name + "\"有误").errorParam(this.code).error(error);
+			throw Result.build(1001, "\"" + this.name + "\"有误").invalidParam(this.code);
 		else
 			return this;
-	}
-
-	public Var vEnum(String... enums) {
-		return vEnum(enums, null);
 	}
 
 	public Var vLong() {
@@ -487,7 +483,7 @@ public class Var {
 
 			}
 			if (this.longv == null)
-				throw Result.build(1001, "\"" + this.name + "\"有误").errorParam(this.code);
+				throw Result.build(1001, "\"" + this.name + "\"有误").invalidParam(this.code);
 		}
 		return this;
 	}
@@ -502,7 +498,7 @@ public class Var {
 
 			}
 			if (this.doublev == null)
-				throw Result.build(1001, "\"" + this.name + "\"只能输入数字").errorParam(this.code);
+				throw Result.build(1001, "\"" + this.name + "\"只能输入数字").invalidParam(this.code);
 		}
 		return this;
 	}
@@ -517,7 +513,7 @@ public class Var {
 
 			}
 			if (this.floatv == null)
-				throw Result.build(1001, "\"" + this.name + "\"只能输入数字").errorParam(this.code);
+				throw Result.build(1001, "\"" + this.name + "\"只能输入数字").invalidParam(this.code);
 		}
 		return this;
 	}
@@ -532,7 +528,7 @@ public class Var {
 
 			}
 			if (this.decimalv == null)
-				throw Result.build(1001, "\"" + this.name + "\"只能输入数字").errorParam(this.code);
+				throw Result.build(1001, "\"" + this.name + "\"只能输入数字").invalidParam(this.code);
 		}
 		return this;
 	}
@@ -602,7 +598,7 @@ public class Var {
 						.build(1001,
 								"\"" + this.name + "\"有误"
 										+ (note == null || note.isEmpty() ? "" : ", 正确格式: " + note + "."))
-						.errorParam(this.code);
+						.invalidParam(this.code);
 		}
 		return this;
 	}
@@ -622,7 +618,7 @@ public class Var {
 						.build(1001,
 								"\"" + this.name + "\"有误"
 										+ (note == null || note.isEmpty() ? "" : ", 正确格式: " + note + "."))
-						.errorParam(this.code);
+						.invalidParam(this.code);
 		}
 		return this;
 	}
@@ -642,7 +638,7 @@ public class Var {
 						.build(1001,
 								"\"" + this.name + "\"有误"
 										+ (note == null || note.isEmpty() ? "" : ", 正确格式: " + note + "."))
-						.errorParam(this.code);
+						.invalidParam(this.code);
 		}
 		return this;
 	}
@@ -662,7 +658,7 @@ public class Var {
 						.build(1001,
 								"\"" + this.name + "\"有误"
 										+ (note == null || note.isEmpty() ? "" : ", 正确格式: " + note + "."))
-						.errorParam(this.code);
+						.invalidParam(this.code);
 		}
 		return this;
 	}
@@ -672,7 +668,7 @@ public class Var {
 			return this;
 		toDate();
 		if (this.datev == null)
-			throw Result.build(1001, "\"" + this.name + "\"有误").errorParam(this.code);
+			throw Result.build(1001, "\"" + this.name + "\"有误").invalidParam(this.code);
 		else {
 			this.value = new SimpleDateFormat(datePattern1).format(this.datev);
 		}
@@ -748,12 +744,12 @@ public class Var {
 	}
 
 	public void bomb(String message) {
-		throw Result.build(1001, "\"" + this.name + "\"" + message).errorParam(this.code);
+		throw Result.build(1001, "\"" + this.name + "\"" + message).invalidParam(this.code);
 	}
 
 	public void bomb(boolean run, String message) {
 		if (run)
-			throw Result.build(1001, "\"" + this.name + "\"" + message).errorParam(this.code);
+			throw Result.build(1001, "\"" + this.name + "\"" + message).invalidParam(this.code);
 	}
 
 	public boolean equals(Object object) {

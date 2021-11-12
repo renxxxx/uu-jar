@@ -10,12 +10,12 @@ public class Result extends RuntimeException {
 
 	public String runNo = null;
 	public int code;
-	public String errorParam = null;
+	public String invalidParam = null;
 	public String message = null;
 	public Object data = null;
 	public String messageEn = null;
 	public String messageCn = null;
-	public String error = null;
+	public String debug = null;
 
 	public Map to() {
 		Map map = new LinkedHashMap();
@@ -23,7 +23,8 @@ public class Result extends RuntimeException {
 		map.put("message", message);
 		map.put("code", code);
 		map.put("data", data);
-		map.put("errorParam", errorParam);
+		map.put("invalidParam", invalidParam);
+		map.put("debug", debug);
 		return map;
 	}
 
@@ -143,13 +144,13 @@ public class Result extends RuntimeException {
 		return this;
 	}
 
-	public Result error(String error) {
-		this.error = error;
+	public Result debug(String debug) {
+		this.debug = debug;
 		return this;
 	}
 
-	public Result errorParam(String errorParam) {
-		this.errorParam = errorParam;
+	public Result invalidParam(String invalidParam) {
+		this.invalidParam = invalidParam;
 		return this;
 	}
 
