@@ -108,20 +108,20 @@ public class Urluu {
 		return url;
 	}
 
-	public static String querystr(String url) throws UnsupportedEncodingException {
+	public static String querystring(String url) throws UnsupportedEncodingException {
 		if (url == null || url.isEmpty())
 			return null;
-		String querystr = null;
+		String querystring = null;
 		try {
-			querystr = url.split("\\?")[1].split("#")[0];
+			querystring = url.split("\\?")[1].split("#")[0];
 		} catch (Exception e) {
 
 		}
-		return querystr;
+		return querystring;
 	}
 
-	public static MMap params(String querystr) throws UnsupportedEncodingException {
-		return params(querystr, "utf-8");
+	public static MMap params(String querystring) throws UnsupportedEncodingException {
+		return params(querystring, "utf-8");
 	}
 
 	public static MMap params(String querystr, String encode) throws UnsupportedEncodingException {
