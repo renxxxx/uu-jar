@@ -11,8 +11,7 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang3.StringUtils;
 
 public class Urluu {
-	@Deprecated
-	public static String getPureName(String url) {
+	public static String pureName(String url) {
 		if (url == null || url.isEmpty())
 			return null;
 		return url.replaceAll("^.*/", "");
@@ -26,6 +25,16 @@ public class Urluu {
 			return url;
 		else
 			return url.substring(0, a);
+	}
+
+	public static String path(String url) {
+		if (url == null || url.isEmpty())
+			return null;
+		url = pretty(url);
+		String path = url.substring(url.indexOf("/") + 1);
+		path = path.substring(path.indexOf("/") + 1);
+		path = path.substring(path.indexOf("/") + 1);
+		return "/" + path;
 	}
 
 	// TODO
@@ -83,10 +92,10 @@ public class Urluu {
 		url = url.replaceFirst("https:/", "https://");
 		url = url.replaceFirst("http:/", "http://");
 
-		return url;
+		return makeScheme(url);
 	}
 
-	public static String makehttp(String url) {
+	public static String makeScheme(String url) {
 		if (url == null || url.isEmpty())
 			return null;
 		if (!url.startsWith("http")) {
