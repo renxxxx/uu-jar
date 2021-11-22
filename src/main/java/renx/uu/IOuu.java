@@ -47,7 +47,7 @@ public class IOuu {
 		logger.debug("download " + url + " to " + to + " " + headers);
 		if (url == null || url.isEmpty() || to == null || to.isEmpty())
 			return;
-		url = Urluu.pretty(url);
+		url = Urluu.beautify(url);
 		int bytesum = 0;
 		int byteread = 0;
 		URL urll = new URL(url);
