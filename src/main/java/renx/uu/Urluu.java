@@ -92,6 +92,13 @@ public class Urluu {
 		url = url.replaceFirst("https:/", "https://");
 		url = url.replaceFirst("http:/", "http://");
 
+		return url;
+	}
+
+	public static String makeHttp(String url) {
+		if (url == null || url.isEmpty())
+			return null;
+
 		if (!url.startsWith("http")) {
 			if (url.startsWith("//"))
 				url = "http:" + url;
