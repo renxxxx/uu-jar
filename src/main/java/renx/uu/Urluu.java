@@ -30,7 +30,7 @@ public class Urluu {
 	public static String path(String url) {
 		if (url == null || url.isEmpty())
 			return null;
-		url = pretty(url);
+		url = beautify(url);
 		String path = url.substring(url.indexOf("/") + 1);
 		path = path.substring(path.indexOf("/") + 1);
 		path = path.substring(path.indexOf("/") + 1);
@@ -81,10 +81,10 @@ public class Urluu {
 			else
 				url = url + parts[i] + "/";
 		}
-		return pretty(url);
+		return beautify(url);
 	}
 
-	public static String pretty(String url) {
+	public static String beautify(String url) {
 		if (url == null || url.isEmpty())
 			return null;
 		url = url.replaceAll("(\\\\+|/+)", "/");
@@ -92,20 +92,12 @@ public class Urluu {
 		url = url.replaceFirst("https:/", "https://");
 		url = url.replaceFirst("http:/", "http://");
 
-		return makeScheme(url);
-	}
-
-	public static String makeScheme(String url) {
-		if (url == null || url.isEmpty())
-			return null;
 		if (!url.startsWith("http")) {
 			if (url.startsWith("//"))
 				url = "http:" + url;
 			else
 				url = "http://" + url;
 		}
-		url = pretty(url);
-
 		return url;
 	}
 
