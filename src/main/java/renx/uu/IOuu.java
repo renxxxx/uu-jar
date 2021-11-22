@@ -6,26 +6,27 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.RandomAccessFile;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.charset.Charset;
 import java.security.MessageDigest;
+import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class IOuu {
 	private static Logger logger = LoggerFactory.getLogger(IOuu.class);
 
-	public static void downloadasync(String url, String to) throws Exception {
+	public static void downloadAsync(String url, String to, Map headers) throws Exception {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
 				try {
-					download(url, to);
+					download(url, to, headers);
 				} catch (Exception e) {
 					throw new RuntimeException(e);
 				}
@@ -33,7 +34,15 @@ public class IOuu {
 		}).start();
 	}
 
-	public static void download(String url, String to) throws Exception {
+	public static void downloadSilent(String url, String to, Map headers) {
+		try {
+			download(url, to, headers);
+		} catch (Exception e) {
+			logger.info(ExceptionUtils.getStackTrace(e));
+		}
+	}
+
+	public static void download(String url, String to, Map headers) throws Exception {
 		if (url == null || url.isEmpty() || to == null || to.isEmpty())
 			return;
 		url = Urluu.pretty(url);
@@ -45,6 +54,16 @@ public class IOuu {
 		FileOutputStream fs = null;
 		try {
 			conn = (HttpURLConnection) urll.openConnection();
+			if (headers != null) {
+				Set keySet = headers.keySet();
+				while (keySet.iterator().hasNext()) {
+					Object key = keySet.iterator().next();
+					Object value = headers.get(key);
+					if (key != null && value != null)
+						conn.addRequestProperty(key.toString(), value.toString());
+				}
+			}
+
 			if (conn.getResponseCode() != 200)
 				return;
 
