@@ -10,6 +10,7 @@ import java.io.RandomAccessFile;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.MessageDigest;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -43,6 +44,7 @@ public class IOuu {
 	}
 
 	public static void download(String url, String to, Map headers) throws Exception {
+		logger.debug("download " + url + " to " + to + " " + headers);
 		if (url == null || url.isEmpty() || to == null || to.isEmpty())
 			return;
 		url = Urluu.pretty(url);
@@ -56,8 +58,9 @@ public class IOuu {
 			conn = (HttpURLConnection) urll.openConnection();
 			if (headers != null) {
 				Set keySet = headers.keySet();
-				while (keySet.iterator().hasNext()) {
-					Object key = keySet.iterator().next();
+				Iterator itr = keySet.iterator();
+				while (itr.hasNext()) {
+					Object key = itr.next();
 					Object value = headers.get(key);
 					if (key != null && value != null)
 						conn.addRequestProperty(key.toString(), value.toString());
