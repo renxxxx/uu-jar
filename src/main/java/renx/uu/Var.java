@@ -39,6 +39,12 @@ public class Var {
 	public static String datePattern6 = "HH:mm";
 	public static String datePattern7 = "HH:mm:ss.SSS";
 	public static String datePattern8 = "yyyy-MM-dd HH:mm";
+	public static String datePattern9 = "yyyy/MM/dd HH:mm:ss.SSS Z";
+	public static String datePattern10 = "yyyy/MM/dd HH:mm:ss";
+	public static String datePattern11 = "yyyy/MM/dd";
+	public static String datePattern12 = "yyyy/MM/dd HH:mm:ss.SSS";
+	public static String datePattern13 = "yyyy/MM";
+	public static String datePattern14 = "yyyy/MM/dd HH:mm";
 
 	boolean run = true;
 
@@ -967,6 +973,48 @@ public class Var {
 		}
 		try {
 			date = new SimpleDateFormat(datePattern8).parse(value.toString());
+			if (date != null) {
+				return date;
+			}
+		} catch (Exception e) {
+		}
+		try {
+			date = new SimpleDateFormat(datePattern9).parse(value.toString());
+			if (date != null) {
+				return date;
+			}
+		} catch (Exception e) {
+		}
+		try {
+			date = new SimpleDateFormat(datePattern10).parse(value.toString());
+			if (date != null) {
+				return date;
+			}
+		} catch (Exception e) {
+		}
+		try {
+			date = new SimpleDateFormat(datePattern11).parse(value.toString());
+			if (date != null) {
+				return date;
+			}
+		} catch (Exception e) {
+		}
+		try {
+			date = new SimpleDateFormat(datePattern12).parse(value.toString());
+			if (date != null) {
+				return date;
+			}
+		} catch (Exception e) {
+		}
+		try {
+			date = new SimpleDateFormat(datePattern13).parse(value.toString());
+			if (date != null) {
+				return date;
+			}
+		} catch (Exception e) {
+		}
+		try {
+			date = new SimpleDateFormat(datePattern14).parse(value.toString());
 			if (date != null) {
 				return date;
 			}
