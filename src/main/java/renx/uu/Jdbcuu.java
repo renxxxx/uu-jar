@@ -212,6 +212,10 @@ public class Jdbcuu {
 		}
 	}
 
+	public static Integer insert(Connection conn, String sql, LList params) throws Exception {
+		return insert(conn, sql, params.toArray());
+	}
+
 	public static int update(Connection conn, String sql, LList params) throws Exception {
 		return update(conn, sql, params.toArray());
 	}
