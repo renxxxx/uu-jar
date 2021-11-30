@@ -369,7 +369,8 @@ public class Var {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() < length) {
-			throw Result.build(1001, "\"" + this.name + "\"长度最低" + length).invalidParam(this.code);
+			throw Result.build(1001, "\"" + this.name + "\"当前长度" + this.value.length() + ", 最小" + length + ".")
+					.invalidParam(this.code);
 		}
 		return this;
 	}
@@ -386,7 +387,8 @@ public class Var {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && length > -1 && this.value.length() > length) {
-			throw Result.build(1001, "\"" + this.name + "\"长度最大" + length).invalidParam(this.code);
+			throw Result.build(1001, "\"" + this.name + "\"当前长度" + this.value.length() + ", 最大" + length + ".")
+					.invalidParam(this.code);
 		}
 		return this;
 	}
@@ -403,7 +405,7 @@ public class Var {
 		if (!this.run)
 			return this;
 		if (!isEmpty() && toFloat() > maxnum) {
-			throw Result.build(1001, "\"" + this.name + "\"最大" + maxnum).invalidParam(this.code);
+			throw Result.build(1001, "\"" + this.name + "\"最大值" + maxnum).invalidParam(this.code);
 		}
 		return this;
 	}
@@ -420,7 +422,7 @@ public class Var {
 		if (!this.run)
 			return this;
 		if (!isEmpty() && toFloat() < minnum) {
-			throw Result.build(1001, "\"" + this.name + "\"最小" + minnum).invalidParam(this.code);
+			throw Result.build(1001, "\"" + this.name + "\"最小值" + minnum).invalidParam(this.code);
 		}
 		return this;
 	}
