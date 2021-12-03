@@ -107,7 +107,7 @@ public class Var {
 			}
 		if (this.value != null && !this.value.isEmpty() && this.value.matches(".*<(s|S)(c|C)(r|R)(i|I)(p|P)(t|T).*"))
 			throw Result.build(1001, "\"" + this.name + "\"有误").invalidParam(this.code);
-		if ("null".equals(this.value) || "undefined".equals(this.value))
+		if ("null".equals(this.value) || "undefined".equals(this.value) || "NaN".equals(this.value))
 			this.value = null;
 		return this;
 	}
@@ -117,7 +117,7 @@ public class Var {
 		this.value = from.getString(code);
 		if (this.value != null && !this.value.isEmpty() && this.value.matches(".*<(s|S)(c|C)(r|R)(i|I)(p|P)(t|T).*"))
 			throw Result.build(1001, "\"" + this.name + "\"有误").invalidParam(this.code);
-		if ("null".equals(this.value) || "undefined".equals(this.value))
+		if ("null".equals(this.value) || "undefined".equals(this.value) || "NaN".equals(this.value))
 			this.value = null;
 		return this;
 	}
@@ -134,7 +134,7 @@ public class Var {
 
 		if (this.value != null && !this.value.isEmpty() && this.value.matches(".*<(s|S)(c|C)(r|R)(i|I)(p|P)(t|T).*"))
 			throw Result.build(1001, "\"" + this.name + "\"有误").invalidParam(this.code);
-		if ("null".equals(this.value) || "undefined".equals(this.value))
+		if ("null".equals(this.value) || "undefined".equals(this.value) || "NaN".equals(this.value))
 			this.value = null;
 		return this;
 	}
