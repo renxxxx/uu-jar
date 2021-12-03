@@ -146,11 +146,20 @@ public class MMap {
 			return this.map.isEmpty();
 	}
 
-	public boolean notEmpty() {
-		return !isEmpty();
+	public boolean isExist(String key) {
+		Object value = this.get(key);
+		if (value == null)
+			return false;
+		if (value.toString().isEmpty())
+			return false;
+		return true;
 	}
 
-	public boolean exist() {
+	public boolean isEmpty(String key) {
+		return !isExist(key);
+	}
+
+	public boolean isExist() {
 		return !isEmpty();
 	}
 
