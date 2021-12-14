@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 
@@ -64,13 +66,31 @@ public class MMap {
 		return this;
 	}
 
-	public MMap putAll(MMap mmap) {
+	public MMap putAll(String keyPrefix, Map map) {
 		if (this.map == null)
 			this.map = new LinkedHashMap();
-		if (mmap.map != null) {
-			this.map.putAll(mmap.map);
+		if (map == null)
+			return this;
+
+		Iterator keys = map.keySet().iterator();
+		while (keys.hasNext()) {
+			Object key = keys.next();
+			String key2 = keyPrefix + "_" + key.toString();
+			this.map.put(key2, map.get(key));
 		}
 		return this;
+	}
+
+	public MMap putAll(MMap mmap) {
+		if (mmap == null)
+			return this;
+		return putAll(mmap.map);
+	}
+
+	public MMap putAll(String keyPrefix, MMap mmap) {
+		if (mmap == null)
+			return this;
+		return putAll(keyPrefix, mmap.map);
 	}
 
 	public Object get(Object key) {

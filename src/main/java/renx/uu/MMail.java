@@ -14,7 +14,7 @@ public class MMail {
 		MMail j = new MMail();
 		j.host = "smtp.qq.com";
 		j.user = "413038044@qq.com";
-		j.password = "gfjilukxeefgbigb";
+		j.password = "pjqcxyxysvfpbjci";
 		j.sender = "413038044@qq.com";
 
 		j.send("413038044@qq.com", "aq123123d", "qqqq");
@@ -28,7 +28,7 @@ public class MMail {
 	public Message send(String receiver, String subject, String content) throws Exception {
 		Properties prop = new Properties();
 		prop.setProperty("mail.transport.protocol", "smtp");
-		prop.setProperty("mail.smtp.host", "smtp.qq.com");
+		prop.setProperty("mail.smtp.host", host);
 		prop.setProperty("mail.smtp.auth", "true");
 		prop.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 		prop.setProperty("mail.smtp.socketFactory.port", "465");
