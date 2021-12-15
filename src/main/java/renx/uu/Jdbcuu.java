@@ -353,8 +353,10 @@ public class Jdbcuu {
 				row.put(Stringuu.camel(name), value);
 			}
 			rows.add(row);
-			if (rows.size() <= 10)
+			if (rows.size() <= 10) {
 				logger.info(JSON.toJSONString(row));
+				logger4j.info(JSON.toJSONString(row));
+			}
 		}
 		logger.info("affected : " + rows.size());
 		logger4j.info("affected : " + rows.size());
