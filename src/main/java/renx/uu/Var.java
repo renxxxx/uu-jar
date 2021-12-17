@@ -45,6 +45,7 @@ public class Var {
 	public static String datePattern12 = "yyyy/MM/dd HH:mm:ss.SSS";
 	public static String datePattern13 = "yyyy/MM";
 	public static String datePattern14 = "yyyy/MM/dd HH:mm";
+	public static String datePattern15 = "yyyy-MM-ddTHH:mm:ss";
 
 	boolean run = true;
 
@@ -1025,6 +1026,13 @@ public class Var {
 		}
 		try {
 			date = new SimpleDateFormat(datePattern14).parse(value.toString());
+			if (date != null) {
+				return date;
+			}
+		} catch (Exception e) {
+		}
+		try {
+			date = new SimpleDateFormat(datePattern15).parse(value.toString());
 			if (date != null) {
 				return date;
 			}
