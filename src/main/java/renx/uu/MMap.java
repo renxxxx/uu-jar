@@ -172,7 +172,7 @@ public class MMap {
 			return this.map.isEmpty();
 	}
 
-	public boolean isExist(String key) {
+	public boolean notEmpty(String key) {
 		Object value = this.get(key);
 		if (value == null)
 			return false;
@@ -182,10 +182,10 @@ public class MMap {
 	}
 
 	public boolean isEmpty(String key) {
-		return !isExist(key);
+		return !notEmpty(key);
 	}
 
-	public boolean isExist() {
+	public boolean notEmpty() {
 		return !isEmpty();
 	}
 
