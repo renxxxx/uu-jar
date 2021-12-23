@@ -104,7 +104,7 @@ public class LList {
 			return this.list.isEmpty();
 	}
 
-	public boolean notEmpty() {
+	public boolean isExist() {
 		return !isEmpty();
 	}
 

@@ -51,6 +51,8 @@ public class MMap {
 			this.map = new LinkedHashMap();
 		if (value instanceof MMap)
 			value = ((MMap) value).map;
+		if (value instanceof LList)
+			value = ((LList) value).list;
 		if (value instanceof Var)
 			value = ((Var) value).value;
 		this.map.put(key, value);
@@ -61,7 +63,11 @@ public class MMap {
 		if (this.map == null)
 			this.map = new LinkedHashMap();
 		if (map != null) {
-			this.map.putAll(map);
+			Iterator keys = map.keySet().iterator();
+			while (keys.hasNext()) {
+				Object key = keys.next();
+				this.put(key, map.get(key));
+			}
 		}
 		return this;
 	}

@@ -550,10 +550,6 @@ public class Var {
 		return this;
 	}
 
-	public boolean exist() {
-		return !isEmpty();
-	}
-
 	public boolean notEmpty() {
 		return !isEmpty();
 	}
@@ -775,6 +771,10 @@ public class Var {
 		if (this.value == null && object != null)
 			return false;
 		return this.value.equals(object);
+	}
+
+	public boolean notEquals(Object object) {
+		return !equals(object);
 	}
 
 	public Var toLowerCase() {

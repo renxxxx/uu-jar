@@ -150,10 +150,6 @@ public class Stringuu {
 		return new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + RandomStringUtils.randomNumeric(6);
 	}
 
-	public static boolean exist(CharSequence cs) {
-		return org.apache.commons.lang3.StringUtils.isNotEmpty(cs);
-	}
-
 	public static boolean notEmpty(CharSequence cs) {
 		return org.apache.commons.lang3.StringUtils.isNotEmpty(cs);
 	}
