@@ -108,6 +108,10 @@ public class LList {
 		return !isEmpty();
 	}
 
+	public boolean isExist() {
+		return notEmpty();
+	}
+
 	public String toString() {
 		if (this.list == null)
 			return null;

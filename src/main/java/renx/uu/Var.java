@@ -550,6 +550,10 @@ public class Var {
 		return this;
 	}
 
+	public boolean isExist() {
+		return notEmpty();
+	}
+
 	public boolean notEmpty() {
 		return !isEmpty();
 	}
