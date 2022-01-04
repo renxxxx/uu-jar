@@ -159,7 +159,7 @@ public class Jdbcuu {
 		return MMap.build(item);
 	}
 
-	public static ResultSet row(PreparedStatement pst, String sql, Object... params) throws SQLException {
+	public static ResultSet row(PreparedStatement pst, String sql, Object... params) throws Exception {
 		if (params == null)
 			params = new Object[] {};
 		sql = sql.replaceAll("\\s+", " ");
@@ -185,8 +185,8 @@ public class Jdbcuu {
 			logger4j.info(sqlNo + " " + "takes: " + Stringuu.commaNum((e - s) + "") + "ms");
 			return rs;
 		} catch (Exception e) {
-			throw new SQLException(
-					e.getMessage() + " " + sqlNo + " " + " sql: " + sql + " params: " + Arrays.toString(params), e);
+			throw new Exception(e.getMessage() + " > " + sqlNo + " > " + " sql: " + sql + " > " + " params: "
+					+ Arrays.toString(params), e);
 		}
 	}
 
@@ -267,8 +267,8 @@ public class Jdbcuu {
 			logger.info(sqlNo + " " + "takes: " + Stringuu.commaNum((e - s) + "") + "ms");
 			logger4j.info(sqlNo + " " + "takes: " + Stringuu.commaNum((e - s) + "") + "ms");
 		} catch (Exception e) {
-			throw new Exception(
-					e.getMessage() + " " + sqlNo + " " + " sql: " + sql + " params: " + Arrays.toString(params), e);
+			throw new Exception(e.getMessage() + " > " + sqlNo + " > " + " sql: " + sql + " > " + " params: "
+					+ Arrays.toString(params), e);
 		}
 		logger.info(sqlNo + " " + "affected: " + cnt);
 		logger4j.info(sqlNo + " " + "affected: " + cnt);

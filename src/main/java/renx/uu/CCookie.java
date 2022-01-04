@@ -7,6 +7,10 @@ public class CCookie {
 
 	public Cookie o = null;
 
+	public static void main(String[] args) {
+		new Cookie("asdf", null);
+	}
+
 	public static CCookie build(Cookie o) {
 		CCookie ccookie = new CCookie();
 		ccookie.o = o;
