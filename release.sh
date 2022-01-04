@@ -1,4 +1,6 @@
 #!/bin/bash
+group=renx
+project=uu
 
 versionMsg=$1
 if [ -z "$versionMsg" ]; then
@@ -6,7 +8,7 @@ if [ -z "$versionMsg" ]; then
 fi
 
 echo "-gen version"
-date=`date +%y%m%d`
+date=`date +%y%m%d%H`
 version=$date
 echo version: $version
 sed -i "0,/^\(.*\)<version>.*<\/version>\(.*\)$/s//\1<version>$version<\/version>/" ./pom.xml
@@ -31,6 +33,12 @@ echo
 
 echo "-mvn -q clean install"
 mvn -q clean install
+echo
+
+echo "-rename package"
+commitid=`git rev-parse --short HEAD`
+packagename=$group-$project-jar-$version-$commitid.war
+cp target/$project-$version.war target/$packagename
 echo
 
 echo success

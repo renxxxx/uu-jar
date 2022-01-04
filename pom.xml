@@ -5,7 +5,7 @@
 
 	<groupId>renx</groupId>
 	<artifactId>uu</artifactId>
-	<version>220104</version>
+	<version>22010417</version>
 	<description>all scopes to provided from none</description>
 	<packaging>jar</packaging>
 	<name>archive</name>
@@ -13,12 +13,9 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.build.timestamp.format>YYMMdd</maven.build.timestamp.format>
 	</properties>
 
 	<build>
-		<finalName>${groupId}-${artifactId}-jar-${version}-${git.commit.id.abbrev}
-		</finalName>
 		<resources>
 			<resource>
 				<directory>src/main/java</directory>
