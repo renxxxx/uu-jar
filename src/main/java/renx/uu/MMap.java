@@ -39,8 +39,8 @@ public class MMap {
 		return build(null);
 	}
 
-	public MMap put(Object key, Object value, boolean iff) {
-		if (iff) {
+	public MMap put(Object key, Object value, boolean if_) {
+		if (if_) {
 			put(key, value);
 		}
 		return this;

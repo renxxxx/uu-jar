@@ -17,13 +17,14 @@ public class Database {
 	public String username;
 	public String password;
 
-	public void start() {
+	public void start() throws SQLException {
 		start(null);
 	}
 
-	public void start(DataSource dataSource) {
+	public void start(DataSource dataSource) throws SQLException {
 		if (dataSource == null) {
 			if (this.dataSource == null) {
+				Connection connection = null;
 				try {
 					org.apache.tomcat.jdbc.pool.DataSource tomcatJdbcPoolDataSource = new org.apache.tomcat.jdbc.pool.DataSource();
 					tomcatJdbcPoolDataSource.setDriverClassName(driver);
@@ -34,9 +35,14 @@ public class Database {
 					tomcatJdbcPoolDataSource.setDefaultAutoCommit(false);
 					tomcatJdbcPoolDataSource.setRollbackOnReturn(true);
 					tomcatJdbcPoolDataSource.setValidationQuery("SELECT 1");
+					connection = tomcatJdbcPoolDataSource.getConnection();
+					connection.createStatement().execute("select 1");
 					this.dataSource = tomcatJdbcPoolDataSource;
 				} catch (Exception e) {
 					throw new RuntimeException(e);
+				} finally {
+					if (connection != null)
+						connection.close();
 				}
 			}
 		} else {
@@ -44,32 +50,26 @@ public class Database {
 		}
 	}
 
-	public Connection connect(Connection conn) throws SQLException {
+	public Connection getConnection() throws SQLException {
 		start();
-		if (conn == null) {
-			conn = dataSource.getConnection();
-			conn.setAutoCommit(false);
-		}
+		Connection conn = dataSource.getConnection();
+		conn.setAutoCommit(false);
 		return conn;
 	}
 
-	public Connection connect() throws SQLException {
-		return connect(null);
-	}
-
-	public void commit(Connection conn) throws SQLException {
+	public void commitConnection(Connection conn) throws SQLException {
 		if (conn != null && !conn.getAutoCommit())
 			conn.commit();
 	}
 
-	public void rollback(Connection conn) throws SQLException {
+	public void rollbackConnection(Connection conn) throws SQLException {
 		if (conn != null && !conn.getAutoCommit())
 			conn.rollback();
 	}
 
-	public void close(Connection conn) throws SQLException {
+	public void closeConnection(Connection conn) throws SQLException {
 		if (conn != null) {
-			rollback(conn);
+			rollbackConnection(conn);
 			conn.close();
 		}
 	}

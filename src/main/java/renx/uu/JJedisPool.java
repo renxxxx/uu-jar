@@ -20,7 +20,7 @@ public class JJedisPool {
 	public boolean started = false;
 
 	public void start() {
-		if (this.started)
+		if (this.jedisPool != null && !this.jedisPool.isClosed())
 			return;
 		if (this.jedisPool != null) {
 			this.jedisPool.close();
@@ -40,24 +40,15 @@ public class JJedisPool {
 		}
 	}
 
-	public JJedis connect(JJedis jjedis) throws SQLException {
+	public Jedis getConnection() throws SQLException {
 		start();
-		JJedis jjedis1 = new JJedis();
-		if (jjedis == null) {
-			jjedis1.jedis = jjedis1.myJedis = jedisPool.getResource();
-		} else {
-			jjedis1.jedis = jjedis1.upperJedis = jedisPool.getResource();
-		}
-		return jjedis1;
+		Jedis jedis = this.jedisPool.getResource();
+		return jedis;
 	}
 
-	public JJedis connect() throws SQLException {
-		return connect(null);
-	}
-
-	public void close(JJedis jjedis) throws SQLException {
-		if (jjedis != null)
-			jjedis.close();
+	public void closeConnection(Jedis jedis) throws SQLException {
+		if (jedis != null)
+			jedis.close();
 	}
 
 	public static void main(String[] args) throws Exception {

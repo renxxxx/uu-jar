@@ -1,7 +1,9 @@
 package renx.uu;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class LList {
 
@@ -30,8 +32,8 @@ public class LList {
 		return build(null);
 	}
 
-	public LList add(Object e, boolean iff) {
-		if (iff)
+	public LList add(Object e, boolean if_) {
+		if (if_)
 			return add(e);
 		return this;
 	}
