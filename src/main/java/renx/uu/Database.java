@@ -57,6 +57,12 @@ public class Database {
 		return conn;
 	}
 
+	public Connection getConnection(Connection conn) throws SQLException {
+		if (conn != null)
+			return conn;
+		return getConnection();
+	}
+
 	public void commitConnection(Connection conn) throws SQLException {
 		if (conn != null && !conn.getAutoCommit())
 			conn.commit();
