@@ -197,6 +197,17 @@ public class MMap {
 		return !isEmpty();
 	}
 
+	public boolean getAndEquals(Object key, Object target) {
+		if (map == null)
+			return false;
+		Object value = map.get(key);
+		if (value == target)
+			return true;
+		if (value.equals(target))
+			return true;
+		return false;
+	}
+
 	@Override
 	public String toString() {
 		return this.map == null ? null : this.map.toString();

@@ -14,7 +14,7 @@ public class MMail {
 		MMail j = new MMail();
 		j.host = "smtp.qq.com";
 		j.user = "413038044@qq.com";
-		j.password = "pjqcxyxysvfpbjci";
+		j.password = "mwnfxakaeqrybhcg";
 		j.sender = "413038044@qq.com";
 
 		j.send("413038044@qq.com", "aq123123d", "qqqq");
