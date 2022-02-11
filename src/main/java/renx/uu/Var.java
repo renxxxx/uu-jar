@@ -479,7 +479,7 @@ public class Var {
 	public Var vEnum(String... enums) {
 		if (!this.run)
 			return this;
-		if (enums == null || enums.length == 0)
+		if (this.value == null || this.value.isEmpty() || enums == null || enums.length == 0)
 			return this;
 		boolean v = Stringuu.equalsAny(this.value, enums);
 		if (!v)
