@@ -207,7 +207,7 @@ public class MMap {
 		Object value = map.get(key);
 		if (value == target)
 			return true;
-		return value.toString().equals(target);
+		return value.toString().equals(target.toString());
 	}
 
 	@Override
