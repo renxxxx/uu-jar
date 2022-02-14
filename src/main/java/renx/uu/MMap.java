@@ -81,7 +81,7 @@ public class MMap {
 		Iterator keys = map.keySet().iterator();
 		while (keys.hasNext()) {
 			Object key = keys.next();
-			String key2 = keyPrefix + "_" + key.toString();
+			String key2 = keyPrefix + (key.toString().charAt(0) + "").toUpperCase() + key.toString().substring(1);
 			this.map.put(key2, map.get(key));
 		}
 		return this;
