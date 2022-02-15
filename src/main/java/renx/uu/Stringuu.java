@@ -36,6 +36,14 @@ public class Stringuu {
 		System.out.println(n2 - n1);
 	}
 
+	public static String[] toArray(String item, int size) {
+		String[] items = new String[size];
+		for (int i = 0; i < items.length; i++) {
+			items[i] = item;
+		}
+		return items;
+	}
+
 	public static Integer toByte(String str) {
 		if (Stringuu.isEmpty(str))
 			return null;
