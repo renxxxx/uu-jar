@@ -10,18 +10,31 @@ import org.slf4j.LoggerFactory;
 public class Regexuu {
 	private static Logger logger = LoggerFactory.getLogger(Regexuu.class);
 
-	public static String group(String regex, String str, int group) {
-		Pattern p = Pattern.compile(regex);
-		Matcher m = p.matcher(str);
-		if (!m.matches())
-			return null;
-		try {
-			return m.group(group);
-		} catch (RuntimeException e) {
-			logger.debug(ExceptionUtils.getStackTrace(e));
-			return null;
-		}
+	public static boolean find(String source, String regex) {
+		if (source == null || source.isEmpty() || regex == null || regex.isEmpty())
+			return false;
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(source);
+		return matcher.find();
+	}
 
+	public static String group(String source, String regex) {
+		return group(source, regex, 1);
+	}
+
+	public static String group(String source, String regex, int group) {
+		if (source == null || source.isEmpty() || regex == null || regex.isEmpty())
+			return null;
+		String target = null;
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(source);
+		if (matcher.find()) {
+			int groupCount = matcher.groupCount();
+			if (group <= groupCount) {
+				target = matcher.group(group);
+			}
+		}
+		return target;
 	}
 
 	public static void main(String[] args) {
