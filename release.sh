@@ -46,7 +46,7 @@ echo "-rename package"
 commitId=`git rev-parse --short HEAD`
 date=`date +%Y%m%d%H%M%S`
 packageName=$domain-$project-$version-$date-$commitId.jar
-cp target/$project-$version.war target/$packageName
+cp target/$project-$version.jar target/$packageName
 echo
 
 echo success
