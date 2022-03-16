@@ -1,5 +1,5 @@
 #!/bin/bash
-group=renx
+domain=renx
 project=uu
 
 versionMsg=$1
@@ -7,12 +7,19 @@ if [ -z "$versionMsg" ]; then
  versionMsg='更新'
 fi
 
-echo "-gen version"
-date=`date +%y%m%d%H`
-version=$date
-echo version: $version
-sed -i "0,/^\(.*\)<version>.*<\/version>\(.*\)$/s//\1<version>$version<\/version>/" ./pom.xml
-sed -i "s/public static String version = \".*\"/public static String version = \"$version\"/g" ./src/main/java/renx/uu/UU.java
+version=`cat  ./src/main/java/renx/uu/UU.java |grep -oP '(?<= version = ").*(?=";)'`
+echo current version: $version
+
+read -p "Enter new version: " newVersion
+
+if [[ "$newVersion" = "" ]]
+then 
+	newVersion=$version
+fi
+
+echo new version: $newVersion
+sed -i "0,/^\(.*\)<version>.*<\/version>\(.*\)$/s//\1<version>$newVersion<\/version>/" ./pom.xml
+sed -i "0,/^\(.*\)public static String version = ".*";\(.*\)$/s//\1public static String version = \"$newVersion\";/" ./src/main/java/renx/uu/UU.java
 echo
 
 echo "-git add"
@@ -36,9 +43,10 @@ mvn -q clean install
 echo
 
 echo "-rename package"
-commitid=`git rev-parse --short HEAD`
-packagename=$group-$project-jar-$version-$commitid.jar
-cp target/$project-$version.jar target/$packagename
+commitId=`git rev-parse --short HEAD`
+date=`date +%Y%m%d%H%M%S`
+packageName=$domain-$project-$version-$date-$commitId.jar
+cp target/$project-$version.war target/$packageName
 echo
 
 echo success
