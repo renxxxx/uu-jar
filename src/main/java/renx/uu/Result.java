@@ -12,7 +12,7 @@ public class Result extends RuntimeException {
 	public int code;
 	public String invalidParam = null;
 	public String message = null;
-	public Object data = null;
+	public Object data = new LinkedHashMap();
 	public String messageEn = null;
 	public String messageCn = null;
 	public String debug = null;
