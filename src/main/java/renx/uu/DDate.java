@@ -162,6 +162,8 @@ public class DDate extends Date {
 	}
 
 	public DDate set(String source) {
+		if (source == null || source.isEmpty())
+			return null;
 		Date date = null;
 		if (date == null) {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
