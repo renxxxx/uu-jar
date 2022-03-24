@@ -1,6 +1,7 @@
 package renx.uu;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -49,6 +50,15 @@ public class LList {
 		return this;
 	}
 
+	public LList addAll(Object[] e) {
+		if (this.list == null)
+			this.list = new ArrayList();
+		if (e == null)
+			return this;
+		this.list.addAll(Arrays.asList(e));
+		return this;
+	}
+
 	public LList addAll(List e) {
 		if (this.list == null)
 			this.list = new ArrayList();
@@ -60,6 +70,12 @@ public class LList {
 		if (this.list == null)
 			this.list = new ArrayList();
 		this.list.addAll(e.list);
+		return this;
+	}
+
+	public LList addAll(Object[] e, boolean if_) {
+		if (if_)
+			addAll(e);
 		return this;
 	}
 
