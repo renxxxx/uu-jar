@@ -63,6 +63,18 @@ public class LList {
 		return this;
 	}
 
+	public LList addAll(List e, boolean if_) {
+		if (if_)
+			addAll(e);
+		return this;
+	}
+
+	public LList addAll(LList e, boolean if_) {
+		if (if_)
+			addAll(e);
+		return this;
+	}
+
 	public Object[] toArray() {
 		if (this.list == null)
 			return null;
