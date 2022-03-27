@@ -11,6 +11,11 @@ public class CCookie {
 		new Cookie("asdf", null);
 	}
 
+	public static CCookie build() {
+		CCookie ccookie = new CCookie();
+		return ccookie;
+	}
+
 	public static CCookie build(Cookie o) {
 		CCookie ccookie = new CCookie();
 		ccookie.o = o;
@@ -28,9 +33,17 @@ public class CCookie {
 		return this;
 	}
 
+	public String domain() {
+		return o != null ? o.getDomain() : null;
+	}
+
 	public CCookie path(String uri) {
 		o.setPath(uri);
 		return this;
+	}
+
+	public String path() {
+		return o != null ? o.getPath() : null;
 	}
 
 	public CCookie httpOnly(boolean isHttpOnly) {
@@ -43,9 +56,18 @@ public class CCookie {
 		return this;
 	}
 
+	public CCookie value(Cookie o) {
+		this.o = o;
+		return this;
+	}
+
 	public CCookie value(String newValue) {
 		o.setValue(newValue);
 		return this;
+	}
+
+	public String value() {
+		return o != null ? o.getValue() : null;
 	}
 
 	public CCookie secure(boolean flag) {
@@ -53,12 +75,18 @@ public class CCookie {
 		return this;
 	}
 
-	public CCookie add(HttpServletResponse hres) {
-		hres.addCookie(o);
+	public CCookie addTo(HttpServletResponse response) {
+		response.addCookie(o);
 		return this;
 	}
 
-	public String value() {
-		return o != null ? o.getValue() : null;
+	public boolean isEmpty() {
+		if (o == null || o.getValue() == null || o.getValue().isEmpty())
+			return true;
+		return false;
+	}
+
+	public boolean isExist() {
+		return !isEmpty();
 	}
 }

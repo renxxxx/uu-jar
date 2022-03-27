@@ -1,0 +1,79 @@
+package renx.uu;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import javax.sql.DataSource;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class Database2 {
+	private Logger logger = LoggerFactory.getLogger(Database2.class);
+
+	public DataSource dataSource;
+	public String driver;
+	public String url;
+	public String username;
+	public String password;
+
+	public void start() throws SQLException {
+		start(null);
+	}
+
+	public void start(DataSource dataSource) throws SQLException {
+		if (dataSource == null) {
+			if (this.dataSource == null) {
+				Connection connection = null;
+				try {
+					org.apache.tomcat.jdbc.pool.DataSource tomcatJdbcPoolDataSource = new org.apache.tomcat.jdbc.pool.DataSource();
+					tomcatJdbcPoolDataSource.setDriverClassName(driver);
+					tomcatJdbcPoolDataSource.setUrl(url);
+					tomcatJdbcPoolDataSource.setUsername(username);
+					tomcatJdbcPoolDataSource.setPassword(password);
+					tomcatJdbcPoolDataSource.setTestOnBorrow(true);
+					tomcatJdbcPoolDataSource.setDefaultAutoCommit(false);
+					tomcatJdbcPoolDataSource.setRollbackOnReturn(true);
+					tomcatJdbcPoolDataSource.setValidationQuery("SELECT 1");
+					connection = tomcatJdbcPoolDataSource.getConnection();
+					connection.createStatement().execute("select 1");
+					this.dataSource = tomcatJdbcPoolDataSource;
+				} catch (Exception e) {
+					throw new RuntimeException(e);
+				} finally {
+					if (connection != null)
+						connection.close();
+				}
+			}
+		} else {
+			this.dataSource = dataSource;
+		}
+	}
+
+	public CConnection getConnection() throws SQLException {
+		start();
+		CConnection cconn = new CConnection();
+		Connection conn = dataSource.getConnection();
+		conn.setAutoCommit(false);
+
+		cconn.o = conn;
+		return cconn;
+	}
+
+	public CConnection getConnection(CConnection cconn) throws SQLException {
+		if (cconn != null && cconn.o != null) {
+			CConnection cconn2 = new CConnection();
+			cconn2.o = cconn.o;
+			cconn2.self = false;
+			return cconn2;
+		}
+		return getConnection();
+	}
+
+	public static void main(String[] args) throws Exception {
+		m2();
+	}
+
+	public static void m2() throws Exception {
+	}
+}
