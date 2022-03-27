@@ -557,7 +557,7 @@ public class Var {
 		return this;
 	}
 
-	public boolean isExist() {
+	public boolean isExisting() {
 		return notEmpty();
 	}
 

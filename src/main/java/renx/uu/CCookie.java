@@ -86,7 +86,7 @@ public class CCookie {
 		return false;
 	}
 
-	public boolean isExist() {
+	public boolean isExisting() {
 		return !isEmpty();
 	}
 }

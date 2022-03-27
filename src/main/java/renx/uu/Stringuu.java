@@ -160,7 +160,7 @@ public class Stringuu {
 		return new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + RandomStringUtils.randomNumeric(6);
 	}
 
-	public static boolean isExist(CharSequence cs) {
+	public static boolean isExisting(CharSequence cs) {
 		return notEmpty(cs);
 	}
 

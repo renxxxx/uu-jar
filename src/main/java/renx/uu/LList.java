@@ -138,7 +138,7 @@ public class LList {
 		return !isEmpty();
 	}
 
-	public boolean isExist() {
+	public boolean isExisting() {
 		return notEmpty();
 	}
 
