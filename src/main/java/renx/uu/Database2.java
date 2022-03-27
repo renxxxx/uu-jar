@@ -50,7 +50,7 @@ public class Database2 {
 		}
 	}
 
-	public CConnection getConnection() throws SQLException {
+	public CConnection getCConnection() throws SQLException {
 		start();
 		CConnection cconn = new CConnection();
 		Connection conn = dataSource.getConnection();
@@ -60,14 +60,14 @@ public class Database2 {
 		return cconn;
 	}
 
-	public CConnection getConnection(CConnection cconn) throws SQLException {
+	public CConnection getCConnection(CConnection cconn) throws SQLException {
 		if (cconn != null && cconn.o != null) {
 			CConnection cconn2 = new CConnection();
 			cconn2.o = cconn.o;
 			cconn2.self = false;
 			return cconn2;
 		}
-		return getConnection();
+		return getCConnection();
 	}
 
 	public static void main(String[] args) throws Exception {

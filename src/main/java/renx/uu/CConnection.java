@@ -7,6 +7,12 @@ public class CConnection {
 	public Connection o;
 	public boolean self = true;
 
+	public CConnection build(Connection conn) throws SQLException {
+		CConnection cconn = new CConnection();
+		cconn.o = conn;
+		return cconn;
+	}
+
 	public void commit() throws SQLException {
 		if (self && o != null)
 			o.commit();

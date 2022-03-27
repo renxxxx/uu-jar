@@ -66,7 +66,7 @@ public class Jdbcuu {
 		}
 	}
 
-	public static InputStream queryStream(Connection conn, String sql, Object... params) throws Exception {
+	public static InputStream getStream(Connection conn, String sql, Object... params) throws Exception {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
@@ -84,38 +84,38 @@ public class Jdbcuu {
 	}
 
 	public static Integer getInteger(Connection conn, String sql, Object... params) throws Exception {
-		return Var.toInteger(getObject(conn, sql, params));
+		return Var.toInteger(getColumn(conn, sql, params));
 	}
 
 	public static String getString(Connection conn, String sql, Object... params) throws Exception {
-		return Var.toString(getObject(conn, sql, params));
+		return Var.toString(getColumn(conn, sql, params));
 	}
 
 	public static LList getJsonArray(Connection conn, String sql, Object... params) throws Exception {
-		return Var.toJsonArray(getObject(conn, sql, params));
+		return Var.toJsonArray(getColumn(conn, sql, params));
 	}
 
 	public static MMap getJson(Connection conn, String sql, Object... params) throws Exception {
-		return Var.toJson(getObject(conn, sql, params));
+		return Var.toJson(getColumn(conn, sql, params));
 	}
 
 	public static BigDecimal getDecimal(Connection conn, String sql, Object... params) throws Exception {
-		return Var.toDecimal(getObject(conn, sql, params));
+		return Var.toDecimal(getColumn(conn, sql, params));
 	}
 
 	public static Long getLong(Connection conn, String sql, Object... params) throws Exception {
-		return Var.toLong(getObject(conn, sql, params));
+		return Var.toLong(getColumn(conn, sql, params));
 	}
 
 	public static Float getFloat(Connection conn, String sql, Object... params) throws Exception {
-		return Var.toFloat(getObject(conn, sql, params));
+		return Var.toFloat(getColumn(conn, sql, params));
 	}
 
 	public static Date getDate(Connection conn, String sql, Object... params) throws Exception {
-		return Var.toDate(getObject(conn, sql, params));
+		return Var.toDate(getColumn(conn, sql, params));
 	}
 
-	public static Object getObject(Connection conn, String sql, Object... params) throws Exception {
+	public static Object getColumn(Connection conn, String sql, Object... params) throws Exception {
 		MMap row = row(conn, sql, params);
 		if (row.map == null)
 			return null;
