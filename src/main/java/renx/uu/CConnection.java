@@ -28,9 +28,15 @@ public class CConnection {
 			o.close();
 	}
 
-	public void isClosed() throws SQLException {
+	public boolean isClosed() throws SQLException {
 		if (o != null)
-			o.isClosed();
+			return o.isClosed();
+		else
+			return true;
+	}
+
+	public boolean isOpen() throws SQLException {
+		return !isClosed();
 	}
 
 	public void isReadOnly() throws SQLException {

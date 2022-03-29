@@ -61,7 +61,7 @@ public class Database2 {
 	}
 
 	public CConnection getCConnection(CConnection cconn) throws SQLException {
-		if (cconn != null && cconn.o != null) {
+		if (cconn != null && cconn.isOpen()) {
 			CConnection cconn2 = new CConnection();
 			cconn2.o = cconn.o;
 			cconn2.self = false;
