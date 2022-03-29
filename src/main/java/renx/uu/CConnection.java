@@ -11,7 +11,16 @@ public class CConnection {
 		return new CConnection();
 	}
 
+	public static CConnection build(CConnection cconn) throws SQLException {
+		if (cconn == null)
+			return build();
+		else
+			return cconn;
+	}
+
 	public static CConnection build(Connection conn) throws SQLException {
+		if (conn == null || conn.isClosed())
+			return build();
 		CConnection cconn = new CConnection();
 		cconn.o = conn;
 		return cconn;
