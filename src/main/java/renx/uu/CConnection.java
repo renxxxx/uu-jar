@@ -7,7 +7,11 @@ public class CConnection {
 	public Connection o;
 	public boolean self = true;
 
-	public CConnection build(Connection conn) throws SQLException {
+	public static CConnection build() throws SQLException {
+		return new CConnection();
+	}
+
+	public static CConnection build(Connection conn) throws SQLException {
 		CConnection cconn = new CConnection();
 		cconn.o = conn;
 		return cconn;
