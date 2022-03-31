@@ -113,12 +113,14 @@ public class Servletuu {
 
 	public static String scheme(HttpServletRequest request) {
 		String value = null;
-		value = request.getHeader("X-Forwarded-Scheme");
+		value = request.getHeader("remote-scheme");
 		if (value != null && !value.isEmpty())
 			return value;
+
 		value = request.getScheme();
 		if (value != null && !value.isEmpty())
 			return value;
+
 		return value;
 	}
 
@@ -127,9 +129,15 @@ public class Servletuu {
 		value = request.getHeader("remote-host");
 		if (value != null && !value.isEmpty())
 			return value;
+
 		value = request.getHeader("HOST");
 		if (value != null && !value.isEmpty())
 			return value;
+
+		value = request.getRemoteHost();
+		if (value != null && !value.isEmpty())
+			return value;
+
 		return value;
 	}
 
