@@ -19,8 +19,6 @@ public class CConnection {
 	}
 
 	public static CConnection build(Connection conn) throws SQLException {
-		if (conn == null || conn.isClosed())
-			return build();
 		CConnection cconn = new CConnection();
 		cconn.o = conn;
 		return cconn;

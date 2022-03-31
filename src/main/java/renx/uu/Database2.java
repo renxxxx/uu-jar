@@ -70,6 +70,16 @@ public class Database2 {
 		return getCConnection();
 	}
 
+	public CConnection getCConnection(Connection conn) throws SQLException {
+		if (conn != null && !conn.isClosed()) {
+			CConnection cconn2 = new CConnection();
+			cconn2.o = conn;
+			cconn2.self = false;
+			return cconn2;
+		}
+		return getCConnection();
+	}
+
 	public static void main(String[] args) throws Exception {
 		m2();
 	}
