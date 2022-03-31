@@ -35,7 +35,7 @@ public class DDate extends Date {
 
 	}
 
-	public DDate(long time) {
+	public DDate(Long time) {
 		set(time);
 	}
 
@@ -155,7 +155,9 @@ public class DDate extends Date {
 		return this;
 	}
 
-	public DDate set(long time) {
+	public DDate set(Long time) {
+		if (time == null)
+			return this;
 		this.setTime(time);
 		calendar.setTime(this);
 		return this;
@@ -163,7 +165,7 @@ public class DDate extends Date {
 
 	public DDate set(String source) {
 		if (source == null || source.isEmpty())
-			return null;
+			return this;
 		Date date = null;
 		if (date == null) {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -259,8 +261,10 @@ public class DDate extends Date {
 			} catch (Exception e) {
 			}
 		}
-		this.setTime(date.getTime());
-		calendar.setTime(this);
+		if (date != null) {
+			this.setTime(date.getTime());
+			calendar.setTime(this);
+		}
 		return this;
 	}
 
@@ -268,11 +272,15 @@ public class DDate extends Date {
 		return new DDate();
 	}
 
-	public static DDate build(long time) throws ParseException {
+	public static DDate build(Long time) throws ParseException {
+		if (time == null)
+			return null;
 		return new DDate(time);
 	}
 
 	public static DDate build(String source) throws ParseException {
+		if (source == null)
+			return null;
 		return new DDate(source);
 	}
 }
