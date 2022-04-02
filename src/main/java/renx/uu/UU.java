@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 
 public class UU {
 	private static Logger logger = LoggerFactory.getLogger(UU.class);
-	public static String version = "2.0.12";
+	public static String version = "2.1.0";
 
 	public static boolean isLinux() {
 		Properties prop = System.getProperties();

@@ -44,7 +44,7 @@ public class Jdbcuu {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
-			return rows(row(pst, sql, params));
+			return rows(row(conn, pst, sql, params));
 		} catch (Exception e) {
 			throw e;
 		} finally {
@@ -57,7 +57,7 @@ public class Jdbcuu {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
-			return thinRows(row(pst, sql, params));
+			return thinRows(row(conn, pst, sql, params));
 		} catch (Exception e) {
 			throw e;
 		} finally {
@@ -70,7 +70,7 @@ public class Jdbcuu {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
-			ResultSet rs = row(pst, sql, params);
+			ResultSet rs = row(conn, pst, sql, params);
 			if (rs.next()) {
 				return rs.getBinaryStream(1);
 			}
@@ -159,7 +159,7 @@ public class Jdbcuu {
 		return MMap.build(item);
 	}
 
-	public static ResultSet row(PreparedStatement pst, String sql, Object... params) throws Exception {
+	public static ResultSet row(Connection conn, PreparedStatement pst, String sql, Object... params) throws Exception {
 		if (params == null)
 			params = new Object[] {};
 		sql = sql.replaceAll("\\s+", " ");
@@ -181,12 +181,27 @@ public class Jdbcuu {
 			long s = System.currentTimeMillis();
 			ResultSet rs = pst.executeQuery();
 			long e = System.currentTimeMillis();
-			logger.info(sqlNo + " " + "takes: " + Stringuu.commaNum((e - s) + "") + "ms");
-			logger4j.info(sqlNo + " " + "takes: " + Stringuu.commaNum((e - s) + "") + "ms");
+			logger.info(sqlNo + " " + "duration: " + (e - s) / 1000f);
+			logger.info(sqlNo + " " + "duration: " + (e - s) / 1000f);
+
+			String sql2 = "insert into sql (no,sql,params,duration,rowCount) values(?,?,?,?,?)";
+			PreparedStatement pst2 = null;
+			try {
+				pst2 = conn.prepareStatement(sql2);
+				pst2.setObject(1, sqlNo);
+				pst2.setObject(2, sql2);
+				pst2.setObject(3, JSON.toJSONString(params));
+				pst2.setObject(4, (e - s) / 1000f);
+				pst2.setObject(5, rs.getFetchSize());
+				pst2.execute();
+			} finally {
+				if (pst2 != null)
+					pst2.close();
+			}
+
 			return rs;
 		} catch (Exception e) {
-			throw new Exception(e.getMessage() + " > " + sqlNo + " > " + " sql: " + sql + " > " + " params: "
-					+ Arrays.toString(params), e);
+			throw new Exception(e.getMessage() + " sqlNo: " + sqlNo, e);
 		}
 	}
 
@@ -198,7 +213,7 @@ public class Jdbcuu {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-			update(pst, sql, params);
+			update(conn, pst, sql, params);
 			ResultSet rs = pst.getGeneratedKeys();
 			if (rs.next())
 				return rs.getInt(1);
@@ -228,7 +243,7 @@ public class Jdbcuu {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
-			return update(pst, sql, params);
+			return update(conn, pst, sql, params);
 		} catch (Exception e) {
 			throw e;
 		} finally {
@@ -238,7 +253,7 @@ public class Jdbcuu {
 		}
 	}
 
-	public static int update(PreparedStatement pst, String sql, Object... params) throws Exception {
+	public static int update(Connection conn, PreparedStatement pst, String sql, Object... params) throws Exception {
 		if (params == null)
 			params = new Object[] {};
 		sql = sql.replaceAll("\\s+", " ");
@@ -264,11 +279,27 @@ public class Jdbcuu {
 			long s = System.currentTimeMillis();
 			cnt = pst.executeUpdate();
 			long e = System.currentTimeMillis();
-			logger.info(sqlNo + " " + "takes: " + Stringuu.commaNum((e - s) + "") + "ms");
-			logger4j.info(sqlNo + " " + "takes: " + Stringuu.commaNum((e - s) + "") + "ms");
+
+			logger.info(sqlNo + " " + "duration: " + (e - s) / 1000f);
+			logger.info(sqlNo + " " + "duration: " + (e - s) / 1000f);
+
+			String sql2 = "insert into sql (no,sql,params,duration,rowCount) values(?,?,?,?,?)";
+			PreparedStatement pst2 = null;
+			try {
+				pst2 = conn.prepareStatement(sql2);
+				pst2.setObject(1, sqlNo);
+				pst2.setObject(2, sql2);
+				pst2.setObject(3, JSON.toJSONString(params));
+				pst2.setObject(4, (e - s) / 1000f);
+				pst2.setObject(5, cnt);
+				pst2.execute();
+			} finally {
+				if (pst2 != null)
+					pst2.close();
+			}
+
 		} catch (Exception e) {
-			throw new Exception(e.getMessage() + " > " + sqlNo + " > " + " sql: " + sql + " > " + " params: "
-					+ Arrays.toString(params), e);
+			throw new Exception(e.getMessage() + " sqlNo: " + sqlNo, e);
 		}
 		logger.info(sqlNo + " " + "affected: " + cnt);
 		logger4j.info(sqlNo + " " + "affected: " + cnt);

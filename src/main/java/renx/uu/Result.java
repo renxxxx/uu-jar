@@ -10,21 +10,19 @@ public class Result extends RuntimeException {
 
 	public String runNo = null;
 	public int code;
-	public String invalidParam = null;
-	public String message = null;
+	public String errorParam = null;
+	public String msg = null;
 	public Object data = new LinkedHashMap();
-	public String messageEn = null;
-	public String messageCn = null;
-	public String debug = null;
+	public String enMsg = null;
+	public String zhMsg = null;
 
 	public Map to() {
 		Map map = new LinkedHashMap();
 		map.put("runNo", runNo);
-		map.put("message", message);
+		map.put("msg", msg);
 		map.put("code", code);
 		map.put("data", data);
-		map.put("invalidParam", invalidParam);
-		map.put("debug", debug);
+		map.put("errorParam", errorParam);
 		return map;
 	}
 
@@ -40,14 +38,14 @@ public class Result extends RuntimeException {
 		return success(null, data);
 	}
 
-	public static Result success(String message, Object data) {
+	public static Result success(String msg, Object data) {
 		if (data instanceof MMap)
 			data = ((MMap) data).map;
-		Result response = new Result(0 + " : " + message);
-		response.code = 0;
-		response.message = message;
-		response.data = data;
-		return response;
+		Result result = new Result(0 + " : " + msg);
+		result.code = 0;
+		result.msg = msg;
+		result.data = data;
+		return result;
 	}
 
 	public static Result fail() {
@@ -62,46 +60,46 @@ public class Result extends RuntimeException {
 		return fail(null, data);
 	}
 
-	public static Result fail(String message, Object data) {
+	public static Result fail(String msg, Object data) {
 		if (data instanceof MMap)
 			data = ((MMap) data).map;
-		Result response = new Result(900 + " : " + message);
-		response.code = 900;
-		response.message = message;
-		response.data = data;
-		return response;
+		Result result = new Result(9 + " : " + msg);
+		result.code = 9;
+		result.msg = msg;
+		result.data = data;
+		return result;
 	}
 
 	public static Result build(int code) {
-		Result response = new Result(code + "");
-		response.code = code;
-		return response;
+		Result result = new Result(code + "");
+		result.code = code;
+		return result;
 	}
 
-	public static Result build(int code, String message, Object data) {
+	public static Result build(int code, String msg, Object data) {
 		if (data instanceof MMap)
 			data = ((MMap) data).map;
-		Result response = new Result(code + " : " + message);
-		response.code = code;
-		response.message = message;
-		response.data = data;
-		return response;
+		Result result = new Result(code + " : " + msg);
+		result.code = code;
+		result.msg = msg;
+		result.data = data;
+		return result;
 	}
 
-	public static Result build(int code, String message) {
-		Result response = new Result(code + " : " + message);
-		response.code = code;
-		response.message = message;
-		return response;
+	public static Result build(int code, String msg) {
+		Result result = new Result(code + " : " + msg);
+		result.code = code;
+		result.msg = msg;
+		return result;
 	}
 
 	public static Result build(int code, Object data) {
 		if (data instanceof MMap)
 			data = ((MMap) data).map;
-		Result response = new Result(code + "");
-		response.code = code;
-		response.data = data;
-		return response;
+		Result result = new Result(code + "");
+		result.code = code;
+		result.data = data;
+		return result;
 	}
 
 	public Result() {
@@ -129,28 +127,23 @@ public class Result extends RuntimeException {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Result message(String message) {
-		this.message = message;
+	public Result msg(String msg) {
+		this.msg = msg;
 		return this;
 	}
 
-	public Result messageCn(String messageCn) {
-		this.messageCn = messageCn;
+	public Result zhMsg(String zhMsg) {
+		this.zhMsg = zhMsg;
 		return this;
 	}
 
-	public Result messageEn(String messageEn) {
-		this.messageEn = messageEn;
+	public Result enMsg(String enMsg) {
+		this.enMsg = enMsg;
 		return this;
 	}
 
-	public Result debug(String debug) {
-		this.debug = debug;
-		return this;
-	}
-
-	public Result invalidParam(String invalidParam) {
-		this.invalidParam = invalidParam;
+	public Result errorParam(String errorParam) {
+		this.errorParam = errorParam;
 		return this;
 	}
 
