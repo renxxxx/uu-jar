@@ -2,69 +2,56 @@ package renx.uu;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Map;
-
-import javax.sql.DataSource;
 
 public class CConnection2 {
-	public DataSource ds;
-	public Connection conn;
+	public Connection o;
 	public boolean self = true;
 
 	public static CConnection2 build() throws SQLException {
-		return build(null, null);
+		return new CConnection2();
 	}
 
-	public static CConnection2 build(DataSource ds) throws SQLException {
-		return build(ds, null);
+	public static CConnection2 build(CConnection2 cconn) throws SQLException {
+		if (cconn == null)
+			return build();
+		else
+			return cconn;
 	}
 
-	public static CConnection2 build(DataSource ds, CConnection2 cconn) throws SQLException {
-		CConnection2 cconn2 = new CConnection2();
-		cconn2.ds = ds;
-		if (cconn != null && cconn.conn != null && !cconn.conn.isClosed()) {
-			cconn2.conn = cconn.conn;
-			cconn2.self = false;
-		}
-		return cconn2;
+	public static CConnection2 build(Connection conn) throws SQLException {
+		CConnection2 cconn = new CConnection2();
+		cconn.o = conn;
+		return cconn;
 	}
 
-	public List<Map> rows(String sql, List params) throws Exception {
-		if (conn == null || conn.isClosed()) {
-			conn = ds.getConnection();
-			conn.setAutoCommit(false);
-		}
-
-		List<Map> rows = Jdbcuu.rows(conn, sql, params);
-		return rows;
+	public void commit() throws SQLException {
+		if (self && o != null)
+			o.commit();
 	}
 
-	public MMap row(String sql, List params) throws Exception {
-		if (conn == null || conn.isClosed()) {
-			conn = ds.getConnection();
-			conn.setAutoCommit(false);
-		}
-
-		MMap row = Jdbcuu.row(conn, sql, params);
-		return row;
+	public void rollback() throws SQLException {
+		if (self && o != null)
+			o.rollback();
 	}
 
-	public void rollback() throws Exception {
-		if (self && conn != null) {
-			conn.rollback();
-		}
+	public void close() throws SQLException {
+		if (self && o != null)
+			o.close();
 	}
 
-	public void commit() throws Exception {
-		if (self && conn != null) {
-			conn.commit();
-		}
+	public boolean isClosed() throws SQLException {
+		if (o != null)
+			return o.isClosed();
+		else
+			return true;
 	}
 
-	public void close() throws Exception {
-		if (self && conn != null) {
-			conn.close();
-		}
+	public boolean isOpen() throws SQLException {
+		return !isClosed();
+	}
+
+	public void isReadOnly() throws SQLException {
+		if (o != null)
+			o.isReadOnly();
 	}
 }

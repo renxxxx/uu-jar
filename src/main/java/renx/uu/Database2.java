@@ -50,9 +50,9 @@ public class Database2 {
 		}
 	}
 
-	public CConnection getCConnection() throws SQLException {
+	public CConnection2 getCConnection() throws SQLException {
 		start();
-		CConnection cconn = new CConnection();
+		CConnection2 cconn = new CConnection2();
 		Connection conn = dataSource.getConnection();
 		conn.setAutoCommit(false);
 
@@ -60,9 +60,9 @@ public class Database2 {
 		return cconn;
 	}
 
-	public CConnection getCConnection(CConnection cconn) throws SQLException {
+	public CConnection2 getCConnection(CConnection2 cconn) throws SQLException {
 		if (cconn != null && cconn.isOpen()) {
-			CConnection cconn2 = new CConnection();
+			CConnection2 cconn2 = new CConnection2();
 			cconn2.o = cconn.o;
 			cconn2.self = false;
 			return cconn2;
@@ -70,9 +70,9 @@ public class Database2 {
 		return getCConnection();
 	}
 
-	public CConnection getCConnection(Connection conn) throws SQLException {
+	public CConnection2 getCConnection(Connection conn) throws SQLException {
 		if (conn != null && !conn.isClosed()) {
-			CConnection cconn2 = new CConnection();
+			CConnection2 cconn2 = new CConnection2();
 			cconn2.o = conn;
 			cconn2.self = false;
 			return cconn2;
