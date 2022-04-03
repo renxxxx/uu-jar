@@ -184,7 +184,7 @@ public class Jdbcuu {
 			logger.info(sqlNo + " " + "duration: " + (e - s) / 1000f);
 			logger.info(sqlNo + " " + "duration: " + (e - s) / 1000f);
 
-			String sql2 = "insert into sql (no,sql,params,duration,rowCount) values(?,?,?,?,?)";
+			String sql2 = "insert into sql_record (no,statement,params,duration,rowCount) values(?,?,?,?,?)";
 			PreparedStatement pst2 = null;
 			try {
 				pst2 = conn.prepareStatement(sql2);
@@ -283,7 +283,7 @@ public class Jdbcuu {
 			logger.info(sqlNo + " " + "duration: " + (e - s) / 1000f);
 			logger.info(sqlNo + " " + "duration: " + (e - s) / 1000f);
 
-			String sql2 = "insert into sql (no,sql,params,duration,rowCount) values(?,?,?,?,?)";
+			String sql2 = "insert into sql_record (no,statement,params,duration,rowCount) values(?,?,?,?,?)";
 			PreparedStatement pst2 = null;
 			try {
 				pst2 = conn.prepareStatement(sql2);
