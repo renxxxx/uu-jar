@@ -189,7 +189,7 @@ public class Jdbcuu {
 			try {
 				pst2 = conn.prepareStatement(sql2);
 				pst2.setObject(1, sqlNo);
-				pst2.setObject(2, sql2);
+				pst2.setObject(2, sql);
 				pst2.setObject(3, JSON.toJSONString(params));
 				pst2.setObject(4, (e - s) / 1000f);
 				pst2.setObject(5, rs.getFetchSize());
@@ -288,7 +288,7 @@ public class Jdbcuu {
 			try {
 				pst2 = conn.prepareStatement(sql2);
 				pst2.setObject(1, sqlNo);
-				pst2.setObject(2, sql2);
+				pst2.setObject(2, sql);
 				pst2.setObject(3, JSON.toJSONString(params));
 				pst2.setObject(4, (e - s) / 1000f);
 				pst2.setObject(5, cnt);
