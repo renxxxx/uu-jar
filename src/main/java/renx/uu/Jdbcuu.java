@@ -14,10 +14,8 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +23,6 @@ import com.alibaba.fastjson.JSON;
 
 public class Jdbcuu {
 	private static Logger logger = LoggerFactory.getLogger(Jdbcuu.class);
-	private static org.apache.log4j.Logger logger4j = org.apache.log4j.Logger.getLogger(Jdbcuu.class);
 
 	public static void main(String[] args) {
 		Integer a = null;
@@ -167,9 +164,6 @@ public class Jdbcuu {
 				+ RandomStringUtils.randomNumeric(3);
 		logger.info(sqlNo + " " + sql);
 		logger.info(sqlNo + " " + JSON.toJSONString(params));
-
-		logger4j.info(sqlNo + " " + sql);
-		logger4j.info(sqlNo + " " + JSON.toJSONString(params));
 		try {
 			for (int i = 0; i < params.length; i++) {
 				Object param = params[i];
@@ -261,8 +255,6 @@ public class Jdbcuu {
 				+ RandomStringUtils.randomNumeric(3);
 		logger.info(sqlNo + " " + sql);
 		logger.info(sqlNo + " " + JSON.toJSONString(params));
-		logger4j.info(sqlNo + " " + sql);
-		logger4j.info(sqlNo + " " + JSON.toJSONString(params));
 		int cnt = 0;
 		try {
 			for (int i = 0; i < params.length; i++) {
@@ -302,7 +294,6 @@ public class Jdbcuu {
 			throw new Exception(e.getMessage() + " sqlNo: " + sqlNo, e);
 		}
 		logger.info(sqlNo + " " + "affected: " + cnt);
-		logger4j.info(sqlNo + " " + "affected: " + cnt);
 		return cnt;
 	}
 
@@ -386,11 +377,9 @@ public class Jdbcuu {
 			rows.add(row);
 			if (rows.size() <= 10) {
 				logger.info(JSON.toJSONString(row));
-				logger4j.info(JSON.toJSONString(row));
 			}
 		}
 		logger.info("affected : " + rows.size());
-		logger4j.info("affected : " + rows.size());
 		return rows;
 	}
 
