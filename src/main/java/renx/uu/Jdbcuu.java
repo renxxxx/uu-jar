@@ -176,7 +176,6 @@ public class Jdbcuu {
 			ResultSet rs = pst.executeQuery();
 			long e = System.currentTimeMillis();
 			logger.info(sqlNo + " " + "duration: " + (e - s) / 1000f);
-			logger.info(sqlNo + " " + "duration: " + (e - s) / 1000f);
 
 			String sql2 = "insert into sql_record (no,statement,params,duration,rowCount) values(?,?,?,?,?)";
 			PreparedStatement pst2 = null;
@@ -272,7 +271,6 @@ public class Jdbcuu {
 			cnt = pst.executeUpdate();
 			long e = System.currentTimeMillis();
 
-			logger.info(sqlNo + " " + "duration: " + (e - s) / 1000f);
 			logger.info(sqlNo + " " + "duration: " + (e - s) / 1000f);
 
 			String sql2 = "insert into sql_record (no,statement,params,duration,rowCount) values(?,?,?,?,?)";
