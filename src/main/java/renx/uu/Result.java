@@ -18,11 +18,11 @@ public class Result extends RuntimeException {
 
 	public Map to() {
 		Map map = new LinkedHashMap();
-		map.put("runNo", runNo);
-		map.put("msg", msg);
 		map.put("code", code);
+		map.put("msg", msg);
 		map.put("data", data);
 		map.put("errorParam", errorParam);
+		map.put("runNo", runNo);
 		return map;
 	}
 
