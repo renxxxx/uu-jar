@@ -207,7 +207,16 @@ public class MMap {
 		Object value = map.get(key);
 		if (value == target)
 			return true;
-		return value.toString().equals(target.toString());
+		if (value == null || target == null)
+			return false;
+
+		String vs = value.toString();
+		String ts = target.toString();
+		if (vs == ts)
+			return true;
+		if (vs == null || ts == null)
+			return true;
+		return vs.equals(ts);
 	}
 
 	@Override
