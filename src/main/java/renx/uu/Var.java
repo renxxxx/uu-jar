@@ -83,6 +83,18 @@ public class Var {
 		return var;
 	}
 
+	public Var build(HttpServletRequest from) {
+		return Var.build().value(from);
+	}
+
+	public Var build(MMap from) {
+		return Var.build().value(from);
+	}
+
+	public Var build(String... from) {
+		return Var.build().value(from);
+	}
+
 	public Var name(String name) {
 		this.name = name;
 		return this;
@@ -126,10 +138,10 @@ public class Var {
 		return this;
 	}
 
-	public Var value(String... froms) {
+	public Var value(String... from) {
 		reset();
-		if (froms != null)
-			for (String value : froms) {
+		if (from != null)
+			for (String value : from) {
 				if (value != null) {
 					this.value = value;
 					break;
