@@ -162,8 +162,7 @@ public class Jdbcuu {
 		sql = sql.replaceAll("\\s+", " ");
 		String sqlNo = new SimpleDateFormat("YYYYMMDDHHmmssSSS").format(new Date())
 				+ RandomStringUtils.randomNumeric(3);
-		logger.info(sql + " (" + sqlNo);
-		logger.info(Arrays.toString(params) + " (" + sqlNo);
+		logger.info("[" + sql + "]\n" + Arrays.toString(params) + "\n" + sqlNo);
 		try {
 			for (int i = 0; i < params.length; i++) {
 				Object param = params[i];
@@ -175,8 +174,7 @@ public class Jdbcuu {
 			long s = System.currentTimeMillis();
 			ResultSet rs = pst.executeQuery();
 			long e = System.currentTimeMillis();
-			logger.info("duration: " + (e - s) / 1000f + " (" + sqlNo);
-			logger.info(" " + "affected: " + rs.getFetchSize() + " (" + sqlNo);
+			logger.info("duration: " + (e - s) / 1000f + " affected: " + rs.getFetchSize() + " >" + sqlNo);
 
 			String sql2 = "insert into sql_record (no,statement,params,duration,rowCount) values(?,?,?,?,?)";
 			PreparedStatement pst2 = null;
@@ -253,8 +251,7 @@ public class Jdbcuu {
 		sql = sql.replaceAll("\\s+", " ");
 		String sqlNo = new SimpleDateFormat("YYYYMMDDHHmmssSSS").format(new Date())
 				+ RandomStringUtils.randomNumeric(3);
-		logger.info(sql + " (" + sqlNo);
-		logger.info(Arrays.toString(params) + " (" + sqlNo);
+		logger.info("[" + sql + "]\n" + Arrays.toString(params) + "\n" + sqlNo);
 		int cnt = 0;
 		try {
 			for (int i = 0; i < params.length; i++) {
@@ -272,8 +269,7 @@ public class Jdbcuu {
 			cnt = pst.executeUpdate();
 			long e = System.currentTimeMillis();
 
-			logger.info("duration: " + (e - s) / 1000f + " (" + sqlNo);
-			logger.info(" " + "affected: " + cnt + " (" + sqlNo);
+			logger.info("duration: " + (e - s) / 1000f + " affected: " + cnt + " >" + sqlNo);
 
 			String sql2 = "insert into sql_record (no,statement,params,duration,rowCount) values(?,?,?,?,?)";
 			PreparedStatement pst2 = null;
@@ -373,12 +369,10 @@ public class Jdbcuu {
 				Object value = rs.getObject(i);
 				row.put(Stringuu.camel(name), value);
 			}
-			rows.add(row);
 			if (rows.size() <= 10) {
 				logger.info(JSON.toJSONString(row));
 			}
 		}
-		logger.info("affected : " + rows.size());
 		return rows;
 	}
 
@@ -400,7 +394,6 @@ public class Jdbcuu {
 			if (rows.size() <= 10)
 				logger.info(JSON.toJSONString(row));
 		}
-		logger.info("affected : " + rows.size());
 		return rows;
 	}
 
