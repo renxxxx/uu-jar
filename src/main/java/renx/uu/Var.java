@@ -796,9 +796,9 @@ public class Var {
 	public boolean equals(Object object) {
 		if (this.value == object)
 			return true;
-		if (this.value == null && object != null)
+		if (this.value == null || object == null)
 			return false;
-		return this.value.equals(object);
+		return this.value.equals(object.toString());
 	}
 
 	public boolean notEquals(Object object) {
