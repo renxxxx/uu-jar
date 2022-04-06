@@ -162,7 +162,7 @@ public class Jdbcuu {
 		sql = sql.trim().replaceAll("\\s+", " ");
 		String sqlNo = new SimpleDateFormat("YYYYMMDDHHmmssSSS").format(new Date())
 				+ RandomStringUtils.randomNumeric(3);
-		logger.info("[" + sql + "]\n" + Arrays.toString(params) + "\n" + sqlNo);
+		logger.info("[" + sql + "]" + "\n" + sqlNo + "\n" + Arrays.toString(params));
 		try {
 			for (int i = 0; i < params.length; i++) {
 				Object param = params[i];
@@ -251,7 +251,7 @@ public class Jdbcuu {
 		sql = sql.trim().replaceAll("\\s+", " ");
 		String sqlNo = new SimpleDateFormat("YYYYMMDDHHmmssSSS").format(new Date())
 				+ RandomStringUtils.randomNumeric(3);
-		logger.info("[" + sql + "]\n" + Arrays.toString(params) + "\n" + sqlNo);
+		logger.info("[" + sql + "]" + "\n" + sqlNo + "\n" + Arrays.toString(params));
 		int cnt = 0;
 		try {
 			for (int i = 0; i < params.length; i++) {
