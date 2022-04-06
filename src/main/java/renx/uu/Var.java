@@ -26,6 +26,7 @@ public class Var {
 	public String code;
 	public String[] codes;
 	public String value;
+	public String sourceValue;
 
 	private String separator = ",";
 
@@ -73,6 +74,7 @@ public class Var {
 		this.longValue = null;
 		this.decimalValue = null;
 		this.verifiedEnums = null;
+		this.value = this.sourceValue;
 		return this;
 	}
 
@@ -109,6 +111,7 @@ public class Var {
 			throw Result.build(8, "\"" + this.name + "\"有误").errorParam(this.code);
 		if ("null".equals(this.value) || "undefined".equals(this.value) || "NaN".equals(this.value))
 			this.value = null;
+		this.sourceValue = this.value;
 		return this;
 	}
 
@@ -119,6 +122,7 @@ public class Var {
 			throw Result.build(8, "\"" + this.name + "\"有误").errorParam(this.code);
 		if ("null".equals(this.value) || "undefined".equals(this.value) || "NaN".equals(this.value))
 			this.value = null;
+		this.sourceValue = this.value;
 		return this;
 	}
 
@@ -136,6 +140,7 @@ public class Var {
 			throw Result.build(8, "\"" + this.name + "\"有误").errorParam(this.code);
 		if ("null".equals(this.value) || "undefined".equals(this.value) || "NaN".equals(this.value))
 			this.value = null;
+		this.sourceValue = this.value;
 		return this;
 	}
 
@@ -828,14 +833,6 @@ public class Var {
 		return this;
 	}
 
-	public Var concat(String str) {
-		if (!this.run)
-			return this;
-		if (this.value != null)
-			this.value = this.value.concat(str);
-		return this;
-	}
-
 	public boolean contains(String prefix) {
 		if (this.value != null)
 			return this.value.contains(prefix);
@@ -1141,6 +1138,13 @@ public class Var {
 				break;
 		}
 		return target;
+	}
+
+	public Var concat(String str) {
+		String str2 = str == null ? "" : str;
+		this.value = this.value == null ? "" : this.value;
+		this.value = this.value.concat(str2);
+		return this;
 	}
 
 	public static void main(String[] args) throws ParseException, NoSuchFieldException, SecurityException,
