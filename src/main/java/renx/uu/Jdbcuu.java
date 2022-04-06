@@ -162,8 +162,8 @@ public class Jdbcuu {
 		sql = sql.replaceAll("\\s+", " ");
 		String sqlNo = new SimpleDateFormat("YYYYMMDDHHmmssSSS").format(new Date())
 				+ RandomStringUtils.randomNumeric(3);
-		logger.info(sqlNo + " " + sql);
-		logger.info(sqlNo + " " + JSON.toJSONString(params));
+		logger.info(sql + " (" + sqlNo);
+		logger.info(Arrays.toString(params) + " (" + sqlNo);
 		try {
 			for (int i = 0; i < params.length; i++) {
 				Object param = params[i];
@@ -175,7 +175,8 @@ public class Jdbcuu {
 			long s = System.currentTimeMillis();
 			ResultSet rs = pst.executeQuery();
 			long e = System.currentTimeMillis();
-			logger.info(sqlNo + " " + "duration: " + (e - s) / 1000f);
+			logger.info("duration: " + (e - s) / 1000f + " (" + sqlNo);
+			logger.info(" " + "affected: " + rs.getFetchSize() + " (" + sqlNo);
 
 			String sql2 = "insert into sql_record (no,statement,params,duration,rowCount) values(?,?,?,?,?)";
 			PreparedStatement pst2 = null;
@@ -252,8 +253,8 @@ public class Jdbcuu {
 		sql = sql.replaceAll("\\s+", " ");
 		String sqlNo = new SimpleDateFormat("YYYYMMDDHHmmssSSS").format(new Date())
 				+ RandomStringUtils.randomNumeric(3);
-		logger.info(sqlNo + " " + sql);
-		logger.info(sqlNo + " " + JSON.toJSONString(params));
+		logger.info(sql + " (" + sqlNo);
+		logger.info(Arrays.toString(params) + " (" + sqlNo);
 		int cnt = 0;
 		try {
 			for (int i = 0; i < params.length; i++) {
@@ -271,7 +272,8 @@ public class Jdbcuu {
 			cnt = pst.executeUpdate();
 			long e = System.currentTimeMillis();
 
-			logger.info(sqlNo + " " + "duration: " + (e - s) / 1000f);
+			logger.info("duration: " + (e - s) / 1000f + " (" + sqlNo);
+			logger.info(" " + "affected: " + cnt + " (" + sqlNo);
 
 			String sql2 = "insert into sql_record (no,statement,params,duration,rowCount) values(?,?,?,?,?)";
 			PreparedStatement pst2 = null;
@@ -291,7 +293,6 @@ public class Jdbcuu {
 		} catch (Exception e) {
 			throw new Exception(e.getMessage() + " sqlNo: " + sqlNo, e);
 		}
-		logger.info(sqlNo + " " + "affected: " + cnt);
 		return cnt;
 	}
 
