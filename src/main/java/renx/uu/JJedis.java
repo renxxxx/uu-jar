@@ -38,7 +38,7 @@ public class JJedis {
 		return jedis.set(key, value);
 	}
 
-	public Long del(final String key, String value) {
+	public Long del(final String key) {
 		if (jedis == null)
 			jedis = jedisPool.getResource();
 		return jedis.del(key);
