@@ -175,13 +175,9 @@ public class Jdbcuu {
 			ResultSet rs = pst.executeQuery();
 			long e = System.currentTimeMillis();
 
-			rs.last();
-			int cnt = rs.getRow();
-			rs.first();
+			logger.info("duration: " + (e - s) / 1000f + " >" + sqlNo);
 
-			logger.info("duration: " + (e - s) / 1000f + " affected: " + cnt + " >" + sqlNo);
-
-			String sql2 = "insert into sql_record (no,statement,params,duration,rowCount) values(?,?,?,?,?)";
+			String sql2 = "insert into sql_record (no,statement,params,duration) values(?,?,?,?)";
 			PreparedStatement pst2 = null;
 			try {
 				pst2 = conn.prepareStatement(sql2);
@@ -189,7 +185,6 @@ public class Jdbcuu {
 				pst2.setObject(2, sql);
 				pst2.setObject(3, Arrays.toString(params));
 				pst2.setObject(4, (e - s) / 1000f);
-				pst2.setObject(5, cnt);
 				pst2.execute();
 			} finally {
 				if (pst2 != null)
@@ -375,7 +370,7 @@ public class Jdbcuu {
 				row.put(Stringuu.camel(name), value);
 			}
 			rows.add(row);
-			if (rows.size() <= 10) {
+			if (rows.size() <= 3) {
 				logger.info(JSON.toJSONString(row));
 			}
 		}
@@ -397,7 +392,7 @@ public class Jdbcuu {
 				row.put(metaData.getColumnLabel(i), value);
 			}
 			rows.add(row);
-			if (rows.size() <= 10)
+			if (rows.size() <= 3)
 				logger.info(JSON.toJSONString(row));
 		}
 		return rows;
