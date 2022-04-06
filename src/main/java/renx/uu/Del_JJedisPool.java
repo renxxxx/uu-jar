@@ -10,8 +10,8 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
-public class JJedisPool {
-	private static Logger logger = LoggerFactory.getLogger(JJedisPool.class);
+public class Del_JJedisPool {
+	private static Logger logger = LoggerFactory.getLogger(Del_JJedisPool.class);
 
 	public JedisPool jedisPool;
 	public String ip = "127.0.0.1";
