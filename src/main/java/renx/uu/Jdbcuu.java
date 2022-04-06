@@ -174,7 +174,12 @@ public class Jdbcuu {
 			long s = System.currentTimeMillis();
 			ResultSet rs = pst.executeQuery();
 			long e = System.currentTimeMillis();
-			logger.info("duration: " + (e - s) / 1000f + " affected: " + rs.getFetchSize() + " >" + sqlNo);
+
+			rs.last();
+			int cnt = rs.getRow();
+			rs.first();
+
+			logger.info("duration: " + (e - s) / 1000f + " affected: " + cnt + " >" + sqlNo);
 
 			String sql2 = "insert into sql_record (no,statement,params,duration,rowCount) values(?,?,?,?,?)";
 			PreparedStatement pst2 = null;
@@ -184,7 +189,7 @@ public class Jdbcuu {
 				pst2.setObject(2, sql);
 				pst2.setObject(3, Arrays.toString(params));
 				pst2.setObject(4, (e - s) / 1000f);
-				pst2.setObject(5, rs.getFetchSize());
+				pst2.setObject(5, cnt);
 				pst2.execute();
 			} finally {
 				if (pst2 != null)
@@ -369,6 +374,7 @@ public class Jdbcuu {
 				Object value = rs.getObject(i);
 				row.put(Stringuu.camel(name), value);
 			}
+			rows.add(row);
 			if (rows.size() <= 10) {
 				logger.info(JSON.toJSONString(row));
 			}
