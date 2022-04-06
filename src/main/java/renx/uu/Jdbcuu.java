@@ -159,7 +159,7 @@ public class Jdbcuu {
 	public static ResultSet row(Connection conn, PreparedStatement pst, String sql, Object... params) throws Exception {
 		if (params == null)
 			params = new Object[] {};
-		sql = sql.replaceAll("\\s+", " ");
+		sql = sql.trim().replaceAll("\\s+", " ");
 		String sqlNo = new SimpleDateFormat("YYYYMMDDHHmmssSSS").format(new Date())
 				+ RandomStringUtils.randomNumeric(3);
 		logger.info("[" + sql + "]\n" + Arrays.toString(params) + "\n" + sqlNo);
@@ -248,7 +248,7 @@ public class Jdbcuu {
 	public static int update(Connection conn, PreparedStatement pst, String sql, Object... params) throws Exception {
 		if (params == null)
 			params = new Object[] {};
-		sql = sql.replaceAll("\\s+", " ");
+		sql = sql.trim().replaceAll("\\s+", " ");
 		String sqlNo = new SimpleDateFormat("YYYYMMDDHHmmssSSS").format(new Date())
 				+ RandomStringUtils.randomNumeric(3);
 		logger.info("[" + sql + "]\n" + Arrays.toString(params) + "\n" + sqlNo);
