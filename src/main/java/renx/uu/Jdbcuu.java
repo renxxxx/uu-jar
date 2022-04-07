@@ -41,7 +41,7 @@ public class Jdbcuu {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
-			return rows(row(conn, pst, sql, params));
+			return rows(select(conn, pst, sql, params));
 		} catch (Exception e) {
 			throw e;
 		} finally {
@@ -54,7 +54,7 @@ public class Jdbcuu {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
-			return thinRows(row(conn, pst, sql, params));
+			return thinRows(select(conn, pst, sql, params));
 		} catch (Exception e) {
 			throw e;
 		} finally {
@@ -67,7 +67,7 @@ public class Jdbcuu {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
-			ResultSet rs = row(conn, pst, sql, params);
+			ResultSet rs = select(conn, pst, sql, params);
 			if (rs.next()) {
 				return rs.getBinaryStream(1);
 			}
@@ -156,13 +156,14 @@ public class Jdbcuu {
 		return MMap.build(item);
 	}
 
-	public static ResultSet row(Connection conn, PreparedStatement pst, String sql, Object... params) throws Exception {
+	public static ResultSet select(Connection conn, PreparedStatement pst, String sql, Object... params)
+			throws Exception {
 		if (params == null)
 			params = new Object[] {};
 		sql = sql.trim().replaceAll("\\s+", " ");
 		String sqlNo = new SimpleDateFormat("YYYYMMDDHHmmssSSS").format(new Date())
 				+ RandomStringUtils.randomNumeric(3);
-		logger.info("[" + sql + "]" + "\n" + sqlNo + "\n" + Arrays.toString(params));
+		logger.info("[" + sql + "]" + " " + Arrays.toString(params) + " " + sqlNo);
 		try {
 			for (int i = 0; i < params.length; i++) {
 				Object param = params[i];
@@ -175,7 +176,7 @@ public class Jdbcuu {
 			ResultSet rs = pst.executeQuery();
 			long e = System.currentTimeMillis();
 
-			logger.info("duration: " + (e - s) / 1000f + " >" + sqlNo);
+			logger.info("duration: " + (e - s) / 1000f + " " + sqlNo);
 
 			String sql2 = "insert into sql_record (no,statement,params,duration) values(?,?,?,?)";
 			PreparedStatement pst2 = null;
@@ -251,7 +252,7 @@ public class Jdbcuu {
 		sql = sql.trim().replaceAll("\\s+", " ");
 		String sqlNo = new SimpleDateFormat("YYYYMMDDHHmmssSSS").format(new Date())
 				+ RandomStringUtils.randomNumeric(3);
-		logger.info("[" + sql + "]" + "\n" + sqlNo + "\n" + Arrays.toString(params));
+		logger.info("[" + sql + "]" + " " + Arrays.toString(params) + " " + sqlNo);
 		int cnt = 0;
 		try {
 			for (int i = 0; i < params.length; i++) {
@@ -269,7 +270,7 @@ public class Jdbcuu {
 			cnt = pst.executeUpdate();
 			long e = System.currentTimeMillis();
 
-			logger.info("duration: " + (e - s) / 1000f + " affected: " + cnt + " >" + sqlNo);
+			logger.info("duration: " + (e - s) / 1000f + " affected: " + cnt + " " + sqlNo);
 
 			String sql2 = "insert into sql_record (no,statement,params,duration,rowCount) values(?,?,?,?,?)";
 			PreparedStatement pst2 = null;
@@ -370,7 +371,7 @@ public class Jdbcuu {
 				row.put(Stringuu.camel(name), value);
 			}
 			rows.add(row);
-			if (rows.size() <= 3) {
+			if (rows.size() <= 1) {
 				logger.info(JSON.toJSONString(row));
 			}
 		}
@@ -392,7 +393,7 @@ public class Jdbcuu {
 				row.put(metaData.getColumnLabel(i), value);
 			}
 			rows.add(row);
-			if (rows.size() <= 3)
+			if (rows.size() <= 1)
 				logger.info(JSON.toJSONString(row));
 		}
 		return rows;
