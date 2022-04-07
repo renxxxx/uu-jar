@@ -138,12 +138,12 @@ public class Var {
 		return this;
 	}
 
-	public Var value(String... from) {
+	public Var value(Object... from) {
 		reset();
 		if (from != null)
-			for (String value : from) {
+			for (Object value : from) {
 				if (value != null) {
-					this.value = value;
+					this.value = value.toString();
 					break;
 				}
 			}
@@ -254,16 +254,17 @@ public class Var {
 		return this;
 	}
 
-	public Var nullDef(String defaultValue) {
+	public Var nullDef(Object defaultValue) {
 		if (!this.run)
 			return this;
-		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
-		if (isNull() && defaultValue != null)
-			this.value = defaultValue;
+		String ss = null;
+		ss = defaultValue == null ? null : defaultValue.toString().trim();
+		if (isNull() && ss != null)
+			this.value = ss;
 		return this;
 	}
 
-	public Var nullDef(boolean run, String defaultValue) {
+	public Var nullDef(boolean run, Object defaultValue) {
 		if (!this.run)
 			return this;
 		if (run)
@@ -271,16 +272,17 @@ public class Var {
 		return this;
 	}
 
-	public Var blankDef(String defaultValue) {
+	public Var blankDef(Object defaultValue) {
 		if (!this.run)
 			return this;
-		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
-		if (isBlank() && defaultValue != null)
-			this.value = defaultValue;
+		String ss = null;
+		ss = defaultValue == null ? null : defaultValue.toString().trim();
+		if (isBlank() && ss != null)
+			this.value = ss;
 		return this;
 	}
 
-	public Var blankDef(boolean run, String defaultValue) {
+	public Var blankDef(boolean run, Object defaultValue) {
 		if (!this.run)
 			return this;
 		if (run)
@@ -288,16 +290,17 @@ public class Var {
 		return this;
 	}
 
-	public Var emptyDef(String defaultValue) {
+	public Var emptyDef(Object defaultValue) {
 		if (!this.run)
 			return this;
-		defaultValue = defaultValue == null ? defaultValue : defaultValue.trim();
-		if (isEmpty() && defaultValue != null)
-			this.value = defaultValue;
+		String ss = null;
+		ss = defaultValue == null ? null : defaultValue.toString().trim();
+		if (isEmpty() && ss != null)
+			this.value = ss;
 		return this;
 	}
 
-	public Var emptyDef(boolean run, String defaultValue) {
+	public Var emptyDef(boolean run, Object defaultValue) {
 		if (!this.run)
 			return this;
 		if (run)
