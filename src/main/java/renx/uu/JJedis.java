@@ -19,7 +19,7 @@ public class JJedis {
 	public static JJedis build(JedisPool jedisPool, JJedis jjedis) {
 		JJedis jjedis2 = new JJedis();
 		jjedis2.jedisPool = jedisPool;
-		if (jjedis != null && jjedis.jedis != null && !jjedis.jedis.isConnected()) {
+		if (jjedis != null && jjedis.jedis != null) {
 			jjedis2.jedis = jjedis.jedis;
 			jjedis2.self = false;
 		}

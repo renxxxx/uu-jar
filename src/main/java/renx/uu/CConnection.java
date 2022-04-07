@@ -16,18 +16,18 @@ public class CConnection {
 	public Connection conn;
 	public boolean self = true;
 
-	public static CConnection build() throws SQLException {
+	public static CConnection build() {
 		return build(null, null);
 	}
 
-	public static CConnection build(DataSource ds) throws SQLException {
+	public static CConnection build(DataSource ds) {
 		return build(ds, null);
 	}
 
-	public static CConnection build(DataSource dataSource, CConnection cconn) throws SQLException {
+	public static CConnection build(DataSource dataSource, CConnection cconn) {
 		CConnection cconn2 = new CConnection();
 		cconn2.dataSource = dataSource;
-		if (cconn != null && cconn.conn != null && !cconn.conn.isClosed()) {
+		if (cconn != null && cconn.conn != null) {
 			cconn2.conn = cconn.conn;
 			cconn2.self = false;
 		}
@@ -49,7 +49,7 @@ public class CConnection {
 	}
 
 	public List<Map> rows(String sql, Object... params) throws Exception {
-		if (conn == null || conn.isClosed()) {
+		if (conn == null) {
 			conn = dataSource.getConnection();
 			conn.setAutoCommit(false);
 		}
@@ -73,7 +73,7 @@ public class CConnection {
 	}
 
 	public MMap row(String sql, Object... params) throws Exception {
-		if (conn == null || conn.isClosed()) {
+		if (conn == null) {
 			conn = dataSource.getConnection();
 			conn.setAutoCommit(false);
 		}
@@ -97,7 +97,7 @@ public class CConnection {
 	}
 
 	public int update(String sql, Object... params) throws Exception {
-		if (conn == null || conn.isClosed()) {
+		if (conn == null) {
 			conn = dataSource.getConnection();
 			conn.setAutoCommit(false);
 		}
@@ -119,7 +119,7 @@ public class CConnection {
 	}
 
 	public int insert(String sql, Object... params) throws Exception {
-		if (conn == null || conn.isClosed()) {
+		if (conn == null) {
 			conn = dataSource.getConnection();
 			conn.setAutoCommit(false);
 		}
