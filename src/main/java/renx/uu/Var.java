@@ -796,6 +796,18 @@ public class Var {
 			throw Result.build(8, "\"" + this.name + "\"" + message).errorParam(this.code);
 	}
 
+	public boolean equalsIgnoreCase(Object object) {
+		if (this.value == object)
+			return true;
+		if (this.value == null || object == null)
+			return false;
+		return this.value.equalsIgnoreCase(object.toString());
+	}
+
+	public boolean notEqualsIgnoreCase(Object object) {
+		return !equalsIgnoreCase(object);
+	}
+
 	public boolean equals(Object object) {
 		if (this.value == object)
 			return true;
