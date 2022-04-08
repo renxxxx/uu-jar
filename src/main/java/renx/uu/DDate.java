@@ -268,19 +268,23 @@ public class DDate extends Date {
 		return this;
 	}
 
-	public static DDate build() throws ParseException {
+	public static DDate build() {
 		return new DDate();
 	}
 
-	public static DDate build(Long time) throws ParseException {
+	public static DDate build(Long time) {
 		if (time == null)
 			return null;
 		return new DDate(time);
 	}
 
-	public static DDate build(String source) throws ParseException {
+	public static DDate build(String source) {
 		if (source == null)
 			return null;
 		return new DDate(source);
+	}
+
+	public String format(String pattern) {
+		return new SimpleDateFormat(pattern).format(this);
 	}
 }

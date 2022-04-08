@@ -58,6 +58,16 @@ public class CConnection {
 		return rows;
 	}
 
+	public List<Object> thinRows(String sql, Object... params) throws Exception {
+		if (conn == null) {
+			conn = dataSource.getConnection();
+			conn.setAutoCommit(false);
+		}
+
+		List<Object> rows = Jdbcuu.thinRows(conn, sql, params);
+		return rows;
+	}
+
 	public MMap row(String sql, LList params) throws Exception {
 		if (params == null || params.isEmpty())
 			return row(sql);

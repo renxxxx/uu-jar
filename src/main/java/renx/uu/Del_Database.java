@@ -8,8 +8,8 @@ import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Database {
-	private Logger logger = LoggerFactory.getLogger(Database.class);
+public class Del_Database {
+	private Logger logger = LoggerFactory.getLogger(Del_Database.class);
 
 	public DataSource dataSource;
 	public String driver;
