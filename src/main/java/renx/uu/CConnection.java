@@ -155,42 +155,82 @@ public class CConnection {
 	}
 
 	public InputStream getStream(String sql, Object... params) throws Exception {
+		if (conn == null) {
+			conn = dataSource.getConnection();
+			conn.setAutoCommit(false);
+		}
 		return Jdbcuu.getStream(conn, sql, params);
 	}
 
 	public Integer getInteger(String sql, Object... params) throws Exception {
+		if (conn == null) {
+			conn = dataSource.getConnection();
+			conn.setAutoCommit(false);
+		}
 		return Jdbcuu.getInteger(conn, sql, params);
 	}
 
 	public String getString(String sql, Object... params) throws Exception {
+		if (conn == null) {
+			conn = dataSource.getConnection();
+			conn.setAutoCommit(false);
+		}
 		return Jdbcuu.getString(conn, sql, params);
 	}
 
 	public LList getJsonArray(String sql, Object... params) throws Exception {
+		if (conn == null) {
+			conn = dataSource.getConnection();
+			conn.setAutoCommit(false);
+		}
 		return Jdbcuu.getJsonArray(conn, sql, params);
 	}
 
 	public MMap getJson(String sql, Object... params) throws Exception {
+		if (conn == null) {
+			conn = dataSource.getConnection();
+			conn.setAutoCommit(false);
+		}
 		return Jdbcuu.getJson(conn, sql, params);
 	}
 
 	public BigDecimal getDecimal(String sql, Object... params) throws Exception {
+		if (conn == null) {
+			conn = dataSource.getConnection();
+			conn.setAutoCommit(false);
+		}
 		return Jdbcuu.getDecimal(conn, sql, params);
 	}
 
 	public Long getLong(String sql, Object... params) throws Exception {
+		if (conn == null) {
+			conn = dataSource.getConnection();
+			conn.setAutoCommit(false);
+		}
 		return Jdbcuu.getLong(conn, sql, params);
 	}
 
 	public Float getFloat(String sql, Object... params) throws Exception {
+		if (conn == null) {
+			conn = dataSource.getConnection();
+			conn.setAutoCommit(false);
+		}
 		return Jdbcuu.getFloat(conn, sql, params);
 	}
 
 	public Date getDate(String sql, Object... params) throws Exception {
+		if (conn == null) {
+			conn = dataSource.getConnection();
+			conn.setAutoCommit(false);
+		}
 		return Jdbcuu.getDate(conn, sql, params);
 	}
 
 	public Object getColumn(String sql, Object... params) throws Exception {
+		if (conn == null) {
+			conn = dataSource.getConnection();
+			conn.setAutoCommit(false);
+		}
 		return Jdbcuu.getColumn(conn, sql, params);
 	}
 }
