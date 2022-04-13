@@ -114,21 +114,21 @@ public class CConnection {
 		return Jdbcuu.update(conn, sql, params);
 	}
 
-	public int insert(String sql, LList params) throws Exception {
+	public Integer insert(String sql, LList params) throws Exception {
 		if (params == null || params.isEmpty())
 			return insert(sql);
 		else
 			return insert(sql, params.toArray());
 	}
 
-	public int insert(String sql, List params) throws Exception {
+	public Integer insert(String sql, List params) throws Exception {
 		if (params == null)
 			return insert(sql);
 		else
 			return insert(sql, params.toArray());
 	}
 
-	public int insert(String sql, Object... params) throws Exception {
+	public Integer insert(String sql, Object... params) throws Exception {
 		if (conn == null) {
 			conn = dataSource.getConnection();
 			conn.setAutoCommit(false);
