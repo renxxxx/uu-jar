@@ -950,7 +950,9 @@ public class Var {
 			String[] ss = dds.split("\\.");
 			String d = null;
 			String d1 = ss[0];
-			String d2 = ss.length > 0 ? ss[1] : null;
+			String d2 = null;
+			if (ss.length > 0)
+				d2 = ss[1];
 			if (d2 != null && !d2.isEmpty()) {
 				if (d2.replaceAll("0", "").isEmpty())
 					d2 = null;
@@ -961,11 +963,13 @@ public class Var {
 			return d;
 		}
 		if (value instanceof Float) {
-			String dds = value.toString();
+			String dds = BigDecimal.valueOf((Float) value).toPlainString();
 			String[] ss = dds.split("\\.");
 			String d = null;
 			String d1 = ss[0];
-			String d2 = ss.length > 0 ? ss[1] : null;
+			String d2 = null;
+			if (ss.length > 0)
+				d2 = ss[1];
 			if (d2 != null && !d2.isEmpty()) {
 				if (d2.replaceAll("0", "").isEmpty())
 					d2 = null;
