@@ -951,7 +951,7 @@ public class Var {
 			String d = null;
 			String d1 = ss[0];
 			String d2 = null;
-			if (ss.length > 0)
+			if (ss.length > 1)
 				d2 = ss[1];
 			if (d2 != null && !d2.isEmpty()) {
 				if (d2.replaceAll("0", "").isEmpty())
@@ -968,7 +968,7 @@ public class Var {
 			String d = null;
 			String d1 = ss[0];
 			String d2 = null;
-			if (ss.length > 0)
+			if (ss.length > 1)
 				d2 = ss[1];
 			if (d2 != null && !d2.isEmpty()) {
 				if (d2.replaceAll("0", "").isEmpty())
