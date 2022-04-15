@@ -946,7 +946,7 @@ public class Var {
 		if (value instanceof String)
 			return (String) value;
 		if (value instanceof Double) {
-			String dds = value.toString();
+			String dds = BigDecimal.valueOf((Double) value).toPlainString();
 			String[] ss = dds.split("\\.");
 			String d = null;
 			String d1 = ss[0];
