@@ -945,6 +945,36 @@ public class Var {
 			return null;
 		if (value instanceof String)
 			return (String) value;
+		if (value instanceof Double) {
+			String dds = value.toString();
+			String[] ss = dds.split("\\.");
+			String d = null;
+			String d1 = ss[0];
+			String d2 = ss.length > 0 ? ss[1] : null;
+			if (d2 != null && !d2.isEmpty()) {
+				if (d2.replaceAll("0", "").isEmpty())
+					d2 = null;
+			}
+			d = d1;
+			if (d2 != null && !d2.isEmpty())
+				d = d + "." + d2;
+			return d;
+		}
+		if (value instanceof Float) {
+			String dds = value.toString();
+			String[] ss = dds.split("\\.");
+			String d = null;
+			String d1 = ss[0];
+			String d2 = ss.length > 0 ? ss[1] : null;
+			if (d2 != null && !d2.isEmpty()) {
+				if (d2.replaceAll("0", "").isEmpty())
+					d2 = null;
+			}
+			d = d1;
+			if (d2 != null && !d2.isEmpty())
+				d = d + "." + d2;
+			return d;
+		}
 		String valueStr = value.toString();
 		if (valueStr.isEmpty())
 			return null;
@@ -1176,7 +1206,6 @@ public class Var {
 
 	public static void main(String[] args) throws ParseException, NoSuchFieldException, SecurityException,
 			IllegalArgumentException, IllegalAccessException {
-		Var value = Var.go(null, null, "20200506132311");
-		System.out.println(new SimpleDateFormat("yyyy-MM").parse("2020-03"));
+		System.out.println(Var.toString(Float.valueOf(.02f)));
 	}
 }
