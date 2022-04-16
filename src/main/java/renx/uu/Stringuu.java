@@ -160,6 +160,11 @@ public class Stringuu {
 		return new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + RandomStringUtils.randomNumeric(6);
 	}
 
+	public static String timeId(int randomLength) {
+		return new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date())
+				+ RandomStringUtils.randomNumeric(randomLength);
+	}
+
 	public static boolean isExisting(CharSequence cs) {
 		return notEmpty(cs);
 	}
