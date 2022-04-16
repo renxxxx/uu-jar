@@ -187,6 +187,7 @@ public class Jdbcuu {
 				pst2.setObject(3, Arrays.toString(params));
 				pst2.setObject(4, (e - s) / 1000f);
 				pst2.execute();
+			} catch (Exception e1) {
 			} finally {
 				if (pst2 != null)
 					pst2.close();
@@ -282,6 +283,7 @@ public class Jdbcuu {
 				pst2.setObject(4, (e - s) / 1000f);
 				pst2.setObject(5, cnt);
 				pst2.execute();
+			} catch (Exception e1) {
 			} finally {
 				if (pst2 != null)
 					pst2.close();
