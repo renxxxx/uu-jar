@@ -35,6 +35,24 @@ public class Listuu {
 		return offEles;
 	}
 
+	public static List subLeft(List list, int count) {
+		List list2 = new ArrayList();
+		for (int i = count - 1; i >= 0; i--) {
+			if (list.size() - 1 >= i)
+				list2.add(0, list.remove(i));
+		}
+		return list2;
+	}
+
+	public static List subRight(List list, int count) {
+		List list2 = new ArrayList();
+		int size = list.size();
+		for (int i = size - 1; i >= size - count + 1; i--) {
+			list2.add(0, list.remove(i));
+		}
+		return list2;
+	}
+
 	public static void main(String[] args) {
 		List<String> aa = new ArrayList<String>();
 		aa.add("a1");
