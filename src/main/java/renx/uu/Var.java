@@ -4,6 +4,9 @@ import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.temporal.TemporalField;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -31,21 +34,21 @@ public class Var {
 	private String separator = ",";
 
 	private static String datePattern = "yyyy-MM-dd HH:mm:ss.SSS Z";
-	private static String datePattern1 = "yyyy-MM-dd HH:mm:ss";
-	private static String datePattern2 = "yyyy-MM-dd";
-	private static String datePattern3 = "HH:mm:ss";
-	private static String datePattern4 = "yyyy-MM-dd HH:mm:ss.SSS";
-	private static String datePattern5 = "yyyy-MM";
-	private static String datePattern6 = "HH:mm";
-	private static String datePattern7 = "HH:mm:ss.SSS";
-	private static String datePattern8 = "yyyy-MM-dd HH:mm";
-	private static String datePattern9 = "yyyy/MM/dd HH:mm:ss.SSS Z";
-	private static String datePattern10 = "yyyy/MM/dd HH:mm:ss";
-	private static String datePattern11 = "yyyy/MM/dd";
-	private static String datePattern12 = "yyyy/MM/dd HH:mm:ss.SSS";
-	private static String datePattern13 = "yyyy/MM";
-	private static String datePattern14 = "yyyy/MM/dd HH:mm";
-	private static String datePattern15 = "yyyy-MM-ddTHH:mm:ss";
+	private static String datePattern2 = "yyyy-MM-dd HH:mm:ss";
+	private static String datePattern3 = "yyyy-MM-dd";
+	private static String datePattern4 = "HH:mm:ss";
+	private static String datePattern5 = "yyyy-MM-dd HH:mm:ss.SSS";
+	private static String datePattern6 = "yyyy-MM";
+	private static String datePattern7 = "HH:mm";
+	private static String datePattern8 = "HH:mm:ss.SSS";
+	private static String datePattern9 = "yyyy-MM-dd HH:mm";
+	private static String datePattern10 = "yyyy/MM/dd HH:mm:ss.SSS Z";
+	private static String datePattern11 = "yyyy/MM/dd HH:mm:ss";
+	private static String datePattern12 = "yyyy/MM/dd";
+	private static String datePattern13 = "yyyy/MM/dd HH:mm:ss.SSS";
+	private static String datePattern14 = "yyyy/MM";
+	private static String datePattern15 = "yyyy/MM/dd HH:mm";
+	private static String datePattern16 = "yyyy-MM-ddTHH:mm:ss";
 
 	boolean run = true;
 
@@ -714,7 +717,7 @@ public class Var {
 		if (this.dateValue == null)
 			throw Result.build(8, "\"" + this.name + "\"有误").errorParam(this.code);
 		else {
-			this.value = new SimpleDateFormat(datePattern1).format(this.dateValue);
+			this.value = new SimpleDateFormat(datePattern2).format(this.dateValue);
 		}
 		return this;
 	}
@@ -992,6 +995,8 @@ public class Var {
 			return null;
 		if (value instanceof Date)
 			return (Date) value;
+		if (value instanceof LocalDateTime)
+			return Date.from(((LocalDateTime) value).atZone(ZoneId.systemDefault()).toInstant());
 		try {
 			date = new SimpleDateFormat(datePattern).parse(value.toString());
 			if (date != null) {
@@ -999,15 +1004,6 @@ public class Var {
 			}
 		} catch (Exception e) {
 		}
-
-		try {
-			date = new SimpleDateFormat(datePattern1).parse(value.toString());
-			if (date != null) {
-				return date;
-			}
-		} catch (Exception e) {
-		}
-
 		try {
 			date = new SimpleDateFormat(datePattern2).parse(value.toString());
 			if (date != null) {
@@ -1023,6 +1019,7 @@ public class Var {
 			}
 		} catch (Exception e) {
 		}
+
 		try {
 			date = new SimpleDateFormat(datePattern4).parse(value.toString());
 			if (date != null) {
@@ -1102,6 +1099,13 @@ public class Var {
 		}
 		try {
 			date = new SimpleDateFormat(datePattern15).parse(value.toString());
+			if (date != null) {
+				return date;
+			}
+		} catch (Exception e) {
+		}
+		try {
+			date = new SimpleDateFormat(datePattern16).parse(value.toString());
 			if (date != null) {
 				return date;
 			}
