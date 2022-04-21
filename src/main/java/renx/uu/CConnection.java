@@ -4,14 +4,18 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class CConnection {
+	private static Logger logger = LoggerFactory.getLogger(CConnection.class);
+
 	public DataSource dataSource;
 	public Connection conn;
 	public boolean self = true;
@@ -48,22 +52,23 @@ public class CConnection {
 			return rows(sql, params.toArray());
 	}
 
-	public List<Map> rows(String sql, Object... params) throws Exception {
+	private void setConnection() throws SQLException {
 		if (conn == null) {
+			logger.info("start dataSource.getConnection()");
 			conn = dataSource.getConnection();
+			logger.info("end dataSource.getConnection()");
 			conn.setAutoCommit(false);
 		}
+	}
 
+	public List<Map> rows(String sql, Object... params) throws Exception {
+		setConnection();
 		List<Map> rows = Jdbcuu.rows(conn, sql, params);
 		return rows;
 	}
 
 	public List<Object> thinRows(String sql, Object... params) throws Exception {
-		if (conn == null) {
-			conn = dataSource.getConnection();
-			conn.setAutoCommit(false);
-		}
-
+		setConnection();
 		List<Object> rows = Jdbcuu.thinRows(conn, sql, params);
 		return rows;
 	}
@@ -83,11 +88,7 @@ public class CConnection {
 	}
 
 	public MMap row(String sql, Object... params) throws Exception {
-		if (conn == null) {
-			conn = dataSource.getConnection();
-			conn.setAutoCommit(false);
-		}
-
+		setConnection();
 		MMap row = Jdbcuu.row(conn, sql, params);
 		return row;
 	}
@@ -107,10 +108,7 @@ public class CConnection {
 	}
 
 	public int update(String sql, Object... params) throws Exception {
-		if (conn == null) {
-			conn = dataSource.getConnection();
-			conn.setAutoCommit(false);
-		}
+		setConnection();
 		return Jdbcuu.update(conn, sql, params);
 	}
 
@@ -129,10 +127,7 @@ public class CConnection {
 	}
 
 	public Integer insert(String sql, Object... params) throws Exception {
-		if (conn == null) {
-			conn = dataSource.getConnection();
-			conn.setAutoCommit(false);
-		}
+		setConnection();
 		return Jdbcuu.insert(conn, sql, params);
 	}
 
@@ -155,82 +150,52 @@ public class CConnection {
 	}
 
 	public InputStream getStream(String sql, Object... params) throws Exception {
-		if (conn == null) {
-			conn = dataSource.getConnection();
-			conn.setAutoCommit(false);
-		}
+		setConnection();
 		return Jdbcuu.getStream(conn, sql, params);
 	}
 
 	public Integer getInteger(String sql, Object... params) throws Exception {
-		if (conn == null) {
-			conn = dataSource.getConnection();
-			conn.setAutoCommit(false);
-		}
+		setConnection();
 		return Jdbcuu.getInteger(conn, sql, params);
 	}
 
 	public String getString(String sql, Object... params) throws Exception {
-		if (conn == null) {
-			conn = dataSource.getConnection();
-			conn.setAutoCommit(false);
-		}
+		setConnection();
 		return Jdbcuu.getString(conn, sql, params);
 	}
 
 	public LList getJsonArray(String sql, Object... params) throws Exception {
-		if (conn == null) {
-			conn = dataSource.getConnection();
-			conn.setAutoCommit(false);
-		}
+		setConnection();
 		return Jdbcuu.getJsonArray(conn, sql, params);
 	}
 
 	public MMap getJson(String sql, Object... params) throws Exception {
-		if (conn == null) {
-			conn = dataSource.getConnection();
-			conn.setAutoCommit(false);
-		}
+		setConnection();
 		return Jdbcuu.getJson(conn, sql, params);
 	}
 
 	public BigDecimal getDecimal(String sql, Object... params) throws Exception {
-		if (conn == null) {
-			conn = dataSource.getConnection();
-			conn.setAutoCommit(false);
-		}
+		setConnection();
 		return Jdbcuu.getDecimal(conn, sql, params);
 	}
 
 	public Long getLong(String sql, Object... params) throws Exception {
-		if (conn == null) {
-			conn = dataSource.getConnection();
-			conn.setAutoCommit(false);
-		}
+		setConnection();
 		return Jdbcuu.getLong(conn, sql, params);
 	}
 
 	public Float getFloat(String sql, Object... params) throws Exception {
-		if (conn == null) {
-			conn = dataSource.getConnection();
-			conn.setAutoCommit(false);
-		}
+		setConnection();
 		return Jdbcuu.getFloat(conn, sql, params);
 	}
 
 	public Date getDate(String sql, Object... params) throws Exception {
-		if (conn == null) {
-			conn = dataSource.getConnection();
-			conn.setAutoCommit(false);
-		}
+		setConnection();
 		return Jdbcuu.getDate(conn, sql, params);
 	}
 
 	public Object getColumn(String sql, Object... params) throws Exception {
-		if (conn == null) {
-			conn = dataSource.getConnection();
-			conn.setAutoCommit(false);
-		}
+		setConnection();
 		return Jdbcuu.getColumn(conn, sql, params);
 	}
 }

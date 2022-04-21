@@ -173,10 +173,12 @@ public class Jdbcuu {
 				pst.setObject(i + 1, param);
 			}
 			long s = System.currentTimeMillis();
+			logger.info("start preparedStatement.executeQuery()");
 			ResultSet rs = pst.executeQuery();
+			logger.info("end preparedStatement.executeQuery()");
 			long e = System.currentTimeMillis();
-
-			logger.info("duration: " + (e - s) / 1000f + " " + sqlNo);
+			Float duration = (e - s) / 1000f;
+			logger.info("duration: " + duration + " " + sqlNo);
 
 			String sql2 = "insert into sql_record (no,statement,params,duration) values(?,?,?,?)";
 			PreparedStatement pst2 = null;
@@ -185,7 +187,7 @@ public class Jdbcuu {
 				pst2.setObject(1, sqlNo);
 				pst2.setObject(2, sql);
 				pst2.setObject(3, Objectuu.overlengthSummarize(params));
-				pst2.setObject(4, (e - s) / 1000f);
+				pst2.setObject(4, duration);
 				pst2.execute();
 			} catch (Exception e1) {
 			} finally {
@@ -267,11 +269,16 @@ public class Jdbcuu {
 					pst.setObject(i + 1, param);
 				}
 			}
-			long s = System.currentTimeMillis();
-			cnt = pst.executeUpdate();
-			long e = System.currentTimeMillis();
 
-			logger.info("duration: " + (e - s) / 1000f + " affected: " + cnt + " " + sqlNo);
+			long s = System.currentTimeMillis();
+			logger.info("start preparedStatement.executeQuery()");
+			cnt = pst.executeUpdate();
+			logger.info("end preparedStatement.executeQuery()");
+			long e = System.currentTimeMillis();
+			Float duration = (e - s) / 1000f;
+			logger.info("duration: " + duration + " " + sqlNo);
+
+			logger.info("duration: " + duration + " affected: " + cnt + " " + sqlNo);
 
 			String sql2 = "insert into sql_record (no,statement,params,duration,rowCount) values(?,?,?,?,?)";
 			PreparedStatement pst2 = null;
@@ -280,7 +287,7 @@ public class Jdbcuu {
 				pst2.setObject(1, sqlNo);
 				pst2.setObject(2, sql);
 				pst2.setObject(3, Objectuu.overlengthSummarize(params));
-				pst2.setObject(4, (e - s) / 1000f);
+				pst2.setObject(4, duration);
 				pst2.setObject(5, cnt);
 				pst2.execute();
 			} catch (Exception e1) {
@@ -377,6 +384,7 @@ public class Jdbcuu {
 				logger.info(JSON.toJSONString(row));
 			}
 		}
+		logger.info("affected: " + rows.size());
 		return rows;
 	}
 
