@@ -273,13 +273,14 @@ public class Jdbcuu {
 
 			logger.info("duration: " + (e - s) / 1000f + " affected: " + cnt + " " + sqlNo);
 
+			Object[] params2 = Stringuu.overlengthBrief(params);
 			String sql2 = "insert into sql_record (no,statement,params,duration,rowCount) values(?,?,?,?,?)";
 			PreparedStatement pst2 = null;
 			try {
 				pst2 = conn.prepareStatement(sql2);
 				pst2.setObject(1, sqlNo);
 				pst2.setObject(2, sql);
-				pst2.setObject(3, Arrays.toString(params));
+				pst2.setObject(3, Arrays.toString(params2));
 				pst2.setObject(4, (e - s) / 1000f);
 				pst2.setObject(5, cnt);
 				pst2.execute();

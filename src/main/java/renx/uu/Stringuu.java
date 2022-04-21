@@ -30,10 +30,7 @@ public class Stringuu {
 //	}
 
 	public static void main(String[] args) throws InterruptedException {
-		long n1 = System.nanoTime();
-		Thread.sleep(1);
-		long n2 = System.nanoTime();
-		System.out.println(n2 - n1);
+		System.out.println(overlengthBrief("123456789"));
 	}
 
 	public static String[] toArray(String item, int size) {
@@ -219,4 +216,24 @@ public class Stringuu {
 		return item;
 	}
 
+	public static Object overlengthBrief(Object obj) {
+		if (obj == null)
+			return obj;
+		if (obj instanceof String) {
+			String str = (String) obj;
+			str = str.length() > 100 ? str.substring(0, 100) + " ..." + str.length() : str;
+			obj = str;
+		}
+		return obj;
+	}
+
+	public static Object[] overlengthBrief(Object[] objs) {
+		Object[] objs2 = new Object[objs.length];
+		for (int i = 0; i < objs.length; i++) {
+			Object obj = objs[i];
+			obj = overlengthBrief(obj);
+			objs2[i] = obj;
+		}
+		return objs2;
+	}
 }
