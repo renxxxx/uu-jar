@@ -2,8 +2,6 @@ package renx.uu;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -30,7 +28,6 @@ public class Stringuu {
 //	}
 
 	public static void main(String[] args) throws InterruptedException {
-		System.out.println(overlengthBrief("123456789"));
 	}
 
 	public static String[] toArray(String item, int size) {
@@ -216,24 +213,4 @@ public class Stringuu {
 		return item;
 	}
 
-	public static Object overlengthBrief(Object obj) {
-		if (obj == null)
-			return obj;
-		if (obj instanceof String) {
-			String str = (String) obj;
-			str = str.length() > 100 ? str.substring(0, 100) + " ..." + str.length() : str;
-			obj = str;
-		}
-		return obj;
-	}
-
-	public static Object[] overlengthBrief(Object[] objs) {
-		Object[] objs2 = new Object[objs.length];
-		for (int i = 0; i < objs.length; i++) {
-			Object obj = objs[i];
-			obj = overlengthBrief(obj);
-			objs2[i] = obj;
-		}
-		return objs2;
-	}
 }

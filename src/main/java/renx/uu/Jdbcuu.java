@@ -279,7 +279,7 @@ public class Jdbcuu {
 			try {
 				pst2 = conn.prepareStatement(sql2);
 				pst2.setObject(1, sqlNo);
-				pst2.setObject(2, sql);
+				pst2.setObject(2, Stringuu.overlengthBrief(sql));
 				pst2.setObject(3, Arrays.toString(params2));
 				pst2.setObject(4, (e - s) / 1000f);
 				pst2.setObject(5, cnt);
