@@ -1212,6 +1212,19 @@ public class Var {
 		return this;
 	}
 
+	public String[] split() {
+		return split(",");
+	}
+
+	public String[] split(String regex) {
+		if (this.value == null)
+			return new String[] {};
+		if (regex == null)
+			return new String[] { this.value };
+		String[] strs = this.value.split(regex);
+		return strs;
+	}
+
 	public static void main(String[] args) throws ParseException, NoSuchFieldException, SecurityException,
 			IllegalArgumentException, IllegalAccessException {
 		System.out.println(Var.toString(Float.valueOf(.02f)));
