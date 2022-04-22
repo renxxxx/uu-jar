@@ -1221,7 +1221,7 @@ public class Var {
 			return new String[] {};
 		if (regex == null)
 			return new String[] { this.value };
-		String[] strs = this.value.split(regex);
+		String[] strs = StringUtils.splitPreserveAllTokens(this.value, regex);
 		return strs;
 	}
 
