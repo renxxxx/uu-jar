@@ -26,6 +26,8 @@ public class MMail {
 	public String sender;
 
 	public Message send(String receiver, String subject, String content) throws Exception {
+		subject = subject == null ? "" : subject;
+		content = content == null ? "" : content;
 		Properties prop = new Properties();
 		prop.setProperty("mail.transport.protocol", "smtp");
 		prop.setProperty("mail.smtp.host", host);
