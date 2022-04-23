@@ -7,6 +7,7 @@ public class JJedis {
 	public JedisPool jedisPool;
 	public Jedis jedis;
 	public boolean self = true;
+	public String prefix = "";
 
 	public static JJedis build() {
 		return build(null, null);
@@ -26,52 +27,61 @@ public class JJedis {
 		return jjedis2;
 	}
 
+	public JJedis prefix(String prefix) {
+		this.prefix = prefix;
+		return this;
+	}
+
+	public String buildKey(String key) {
+		return this.prefix == null || this.prefix.isEmpty() ? key : (this.prefix + "-" + key);
+	}
+
 	public String get(final String key) {
 		if (jedis == null)
 			jedis = jedisPool.getResource();
-		return jedis.get(key);
+		return jedis.get(buildKey(key));
 	}
 
 	public String set(final String key, String value) {
 		if (jedis == null)
 			jedis = jedisPool.getResource();
-		return jedis.set(key, value);
+		return jedis.set(buildKey(key), value);
 	}
 
 	public Long del(final String key) {
 		if (jedis == null)
 			jedis = jedisPool.getResource();
-		return jedis.del(key);
+		return jedis.del(buildKey(key));
 	}
 
 	public String getSet(final String key, String value) {
 		if (jedis == null)
 			jedis = jedisPool.getResource();
-		return jedis.getSet(key, value);
+		return jedis.getSet(buildKey(key), value);
 	}
 
 	public Long setnx(final String key, String value) {
 		if (jedis == null)
 			jedis = jedisPool.getResource();
-		return jedis.setnx(key, value);
+		return jedis.setnx(buildKey(key), value);
 	}
 
 	public String setex(final String key, final int seconds, final String value) {
 		if (jedis == null)
 			jedis = jedisPool.getResource();
-		return jedis.setex(key, seconds, value);
+		return jedis.setex(buildKey(key), seconds, value);
 	}
 
 	public String psetex(final String key, final long milliseconds, final String value) {
 		if (jedis == null)
 			jedis = jedisPool.getResource();
-		return jedis.psetex(key, milliseconds, value);
+		return jedis.psetex(buildKey(key), milliseconds, value);
 	}
 
 	public String set(final String key, final String value, final String nxxx, final String expx, final long time) {
 		if (jedis == null)
 			jedis = jedisPool.getResource();
-		return jedis.set(key, value, key, value, time);
+		return jedis.set(buildKey(key), value, key, value, time);
 	}
 
 	public void close() {
