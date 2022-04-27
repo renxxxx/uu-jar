@@ -77,7 +77,7 @@ public class Del_CConnection {
 	}
 
 	public MMap getJson(String sql, Object... params) throws Exception {
-		return Jdbcuu.getJson(o, sql, params);
+		return Jdbcuu.toJsonObject(o, sql, params);
 	}
 
 	public BigDecimal getDecimal(String sql, Object... params) throws Exception {

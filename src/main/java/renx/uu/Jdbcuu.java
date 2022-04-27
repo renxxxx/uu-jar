@@ -92,8 +92,8 @@ public class Jdbcuu {
 		return Var.toJsonArray(getColumn(conn, sql, params));
 	}
 
-	public static MMap getJson(Connection conn, String sql, Object... params) throws Exception {
-		return Var.toJson(getColumn(conn, sql, params));
+	public static MMap toJsonObject(Connection conn, String sql, Object... params) throws Exception {
+		return Var.toJsonObject(getColumn(conn, sql, params));
 	}
 
 	public static BigDecimal getDecimal(Connection conn, String sql, Object... params) throws Exception {

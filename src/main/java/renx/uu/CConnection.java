@@ -169,9 +169,9 @@ public class CConnection {
 		return Jdbcuu.getJsonArray(conn, sql, params);
 	}
 
-	public MMap getJson(String sql, Object... params) throws Exception {
+	public MMap getJsonObject(String sql, Object... params) throws Exception {
 		setConnection();
-		return Jdbcuu.getJson(conn, sql, params);
+		return Jdbcuu.toJsonObject(conn, sql, params);
 	}
 
 	public BigDecimal getDecimal(String sql, Object... params) throws Exception {

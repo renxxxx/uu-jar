@@ -58,7 +58,7 @@ public class Var {
 	private Long longValue;
 	private BigDecimal decimalValue;
 	private Date dateValue;
-	private String[] stringsValue;
+	private String[] values;
 
 	public String[] verifiedEnums = null;
 
@@ -70,7 +70,7 @@ public class Var {
 	};
 
 	public Var reset() {
-		this.stringsValue = null;
+		this.values = null;
 		this.dateValue = null;
 		this.integerValue = null;
 		this.floatValue = null;
@@ -738,11 +738,11 @@ public class Var {
 //	}
 
 	public String[] toStrings() {
-		if (this.stringsValue != null)
-			return this.stringsValue;
-		this.stringsValue = isNull() ? null
+		if (this.values != null && this.values.length > 0)
+			return this.values;
+		this.values = isNull() ? new String[] {}
 				: StringUtils.splitByWholeSeparatorPreserveAllTokens(this.value, this.separator);
-		return this.stringsValue;
+		return this.values;
 	}
 
 	@Override
@@ -1164,14 +1164,14 @@ public class Var {
 			if (valueStr.trim().isEmpty())
 				return LList.build();
 			else
-				return LList.build(JSONObject.parseArray(valueStr, ArrayList.class));
+				return LList.build(JSONObject.parseArray(valueStr));
 		} catch (Exception e) {
 			logger.info(ExceptionUtils.getStackTrace(e));
 			return LList.build();
 		}
 	}
 
-	public static MMap toJson(Object value) {
+	public static MMap toJsonObject(Object value) {
 		try {
 			if (value == null)
 				return MMap.build();
