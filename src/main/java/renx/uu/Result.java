@@ -8,7 +8,7 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 
 public class Result extends RuntimeException {
 
-	public String runNo = null;
+	public String runId = null;
 	public int code;
 	public String errorParam = null;
 	public String msg = null;
@@ -22,7 +22,7 @@ public class Result extends RuntimeException {
 		map.put("msg", msg);
 		map.put("data", data);
 		map.put("errorParam", errorParam);
-		map.put("runNo", runNo);
+		map.put("runId", runId);
 		return map;
 	}
 
@@ -159,8 +159,8 @@ public class Result extends RuntimeException {
 		return this;
 	}
 
-	public Result runNo(String runNo) {
-		this.runNo = runNo;
+	public Result runId(String runId) {
+		this.runId = runId;
 		return this;
 	}
 
