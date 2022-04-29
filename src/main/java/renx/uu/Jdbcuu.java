@@ -209,7 +209,7 @@ public class Jdbcuu {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-			update(conn, pst, sql, params);
+			insert(conn, pst, sql, params);
 			ResultSet rs = pst.getGeneratedKeys();
 			if (rs.next())
 				return rs.getInt(1);
@@ -221,6 +221,62 @@ public class Jdbcuu {
 			if (pst != null)
 				pst.close();
 		}
+	}
+
+	public static int insert(Connection conn, PreparedStatement pst, String sql, Object... params) throws Exception {
+		if (params == null)
+			params = new Object[] {};
+		sql = sql.trim().replaceAll("\\s+", " ");
+		if (sql.substring(0, 6).equalsIgnoreCase("insert"))
+			throw new Exception("非insert语句");
+
+		String sqlNo = new SimpleDateFormat("YYYYMMDDHHmmssSSS").format(new Date())
+				+ RandomStringUtils.randomNumeric(8);
+		logger.info("[" + sql + "]" + " " + Arrays.toString(params) + " " + sqlNo);
+		int cnt = 0;
+		try {
+			for (int i = 0; i < params.length; i++) {
+				Object param = params[i];
+				if (param instanceof Var) {
+					param = ((Var) param).value;
+					pst.setObject(i + 1, param);
+				} else if (param instanceof InputStream) {
+					pst.setBinaryStream(i + 1, (InputStream) param);
+				} else {
+					pst.setObject(i + 1, param);
+				}
+			}
+
+			long s = System.currentTimeMillis();
+			logger.info("start preparedStatement.executeQuery()");
+			cnt = pst.executeUpdate();
+			logger.info("end preparedStatement.executeQuery()");
+			long e = System.currentTimeMillis();
+			Float duration = (e - s) / 1000f;
+			logger.info("duration: " + duration + " " + sqlNo);
+
+			logger.info("duration: " + duration + " affected: " + cnt + " " + sqlNo);
+
+			String sql2 = "insert into sql_record (no,statement,params,duration,rowCount) values(?,?,?,?,?)";
+			PreparedStatement pst2 = null;
+			try {
+				pst2 = conn.prepareStatement(sql2);
+				pst2.setObject(1, sqlNo);
+				pst2.setObject(2, sql);
+				pst2.setObject(3, Objectuu.overlengthSummarize(params));
+				pst2.setObject(4, duration);
+				pst2.setObject(5, cnt);
+				pst2.execute();
+			} catch (Exception e1) {
+			} finally {
+				if (pst2 != null)
+					pst2.close();
+			}
+
+		} catch (Exception e) {
+			throw new Exception(e.getMessage() + " sqlNo: " + sqlNo, e);
+		}
+		return cnt;
 	}
 
 	public static Integer insert(Connection conn, String sql, LList params) throws Exception {
@@ -253,6 +309,8 @@ public class Jdbcuu {
 		if (params == null)
 			params = new Object[] {};
 		sql = sql.trim().replaceAll("\\s+", " ");
+		if (sql.substring(0, 6).equalsIgnoreCase("update"))
+			throw new Exception("非update语句");
 		String sqlNo = new SimpleDateFormat("YYYYMMDDHHmmssSSS").format(new Date())
 				+ RandomStringUtils.randomNumeric(8);
 		logger.info("[" + sql + "]" + " " + Arrays.toString(params) + " " + sqlNo);
