@@ -11,11 +11,12 @@ if [[ "$newVersion" = "" ]]
 then 
 	newVersion=$version
 fi
+echo
 
 sed -i "0,/^\(.*\)<groupId>.*<\/groupId>\(.*\)$/s//\1<groupId>$group<\/groupId>/" ./pom.xml
-sed -i "0,/^\(.*\)<artifactId>.*<\/artifactId>\(.*\)$/s//\1<artifactId>$artifactId<\/artifactId>/" ./pom.xml
+sed -i "0,/^\(.*\)<artifactId>.*<\/artifactId>\(.*\)$/s//\1<artifactId>$artifact<\/artifactId>/" ./pom.xml
 sed -i "0,/^\(.*\)<version>.*<\/version>\(.*\)$/s//\1<version>$newVersion<\/version>/" ./pom.xml
-#sed -i "0,/^\(\s*\)public static String version = \".*\";$/s//\1public static String version = \"$newVersion\";/" ./src/main/java/renx/uu/UU.java
+sed -i "0,/^\(\s*\)public static String version = \".*\";$/s//\1public static String version = \"$newVersion\";/" ./src/main/java/renx/uu/UU.java
 
 echo "-mvn -q clean install"
 mvn -q clean install

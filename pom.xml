@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>renx</groupId>
-	<artifactId></artifactId>
+	<artifactId>uu</artifactId>
 	<version>2.3.0</version>
 	<description>all scopes to provided from none</description>
 	<packaging>jar</packaging>
