@@ -227,7 +227,7 @@ public class Jdbcuu {
 		if (params == null)
 			params = new Object[] {};
 		sql = sql.trim().replaceAll("\\s+", " ");
-		if (sql.substring(0, 6).equalsIgnoreCase("insert"))
+		if (!sql.substring(0, 6).equalsIgnoreCase("insert"))
 			throw new Exception("非insert语句");
 
 		String sqlNo = new SimpleDateFormat("YYYYMMDDHHmmssSSS").format(new Date())
@@ -309,7 +309,7 @@ public class Jdbcuu {
 		if (params == null)
 			params = new Object[] {};
 		sql = sql.trim().replaceAll("\\s+", " ");
-		if (sql.substring(0, 6).equalsIgnoreCase("update"))
+		if (!sql.substring(0, 6).equalsIgnoreCase("update"))
 			throw new Exception("非update语句");
 		String sqlNo = new SimpleDateFormat("YYYYMMDDHHmmssSSS").format(new Date())
 				+ RandomStringUtils.randomNumeric(8);
