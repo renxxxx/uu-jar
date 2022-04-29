@@ -21,7 +21,7 @@
 		</resources>
 		<plugins>
 			<plugin>
-				<version></artifactId>
+				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.5.1</version>
 				<configuration>
 					<source>1.8</source>
