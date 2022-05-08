@@ -175,7 +175,7 @@ public class Stringuu {
 		return org.apache.commons.lang3.StringUtils.trimToNull(str);
 	}
 
-	public static String trimToEmpty(String str) {
+	public static String trimToBlank(String str) {
 		return org.apache.commons.lang3.StringUtils.trimToEmpty(str);
 	}
 
