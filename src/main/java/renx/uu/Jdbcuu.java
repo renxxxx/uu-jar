@@ -180,21 +180,6 @@ public class Jdbcuu {
 			Float duration = (e - s) / 1000f;
 			logger.info("duration: " + duration + " " + sqlNo);
 
-			String sql2 = "insert into sql_record (no,statement,params,duration) values(?,?,?,?)";
-			PreparedStatement pst2 = null;
-			try {
-				pst2 = conn.prepareStatement(sql2);
-				pst2.setObject(1, sqlNo);
-				pst2.setObject(2, sql);
-				pst2.setObject(3, Objectuu.overlengthSummarize(params));
-				pst2.setObject(4, duration);
-				pst2.execute();
-			} catch (Exception e1) {
-			} finally {
-				if (pst2 != null)
-					pst2.close();
-			}
-
 			return rs;
 		} catch (Exception e) {
 			throw new Exception(e.getMessage() + " sqlNo: " + sqlNo, e);
@@ -279,23 +264,6 @@ public class Jdbcuu {
 			logger.info("duration: " + duration + " " + sqlNo);
 
 			logger.info("duration: " + duration + " affected: " + cnt + " " + sqlNo);
-
-			String sql2 = "insert into sql_record (no,statement,params,duration,rowCount) values(?,?,?,?,?)";
-			PreparedStatement pst2 = null;
-			try {
-				pst2 = conn.prepareStatement(sql2);
-				pst2.setObject(1, sqlNo);
-				pst2.setObject(2, sql);
-				pst2.setObject(3, Objectuu.overlengthSummarize(params));
-				pst2.setObject(4, duration);
-				pst2.setObject(5, cnt);
-				pst2.execute();
-			} catch (Exception e1) {
-			} finally {
-				if (pst2 != null)
-					pst2.close();
-			}
-
 		} catch (Exception e) {
 			throw new Exception(e.getMessage() + " sqlNo: " + sqlNo, e);
 		}
