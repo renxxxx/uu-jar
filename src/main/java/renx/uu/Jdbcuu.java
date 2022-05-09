@@ -180,7 +180,7 @@ public class Jdbcuu {
 			Float duration = (e - s) / 1000f;
 			logger.info("duration: " + duration + " " + sqlNo);
 
-			String sql2 = "insert into sql_record (no,statement,params,duration) values(?,?,?,?)";
+			String sql2 = "insert into log_sql (no,statement,params,duration) values(?,?,?,?)";
 			PreparedStatement pst2 = null;
 			try {
 				pst2 = conn.prepareStatement(sql2);
@@ -280,7 +280,7 @@ public class Jdbcuu {
 
 			logger.info("duration: " + duration + " affected: " + cnt + " " + sqlNo);
 
-			String sql2 = "insert into sql_record (no,statement,params,duration,rowCount) values(?,?,?,?,?)";
+			String sql2 = "insert into log_sql (no,statement,params,duration,rowCount) values(?,?,?,?,?)";
 			PreparedStatement pst2 = null;
 			try {
 				pst2 = conn.prepareStatement(sql2);
