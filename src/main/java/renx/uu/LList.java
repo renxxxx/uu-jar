@@ -33,6 +33,12 @@ public class LList<E> {
 		return build(null);
 	}
 
+	public LList remove(int i) {
+		if (this.list != null)
+			this.list.remove(i);
+		return this;
+	}
+
 	public LList add(int i, Object e, boolean if_) {
 		if (if_)
 			return add(i, e);
