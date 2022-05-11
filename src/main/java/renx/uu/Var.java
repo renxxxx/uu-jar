@@ -317,6 +317,21 @@ public class Var {
 		return this;
 	}
 
+	public static void vAnyExisting(Var... vars) {
+		boolean anyExisting = false;
+		String names = "";
+		for (int i = 0; i < vars.length; i++) {
+			Var var = vars[i];
+			names += "," + (Stringuu.isEmpty(var.name) ? var.code : var.name);
+			if (var.isExisting()) {
+				anyExisting = true;
+			}
+		}
+		names = names.length() > 0 ? names.substring(1) : names;
+		if (!anyExisting)
+			throw Result.build(8, names + ", 至少一个必输");
+	}
+
 	public Var vEmpty(boolean run, String msg) {
 		if (!this.run)
 			return this;
@@ -1166,6 +1181,6 @@ public class Var {
 
 	public static void main(String[] args) throws ParseException, NoSuchFieldException, SecurityException,
 			IllegalArgumentException, IllegalAccessException {
-		System.out.println(Var.toString(Float.valueOf(.02f)));
+		Var.vAnyExisting(Var.build().code("q"), Var.build().code("e").name("aaa"));
 	}
 }
