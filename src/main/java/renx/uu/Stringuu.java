@@ -200,6 +200,8 @@ public class Stringuu {
 	}
 
 	public static LList split(final String str, final String separator) {
+		if (str == null)
+			return LList.build();
 		String[] ss = StringUtils.splitByWholeSeparatorPreserveAllTokens(str, separator);
 		ss = ss == null ? new String[] {} : ss;
 		LList llist = LList.build().addAll(ss);
