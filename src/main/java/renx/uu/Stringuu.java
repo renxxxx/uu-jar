@@ -199,6 +199,13 @@ public class Stringuu {
 		return org.apache.commons.lang3.StringUtils.right(str, len);
 	}
 
+	public static LList split(final String str, final String separator) {
+		String[] ss = StringUtils.splitByWholeSeparatorPreserveAllTokens(str, separator);
+		ss = ss == null ? new String[] {} : ss;
+		LList llist = LList.build().addAll(ss);
+		return llist;
+	}
+
 	public static String camel(String str) {
 		String[] sss = str.split("_|-");
 		for (int j = 0; j < sss.length; j++) {

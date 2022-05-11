@@ -6,8 +6,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.temporal.TemporalField;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -31,8 +29,6 @@ public class Var {
 	public String value;
 	public String sourceValue;
 
-	private String separator = ",";
-
 	private static String datePattern = "yyyy-MM-dd HH:mm:ss.SSS Z";
 	private static String datePattern2 = "yyyy-MM-dd HH:mm:ss";
 	private static String datePattern3 = "yyyy-MM-dd";
@@ -52,34 +48,12 @@ public class Var {
 
 	boolean run = true;
 
-	private Integer integerValue;
-	private Float floatValue;
-	private Double doubleValue;
-	private Long longValue;
-	private BigDecimal decimalValue;
-	private Date dateValue;
-	private String[] values;
-
-	public String[] verifiedEnums = null;
-
 	public static CacheMap.Ccc<String, Pattern> regexCache = new CacheMap.Ccc<String, Pattern>() {
 		@Override
 		public Pattern create(String regex) {
 			return Pattern.compile(regex);
 		}
 	};
-
-	public Var reset() {
-		this.values = null;
-		this.dateValue = null;
-		this.integerValue = null;
-		this.floatValue = null;
-		this.longValue = null;
-		this.decimalValue = null;
-		this.verifiedEnums = null;
-		this.value = this.sourceValue;
-		return this;
-	}
 
 	public static Var build() {
 		Var var = new Var();
@@ -249,11 +223,6 @@ public class Var {
 		if (!this.run)
 			return this;
 		this.value = this.value == null ? null : this.value.trim();
-		return this;
-	}
-
-	public Var setSeparator(String separator) {
-		this.separator = separator;
 		return this;
 	}
 
@@ -469,7 +438,7 @@ public class Var {
 	public Var vMaxCount(int count) {
 		if (!this.run)
 			return this;
-		if (!this.isEmpty() && this.toStrings() != null && this.toStrings().length > count) {
+		if (!this.isEmpty() && this.split().size() > count) {
 			throw Result.build(8, "\"" + this.name + "\"最多" + count + "个").errorParam(this.code);
 		}
 		return this;
@@ -478,13 +447,14 @@ public class Var {
 	public Var vInteger() {
 		if (!this.run)
 			return this;
+		Integer integerValue = null;
 		if (this.value != null && !this.value.isEmpty()) {
 			try {
-				this.integerValue = Integer.parseInt(this.value);
+				integerValue = Integer.parseInt(this.value);
 			} catch (Exception e) {
 
 			}
-			if (this.integerValue == null)
+			if (integerValue == null)
 				throw Result.build(8, "\"" + this.name + "\"有误").errorParam(this.code);
 		}
 		return this;
@@ -511,25 +481,17 @@ public class Var {
 			return this;
 	}
 
-	public Var vEnum() {
-		return vEnum(this.verifiedEnums);
-	}
-
-	public Var setEnum(String... enums) {
-		this.verifiedEnums = enums;
-		return this;
-	}
-
 	public Var vLong() {
 		if (!this.run)
 			return this;
+		Long longValue = null;
 		if (this.value != null && !this.value.isEmpty()) {
 			try {
-				this.longValue = Long.parseLong(this.value);
+				longValue = Long.parseLong(this.value);
 			} catch (Exception e) {
 
 			}
-			if (this.longValue == null)
+			if (longValue == null)
 				throw Result.build(8, "\"" + this.name + "\"有误").errorParam(this.code);
 		}
 		return this;
@@ -538,13 +500,14 @@ public class Var {
 	public Var vDouble() {
 		if (!this.run)
 			return this;
+		Double doubleValue = null;
 		if (this.value != null && !this.value.isEmpty()) {
 			try {
-				this.doubleValue = Double.parseDouble(this.value);
+				doubleValue = Double.parseDouble(this.value);
 			} catch (Exception e) {
 
 			}
-			if (this.doubleValue == null)
+			if (doubleValue == null)
 				throw Result.build(8, "\"" + this.name + "\"只能输入数字").errorParam(this.code);
 		}
 		return this;
@@ -553,13 +516,14 @@ public class Var {
 	public Var vFloat() {
 		if (!this.run)
 			return this;
+		Float floatValue = null;
 		if (this.value != null && !this.value.isEmpty()) {
 			try {
-				this.floatValue = Float.parseFloat(this.value);
+				floatValue = Float.parseFloat(this.value);
 			} catch (Exception e) {
 
 			}
-			if (this.floatValue == null)
+			if (floatValue == null)
 				throw Result.build(8, "\"" + this.name + "\"只能输入数字").errorParam(this.code);
 		}
 		return this;
@@ -568,13 +532,14 @@ public class Var {
 	public Var vDecimal() {
 		if (!this.run)
 			return this;
+		BigDecimal decimalValue = null;
 		if (this.value != null && !this.value.isEmpty()) {
 			try {
-				this.decimalValue = new BigDecimal(this.value);
+				decimalValue = new BigDecimal(this.value);
 			} catch (Exception e) {
 
 			}
-			if (this.decimalValue == null)
+			if (decimalValue == null)
 				throw Result.build(8, "\"" + this.name + "\"只能输入数字").errorParam(this.code);
 		}
 		return this;
@@ -713,12 +678,9 @@ public class Var {
 	public Var vDate() {
 		if (this.value == null || this.value.isEmpty())
 			return this;
-		toDate();
-		if (this.dateValue == null)
+		Date date = toDate();
+		if (date == null)
 			throw Result.build(8, "\"" + this.name + "\"有误").errorParam(this.code);
-		else {
-			this.value = new SimpleDateFormat(datePattern2).format(this.dateValue);
-		}
 		return this;
 	}
 //	public Value vReplace(String regex, String replace) {
@@ -737,12 +699,12 @@ public class Var {
 //		return this;
 //	}
 
-	public String[] toStrings() {
-		if (this.values != null && this.values.length > 0)
-			return this.values;
-		this.values = isNull() ? new String[] {}
-				: StringUtils.splitByWholeSeparatorPreserveAllTokens(this.value, this.separator);
-		return this.values;
+	public LList split() {
+		return Stringuu.split(this.value, ",");
+	}
+
+	public LList split(String separator) {
+		return Stringuu.split(this.value, separator);
 	}
 
 	@Override
@@ -751,43 +713,28 @@ public class Var {
 	}
 
 	public Integer toInteger() {
-		if (this.integerValue != null)
-			return this.integerValue;
-		this.integerValue = isEmpty() ? null : Integer.parseInt(this.value.split("\\.")[0]);
-		return this.integerValue;
+		return isEmpty() ? null : Integer.parseInt(this.value.split("\\.")[0]);
 	}
 
 	public Float toFloat() {
-		if (this.floatValue != null)
-			return this.floatValue;
-		this.floatValue = isEmpty() ? null : Float.parseFloat(this.value);
-		return this.floatValue;
+		return isEmpty() ? null : Float.parseFloat(this.value);
 	}
 
 	public Long toLong() {
-		if (this.longValue != null)
-			return this.longValue;
-		this.longValue = isEmpty() ? null : Long.parseLong(this.value);
-		return this.longValue;
+		return isEmpty() ? null : Long.parseLong(this.value);
 	}
 
 	public BigDecimal toDecimal() {
-		if (this.decimalValue != null)
-			return this.decimalValue;
-		this.decimalValue = isEmpty() ? null : new BigDecimal(this.value);
-		return this.decimalValue;
+		return isEmpty() ? null : new BigDecimal(this.value);
 	}
 
 	public String formatDate(String pattern) {
-		Date data = this.toDate();
-		return new SimpleDateFormat(pattern).format(data);
+		Date data = toDate();
+		return data == null ? null : new SimpleDateFormat(pattern).format(data);
 	}
 
 	public Date toDate() {
-		if (this.dateValue != null)
-			return this.dateValue;
-		this.dateValue = isEmpty() ? null : toDate(this.value);
-		return this.dateValue;
+		return isEmpty() ? null : toDate(this.value);
 	}
 
 	public void bomb(String message) {
@@ -1212,17 +1159,9 @@ public class Var {
 		return this;
 	}
 
-	public String[] split() {
-		return split(",");
-	}
-
-	public String[] split(String regex) {
-		if (this.value == null)
-			return new String[] {};
-		if (regex == null)
-			return new String[] { this.value };
-		String[] strs = StringUtils.splitPreserveAllTokens(this.value, regex);
-		return strs;
+	public Var reset() {
+		this.value = this.sourceValue;
+		return this;
 	}
 
 	public static void main(String[] args) throws ParseException, NoSuchFieldException, SecurityException,
