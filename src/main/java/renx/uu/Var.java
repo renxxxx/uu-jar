@@ -568,6 +568,16 @@ public class Var {
 		return !isEmpty();
 	}
 
+	public boolean sourceIsEmpty() {
+		if (this.sourceValue == null || this.sourceValue.isEmpty())
+			return true;
+		return false;
+	}
+
+	public boolean sourceIsExisting() {
+		return !isEmpty();
+	}
+
 	public boolean isEmpty() {
 		if (this.value == null || this.value.isEmpty())
 			return true;
