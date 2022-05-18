@@ -28,6 +28,7 @@ public class Stringuu {
 //	}
 
 	public static void main(String[] args) throws InterruptedException {
+		System.out.println(right("123456", 3, 6));
 	}
 
 	public static String[] toArray(String item, int size) {
@@ -195,7 +196,23 @@ public class Stringuu {
 		return org.apache.commons.lang3.StringUtils.left(str, len);
 	}
 
+	public static String left(String str, int len, int start) {
+		if (start <= str.length())
+			str = str.substring(start - 1);
+		else
+			return "";
+		return org.apache.commons.lang3.StringUtils.left(str, len);
+	}
+
 	public static String right(String str, int len) {
+		return org.apache.commons.lang3.StringUtils.right(str, len);
+	}
+
+	public static String right(String str, int len, int start) {
+		if (start <= str.length())
+			str = str.substring(0, str.length() - start + 1);
+		else
+			return "";
 		return org.apache.commons.lang3.StringUtils.right(str, len);
 	}
 
