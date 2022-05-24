@@ -28,7 +28,7 @@ public class Stringuu {
 //	}
 
 	public static void main(String[] args) throws InterruptedException {
-		System.out.println(right("123456", 3, 6));
+		System.out.println(left("17372202877", 7, 1));
 	}
 
 	public static String[] toArray(String item, int size) {
