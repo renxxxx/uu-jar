@@ -76,6 +76,14 @@ public class Var {
 		return Var.build().code(code).value(from);
 	}
 
+	public static Var build(String name, String code, HttpServletRequest from) {
+		return Var.build().name(name).code(code).value(from);
+	}
+
+	public static Var build(String name, String code, MMap from) {
+		return Var.build().name(name).code(code).value(from);
+	}
+
 	public static Var build(Object... from) {
 		return Var.build().value(from);
 	}
