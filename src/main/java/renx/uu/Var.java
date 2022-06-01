@@ -68,15 +68,15 @@ public class Var {
 		return var2;
 	}
 
-	public Var build(HttpServletRequest from) {
+	public static Var build(HttpServletRequest from) {
 		return Var.build().value(from);
 	}
 
-	public Var build(MMap from) {
+	public static Var build(MMap from) {
 		return Var.build().value(from);
 	}
 
-	public Var build(String... from) {
+	public static Var build(String... from) {
 		return Var.build().value(from);
 	}
 
@@ -88,7 +88,7 @@ public class Var {
 
 	public Var code(String... codes) {
 		Var var = Var.build(this);
-		
+
 		var.codes = codes;
 		if (codes != null && codes.length > 0)
 			var.code = codes[0];
