@@ -68,15 +68,15 @@ public class Var {
 		return var2;
 	}
 
-	public static Var build(HttpServletRequest from) {
-		return Var.build().value(from);
+	public static Var build(String code, HttpServletRequest from) {
+		return Var.build().code(code).value(from);
 	}
 
-	public static Var build(MMap from) {
-		return Var.build().value(from);
+	public static Var build(String code, MMap from) {
+		return Var.build().code(code).value(from);
 	}
 
-	public static Var build(String... from) {
+	public static Var build(Object... from) {
 		return Var.build().value(from);
 	}
 
@@ -183,23 +183,23 @@ public class Var {
 		return var;
 	}
 
-	public Var suffix(String suffix) {
+	public Var suffix(Object suffix) {
 		if (!this.run)
 			return this;
 
 		Var var = Var.build(this);
 		if (var.value != null)
-			var.value = var.value + suffix;
+			var.value = var.value + suffix.toString();
 		return var;
 	}
 
-	public Var prefix(String prefix) {
+	public Var prefix(Object prefix) {
 		if (!this.run)
 			return this;
 
 		Var var = Var.build(this);
 		if (var.value != null)
-			var.value = prefix + var.value;
+			var.value = prefix.toString() + var.value;
 		return var;
 	}
 
@@ -315,6 +315,14 @@ public class Var {
 		if (run)
 			var.emptyDef(defaultValue);
 		return var;
+	}
+
+	public Var default_(Object defaultValue) {
+		return emptyDef(defaultValue);
+	}
+
+	public Var default_(boolean run, Object defaultValue) {
+		return emptyDef(run, defaultValue);
 	}
 
 	public Var stop() {
@@ -521,7 +529,7 @@ public class Var {
 		return this;
 	}
 
-	public Var vEnum(String... enums) {
+	public Var vEnum(Object... enums) {
 		if (!this.run)
 			return this;
 		if (this.value == null || this.value.isEmpty() || enums == null || enums.length == 0)
@@ -793,11 +801,11 @@ public class Var {
 		return isEmpty() ? null : toDate(this.value);
 	}
 
-	public void bomb(String message) {
+	public void throw_(String message) {
 		throw Result.build(8, "\"" + this.name + "\"" + message).errorParam(this.code);
 	}
 
-	public void bomb(boolean run, String message) {
+	public void throw_(boolean run, String message) {
 		if (run)
 			throw Result.build(8, "\"" + this.name + "\"" + message).errorParam(this.code);
 	}
@@ -846,13 +854,13 @@ public class Var {
 		return var;
 	}
 
-	public Var replaceAll(String regex, String replacement) {
+	public Var replaceAll(String regex, Object replacement) {
 		if (!this.run)
 			return this;
 
 		Var var = Var.build(this);
 		if (var.value != null)
-			var.value = var.value.replaceAll(regex, replacement);
+			var.value = var.value.replaceAll(regex, replacement.toString());
 		return var;
 	}
 
@@ -876,21 +884,21 @@ public class Var {
 		return var;
 	}
 
-	public boolean contains(String prefix) {
+	public boolean contains(Object prefix) {
 		if (this.value != null)
-			return this.value.contains(prefix);
+			return this.value.contains(prefix.toString());
 		return false;
 	}
 
-	public boolean startsWith(String prefix) {
+	public boolean startsWith(Object prefix) {
 		if (this.value != null)
-			return this.value.startsWith(prefix);
+			return this.value.startsWith(prefix.toString());
 		return false;
 	}
 
-	public boolean endsWith(String suffix) {
+	public boolean endsWith(Object suffix) {
 		if (this.value != null)
-			return this.value.endsWith(suffix);
+			return this.value.endsWith(suffix.toString());
 		return false;
 	}
 
@@ -1218,9 +1226,9 @@ public class Var {
 		return target;
 	}
 
-	public Var concat(String str) {
+	public Var concat(Object str) {
 		Var var = Var.build(this);
-		String str2 = str == null ? "" : str;
+		String str2 = str == null ? "" : str.toString();
 		var.value = var.value == null ? "" : var.value;
 		var.value = var.value.concat(str2);
 		return var;
