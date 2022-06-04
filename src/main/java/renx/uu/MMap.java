@@ -111,6 +111,12 @@ public class MMap {
 		return map.remove(key);
 	}
 
+	public Var getVar(Object key) {
+		if (map == null)
+			return null;
+		return Var.build(map.get(key));
+	}
+
 	public String getString(Object key) {
 		if (map == null)
 			return null;
