@@ -235,6 +235,15 @@ public class Stringuu {
 		return str1;
 	}
 
+	public static String buildFixedArrayString(String s, int count) {
+		String ss = "";
+		for (int i = 0; i < count; i++) {
+			ss += (s + ",");
+		}
+		ss = ss.substring(0, ss.length() - 1);
+		return ss;
+	}
+
 	public static String[] array(String... item) {
 		return item;
 	}
