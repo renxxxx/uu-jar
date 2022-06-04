@@ -18,6 +18,25 @@ public class LList<E> {
 	public int index = -1;
 	public List list = null;
 
+	public LList attrs(String key) {
+		if (this.list == null)
+			this.list = new ArrayList();
+
+		LList values = LList.build();
+		for (int i = 0; i < this.list.size(); i++) {
+			Object o = this.list.get(i);
+			Map m = null;
+			if (o instanceof Map) {
+				m = (Map) o;
+				Object value = m.get("key");
+				values.add(value);
+			} else {
+				values.add(null);
+			}
+		}
+		return values;
+	}
+
 	public static LList build(List list) {
 		if (list == null) {
 			LList listt = new LList();
