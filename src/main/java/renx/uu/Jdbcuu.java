@@ -29,15 +29,15 @@ public class Jdbcuu {
 		System.out.println(Var.toString(a));
 	}
 
-	public static List<Map> rows(Connection conn, String sql, LList params) throws Exception {
+	public static LList<Map> rows(Connection conn, String sql, LList params) throws Exception {
 		return rows(conn, sql, params.toArray());
 	}
 
-	public static List<Map> rows(Connection conn, String sql, List params) throws Exception {
+	public static LList<Map> rows(Connection conn, String sql, List params) throws Exception {
 		return rows(conn, sql, LList.build(params));
 	}
 
-	public static List<Map> rows(Connection conn, String sql, Object... params) throws Exception {
+	public static LList<Map> rows(Connection conn, String sql, Object... params) throws Exception {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
@@ -147,13 +147,13 @@ public class Jdbcuu {
 
 	public static MMap row(Connection conn, String sql, Object... params) throws Exception {
 
-		Map item = null;
-		List<Map> itemList = rows(conn, sql, params);
+		MMap item = null;
+		LList<Map> itemList = rows(conn, sql, params);
 		if (itemList != null && itemList.size() > 0) {
-			item = itemList.get(0);
+			item = itemList.getMap(0);
 		}
 
-		return MMap.build(item);
+		return item;
 	}
 
 	public static ResultSet select(Connection conn, PreparedStatement pst, String sql, Object... params)
@@ -197,7 +197,7 @@ public class Jdbcuu {
 			update(conn, pst, sql, params);
 			ResultSet rs = pst.getGeneratedKeys();
 			if (rs.next())
-				return rs.getInt(1) ;
+				return rs.getInt(1);
 			else
 				return null;
 		} catch (Exception e) {
@@ -336,8 +336,8 @@ public class Jdbcuu {
 		return cnts;
 	}
 
-	public static List<Map> rows(ResultSet rs) throws SQLException {
-		List<Map> rows = new ArrayList();
+	public static LList<Map> rows(ResultSet rs) throws SQLException {
+		LList<Map> rows = LList.build();
 		ResultSetMetaData metaData = rs.getMetaData();
 		int columnCnt = metaData.getColumnCount();
 		while (rs.next()) {
@@ -409,18 +409,18 @@ public class Jdbcuu {
 		return rows;
 	}
 
-	public static Map row(ResultSet rs) throws SQLException {
-		List<Map> list = rows(rs);
+	public static MMap row(ResultSet rs) throws SQLException {
+		LList<Map> list = rows(rs);
 		if (list.size() > 0)
-			return list.get(0);
+			return list.getMap(0);
 		else
 			return null;
 	}
 
 	public static Object getColumn(ResultSet rs) throws SQLException {
-		List<Map> list = rows(rs);
+		LList<Map> list = rows(rs);
 		if (list.size() > 0)
-			return list.get(0).get(list.get(0).keySet().iterator().next());
+			return list.getMap(0).get(list.getMap(0).keySet().iterator().next());
 		else
 			return null;
 	}

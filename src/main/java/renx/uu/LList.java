@@ -2,7 +2,6 @@ package renx.uu;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -24,10 +23,8 @@ public class LList<E> {
 
 		LList values = LList.build();
 		for (int i = 0; i < this.list.size(); i++) {
-			Object o = this.list.get(i);
-			Map m = null;
-			if (o instanceof Map) {
-				m = (Map) o;
+			MMap m = this.getMap(i);
+			if (m != null) {
 				Object value = m.get("key");
 				values.add(value);
 			} else {
@@ -35,6 +32,7 @@ public class LList<E> {
 			}
 		}
 		return values;
+
 	}
 
 	public static LList build(List list) {
@@ -150,6 +148,13 @@ public class LList<E> {
 			return null;
 		else
 			return this.list.get(index);
+	};
+
+	public MMap getMap(int index) {
+		if (this.list == null || this.list.size() <= index)
+			return null;
+		else
+			return MMap.build((Map) this.list.get(index));
 	};
 
 	public String getString(int index) {

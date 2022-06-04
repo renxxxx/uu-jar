@@ -38,14 +38,14 @@ public class CConnection {
 		return cconn2;
 	}
 
-	public List<Map> rows(String sql, LList params) throws Exception {
+	public LList<Map> rows(String sql, LList params) throws Exception {
 		if (params == null || params.isEmpty())
 			return rows(sql);
 		else
 			return rows(sql, params.toArray());
 	}
 
-	public List<Map> rows(String sql, List params) throws Exception {
+	public LList<Map> rows(String sql, List params) throws Exception {
 		if (params == null)
 			return rows(sql);
 		else
@@ -61,9 +61,9 @@ public class CConnection {
 		}
 	}
 
-	public List<Map> rows(String sql, Object... params) throws Exception {
+	public LList<Map> rows(String sql, Object... params) throws Exception {
 		setConnection();
-		List<Map> rows = Jdbcuu.rows(conn, sql, params);
+		LList<Map> rows = Jdbcuu.rows(conn, sql, params);
 		return rows;
 	}
 
