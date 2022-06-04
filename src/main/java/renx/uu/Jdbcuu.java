@@ -147,7 +147,7 @@ public class Jdbcuu {
 
 	public static MMap row(Connection conn, String sql, Object... params) throws Exception {
 
-		MMap item = null;
+		MMap item = MMap.build();
 		LList<Map> itemList = rows(conn, sql, params);
 		if (itemList != null && itemList.size() > 0) {
 			item = itemList.getMap(0);

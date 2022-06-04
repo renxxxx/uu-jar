@@ -3,7 +3,7 @@
 
 	<groupId>renx</groupId>
 	<artifactId>uu</artifactId>
-	<version>2.4.3</version>
+	<version>2.4.4</version>
 	<description>all scopes to provided from none</description>
 	<packaging>jar</packaging>
 	<name>archive</name>
