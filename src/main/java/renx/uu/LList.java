@@ -102,14 +102,16 @@ public class LList<E> {
 	public LList addAll(List e) {
 		if (this.list == null)
 			this.list = new ArrayList();
-		this.list.addAll(e);
+		if (e != null)
+			this.list.addAll(e);
 		return this;
 	}
 
 	public LList addAll(LList e) {
 		if (this.list == null)
 			this.list = new ArrayList();
-		this.list.addAll(e.list);
+		if (e.list != null)
+			this.list.addAll(e.list);
 		return this;
 	}
 
