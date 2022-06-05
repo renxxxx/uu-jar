@@ -25,7 +25,7 @@ public class LList<E> {
 		for (int i = 0; i < this.list.size(); i++) {
 			MMap m = this.getMap(i);
 			if (m != null) {
-				Object value = m.get("key");
+				Object value = m.get(key);
 				values.add(value);
 			} else {
 				values.add(null);
