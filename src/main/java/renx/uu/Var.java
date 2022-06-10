@@ -61,10 +61,12 @@ public class Var {
 
 	public static Var build(Var var) {
 		Var var2 = new Var();
-		var2.name = var.name;
-		var2.value = var.value;
-		var2.code = var.code;
-		var2.codes = var.codes;
+		if (var != null) {
+			var2.name = var.name;
+			var2.value = var.value;
+			var2.code = var.code;
+			var2.codes = var.codes;
+		}
 		return var2;
 	}
 
