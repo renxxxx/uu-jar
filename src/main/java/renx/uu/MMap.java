@@ -113,7 +113,7 @@ public class MMap {
 
 	public Var getVar(Object key) {
 		if (map == null)
-			return null;
+			return Var.build();
 		return Var.build(map.get(key));
 	}
 
