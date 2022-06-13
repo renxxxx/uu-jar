@@ -24,6 +24,12 @@ public class CConnection {
 		return build(null, null);
 	}
 
+	public static CConnection build(Connection conn) {
+		CConnection cconn = build();
+		cconn.conn = conn;
+		return cconn;
+	}
+
 	public static CConnection build(DataSource ds) {
 		return build(ds, null);
 	}
