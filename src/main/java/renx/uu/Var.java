@@ -103,7 +103,7 @@ public class Var {
 		if (codes != null && codes.length > 0)
 			var.code = codes[0];
 		if (var.name == null || var.name.isEmpty())
-			var.name = code;
+			var.name = var.code;
 		return var;
 	}
 
