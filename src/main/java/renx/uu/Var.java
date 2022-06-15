@@ -979,40 +979,40 @@ public class Var {
 			return null;
 		if (value instanceof String)
 			return (String) value;
-		if (value instanceof Double) {
-			String dds = BigDecimal.valueOf((Double) value).toPlainString();
-			String[] ss = dds.split("\\.");
-			String d = null;
-			String d1 = ss[0];
-			String d2 = null;
-			if (ss.length > 1)
-				d2 = ss[1];
-			if (d2 != null && !d2.isEmpty()) {
-				if (d2.replaceAll("0", "").isEmpty())
-					d2 = null;
-			}
-			d = d1;
-			if (d2 != null && !d2.isEmpty())
-				d = d + "." + d2;
-			return d;
-		}
-		if (value instanceof Float) {
-			String dds = BigDecimal.valueOf((Float) value).toPlainString();
-			String[] ss = dds.split("\\.");
-			String d = null;
-			String d1 = ss[0];
-			String d2 = null;
-			if (ss.length > 1)
-				d2 = ss[1];
-			if (d2 != null && !d2.isEmpty()) {
-				if (d2.replaceAll("0", "").isEmpty())
-					d2 = null;
-			}
-			d = d1;
-			if (d2 != null && !d2.isEmpty())
-				d = d + "." + d2;
-			return d;
-		}
+//		if (value instanceof Double) {
+//			String dds = BigDecimal.valueOf((Double) value).toPlainString();
+//			String[] ss = dds.split("\\.");
+//			String d = null;
+//			String d1 = ss[0];
+//			String d2 = null;
+//			if (ss.length > 1)
+//				d2 = ss[1];
+//			if (d2 != null && !d2.isEmpty()) {
+//				if (d2.replaceAll("0", "").isEmpty())
+//					d2 = null;
+//			}
+//			d = d1;
+//			if (d2 != null && !d2.isEmpty())
+//				d = d + "." + d2;
+//			return d;
+//		}
+//		if (value instanceof Float) {
+//			String dds = BigDecimal.valueOf(((Float) value).doubleValue()).toPlainString();
+//			String[] ss = dds.split("\\.");
+//			String d = null;
+//			String d1 = ss[0];
+//			String d2 = null;
+//			if (ss.length > 1)
+//				d2 = ss[1];
+//			if (d2 != null && !d2.isEmpty()) {
+//				if (d2.replaceAll("0", "").isEmpty())
+//					d2 = null;
+//			}
+//			d = d1;
+//			if (d2 != null && !d2.isEmpty())
+//				d = d + "." + d2;
+//			return d;
+//		}
 		String valueStr = value.toString();
 		if (valueStr.isEmpty())
 			return null;
