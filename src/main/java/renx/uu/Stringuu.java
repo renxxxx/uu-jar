@@ -152,12 +152,11 @@ public class Stringuu {
 	}
 
 	public static String timeId() {
-		return new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + RandomStringUtils.randomNumeric(6);
+		return new Date().getTime() + RandomStringUtils.randomNumeric(6);
 	}
 
 	public static String timeId(int randomLength) {
-		return new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date())
-				+ RandomStringUtils.randomNumeric(randomLength);
+		return new Date().getTime() + RandomStringUtils.randomNumeric(randomLength);
 	}
 
 	public static boolean isExisting(CharSequence cs) {

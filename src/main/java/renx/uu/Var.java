@@ -679,7 +679,7 @@ public class Var {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null) {
-			if (!regex.matcher(this.value).matches())
+			if (regex.matcher(this.value).matches())
 				throw Result
 						.build(8,
 								"\"" + this.name + "\"有误"
@@ -699,7 +699,7 @@ public class Var {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null) {
-			if (regex.matcher(this.value).matches())
+			if (!regex.matcher(this.value).matches())
 				throw Result
 						.build(8,
 								"\"" + this.name + "\"有误"
@@ -719,7 +719,7 @@ public class Var {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty()) {
-			if (!regexCache.getWithCreate(regex).matcher(this.value).matches())
+			if (regexCache.getWithCreate(regex).matcher(this.value).matches())
 				throw Result
 						.build(8,
 								"\"" + this.name + "\"有误"
@@ -739,7 +739,7 @@ public class Var {
 		if (!this.run)
 			return this;
 		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty()) {
-			if (regexCache.getWithCreate(regex).matcher(this.value).matches())
+			if (!regexCache.getWithCreate(regex).matcher(this.value).matches())
 				throw Result
 						.build(8,
 								"\"" + this.name + "\"有误"
