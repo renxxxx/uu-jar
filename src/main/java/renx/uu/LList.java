@@ -154,7 +154,7 @@ public class LList<E> {
 
 	public MMap getMap(int index) {
 		if (this.list == null || this.list.size() <= index)
-			return null;
+			return MMap.build();
 		else
 			return MMap.build((Map) this.list.get(index));
 	};
