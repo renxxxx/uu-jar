@@ -113,8 +113,8 @@ public class MMap {
 
 	public Var getVar(Object key) {
 		if (map == null)
-			return Var.build();
-		return Var.build(map.get(key));
+			return Var.build().code(key == null ? null : key.toString());
+		return Var.build(map.get(key)).code(key == null ? null : key.toString());
 	}
 
 	public String getString(Object key) {
