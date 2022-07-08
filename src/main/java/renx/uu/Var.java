@@ -328,11 +328,11 @@ public class Var {
 		return var;
 	}
 
-	public Var default_(Object defaultValue) {
+	public Var setDefault(Object defaultValue) {
 		return emptyDef(defaultValue);
 	}
 
-	public Var default_(boolean run, Object defaultValue) {
+	public Var setDefault(boolean run, Object defaultValue) {
 		return emptyDef(run, defaultValue);
 	}
 

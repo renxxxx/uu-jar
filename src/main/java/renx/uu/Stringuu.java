@@ -244,6 +244,24 @@ public class Stringuu {
 		return ss;
 	}
 
+	public static String excelIndexToAlphas(int value) throws Exception {
+		if (value < 1)
+			return "";
+		// 转26进制 0-25
+		int calculateValue = value - 1;
+		// 取高位
+		int high = calculateValue / 26;
+		// 取低位
+		int low = calculateValue % 26;
+		// 低位可直接取出对应的字母
+		String transStr = String.valueOf((char) (low + 65));
+		if (high > 0) {
+			// 高位递归取出字母
+			transStr = excelIndexToAlphas(high) + transStr;
+		}
+		return transStr;
+	}
+
 	public static String[] array(String... item) {
 		return item;
 	}

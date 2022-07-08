@@ -3,15 +3,43 @@ group=renx
 artifact=uu
 
 version=`cat  ./src/main/java/renx/uu/UU.java |grep -oP '(?<= version = ").*(?=";)'`
-echo current version: $version
+
+echo "-git status"
+result=`git status`
+echo "$result"
+ck=$(echo $result | grep "nothing to commit, working tree clean")
+echo
+
+###########################################
+
+echo current version is $version
 
 read -p "Enter new version: " newVersion
 
 if [[ "$newVersion" = "" ]]
 then 
-	newVersion=$version
+	if [[ "$version" = "" ]]
+	then 
+		newVersion=1.0.0.0
+	else
+		if [[ "$ck" = "" ]]
+		then 
+			in=`echo $version | awk -F ''.'' '{printf "%d", length($0)-length($NF)}'`
+			l=${#version}
+			v=${version:0:$in-1}
+			v2=${version:$in-$l}
+			newVersion=$v.`expr $v2 + 1`
+		else
+			newVersion=$version
+		fi
+	fi
 fi
+
+echo current version: $newVersion
+
 echo
+
+###########################################
 
 sed -i "0,/^\(.*\)<groupId>.*<\/groupId>\(.*\)$/s//\1<groupId>$group<\/groupId>/" ./pom.xml
 sed -i "0,/^\(.*\)<artifactId>.*<\/artifactId>\(.*\)$/s//\1<artifactId>$artifact<\/artifactId>/" ./pom.xml

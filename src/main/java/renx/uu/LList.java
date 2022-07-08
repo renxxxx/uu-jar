@@ -24,15 +24,10 @@ public class LList<E> {
 		LList values = LList.build();
 		for (int i = 0; i < this.list.size(); i++) {
 			MMap m = this.getMap(i);
-			if (m != null) {
-				Object value = m.get(key);
-				values.add(value);
-			} else {
-				values.add(null);
-			}
+			Object value = m.get(key);
+			values.add(value);
 		}
 		return values;
-
 	}
 
 	public static LList build(List list) {
