@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class LList<E> {
 
 	public static void main(String[] args) {
@@ -204,5 +206,17 @@ public class LList<E> {
 			return null;
 		else
 			return this.list.toString();
+	}
+
+	public String join() {
+		if (this.list == null)
+			return null;
+		return StringUtils.join(this.list);
+	}
+
+	public String join(String separator) {
+		if (this.list == null)
+			return null;
+		return StringUtils.join(this.list, separator);
 	}
 }
