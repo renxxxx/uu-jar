@@ -51,13 +51,13 @@ public class LList<E> {
 		return this;
 	}
 
-	public LList add(int i, Object e, boolean if_) {
+	public LList addIf(int i, Object e, boolean if_) {
 		if (if_)
 			return add(i, e);
 		return this;
 	}
 
-	public LList add(Object e, boolean if_) {
+	public LList addIf(Object e, boolean if_) {
 		if (if_)
 			return add(e);
 		return this;
@@ -110,19 +110,19 @@ public class LList<E> {
 		return this;
 	}
 
-	public LList addAll(Object[] e, boolean if_) {
+	public LList addAllIf(Object[] e, boolean if_) {
 		if (if_)
 			addAll(e);
 		return this;
 	}
 
-	public LList addAll(List e, boolean if_) {
+	public LList addAllIf(List e, boolean if_) {
 		if (if_)
 			addAll(e);
 		return this;
 	}
 
-	public LList addAll(LList e, boolean if_) {
+	public LList addAllIf(LList e, boolean if_) {
 		if (if_)
 			addAll(e);
 		return this;
