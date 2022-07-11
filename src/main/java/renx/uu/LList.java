@@ -219,4 +219,10 @@ public class LList<E> {
 			return null;
 		return StringUtils.join(this.list, separator);
 	}
+
+	public Var getVar(int index) {
+		if (this.list == null)
+			return Var.build();
+		return Var.build(this.list.get(index));
+	}
 }
