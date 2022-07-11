@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -207,5 +208,19 @@ public class CConnection {
 	public Object getColumn(String sql, Object... params) throws Exception {
 		setConnection();
 		return Jdbcuu.getColumn(conn, sql, params);
+	}
+
+	public int updateCommonly(String table, MMap columnm, MMap conditionm) throws Exception {
+		return Jdbcuu.updateCommonly(conn, table, columnm, conditionm);
+
+	}
+
+	public int insertByCustomKeyCommonly(String table, MMap columnm) throws Exception {
+		return Jdbcuu.insertByCustomKeyCommonly(conn, table, columnm);
+
+	}
+
+	public int insertCommonly(String table, MMap columnm) throws Exception {
+		return Jdbcuu.insertCommonly(conn, table, columnm);
 	}
 }

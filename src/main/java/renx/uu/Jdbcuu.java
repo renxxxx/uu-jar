@@ -11,11 +11,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.tomcat.util.buf.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -268,6 +270,139 @@ public class Jdbcuu {
 			throw new Exception(e.getMessage() + " sqlNo: " + sqlNo, e);
 		}
 		return cnt;
+	}
+
+	public static LList rowsCommonly(Connection conn, String table, LList columns, MMap conditionm, MMap orderm,
+			LList limits) throws Exception {
+		String sql = "";
+		sql += "select ";
+
+		if (columns.isEmpty()) {
+			sql += " * ";
+		} else {
+			for (int i = 0; i < columns.size(); i++) {
+				sql += columns.get(i) + ",";
+			}
+			sql = sql.substring(0, sql.lastIndexOf(","));
+		}
+
+		sql += " from ";
+		sql += table;
+
+		LList params = LList.build();
+		if (conditionm.isExisting()) {
+			sql += " where ";
+			for (Iterator iterator = conditionm.map.keySet().iterator(); iterator.hasNext();) {
+				Object key = (Object) iterator.next();
+				Object value = conditionm.get(key);
+				sql += value == null || value.toString().isEmpty() ? "" : key + "=? and ";
+				params.addIf(value, value != null && !value.toString().isEmpty());
+			}
+			sql = sql.substring(0, sql.lastIndexOf("and"));
+		}
+
+		if (orderm.isExisting()) {
+			sql += " order by ";
+			for (Iterator iterator = orderm.map.keySet().iterator(); iterator.hasNext();) {
+				Object key = (Object) iterator.next();
+				Object value = orderm.get(key);
+				sql += key == null || key.toString().isEmpty() ? ""
+						: key + " " + Stringuu.trimToBlank((String) value) + ",";
+			}
+			sql = sql.substring(0, sql.lastIndexOf("and"));
+		}
+		return rows(conn, sql, params);
+	}
+
+	public static int updateCommonly(Connection conn, String table, MMap columnm, MMap conditionm) throws Exception {
+		String sql = "";
+		sql += "update ";
+		sql += table;
+		sql += " set id=id,";
+
+		LList params = LList.build();
+
+		if (columnm.isExisting()) {
+			for (Iterator iterator = columnm.map.keySet().iterator(); iterator.hasNext();) {
+				Object key = (Object) iterator.next();
+				Object value = columnm.get(key);
+				sql += value == null ? "" : value.toString().isEmpty() ? key + "=null," : key + "=?,";
+				params.addIf(value, value != null && !value.toString().isEmpty());
+			}
+		}
+		sql = sql.substring(0, sql.lastIndexOf(","));
+		if (conditionm.isExisting()) {
+			sql += " where ";
+			for (Iterator iterator = conditionm.map.keySet().iterator(); iterator.hasNext();) {
+				Object key = (Object) iterator.next();
+				Object value = conditionm.get(key);
+				sql += value == null || value.toString().isEmpty() ? "" : key + "=? and ";
+				params.addIf(value, value != null && !value.toString().isEmpty());
+			}
+			sql = sql.substring(0, sql.lastIndexOf("and"));
+		}
+
+		return update(conn, sql, params);
+	}
+
+	public static int insertByCustomKeyCommonly(Connection conn, String table, MMap columnm) throws Exception {
+		String sql = "";
+		sql += "insert into ";
+		sql += table;
+		sql += " ( ";
+
+		LList params = LList.build();
+		if (columnm.isExisting()) {
+			for (Iterator iterator = columnm.map.keySet().iterator(); iterator.hasNext();) {
+				Object key = (Object) iterator.next();
+				Object value = columnm.get(key);
+				sql += value == null || value.toString().isEmpty() ? "" : key + ",";
+			}
+		}
+		sql = sql.substring(0, sql.lastIndexOf(","));
+		sql += " ) values ( ";
+		if (columnm.isExisting()) {
+			for (Iterator iterator = columnm.map.keySet().iterator(); iterator.hasNext();) {
+				Object key = (Object) iterator.next();
+				Object value = columnm.get(key);
+				sql += value == null || value.toString().isEmpty() ? "" : "?,";
+				params.addIf(value, value != null && !value.toString().isEmpty());
+			}
+		}
+		sql = sql.substring(0, sql.lastIndexOf(","));
+		sql += " ) ";
+
+		return update(conn, sql, params);
+	}
+
+	public static int insertCommonly(Connection conn, String table, MMap columnm) throws Exception {
+		String sql = "";
+		sql += "insert into ";
+		sql += table;
+		sql += " ( ";
+
+		LList params = LList.build();
+		if (columnm.isExisting()) {
+			for (Iterator iterator = columnm.map.keySet().iterator(); iterator.hasNext();) {
+				Object key = (Object) iterator.next();
+				Object value = columnm.get(key);
+				sql += value == null || value.toString().isEmpty() ? "" : key + ",";
+			}
+		}
+		sql = sql.substring(0, sql.lastIndexOf(","));
+		sql += " ) values ( ";
+		if (columnm.isExisting()) {
+			for (Iterator iterator = columnm.map.keySet().iterator(); iterator.hasNext();) {
+				Object key = (Object) iterator.next();
+				Object value = columnm.get(key);
+				sql += value == null || value.toString().isEmpty() ? "" : "?,";
+				params.addIf(value, value != null && !value.toString().isEmpty());
+			}
+		}
+		sql = sql.substring(0, sql.lastIndexOf(","));
+		sql += " ) ";
+
+		return insert(conn, sql, params);
 	}
 
 	public static Integer generatedKey(PreparedStatement pst) throws SQLException {

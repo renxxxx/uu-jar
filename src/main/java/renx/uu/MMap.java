@@ -39,6 +39,10 @@ public class MMap {
 		return build(null);
 	}
 
+	public static MMap build(Object key, Object value) {
+		return build(null).put(key, value);
+	}
+
 	public MMap put(Object key, Object value, boolean if_) {
 		if (if_) {
 			put(key, value);
