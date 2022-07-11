@@ -72,12 +72,12 @@ public class Del_CConnection {
 		return Jdbcuu.getString(o, sql, params);
 	}
 
-	public LList getJsonArray(String sql, Object... params) throws Exception {
-		return Jdbcuu.getJsonArray(o, sql, params);
+	public LList getList(String sql, Object... params) throws Exception {
+		return Jdbcuu.getList(o, sql, params);
 	}
 
-	public MMap getJson(String sql, Object... params) throws Exception {
-		return Jdbcuu.toJsonObject(o, sql, params);
+	public MMap getMap(String sql, Object... params) throws Exception {
+		return Jdbcuu.getMap(o, sql, params);
 	}
 
 	public BigDecimal getDecimal(String sql, Object... params) throws Exception {

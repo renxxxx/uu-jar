@@ -88,12 +88,12 @@ public class Jdbcuu {
 		return Var.toString(getColumn(conn, sql, params));
 	}
 
-	public static LList getJsonArray(Connection conn, String sql, Object... params) throws Exception {
-		return Var.toJsonArray(getColumn(conn, sql, params));
+	public static LList getList(Connection conn, String sql, Object... params) throws Exception {
+		return Var.toList(getColumn(conn, sql, params));
 	}
 
-	public static MMap toJsonObject(Connection conn, String sql, Object... params) throws Exception {
-		return Var.toJsonObject(getColumn(conn, sql, params));
+	public static MMap getMap(Connection conn, String sql, Object... params) throws Exception {
+		return Var.toMap(getColumn(conn, sql, params));
 	}
 
 	public static BigDecimal getDecimal(Connection conn, String sql, Object... params) throws Exception {

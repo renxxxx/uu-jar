@@ -787,6 +787,14 @@ public class Var {
 		return this.value;
 	}
 
+	public MMap toMap() {
+		return Var.toMap(value);
+	}
+
+	public LList toList() {
+		return Var.toList(value);
+	}
+
 	public Integer toInteger() {
 		return isEmpty() ? null : Integer.parseInt(this.value.split("\\.")[0]);
 	}
@@ -1188,7 +1196,7 @@ public class Var {
 			return new BigDecimal(valueStr);
 	}
 
-	public static LList toJsonArray(Object value) {
+	public static LList toList(Object value) {
 		try {
 			if (value == null)
 				return LList.build();
@@ -1203,7 +1211,7 @@ public class Var {
 		}
 	}
 
-	public static MMap toJsonObject(Object value) {
+	public static MMap toMap(Object value) {
 		try {
 			if (value == null)
 				return MMap.build();

@@ -174,14 +174,14 @@ public class CConnection {
 		return Jdbcuu.getString(conn, sql, params);
 	}
 
-	public LList getJsonArray(String sql, Object... params) throws Exception {
+	public LList getList(String sql, Object... params) throws Exception {
 		setConnection();
-		return Jdbcuu.getJsonArray(conn, sql, params);
+		return Jdbcuu.getList(conn, sql, params);
 	}
 
-	public MMap getJsonObject(String sql, Object... params) throws Exception {
+	public MMap getMap(String sql, Object... params) throws Exception {
 		setConnection();
-		return Jdbcuu.toJsonObject(conn, sql, params);
+		return Jdbcuu.getMap(conn, sql, params);
 	}
 
 	public BigDecimal getDecimal(String sql, Object... params) throws Exception {
