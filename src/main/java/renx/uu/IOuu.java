@@ -117,6 +117,7 @@ public class IOuu {
 		InputStream is = null;
 		OutputStream os = null;
 		try {
+			out.getParentFile().mkdirs();
 			is = new FileInputStream(in);
 			os = new FileOutputStream(out);
 			return org.apache.commons.io.IOUtils.copy(is, os);
