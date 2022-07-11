@@ -515,6 +515,38 @@ public class Var {
 		return this;
 	}
 
+	public Var vList() {
+		if (!this.run)
+			return this;
+		LList list = null;
+		if (this.value != null && !this.value.isEmpty()) {
+			try {
+				list = Var.toList(this.value);
+			} catch (Exception e) {
+
+			}
+			if (list == null)
+				throw Result.build(8, "\"" + this.name + "\"有误").errorParam(this.code);
+		}
+		return this;
+	}
+
+	public Var vMap() {
+		if (!this.run)
+			return this;
+		MMap list = null;
+		if (this.value != null && !this.value.isEmpty()) {
+			try {
+				list = Var.toMap(this.value);
+			} catch (Exception e) {
+
+			}
+			if (list == null)
+				throw Result.build(8, "\"" + this.name + "\"有误").errorParam(this.code);
+		}
+		return this;
+	}
+
 	public Var vInteger() {
 		if (!this.run)
 			return this;
