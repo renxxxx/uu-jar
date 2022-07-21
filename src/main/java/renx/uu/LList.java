@@ -156,6 +156,13 @@ public class LList<E> {
 			return MMap.build((Map) this.list.get(index));
 	};
 
+	public LList getList(int index) {
+		if (this.list == null || this.list.size() <= index)
+			return LList.build();
+		else
+			return LList.build((List) this.list.get(index));
+	};
+
 	public String getString(int index) {
 		if (this.list == null || this.list.size() <= index)
 			return null;
