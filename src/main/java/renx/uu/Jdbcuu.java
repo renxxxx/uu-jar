@@ -316,7 +316,7 @@ public class Jdbcuu {
 	public static int updateCommonly(Connection conn, String table, MMap columnm, MMap conditionm) throws Exception {
 		String sql = "";
 		sql += "update ";
-		sql += table;
+		sql += " `" + table + "` ";
 		sql += " set id=id,";
 
 		LList params = LList.build();
@@ -325,7 +325,8 @@ public class Jdbcuu {
 			for (Iterator iterator = columnm.map.keySet().iterator(); iterator.hasNext();) {
 				Object key = (Object) iterator.next();
 				Object value = columnm.get(key);
-				sql += value == null ? "" : value.toString().isEmpty() ? key + "=null," : key + "=?,";
+				sql += value == null ? ""
+						: value.toString().isEmpty() ? "`" + key + "`" + "=null," : "`" + key + "`" + "=?,";
 				params.addIf(value, value != null && !value.toString().isEmpty());
 			}
 		}
@@ -335,7 +336,28 @@ public class Jdbcuu {
 			for (Iterator iterator = conditionm.map.keySet().iterator(); iterator.hasNext();) {
 				Object key = (Object) iterator.next();
 				Object value = conditionm.get(key);
-				sql += value == null || value.toString().isEmpty() ? "" : key + "=? and ";
+				sql += value == null || value.toString().isEmpty() ? "" : "`" + key + "`" + "=? and ";
+				params.addIf(value, value != null && !value.toString().isEmpty());
+			}
+			sql = sql.substring(0, sql.lastIndexOf("and"));
+		}
+
+		return update(conn, sql, params);
+	}
+
+	public static int deleteCommonly(Connection conn, String table, MMap conditionm) throws Exception {
+		String sql = "";
+		sql += "delete from ";
+		sql += " `" + table + "` ";
+
+		LList params = LList.build();
+
+		if (conditionm.isExisting()) {
+			sql += " where ";
+			for (Iterator iterator = conditionm.map.keySet().iterator(); iterator.hasNext();) {
+				Object key = (Object) iterator.next();
+				Object value = conditionm.get(key);
+				sql += value == null || value.toString().isEmpty() ? "" : "`" + key + "`" + "=? and ";
 				params.addIf(value, value != null && !value.toString().isEmpty());
 			}
 			sql = sql.substring(0, sql.lastIndexOf("and"));
@@ -347,7 +369,7 @@ public class Jdbcuu {
 	public static int insertByCustomKeyCommonly(Connection conn, String table, MMap columnm) throws Exception {
 		String sql = "";
 		sql += "insert into ";
-		sql += table;
+		sql += "`" + table + "`";
 		sql += " ( ";
 
 		LList params = LList.build();
@@ -355,7 +377,7 @@ public class Jdbcuu {
 			for (Iterator iterator = columnm.map.keySet().iterator(); iterator.hasNext();) {
 				Object key = (Object) iterator.next();
 				Object value = columnm.get(key);
-				sql += value == null || value.toString().isEmpty() ? "" : key + ",";
+				sql += value == null || value.toString().isEmpty() ? "" : "`" + key + "`" + ",";
 			}
 		}
 		sql = sql.substring(0, sql.lastIndexOf(","));
@@ -377,7 +399,7 @@ public class Jdbcuu {
 	public static int insertCommonly(Connection conn, String table, MMap columnm) throws Exception {
 		String sql = "";
 		sql += "insert into ";
-		sql += table;
+		sql += "`" + table + "`";
 		sql += " ( ";
 
 		LList params = LList.build();
@@ -385,7 +407,7 @@ public class Jdbcuu {
 			for (Iterator iterator = columnm.map.keySet().iterator(); iterator.hasNext();) {
 				Object key = (Object) iterator.next();
 				Object value = columnm.get(key);
-				sql += value == null || value.toString().isEmpty() ? "" : key + ",";
+				sql += value == null || value.toString().isEmpty() ? "" : "`" + key + "`" + ",";
 			}
 		}
 		sql = sql.substring(0, sql.lastIndexOf(","));

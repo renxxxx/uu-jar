@@ -60,12 +60,16 @@ public class CConnection {
 	}
 
 	private void setConnection() throws SQLException {
+		int mark = 0;
+		logger.info("mark" + ++mark);
 		if (conn == null) {
-			logger.info("start dataSource.getConnection()");
+			logger.info("mark" + ++mark);
 			conn = dataSource.getConnection();
-			logger.info("end dataSource.getConnection()");
+
+			logger.info("mark" + ++mark);
 			conn.setAutoCommit(false);
 		}
+		logger.info("mark" + ++mark);
 	}
 
 	public LList<Map> rows(String sql, Object... params) throws Exception {
@@ -212,6 +216,11 @@ public class CConnection {
 
 	public int updateCommonly(String table, MMap columnm, MMap conditionm) throws Exception {
 		return Jdbcuu.updateCommonly(conn, table, columnm, conditionm);
+
+	}
+
+	public int deleteCommonly(String table, MMap conditionm) throws Exception {
+		return Jdbcuu.deleteCommonly(conn, table, conditionm);
 
 	}
 
