@@ -143,7 +143,13 @@ public class Var {
 		if (from != null)
 			for (Object value : from) {
 				if (value != null) {
-					var.value = value.toString();
+					if (value instanceof Float || value instanceof Double) {
+						var.value = value.toString();
+						var.value.replaceAll("\\.0*^", code);
+						
+					} else {
+						var.value = value.toString();
+					}
 					break;
 				}
 			}
@@ -1287,6 +1293,6 @@ public class Var {
 
 	public static void main(String[] args) throws ParseException, NoSuchFieldException, SecurityException,
 			IllegalArgumentException, IllegalAccessException {
-		Var.vAnyExisting(Var.build().code("q"), Var.build().code("e").name("aaa"));
+		System.out.println(Double.valueOf("22314321421342134132421234").toString().replaceAll("\\.0*^", ""));
 	}
 }
