@@ -144,7 +144,7 @@ public class Var {
 			for (Object value : from) {
 				if (value != null) {
 					if (value instanceof Float || value instanceof Double) {
-						var.value = value.toString().replaceAll("\\.0*^", code);
+						var.value = value.toString().replaceAll("\\.0*^", "");
 					} else {
 						var.value = value.toString();
 					}
