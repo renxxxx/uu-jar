@@ -144,7 +144,7 @@ public class Var {
 			for (Object value : from) {
 				if (value != null) {
 					if (value instanceof Float || value instanceof Double) {
-						var.value = value.toString().replaceAll("\\.0*^", "");
+						var.value = value.toString().replaceAll("\\.0*$", "");
 					} else {
 						var.value = value.toString();
 					}
@@ -1291,6 +1291,8 @@ public class Var {
 
 	public static void main(String[] args) throws ParseException, NoSuchFieldException, SecurityException,
 			IllegalArgumentException, IllegalAccessException {
-		System.out.println(Double.valueOf("22314321421342134132421234").toString().replaceAll("\\.0*^", ""));
+		double d = 2.0d;
+		Object c = d;
+		System.out.println(Double.valueOf(1.0).toString().replaceAll("\\.0*$", ""));
 	}
 }
