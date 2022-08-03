@@ -26,6 +26,8 @@ public class MMail {
 	public String sender;
 
 	public Message send(String receiver, String subject, String content) throws Exception {
+		if (receiver == null || receiver.isEmpty())
+			return null;
 		subject = subject == null ? "" : subject;
 		content = content == null ? "" : content;
 		content = content.replaceAll("\n", "</br>");
