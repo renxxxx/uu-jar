@@ -1289,6 +1289,15 @@ public class Var {
 		return var;
 	}
 
+	public Var clone() {
+		Var var2 = new Var();
+		var2.name = this.name;
+		var2.value = this.value;
+		var2.code = this.code;
+		var2.codes = this.codes;
+		return var2;
+	}
+
 	public static void main(String[] args) throws ParseException, NoSuchFieldException, SecurityException,
 			IllegalArgumentException, IllegalAccessException {
 		double d = 2.0d;
