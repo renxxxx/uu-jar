@@ -1,5 +1,6 @@
 package renx.uu;
 
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -273,5 +274,15 @@ public class Stringuu {
 			v += item == null || item.toString() == null ? "" : item.toString();
 		}
 		return v;
+	}
+
+	public static String charsetConvert(String s, String from, String to) {
+		try {
+			if (s == null || s.isEmpty())
+				return s;
+			return new String(s.getBytes(from), to);
+		} catch (UnsupportedEncodingException e) {
+			return s;
+		}
 	}
 }
