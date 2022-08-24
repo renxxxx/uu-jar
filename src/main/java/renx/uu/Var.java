@@ -820,7 +820,7 @@ public class Var {
 
 	@Override
 	public String toString() {
-		return this.value == null ? "" : this.value;
+		return this.value;
 	}
 
 	public MMap toMap() {

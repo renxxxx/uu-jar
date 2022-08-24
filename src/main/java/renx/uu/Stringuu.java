@@ -266,4 +266,12 @@ public class Stringuu {
 		return item;
 	}
 
+	public static String concat(Object... items) {
+		String v = "";
+		for (int i = 0; i < items.length; i++) {
+			Object item = items[i];
+			v += item == null || item.toString() == null ? "" : item.toString();
+		}
+		return v;
+	}
 }
