@@ -36,6 +36,12 @@ public class JJedis {
 		return this.prefix == null || this.prefix.isEmpty() ? key : (this.prefix + "-" + key);
 	}
 
+	public Long ttl(final String key) {
+		if (jedis == null)
+			jedis = jedisPool.getResource();
+		return jedis.ttl(buildKey(key));
+	}
+
 	public String get(final String key) {
 		if (jedis == null)
 			jedis = jedisPool.getResource();
