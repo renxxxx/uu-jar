@@ -3,10 +3,10 @@ package renx.uu;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
+
+import com.alibaba.fastjson.JSONObject;
 
 public class Del_CConnection {
 	public Connection o;
@@ -61,42 +61,42 @@ public class Del_CConnection {
 	}
 
 	public InputStream getStream(String sql, Object... params) throws Exception {
-		return Jdbcuu.getStream(o, sql, params);
+		return Jdbcuu2.getStream(o, sql, params);
 	}
 
 	public Integer getInteger(String sql, Object... params) throws Exception {
-		return Jdbcuu.getInteger(o, sql, params);
+		return Jdbcuu2.getInteger(o, sql, params);
 	}
 
 	public String getString(String sql, Object... params) throws Exception {
-		return Jdbcuu.getString(o, sql, params);
+		return Jdbcuu2.getString(o, sql, params);
 	}
 
-	public LList getList(String sql, Object... params) throws Exception {
-		return Jdbcuu.getList(o, sql, params);
-	}
+//	public LList getList(String sql, Object... params) throws Exception {
+//		return Jdbcuuu.getList(o, sql, params);
+//	}
 
-	public MMap getMap(String sql, Object... params) throws Exception {
-		return Jdbcuu.getMap(o, sql, params);
+	public JSONObject getMap(String sql, Object... params) throws Exception {
+		return Jdbcuu2.getMap(o, sql, params);
 	}
 
 	public BigDecimal getDecimal(String sql, Object... params) throws Exception {
-		return Jdbcuu.getDecimal(o, sql, params);
+		return Jdbcuu2.getDecimal(o, sql, params);
 	}
 
 	public Long getLong(String sql, Object... params) throws Exception {
-		return Jdbcuu.getLong(o, sql, params);
+		return Jdbcuu2.getLong(o, sql, params);
 	}
 
 	public Float getFloat(String sql, Object... params) throws Exception {
-		return Jdbcuu.getFloat(o, sql, params);
+		return Jdbcuu2.getFloat(o, sql, params);
 	}
 
 	public Date getDate(String sql, Object... params) throws Exception {
-		return Jdbcuu.getDate(o, sql, params);
+		return Jdbcuu2.getDate(o, sql, params);
 	}
 
-	public Object getColumn(String sql, Object... params) throws Exception {
-		return Jdbcuu.getColumn(o, sql, params);
+	public Object getObject(String sql, Object... params) throws Exception {
+		return Jdbcuu2.getObject(o, sql, params);
 	}
 }
