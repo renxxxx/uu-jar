@@ -27,8 +27,10 @@ public class Jdbcuu {
 	private static Logger logger = LoggerFactory.getLogger(Jdbcuu.class);
 
 	public static void main(String[] args) {
-		Integer a = null;
-		System.out.println(Var.toString(a));
+		Object value = "";
+		String sql = "";
+		System.out.println(sql += value == null ? ""
+				: value.toString().isEmpty() ? "`" + null + "`" + "=null," : "`" + null + "`" + "=?,");
 	}
 
 	public static LList<Map> rows(Connection conn, String sql, LList params) throws Exception {
@@ -354,9 +356,9 @@ public class Jdbcuu {
 			for (Iterator iterator = columnm.map.keySet().iterator(); iterator.hasNext();) {
 				Object key = (Object) iterator.next();
 				Object value = columnm.get(key);
-				sql += value == null ? ""
+				sql += value == null || value.toString() == null ? ""
 						: value.toString().isEmpty() ? "`" + key + "`" + "=null," : "`" + key + "`" + "=?,";
-				params.addIf(value, value != null && !value.toString().isEmpty());
+				params.addIf(value, value != null && value.toString() != null && !value.toString().isEmpty());
 			}
 		}
 		sql = sql.substring(0, sql.lastIndexOf(","));
@@ -365,8 +367,9 @@ public class Jdbcuu {
 			for (Iterator iterator = conditionm.map.keySet().iterator(); iterator.hasNext();) {
 				Object key = (Object) iterator.next();
 				Object value = conditionm.get(key);
-				sql += value == null || value.toString().isEmpty() ? "" : "`" + key + "`" + "=? and ";
-				params.addIf(value, value != null && !value.toString().isEmpty());
+				sql += value == null || value.toString() == null || value.toString().isEmpty() ? ""
+						: "`" + key + "`" + "=? and ";
+				params.addIf(value, value != null && value.toString() != null && !value.toString().isEmpty());
 			}
 			sql = sql.substring(0, sql.lastIndexOf("and"));
 		}
@@ -408,8 +411,9 @@ public class Jdbcuu {
 			for (Iterator iterator = conditionm.map.keySet().iterator(); iterator.hasNext();) {
 				Object key = (Object) iterator.next();
 				Object value = conditionm.get(key);
-				sql += value == null || value.toString().isEmpty() ? "" : "`" + key + "`" + "=? and ";
-				params.addIf(value, value != null && !value.toString().isEmpty());
+				sql += value == null || value.toString() == null || value.toString().isEmpty() ? ""
+						: "`" + key + "`" + "=? and ";
+				params.addIf(value, value != null && value.toString() != null && !value.toString().isEmpty());
 			}
 			sql = sql.substring(0, sql.lastIndexOf("and"));
 		}
@@ -474,7 +478,8 @@ public class Jdbcuu {
 			for (Iterator iterator = columnm.map.keySet().iterator(); iterator.hasNext();) {
 				Object key = (Object) iterator.next();
 				Object value = columnm.get(key);
-				sql += value == null || value.toString().isEmpty() ? "" : "`" + key + "`" + ",";
+				sql += value == null || value.toString() == null || value.toString().isEmpty() ? ""
+						: "`" + key + "`" + ",";
 			}
 		}
 		sql = sql.substring(0, sql.lastIndexOf(","));
@@ -483,8 +488,8 @@ public class Jdbcuu {
 			for (Iterator iterator = columnm.map.keySet().iterator(); iterator.hasNext();) {
 				Object key = (Object) iterator.next();
 				Object value = columnm.get(key);
-				sql += value == null || value.toString().isEmpty() ? "" : "?,";
-				params.addIf(value, value != null && !value.toString().isEmpty());
+				sql += value == null || value.toString() == null || value.toString().isEmpty() ? "" : "?,";
+				params.addIf(value, value != null && value.toString() != null && !value.toString().isEmpty());
 			}
 		}
 		sql = sql.substring(0, sql.lastIndexOf(","));
@@ -818,4 +823,5 @@ public class Jdbcuu {
 //		sqlB.append(baseSort).append(" ").append(baseOrder);
 //		return sqlB.toString();
 //	}
+
 }
