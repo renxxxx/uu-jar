@@ -79,11 +79,19 @@ public class Var {
 		return Var.build().code(code).value(from);
 	}
 
+	public static Var build(String code, Map from) {
+		return Var.build().code(code).value(from);
+	}
+
 	public static Var build(String name, String code, HttpServletRequest from) {
 		return Var.build().name(name).code(code).value(from);
 	}
 
 	public static Var build(String name, String code, MMap from) {
+		return Var.build().name(name).code(code).value(from);
+	}
+
+	public static Var build(String name, String code, Map from) {
 		return Var.build().name(name).code(code).value(from);
 	}
 
@@ -130,6 +138,17 @@ public class Var {
 		Var var = Var.build(this);
 
 		var.value = from.getString(code);
+		if (var.value != null && !var.value.isEmpty() && var.value.matches(".*<(s|S)(c|C)(r|R)(i|I)(p|P)(t|T).*"))
+			throw Result.build(8, "\"" + var.name + "\"有误").errorParam(var.code);
+		if ("null".equals(var.value) || "undefined".equals(var.value) || "NaN".equals(var.value))
+			var.value = null;
+		return var;
+	}
+
+	public Var value(Map from) {
+		Var var = Var.build(this);
+
+		var.value = (String) from.get(code);
 		if (var.value != null && !var.value.isEmpty() && var.value.matches(".*<(s|S)(c|C)(r|R)(i|I)(p|P)(t|T).*"))
 			throw Result.build(8, "\"" + var.name + "\"有误").errorParam(var.code);
 		if ("null".equals(var.value) || "undefined".equals(var.value) || "NaN".equals(var.value))

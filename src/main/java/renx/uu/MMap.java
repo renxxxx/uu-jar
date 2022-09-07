@@ -103,7 +103,7 @@ public class MMap {
 		return putAll(keyPrefix, mmap.map);
 	}
 
-	public Object get(Object key) {
+	public Object getObject(Object key) {
 		if (this.map == null)
 			return null;
 		return map.get(key);
@@ -115,7 +115,7 @@ public class MMap {
 		return map.remove(key);
 	}
 
-	public Var getVar(Object key) {
+	public Var get(Object key) {
 		if (map == null)
 			return Var.build().code(key == null ? null : key.toString());
 		return Var.build(map.get(key)).code(key == null ? null : key.toString());

@@ -5,9 +5,7 @@ import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import javax.sql.DataSource;
 
@@ -45,14 +43,14 @@ public class CConnection {
 		return cconn2;
 	}
 
-	public LList<Map> rows(String sql, LList params) throws Exception {
+	public LList rows(String sql, LList params) throws Exception {
 		if (params == null || params.isEmpty())
 			return rows(sql);
 		else
 			return rows(sql, params.toArray());
 	}
 
-	public LList<Map> rows(String sql, List params) throws Exception {
+	public LList rows(String sql, List params) throws Exception {
 		if (params == null)
 			return rows(sql);
 		else
@@ -72,15 +70,9 @@ public class CConnection {
 		logger.info("mark" + ++mark);
 	}
 
-	public LList<Map> rows(String sql, Object... params) throws Exception {
+	public LList rows(String sql, Object... params) throws Exception {
 		setConnection();
-		LList<Map> rows = Jdbcuu.rows(conn, sql, params);
-		return rows;
-	}
-
-	public List<Object> thinRows(String sql, Object... params) throws Exception {
-		setConnection();
-		List<Object> rows = Jdbcuu.thinRows(conn, sql, params);
+		LList rows = Jdbcuu.rows(conn, sql, params);
 		return rows;
 	}
 
@@ -104,42 +96,42 @@ public class CConnection {
 		return row;
 	}
 
-	public int update(String sql, LList params) throws Exception {
+	public int updateSql(String sql, LList params) throws Exception {
 		if (params == null || params.isEmpty())
-			return update(sql);
+			return updateSql(sql);
 		else
-			return update(sql, params.toArray());
+			return updateSql(sql, params.toArray());
 	}
 
-	public int update(String sql, List params) throws Exception {
+	public int updateSql(String sql, List params) throws Exception {
 		if (params == null)
-			return update(sql);
+			return updateSql(sql);
 		else
-			return update(sql, params.toArray());
+			return updateSql(sql, params.toArray());
 	}
 
-	public int update(String sql, Object... params) throws Exception {
+	public int updateSql(String sql, Object... params) throws Exception {
 		setConnection();
-		return Jdbcuu.update(conn, sql, params);
+		return Jdbcuu.updateSql(conn, sql, params);
 	}
 
-	public Integer insert(String sql, LList params) throws Exception {
+	public Integer insertSql(String sql, LList params) throws Exception {
 		if (params == null || params.isEmpty())
-			return insert(sql);
+			return insertSql(sql);
 		else
-			return insert(sql, params.toArray());
+			return insertSql(sql, params.toArray());
 	}
 
-	public Integer insert(String sql, List params) throws Exception {
+	public Integer insertSql(String sql, List params) throws Exception {
 		if (params == null)
-			return insert(sql);
+			return insertSql(sql);
 		else
-			return insert(sql, params.toArray());
+			return insertSql(sql, params.toArray());
 	}
 
-	public Integer insert(String sql, Object... params) throws Exception {
+	public Integer insertSql(String sql, Object... params) throws Exception {
 		setConnection();
-		return Jdbcuu.insert(conn, sql, params);
+		return Jdbcuu.insertSql(conn, sql, params);
 	}
 
 	public void rollback() throws Exception {
@@ -209,27 +201,86 @@ public class CConnection {
 		return Jdbcuu.getDate(conn, sql, params);
 	}
 
-	public Object getColumn(String sql, Object... params) throws Exception {
+	public Object getObject(String sql, Object... params) throws Exception {
 		setConnection();
-		return Jdbcuu.getColumn(conn, sql, params);
+		return Jdbcuu.getObject(conn, sql, params);
 	}
 
-	public int updateCommonly(String table, MMap columnm, MMap conditionm) throws Exception {
-		return Jdbcuu.updateCommonly(conn, table, columnm, conditionm);
+	public int updateById(String table, Object column, Object value, String id) throws Exception {
+		MMap columnm = new MMap();
+		columnm.put((String) column, value);
+		return Jdbcuu.updateById(conn, table, columnm, id);
+	}
+
+	public int updateById(String table, Object[] columns, Object[] values, String id) throws Exception {
+		MMap columnm = new MMap();
+		columns = columns == null ? new Object[] {} : columns;
+		values = values == null ? new Object[] {} : values;
+		for (int i = 0; i < columns.length; i++) {
+			columnm.put((String) columns[i], values[i]);
+		}
+		return Jdbcuu.updateById(conn, table, columnm, id);
+	}
+
+	public int updateById(String table, MMap columnm, String id) throws Exception {
+		MMap conditionm = new MMap();
+		conditionm.put("id", id);
+		return Jdbcuu.update(conn, table, columnm, conditionm);
+	}
+
+	public int update(String table, MMap columnm, MMap conditionm) throws Exception {
+		return Jdbcuu.update(conn, table, columnm, conditionm);
+	}
+
+	public int deleteById(Connection conn, String table, Object id) throws Exception {
+		MMap conditionm = new MMap();
+		conditionm.put("id", id);
+		return Jdbcuu.delete(conn, table, conditionm);
+	}
+
+	public int delete(String table, Object columnm, Object value) throws Exception {
+		MMap conditionm = new MMap();
+		conditionm.put((String) columnm, value);
+		return Jdbcuu.delete(conn, table, conditionm);
+	}
+
+	public int delete(String table, Object[] columnms, Object[] values) throws Exception {
+		MMap conditionm = new MMap();
+		columnms = columnms == null ? new Object[] {} : columnms;
+		values = values == null ? new Object[] {} : values;
+		for (int i = 0; i < columnms.length; i++) {
+			conditionm.put((String) columnms[i], values[i]);
+		}
+		return Jdbcuu.delete(conn, table, conditionm);
+	}
+
+	public int delete(String table, MMap conditionm) throws Exception {
+		return Jdbcuu.delete(conn, table, conditionm);
 
 	}
 
-	public int deleteCommonly(String table, MMap conditionm) throws Exception {
-		return Jdbcuu.deleteCommonly(conn, table, conditionm);
+//	public int insertByCustomKeyCommonly(String table, MMap columnm) throws Exception {
+//		return Jdbcuu.insertByCustomKeyCommonly(conn, table, columnm);
+//
+//	}
 
+	public int insert(String table, MMap columnm) throws Exception {
+		return Jdbcuu.insert(conn, table, columnm);
 	}
 
-	public int insertByCustomKeyCommonly(String table, MMap columnm) throws Exception {
-		return Jdbcuu.insertByCustomKeyCommonly(conn, table, columnm);
-
+	public int insert(String table, Object column, Object value) throws Exception {
+		MMap columnm = new MMap();
+		columnm.put((String) column, value);
+		return Jdbcuu.insert(conn, table, columnm);
 	}
 
-	public int insertCommonly(String table, MMap columnm) throws Exception {
-		return Jdbcuu.insertCommonly(conn, table, columnm);
+	public int insert(String table, Object[] columnms, Object[] values) throws Exception {
+		MMap columnm = new MMap();
+		columnms = columnms == null ? new Object[] {} : columnms;
+		values = values == null ? new Object[] {} : values;
+		for (int i = 0; i < columnms.length; i++) {
+			columnm.put((String) columnms[i], values[i]);
+		}
+		return Jdbcuu.insert(conn, table, columnm);
 	}
 }

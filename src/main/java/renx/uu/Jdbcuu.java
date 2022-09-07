@@ -21,6 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 
 public class Jdbcuu {
 	private static Logger logger = LoggerFactory.getLogger(Jdbcuu.class);
@@ -42,7 +43,7 @@ public class Jdbcuu {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
-			return rows(select(conn, pst, sql, params));
+			return rows(selectSql(conn, pst, sql, params));
 		} catch (Exception e) {
 			throw e;
 		} finally {
@@ -51,24 +52,24 @@ public class Jdbcuu {
 		}
 	}
 
-	public static List<Object> thinRows(Connection conn, String sql, Object... params) throws Exception {
-		PreparedStatement pst = null;
-		try {
-			pst = conn.prepareStatement(sql);
-			return thinRows(select(conn, pst, sql, params));
-		} catch (Exception e) {
-			throw e;
-		} finally {
-			if (pst != null)
-				pst.close();
-		}
-	}
+//	public static List<Object> thinRows(Connection conn, String sql, Object... params) throws Exception {
+//		PreparedStatement pst = null;
+//		try {
+//			pst = conn.prepareStatement(sql);
+//			return thinRows(select(conn, pst, sql, params));
+//		} catch (Exception e) {
+//			throw e;
+//		} finally {
+//			if (pst != null)
+//				pst.close();
+//		}
+//	}
 
 	public static InputStream getStream(Connection conn, String sql, Object... params) throws Exception {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
-			ResultSet rs = select(conn, pst, sql, params);
+			ResultSet rs = selectSql(conn, pst, sql, params);
 			if (rs.next()) {
 				return rs.getBinaryStream(1);
 			}
@@ -82,38 +83,42 @@ public class Jdbcuu {
 	}
 
 	public static Integer getInteger(Connection conn, String sql, Object... params) throws Exception {
-		return Var.toInteger(getColumn(conn, sql, params));
+		return Var.toInteger(getObject(conn, sql, params));
 	}
 
 	public static String getString(Connection conn, String sql, Object... params) throws Exception {
-		return Var.toString(getColumn(conn, sql, params));
+		return Var.toString(getObject(conn, sql, params));
 	}
 
 	public static LList getList(Connection conn, String sql, Object... params) throws Exception {
-		return Var.toList(getColumn(conn, sql, params));
+		return Var.toList(getObject(conn, sql, params));
 	}
 
 	public static MMap getMap(Connection conn, String sql, Object... params) throws Exception {
-		return Var.toMap(getColumn(conn, sql, params));
+		return Var.toMap(getObject(conn, sql, params));
 	}
 
 	public static BigDecimal getDecimal(Connection conn, String sql, Object... params) throws Exception {
-		return Var.toDecimal(getColumn(conn, sql, params));
+		return Var.toDecimal(getObject(conn, sql, params));
 	}
 
 	public static Long getLong(Connection conn, String sql, Object... params) throws Exception {
-		return Var.toLong(getColumn(conn, sql, params));
+		return Var.toLong(getObject(conn, sql, params));
 	}
 
 	public static Float getFloat(Connection conn, String sql, Object... params) throws Exception {
-		return Var.toFloat(getColumn(conn, sql, params));
+		return Var.toFloat(getObject(conn, sql, params));
 	}
 
 	public static Date getDate(Connection conn, String sql, Object... params) throws Exception {
-		return Var.toDate(getColumn(conn, sql, params));
+		return Var.toDate(getObject(conn, sql, params));
 	}
 
-	public static Object getColumn(Connection conn, String sql, Object... params) throws Exception {
+	public static Var getVar(Connection conn, String sql, Object... params) throws Exception {
+		return Var.build(getObject(conn, sql, params));
+	}
+
+	public static Object getObject(Connection conn, String sql, Object... params) throws Exception {
 		MMap row = row(conn, sql, params);
 		if (row.map == null)
 			return null;
@@ -157,7 +162,7 @@ public class Jdbcuu {
 		return item;
 	}
 
-	public static ResultSet select(Connection conn, PreparedStatement pst, String sql, Object... params)
+	public static ResultSet selectSql(Connection conn, PreparedStatement pst, String sql, Object... params)
 			throws Exception {
 		if (params == null)
 			params = new Object[] {};
@@ -191,11 +196,11 @@ public class Jdbcuu {
 //		return new StringBuilder("%").append(columnValue).append("%").toString();
 //	}
 
-	public static Integer insert(Connection conn, String sql, Object... params) throws Exception {
+	public static Integer insertSql(Connection conn, String sql, Object... params) throws Exception {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-			update(conn, pst, sql, params);
+			updateSql(conn, pst, sql, params);
 			ResultSet rs = pst.getGeneratedKeys();
 			if (rs.next())
 				return rs.getInt(1);
@@ -209,23 +214,23 @@ public class Jdbcuu {
 		}
 	}
 
-	public static Integer insert(Connection conn, String sql, LList params) throws Exception {
-		return insert(conn, sql, params.toArray());
+	public static Integer insertSql(Connection conn, String sql, LList params) throws Exception {
+		return insertSql(conn, sql, params.toArray());
 	}
 
-	public static int update(Connection conn, String sql, LList params) throws Exception {
-		return update(conn, sql, params.toArray());
+	public static int updateSql(Connection conn, String sql, LList params) throws Exception {
+		return updateSql(conn, sql, params.toArray());
 	}
 
-	public static int update(Connection conn, String sql, List params) throws Exception {
-		return update(conn, sql, LList.build(params));
+	public static int updateSql(Connection conn, String sql, List params) throws Exception {
+		return updateSql(conn, sql, LList.build(params));
 	}
 
-	public static int update(Connection conn, String sql, Object... params) throws Exception {
+	public static int updateSql(Connection conn, String sql, Object... params) throws Exception {
 		PreparedStatement pst = null;
 		try {
 			pst = conn.prepareStatement(sql);
-			return update(conn, pst, sql, params);
+			return updateSql(conn, pst, sql, params);
 		} catch (Exception e) {
 			throw e;
 		} finally {
@@ -235,7 +240,7 @@ public class Jdbcuu {
 		}
 	}
 
-	public static int update(Connection conn, PreparedStatement pst, String sql, Object... params) throws Exception {
+	public static int updateSql(Connection conn, PreparedStatement pst, String sql, Object... params) throws Exception {
 		if (params == null)
 			params = new Object[] {};
 		sql = sql.trim().replaceAll("\\s+", " ");
@@ -271,49 +276,73 @@ public class Jdbcuu {
 		return cnt;
 	}
 
-	public static LList rowsCommonly(Connection conn, String table, LList columns, MMap conditionm, MMap orderm,
-			LList limits) throws Exception {
-		String sql = "";
-		sql += "select ";
+//	public static LList rowsCommonly(Connection conn, String table, LList columns, MMap conditionm, MMap orderm,
+//			LList limits) throws Exception {
+//		String sql = "";
+//		sql += "select ";
+//
+//		if (columns.isEmpty()) {
+//			sql += " * ";
+//		} else {
+//			for (int i = 0; i < columns.size(); i++) {
+//				sql += columns.get(i) + ",";
+//			}
+//			sql = sql.substring(0, sql.lastIndexOf(","));
+//		}
+//
+//		sql += " from ";
+//		sql += table;
+//
+//		LList params = LList.build();
+//		if (conditionm.isExisting()) {
+//			sql += " where ";
+//			for (Iterator iterator = conditionm.map.keySet().iterator(); iterator.hasNext();) {
+//				Object key = (Object) iterator.next();
+//				Object value = conditionm.get(key);
+//				sql += value == null || value.toString().isEmpty() ? "" : key + "=? and ";
+//				params.addIf(value, value != null && !value.toString().isEmpty());
+//			}
+//			sql = sql.substring(0, sql.lastIndexOf("and"));
+//		}
+//
+//		if (orderm.isExisting()) {
+//			sql += " order by ";
+//			for (Iterator iterator = orderm.map.keySet().iterator(); iterator.hasNext();) {
+//				Object key = (Object) iterator.next();
+//				Object value = orderm.get(key);
+//				sql += key == null || key.toString().isEmpty() ? ""
+//						: key + " " + Stringuu.trimToBlank((String) value) + ",";
+//			}
+//			sql = sql.substring(0, sql.lastIndexOf("and"));
+//		}
+//		return rows(conn, sql, params);
+//	}
 
-		if (columns.isEmpty()) {
-			sql += " * ";
-		} else {
-			for (int i = 0; i < columns.size(); i++) {
-				sql += columns.get(i) + ",";
-			}
-			sql = sql.substring(0, sql.lastIndexOf(","));
-		}
-
-		sql += " from ";
-		sql += table;
-
-		LList params = LList.build();
-		if (conditionm.isExisting()) {
-			sql += " where ";
-			for (Iterator iterator = conditionm.map.keySet().iterator(); iterator.hasNext();) {
-				Object key = (Object) iterator.next();
-				Object value = conditionm.get(key);
-				sql += value == null || value.toString().isEmpty() ? "" : key + "=? and ";
-				params.addIf(value, value != null && !value.toString().isEmpty());
-			}
-			sql = sql.substring(0, sql.lastIndexOf("and"));
-		}
-
-		if (orderm.isExisting()) {
-			sql += " order by ";
-			for (Iterator iterator = orderm.map.keySet().iterator(); iterator.hasNext();) {
-				Object key = (Object) iterator.next();
-				Object value = orderm.get(key);
-				sql += key == null || key.toString().isEmpty() ? ""
-						: key + " " + Stringuu.trimToBlank((String) value) + ",";
-			}
-			sql = sql.substring(0, sql.lastIndexOf("and"));
-		}
-		return rows(conn, sql, params);
+	public static int updateById(Connection conn, String table, Object column, Object value, String id)
+			throws Exception {
+		MMap columnm = new MMap();
+		columnm.put((String) column, value);
+		return updateById(conn, table, columnm, id);
 	}
 
-	public static int updateCommonly(Connection conn, String table, MMap columnm, MMap conditionm) throws Exception {
+	public static int updateById(Connection conn, String table, Object[] columns, Object[] values, String id)
+			throws Exception {
+		MMap columnm = new MMap();
+		columns = columns == null ? new Object[] {} : columns;
+		values = values == null ? new Object[] {} : values;
+		for (int i = 0; i < columns.length; i++) {
+			columnm.put((String) columns[i], values[i]);
+		}
+		return updateById(conn, table, columnm, id);
+	}
+
+	public static int updateById(Connection conn, String table, MMap columnm, String id) throws Exception {
+		MMap conditionm = MMap.build();
+		conditionm.put("id", id);
+		return update(conn, table, columnm, conditionm);
+	}
+
+	public static int update(Connection conn, String table, MMap columnm, MMap conditionm) throws Exception {
 		String sql = "";
 		sql += "update ";
 		sql += " `" + table + "` ";
@@ -342,10 +371,32 @@ public class Jdbcuu {
 			sql = sql.substring(0, sql.lastIndexOf("and"));
 		}
 
-		return update(conn, sql, params);
+		return updateSql(conn, sql, params);
 	}
 
-	public static int deleteCommonly(Connection conn, String table, MMap conditionm) throws Exception {
+	public static int deleteById(Connection conn, String table, Object id) throws Exception {
+		MMap conditionm = new MMap();
+		conditionm.put("id", id);
+		return delete(conn, table, conditionm);
+	}
+
+	public static int delete(Connection conn, String table, Object columnm, Object value) throws Exception {
+		MMap conditionm = new MMap();
+		conditionm.put((String) columnm, value);
+		return delete(conn, table, conditionm);
+	}
+
+	public static int delete(Connection conn, String table, Object[] columnms, Object[] values) throws Exception {
+		MMap conditionm = new MMap();
+		columnms = columnms == null ? new Object[] {} : columnms;
+		values = values == null ? new Object[] {} : values;
+		for (int i = 0; i < columnms.length; i++) {
+			conditionm.put((String) columnms[i], values[i]);
+		}
+		return delete(conn, table, conditionm);
+	}
+
+	public static int delete(Connection conn, String table, MMap conditionm) throws Exception {
 		String sql = "";
 		sql += "delete from ";
 		sql += " `" + table + "` ";
@@ -363,10 +414,56 @@ public class Jdbcuu {
 			sql = sql.substring(0, sql.lastIndexOf("and"));
 		}
 
-		return update(conn, sql, params);
+		return updateSql(conn, sql, params);
 	}
 
-	public static int insertByCustomKeyCommonly(Connection conn, String table, MMap columnm) throws Exception {
+//	public static int insertByCustomKeyCommonly(Connection conn, String table, MMap columnm) throws Exception {
+//		String sql = "";
+//		sql += "insert into ";
+//		sql += "`" + table + "`";
+//		sql += " ( ";
+//
+//		LList params = LList.build();
+//		if (columnm.isExisting()) {
+//			for (Iterator iterator = columnm.map.keySet().iterator(); iterator.hasNext();) {
+//				Object key = (Object) iterator.next();
+//				Object value = columnm.get(key);
+//				sql += value == null || value.toString().isEmpty() ? "" : "`" + key + "`" + ",";
+//			}
+//		}
+//		sql = sql.substring(0, sql.lastIndexOf(","));
+//		sql += " ) values ( ";
+//		if (columnm.isExisting()) {
+//			for (Iterator iterator = columnm.map.keySet().iterator(); iterator.hasNext();) {
+//				Object key = (Object) iterator.next();
+//				Object value = columnm.get(key);
+//				sql += value == null || value.toString().isEmpty() ? "" : "?,";
+//				params.addIf(value, value != null && !value.toString().isEmpty());
+//			}
+//		}
+//		sql = sql.substring(0, sql.lastIndexOf(","));
+//		sql += " ) ";
+//
+//		return update(conn, sql, params);
+//	}
+
+	public static int insert(Connection conn, String table, Object column, Object value) throws Exception {
+		MMap columnm = new MMap();
+		columnm.put((String) column, value);
+		return insert(conn, table, columnm);
+	}
+
+	public static int insert(Connection conn, String table, Object[] columns, Object[] values) throws Exception {
+		MMap columnm = new MMap();
+		columns = columns == null ? new Object[] {} : columns;
+		values = values == null ? new Object[] {} : values;
+		for (int i = 0; i < columns.length; i++) {
+			columnm.put((String) columns[i], values[i]);
+		}
+		return insert(conn, table, columnm);
+	}
+
+	public static int insert(Connection conn, String table, MMap columnm) throws Exception {
 		String sql = "";
 		sql += "insert into ";
 		sql += "`" + table + "`";
@@ -393,37 +490,7 @@ public class Jdbcuu {
 		sql = sql.substring(0, sql.lastIndexOf(","));
 		sql += " ) ";
 
-		return update(conn, sql, params);
-	}
-
-	public static int insertCommonly(Connection conn, String table, MMap columnm) throws Exception {
-		String sql = "";
-		sql += "insert into ";
-		sql += "`" + table + "`";
-		sql += " ( ";
-
-		LList params = LList.build();
-		if (columnm.isExisting()) {
-			for (Iterator iterator = columnm.map.keySet().iterator(); iterator.hasNext();) {
-				Object key = (Object) iterator.next();
-				Object value = columnm.get(key);
-				sql += value == null || value.toString().isEmpty() ? "" : "`" + key + "`" + ",";
-			}
-		}
-		sql = sql.substring(0, sql.lastIndexOf(","));
-		sql += " ) values ( ";
-		if (columnm.isExisting()) {
-			for (Iterator iterator = columnm.map.keySet().iterator(); iterator.hasNext();) {
-				Object key = (Object) iterator.next();
-				Object value = columnm.get(key);
-				sql += value == null || value.toString().isEmpty() ? "" : "?,";
-				params.addIf(value, value != null && !value.toString().isEmpty());
-			}
-		}
-		sql = sql.substring(0, sql.lastIndexOf(","));
-		sql += " ) ";
-
-		return insert(conn, sql, params);
+		return insertSql(conn, sql, params);
 	}
 
 	public static Integer generatedKey(PreparedStatement pst) throws SQLException {
@@ -512,58 +579,58 @@ public class Jdbcuu {
 		return rows;
 	}
 
-	public static List<Map> rows(ResultSet rs, String[] excludeColumns) throws SQLException {
-		List<String> excludeColumnList = Arrays.asList(excludeColumns);
-		List<Map> rows = new ArrayList();
-		ResultSetMetaData metaData = rs.getMetaData();
-		int columnCnt = metaData.getColumnCount();
-		while (rs.next()) {
-			Map<String, Object> row = new LinkedHashMap();
-			for (int i = 1; i <= columnCnt; i++) {
-				String column = metaData.getColumnLabel(i);
-				if (excludeColumnList.contains(column))
-					continue;
-				Object value = rs.getObject(i);
-				row.put(metaData.getColumnLabel(i), value);
-			}
-			rows.add(row);
-			if (rows.size() <= 1)
-				logger.info(JSON.toJSONString(row));
-		}
-		return rows;
-	}
+//	public static List<Map> rows(ResultSet rs, String[] excludeColumns) throws SQLException {
+//		List<String> excludeColumnList = Arrays.asList(excludeColumns);
+//		List<Map> rows = new ArrayList();
+//		ResultSetMetaData metaData = rs.getMetaData();
+//		int columnCnt = metaData.getColumnCount();
+//		while (rs.next()) {
+//			Map<String, Object> row = new LinkedHashMap();
+//			for (int i = 1; i <= columnCnt; i++) {
+//				String column = metaData.getColumnLabel(i);
+//				if (excludeColumnList.contains(column))
+//					continue;
+//				Object value = rs.getObject(i);
+//				row.put(metaData.getColumnLabel(i), value);
+//			}
+//			rows.add(row);
+//			if (rows.size() <= 1)
+//				logger.info(JSON.toJSONString(row));
+//		}
+//		return rows;
+//	}
 
-	public static List<List<Object>> listRows(ResultSet rs) throws SQLException {
-		ResultSetMetaData metaData = rs.getMetaData();
-		int columnCnt = metaData.getColumnCount();
+//	public static List<List<Object>> listRows(ResultSet rs) throws SQLException {
+//		ResultSetMetaData metaData = rs.getMetaData();
+//		int columnCnt = metaData.getColumnCount();
+//
+//		List<List<Object>> valueLists = new ArrayList<List<Object>>();
+//		while (rs.next()) {
+//			List<Object> valueList = new ArrayList<Object>();
+//			for (int i = 1; i <= columnCnt; i++) {
+//				Object value = rs.getObject(i);
+//				valueList.add(value);
+//			}
+//			valueLists.add(valueList);
+//			if (valueLists.size() <= 10)
+//				logger.info(JSON.toJSONString(valueList));
+//		}
+//		logger.info("affected : " + valueLists.size());
+//		return valueLists;
+//	}
 
-		List<List<Object>> valueLists = new ArrayList<List<Object>>();
-		while (rs.next()) {
-			List<Object> valueList = new ArrayList<Object>();
-			for (int i = 1; i <= columnCnt; i++) {
-				Object value = rs.getObject(i);
-				valueList.add(value);
-			}
-			valueLists.add(valueList);
-			if (valueLists.size() <= 10)
-				logger.info(JSON.toJSONString(valueList));
-		}
-		logger.info("affected : " + valueLists.size());
-		return valueLists;
-	}
-
-	public static List<Object> thinRows(ResultSet rs) throws SQLException {
-		List<Object> rows = new ArrayList();
-		ResultSetMetaData metaData = rs.getMetaData();
-		while (rs.next()) {
-			Object value = rs.getObject(1);
-			rows.add(value);
-			if (rows.size() <= 10)
-				logger.info(new StringBuilder("[").append(value).append("]").toString());
-		}
-		logger.info("affected : " + rows.size());
-		return rows;
-	}
+//	public static List<Object> thinRows(ResultSet rs) throws SQLException {
+//		List<Object> rows = new ArrayList();
+//		ResultSetMetaData metaData = rs.getMetaData();
+//		while (rs.next()) {
+//			Object value = rs.getObject(1);
+//			rows.add(value);
+//			if (rows.size() <= 10)
+//				logger.info(new StringBuilder("[").append(value).append("]").toString());
+//		}
+//		logger.info("affected : " + rows.size());
+//		return rows;
+//	}
 
 	public static MMap row(ResultSet rs) throws SQLException {
 		LList<Map> list = rows(rs);
@@ -714,41 +781,41 @@ public class Jdbcuu {
 	public static void eeeeeeeeeeeeeeeeeeeeeeee() {
 	}
 
-	@Deprecated
-	public static String buildOrderBy(String[] sorts, String[] orders, String[] sortPool, String[] sortColumnPool,
-			String baseSort, String baseOrder) {
-		StringBuilder sqlB = new StringBuilder(" order by ");
-		if (sorts == null || sorts.length == 0)
-			sorts = new String[] {};
-		if (orders == null || sorts.length == 0) {
-			orders = new String[sorts.length];
-			for (int i = 0; i < orders.length; i++) {
-				orders[i] = "desc";
-			}
-		}
-
-		List<String> sortListPool = sortPool == null ? new ArrayList<String>()
-				: new ArrayList<String>(Arrays.asList(sortPool));
-		List<String> sortColumnListPool = sortColumnPool == null ? new ArrayList<String>()
-				: new ArrayList<String>(Arrays.asList(sortColumnPool));
-		for (int i = 0; i < sorts.length; i++) {
-			if (sorts[i] == null || sorts[i].trim().isEmpty())
-				continue;
-			int n = sortListPool.indexOf(sorts[i]);
-			if (n > -1)
-				sqlB.append(sortColumnListPool.get(n));
-			else
-				throw new RuntimeException("排序字段有误");
-			sqlB.append(" ");
-			if (orders[i].equals("desc"))
-				sqlB.append("desc");
-			else if (orders[i].equals("asc"))
-				sqlB.append("asc");
-			else
-				throw new RuntimeException("排序顺序有误");
-			sqlB.append(sorts.length == 0 ? "" : ",");
-		}
-		sqlB.append(baseSort).append(" ").append(baseOrder);
-		return sqlB.toString();
-	}
+//	@Deprecated
+//	public static String buildOrderBy(String[] sorts, String[] orders, String[] sortPool, String[] sortColumnPool,
+//			String baseSort, String baseOrder) {
+//		StringBuilder sqlB = new StringBuilder(" order by ");
+//		if (sorts == null || sorts.length == 0)
+//			sorts = new String[] {};
+//		if (orders == null || sorts.length == 0) {
+//			orders = new String[sorts.length];
+//			for (int i = 0; i < orders.length; i++) {
+//				orders[i] = "desc";
+//			}
+//		}
+//
+//		List<String> sortListPool = sortPool == null ? new ArrayList<String>()
+//				: new ArrayList<String>(Arrays.asList(sortPool));
+//		List<String> sortColumnListPool = sortColumnPool == null ? new ArrayList<String>()
+//				: new ArrayList<String>(Arrays.asList(sortColumnPool));
+//		for (int i = 0; i < sorts.length; i++) {
+//			if (sorts[i] == null || sorts[i].trim().isEmpty())
+//				continue;
+//			int n = sortListPool.indexOf(sorts[i]);
+//			if (n > -1)
+//				sqlB.append(sortColumnListPool.get(n));
+//			else
+//				throw new RuntimeException("排序字段有误");
+//			sqlB.append(" ");
+//			if (orders[i].equals("desc"))
+//				sqlB.append("desc");
+//			else if (orders[i].equals("asc"))
+//				sqlB.append("asc");
+//			else
+//				throw new RuntimeException("排序顺序有误");
+//			sqlB.append(sorts.length == 0 ? "" : ",");
+//		}
+//		sqlB.append(baseSort).append(" ").append(baseOrder);
+//		return sqlB.toString();
+//	}
 }
