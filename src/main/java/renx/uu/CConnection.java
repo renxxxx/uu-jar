@@ -206,13 +206,13 @@ public class CConnection {
 		return Jdbcuu.getObject(conn, sql, params);
 	}
 
-	public int updateById(String table, Object column, Object value, String id) throws Exception {
+	public int updateById(String table, Object column, Object value, Object id) throws Exception {
 		MMap columnm = new MMap();
 		columnm.put((String) column, value);
 		return Jdbcuu.updateById(conn, table, columnm, id);
 	}
 
-	public int updateById(String table, Object[] columns, Object[] values, String id) throws Exception {
+	public int updateById(String table, Object[] columns, Object[] values, Object id) throws Exception {
 		MMap columnm = new MMap();
 		columns = columns == null ? new Object[] {} : columns;
 		values = values == null ? new Object[] {} : values;
@@ -222,7 +222,7 @@ public class CConnection {
 		return Jdbcuu.updateById(conn, table, columnm, id);
 	}
 
-	public int updateById(String table, MMap columnm, String id) throws Exception {
+	public int updateById(String table, MMap columnm, Object id) throws Exception {
 		MMap conditionm = new MMap();
 		conditionm.put("id", id);
 		return Jdbcuu.update(conn, table, columnm, conditionm);

@@ -318,14 +318,14 @@ public class Jdbcuu {
 //		return rows(conn, sql, params);
 //	}
 
-	public static int updateById(Connection conn, String table, Object column, Object value, String id)
+	public static int updateById(Connection conn, String table, Object column, Object value, Object id)
 			throws Exception {
 		MMap columnm = new MMap();
 		columnm.put((String) column, value);
 		return updateById(conn, table, columnm, id);
 	}
 
-	public static int updateById(Connection conn, String table, Object[] columns, Object[] values, String id)
+	public static int updateById(Connection conn, String table, Object[] columns, Object[] values, Object id)
 			throws Exception {
 		MMap columnm = new MMap();
 		columns = columns == null ? new Object[] {} : columns;
@@ -336,7 +336,7 @@ public class Jdbcuu {
 		return updateById(conn, table, columnm, id);
 	}
 
-	public static int updateById(Connection conn, String table, MMap columnm, String id) throws Exception {
+	public static int updateById(Connection conn, String table, MMap columnm, Object id) throws Exception {
 		MMap conditionm = MMap.build();
 		conditionm.put("id", id);
 		return update(conn, table, columnm, conditionm);
