@@ -232,7 +232,7 @@ public class CConnection {
 		return Jdbcuu.update(conn, table, columnm, conditionm);
 	}
 
-	public int deleteById(Connection conn, String table, Object id) throws Exception {
+	public int deleteById(String table, Object id) throws Exception {
 		MMap conditionm = new MMap();
 		conditionm.put("id", id);
 		return Jdbcuu.delete(conn, table, conditionm);
