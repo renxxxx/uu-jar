@@ -114,7 +114,7 @@ public class Jdbcuu {
 		return Var.toDate(getObject(conn, sql, params));
 	}
 
-	public static Var getVar(Connection conn, String sql, Object... params) throws Exception {
+	public static Var get(Connection conn, String sql, Object... params) throws Exception {
 		return Var.build(getObject(conn, sql, params));
 	}
 

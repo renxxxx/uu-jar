@@ -162,8 +162,8 @@ public class CConnection {
 		return Jdbcuu.getInteger(conn, sql, params);
 	}
 
-	public Var getVar(String sql, Object... params) throws Exception {
-		return Var.build(getString(sql, params));
+	public Var get(String sql, Object... params) throws Exception {
+		return Jdbcuu.get(conn, sql, params);
 	}
 
 	public String getString(String sql, Object... params) throws Exception {
