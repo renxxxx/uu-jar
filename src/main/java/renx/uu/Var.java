@@ -227,7 +227,7 @@ public class Var {
 		return this;
 	}
 
-	public Var nullDef(Object defaultValue) {
+	public Var nullDefault(Object defaultValue) {
 		if (!this.run)
 			return this;
 
@@ -238,16 +238,16 @@ public class Var {
 		return this;
 	}
 
-	public Var nullDef(boolean run, Object defaultValue) {
+	public Var nullDefault(boolean run, Object defaultValue) {
 		if (!this.run)
 			return this;
 
 		if (run)
-			nullDef(defaultValue);
+			nullDefault(defaultValue);
 		return this;
 	}
 
-	public Var blankDef(Object defaultValue) {
+	public Var blankDefault(Object defaultValue) {
 		if (!this.run)
 			return this;
 
@@ -258,16 +258,16 @@ public class Var {
 		return this;
 	}
 
-	public Var blankDef(boolean run, Object defaultValue) {
+	public Var blankDefault(boolean run, Object defaultValue) {
 		if (!this.run)
 			return this;
 
 		if (run)
-			blankDef(defaultValue);
+			blankDefault(defaultValue);
 		return this;
 	}
 
-	public Var emptyDef(Object defaultValue) {
+	public Var emptyDefault(Object defaultValue) {
 		if (!this.run)
 			return this;
 
@@ -278,21 +278,21 @@ public class Var {
 		return this;
 	}
 
-	public Var emptyDef(boolean run, Object defaultValue) {
+	public Var emptyDefault(boolean run, Object defaultValue) {
 		if (!this.run)
 			return this;
 
 		if (run)
-			emptyDef(defaultValue);
+			emptyDefault(defaultValue);
 		return this;
 	}
 
-	public Var setDefault(Object defaultValue) {
-		return emptyDef(defaultValue);
+	public Var default1(Object defaultValue) {
+		return emptyDefault(defaultValue);
 	}
 
-	public Var setDefault(boolean run, Object defaultValue) {
-		return emptyDef(run, defaultValue);
+	public Var default1(boolean run, Object defaultValue) {
+		return emptyDefault(run, defaultValue);
 	}
 
 	public Var stop() {
