@@ -29,7 +29,7 @@ public class Var {
 	public String[] codes;
 	public String value;
 
-	private static String datePattern = "yyyy-MM-dd HH:mm:ss.SSS Z";
+	private static String datePattern1 = "yyyy-MM-dd HH:mm:ss.SSS Z";
 	private static String datePattern2 = "yyyy-MM-dd HH:mm:ss";
 	private static String datePattern3 = "yyyy-MM-dd";
 	private static String datePattern4 = "HH:mm:ss";
@@ -851,19 +851,19 @@ public class Var {
 	}
 
 	public Integer toInteger() {
-		return isEmpty() ? null : Integer.parseInt(this.value.split("\\.")[0]);
+		return isEmpty() ? null : toInteger(value);
 	}
 
 	public Float toFloat() {
-		return isEmpty() ? null : Float.parseFloat(this.value);
+		return isEmpty() ? null : toFloat(value);
 	}
 
 	public Long toLong() {
-		return isEmpty() ? null : Long.parseLong(this.value);
+		return isEmpty() ? null : toLong(value);
 	}
 
 	public BigDecimal toDecimal() {
-		return isEmpty() ? null : new BigDecimal(this.value);
+		return isEmpty() ? null : toDecimal(value);
 	}
 
 	public String formatDate(String pattern) {
@@ -875,11 +875,11 @@ public class Var {
 		return isEmpty() ? null : toDate(this.value);
 	}
 
-	public void throw_(String message) {
+	public void throw1(String message) {
 		throw Result.build(8, "\"" + this.name + "\"" + message).errorParam(this.code);
 	}
 
-	public void throw_(boolean run, String message) {
+	public void throw1(boolean run, String message) {
 		if (run)
 			throw Result.build(8, "\"" + this.name + "\"" + message).errorParam(this.code);
 	}
@@ -1093,7 +1093,7 @@ public class Var {
 		if (value instanceof LocalDateTime)
 			return Date.from(((LocalDateTime) value).atZone(ZoneId.systemDefault()).toInstant());
 		try {
-			date = new SimpleDateFormat(datePattern).parse(value.toString());
+			date = new SimpleDateFormat(datePattern1).parse(value.toString());
 			if (date != null) {
 				return date;
 			}
@@ -1207,20 +1207,9 @@ public class Var {
 		} catch (Exception e) {
 		}
 		try {
-			if (value.toString().length() == 10) {
-				date = new Date(Long.parseLong(value.toString() + "000"));
-				if (date != null) {
-					return date;
-				}
-			}
-		} catch (Exception e) {
-		}
-		try {
-			if (value.toString().length() == 13) {
-				date = new Date(Long.parseLong(value.toString()));
-				if (date != null) {
-					return date;
-				}
+			date = new Date(Long.parseLong(value.toString()));
+			if (date != null) {
+				return date;
 			}
 		} catch (Exception e) {
 		}
