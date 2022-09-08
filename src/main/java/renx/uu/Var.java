@@ -28,6 +28,7 @@ public class Var {
 	public String code;
 	public String[] codes;
 	public String value;
+	public String source;
 
 	private static String datePattern1 = "yyyy-MM-dd HH:mm:ss.SSS Z";
 	private static String datePattern2 = "yyyy-MM-dd HH:mm:ss";
@@ -60,17 +61,6 @@ public class Var {
 		return var;
 	}
 
-	public static Var build(Var var) {
-		Var var2 = new Var();
-		if (var != null) {
-			var2.name = var.name;
-			var2.value = var.value;
-			var2.code = var.code;
-			var2.codes = var.codes;
-		}
-		return var2;
-	}
-
 	public static Var build(String code, HttpServletRequest from) {
 		return Var.build().code(code).value(from);
 	}
@@ -100,255 +90,201 @@ public class Var {
 	}
 
 	public Var name(String name) {
-		Var var = Var.build(this);
-		var.name = name;
-		return var;
+
+		name = name;
+		return this;
 	}
 
 	public Var code(String... codes) {
-		Var var = Var.build(this);
 
-		var.codes = codes;
+		codes = codes;
 		if (codes != null && codes.length > 0)
-			var.code = codes[0];
-		if (var.name == null || var.name.isEmpty())
-			var.name = var.code;
-		return var;
+			code = codes[0];
+		if (name == null || name.isEmpty())
+			name = code;
+		return this;
 	}
 
 	public Var value(HttpServletRequest from) {
-		Var var = Var.build(this);
-
-		if (var.codes != null)
-			for (String code : var.codes) {
-				String value = from.getParameter(code);
+		String value = null;
+		if (codes != null)
+			for (String code : codes) {
+				value = from.getParameter(code);
 				if (value != null) {
-					var.value = value;
+					value = value;
 					break;
 				}
 			}
-		if (var.value != null && !var.value.isEmpty() && var.value.matches(".*<(s|S)(c|C)(r|R)(i|I)(p|P)(t|T).*"))
-			throw Result.build(8, "\"" + var.name + "\"有误").errorParam(var.code);
-		if ("null".equals(var.value) || "undefined".equals(var.value) || "NaN".equals(var.value))
-			var.value = null;
-		return var;
+		return value(value);
 	}
 
 	public Var value(MMap from) {
-		Var var = Var.build(this);
+		String value = null;
+		if (codes != null)
+			for (String code : codes) {
+				value = from.getString(code);
+				if (value != null) {
+					value = value;
+					break;
+				}
+			}
+		return value(value);
 
-		var.value = from.getString(code);
-		if (var.value != null && !var.value.isEmpty() && var.value.matches(".*<(s|S)(c|C)(r|R)(i|I)(p|P)(t|T).*"))
-			throw Result.build(8, "\"" + var.name + "\"有误").errorParam(var.code);
-		if ("null".equals(var.value) || "undefined".equals(var.value) || "NaN".equals(var.value))
-			var.value = null;
-		return var;
 	}
 
 	public Var value(Map from) {
-		Var var = Var.build(this);
-
-		var.value = (String) from.get(code);
-		if (var.value != null && !var.value.isEmpty() && var.value.matches(".*<(s|S)(c|C)(r|R)(i|I)(p|P)(t|T).*"))
-			throw Result.build(8, "\"" + var.name + "\"有误").errorParam(var.code);
-		if ("null".equals(var.value) || "undefined".equals(var.value) || "NaN".equals(var.value))
-			var.value = null;
-		return var;
+		String value = null;
+		if (codes != null)
+			for (String code : codes) {
+				value = (String) from.get(code);
+				if (value != null) {
+					value = value;
+					break;
+				}
+			}
+		return value(value);
 	}
 
 	public Var value(Object... from) {
-		Var var = Var.build(this);
 
 		if (from != null)
 			for (Object value : from) {
 				if (value != null) {
 					if (value instanceof Float || value instanceof Double) {
-						var.value = value.toString().replaceAll("\\.0*$", "");
+						value = value.toString().replaceAll("\\.0*$", "");
 					} else {
-						var.value = value.toString();
+						value = value.toString();
 					}
 					break;
 				}
 			}
 
-		if (var.value != null && !var.value.isEmpty() && var.value.matches(".*<(s|S)(c|C)(r|R)(i|I)(p|P)(t|T).*"))
-			throw Result.build(8, "\"" + var.name + "\"有误").errorParam(var.code);
-		if ("null".equals(var.value) || "undefined".equals(var.value) || "NaN".equals(var.value))
-			var.value = null;
-		return var;
-	}
-
-	@Deprecated
-	public static Var go(String name, String code, String... values) {
-		Var var = new Var();
-		var.name = name;
-		var.code = code;
-		if (values != null)
-			for (String value : values) {
-				if (value != null) {
-					var.value = value;
-					break;
-				}
-			}
-
-		if (var.value != null && !var.value.isEmpty() && var.value.matches(".*<(s|S)(c|C)(r|R)(i|I)(p|P)(t|T).*"))
-			throw Result.build(8, "\"" + var.name + "\"有误").errorParam(var.code);
-		if ("null".equals(var.value) || "undefined".equals(var.value))
-			var.value = null;
-		return var;
-	}
-
-	@Deprecated
-	public static Var go2(String... values) {
-		Var var = new Var();
-		if (values != null)
-			for (String value : values) {
-				if (value != null) {
-					var.value = value;
-					break;
-				}
-			}
-
-		if (var.value != null && !var.value.isEmpty() && var.value.matches(".*<(s|S)(c|C)(r|R)(i|I)(p|P)(t|T).*"))
-			throw Result.build(8, "\"" + var.name + "\"有误").errorParam(var.code);
-		if ("null".equals(var.value) || "undefined".equals(var.value))
-			var.value = null;
-
-		return var;
+		if (value != null && !value.isEmpty() && value.matches(".*<(s|S)(c|C)(r|R)(i|I)(p|P)(t|T).*"))
+			throw Result.build(8, "\"" + name + "\"有误").errorParam(code);
+		if ("null".equals(value) || "undefined".equals(value) || "NaN".equals(value))
+			value = null;
+		return this;
 	}
 
 	public Var suffix(Object suffix) {
 		if (!this.run)
 			return this;
 
-		Var var = Var.build(this);
-		if (var.value != null)
-			var.value = var.value + suffix.toString();
-		return var;
+		if (value != null)
+			value = value + suffix.toString();
+		return this;
 	}
 
 	public Var prefix(Object prefix) {
 		if (!this.run)
 			return this;
 
-		Var var = Var.build(this);
-		if (var.value != null)
-			var.value = prefix.toString() + var.value;
-		return var;
+		if (value != null)
+			value = prefix.toString() + value;
+		return this;
 	}
 
 	public Var trim() {
 		if (!this.run)
 			return this;
 
-		Var var = Var.build(this);
-		var.value = var.value == null ? null : var.value.trim();
-		return var;
+		value = value == null ? null : value.trim();
+		return this;
 	}
 
 	public Var trimToNull() {
 		if (!this.run)
 			return this;
 
-		Var var = Var.build(this);
-		if (var.value != null && var.value.trim().isEmpty())
-			var.value = null;
-		return var;
+		if (value != null && value.trim().isEmpty())
+			value = null;
+		return this;
 	}
 
 	public Var trimToBlank() {
 		if (!this.run)
 			return this;
 
-		Var var = Var.build(this);
-		if (var.value == null)
-			var.value = "";
-		var.value = var.value.trim();
-		return var;
+		if (value == null)
+			value = "";
+		value = value.trim();
+		return this;
 	}
 
 	public Var trimLeft() {
 		if (!this.run)
 			return this;
 
-		Var var = Var.build(this);
-		var.value = var.value == null ? null : var.value.trim();
-		return var;
+		value = value == null ? null : value.trim();
+		return this;
 	}
 
 	public Var trimRight() {
 		if (!this.run)
 			return this;
 
-		Var var = Var.build(this);
-		var.value = var.value == null ? null : var.value.trim();
-		return var;
+		value = value == null ? null : value.trim();
+		return this;
 	}
 
 	public Var nullDef(Object defaultValue) {
 		if (!this.run)
 			return this;
 
-		Var var = Var.build(this);
 		String ss = null;
 		ss = defaultValue == null ? null : defaultValue.toString().trim();
 		if (isNull() && ss != null)
-			var.value = ss;
-		return var;
+			value = ss;
+		return this;
 	}
 
 	public Var nullDef(boolean run, Object defaultValue) {
 		if (!this.run)
 			return this;
 
-		Var var = Var.build(this);
 		if (run)
-			var.nullDef(defaultValue);
-		return var;
+			nullDef(defaultValue);
+		return this;
 	}
 
 	public Var blankDef(Object defaultValue) {
 		if (!this.run)
 			return this;
 
-		Var var = Var.build(this);
 		String ss = null;
 		ss = defaultValue == null ? null : defaultValue.toString().trim();
 		if (isBlank() && ss != null)
-			var.value = ss;
-		return var;
+			value = ss;
+		return this;
 	}
 
 	public Var blankDef(boolean run, Object defaultValue) {
 		if (!this.run)
 			return this;
 
-		Var var = Var.build(this);
 		if (run)
-			var.blankDef(defaultValue);
-		return var;
+			blankDef(defaultValue);
+		return this;
 	}
 
 	public Var emptyDef(Object defaultValue) {
 		if (!this.run)
 			return this;
 
-		Var var = Var.build(this);
 		String ss = null;
 		ss = defaultValue == null ? null : defaultValue.toString().trim();
 		if (isEmpty() && ss != null)
-			var.value = ss;
-		return var;
+			value = ss;
+		return this;
 	}
 
 	public Var emptyDef(boolean run, Object defaultValue) {
 		if (!this.run)
 			return this;
 
-		Var var = Var.build(this);
 		if (run)
-			var.emptyDef(defaultValue);
-		return var;
+			emptyDef(defaultValue);
+		return this;
 	}
 
 	public Var setDefault(Object defaultValue) {
@@ -912,50 +848,45 @@ public class Var {
 		if (!this.run)
 			return this;
 
-		Var var = Var.build(this);
-		if (var.value != null)
-			var.value = var.value.toLowerCase();
-		return var;
+		if (value != null)
+			value = value.toLowerCase();
+		return this;
 	}
 
 	public Var toUpperCase() {
 		if (!this.run)
 			return this;
 
-		Var var = Var.build(this);
-		if (var.value != null)
-			var.value = var.value.toUpperCase();
-		return var;
+		if (value != null)
+			value = value.toUpperCase();
+		return this;
 	}
 
 	public Var replaceAll(String regex, Object replacement) {
 		if (!this.run)
 			return this;
 
-		Var var = Var.build(this);
-		if (var.value != null)
-			var.value = var.value.replaceAll(regex, replacement.toString());
-		return var;
+		if (value != null)
+			value = value.replaceAll(regex, replacement.toString());
+		return this;
 	}
 
 	public Var substring(int beginIndex, int endIndex) {
 		if (!this.run)
 			return this;
 
-		Var var = Var.build(this);
-		if (var.value != null)
-			var.value = var.value.substring(beginIndex, endIndex);
-		return var;
+		if (value != null)
+			value = value.substring(beginIndex, endIndex);
+		return this;
 	}
 
 	public Var substring(int beginIndex) {
 		if (!this.run)
 			return this;
 
-		Var var = Var.build(this);
-		if (var.value != null)
-			var.value = var.value.substring(beginIndex);
-		return var;
+		if (value != null)
+			value = value.substring(beginIndex);
+		return this;
 	}
 
 	public boolean contains(Object prefix) {
@@ -1290,17 +1221,33 @@ public class Var {
 	}
 
 	public Var concat(Object str) {
-		Var var = Var.build(this);
 		String str2 = str == null ? "" : str.toString();
-		var.value = var.value == null ? "" : var.value;
-		var.value = var.value.concat(str2);
-		return var;
+		value = value == null ? "" : value;
+		value = value.concat(str2);
+		return this;
+	}
+
+	public Var reset() {
+		value = this.source;
+		run = true;
+		return this;
 	}
 
 	public Var clone() {
 		Var var2 = new Var();
 		var2.name = this.name;
 		var2.value = this.value;
+		var2.source = this.source;
+		var2.code = this.code;
+		var2.codes = this.codes;
+		return var2;
+	}
+
+	public Var regen() {
+		Var var2 = new Var();
+		var2.name = this.name;
+		var2.value = this.value;
+		var2.source = this.value;
 		var2.code = this.code;
 		var2.codes = this.codes;
 		return var2;
