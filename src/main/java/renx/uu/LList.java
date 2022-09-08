@@ -142,7 +142,7 @@ public class LList<E> {
 		return (T[]) this.list.toArray(a);
 	}
 
-	public Object get(int index) {
+	public Object getObject(int index) {
 		if (this.list == null || this.list.size() <= index)
 			return null;
 		else
@@ -227,7 +227,7 @@ public class LList<E> {
 		return StringUtils.join(this.list, separator);
 	}
 
-	public Var getVar(int index) {
+	public Var get(int index) {
 		if (this.list == null)
 			return Var.build();
 		return Var.build(this.list.get(index));
