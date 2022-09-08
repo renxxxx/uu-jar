@@ -92,28 +92,25 @@ public class Var {
 	}
 
 	public Var name(String name) {
-
-		name = name;
+		this.name = name;
 		return this;
 	}
 
 	public Var code(String... codes) {
-
-		codes = codes;
-		if (codes != null && codes.length > 0)
-			code = codes[0];
-		if (name == null || name.isEmpty())
-			name = code;
+		this.codes = codes;
+		if (this.codes != null && this.codes.length > 0)
+			this.code = this.codes[0];
+		if (this.name == null || this.name.isEmpty())
+			this.name = this.code;
 		return this;
 	}
 
 	public Var value(HttpServletRequest from) {
 		String value = null;
-		if (codes != null)
-			for (String code : codes) {
+		if (this.codes != null)
+			for (String code : this.codes) {
 				value = from.getParameter(code);
 				if (value != null) {
-					value = value;
 					break;
 				}
 			}
@@ -140,7 +137,6 @@ public class Var {
 			for (String code : codes) {
 				value = (String) from.get(code);
 				if (value != null) {
-					value = value;
 					break;
 				}
 			}
@@ -148,23 +144,22 @@ public class Var {
 	}
 
 	public Var value(Object... from) {
-
 		if (from != null)
-			for (Object vv : from) {
-				if (vv != null) {
-					if (vv instanceof Float || vv instanceof Double) {
-						value = vv.toString().replaceAll("\\.0*$", "");
+			for (Object value : from) {
+				if (value != null) {
+					if (value instanceof Float || value instanceof Double) {
+						this.value = value.toString().replaceAll("\\.0*$", "");
 					} else {
-						value = vv.toString();
+						this.value = value.toString();
 					}
 					break;
 				}
 			}
 
-		if (value != null && !value.isEmpty() && value.matches(".*<(s|S)(c|C)(r|R)(i|I)(p|P)(t|T).*"))
-			throw Result.build(8, "\"" + name + "\"有误").errorParam(code);
-		if ("null".equals(value) || "undefined".equals(value) || "NaN".equals(value))
-			value = null;
+		if (this.value != null && !this.value.isEmpty() && this.value.matches(".*<(s|S)(c|C)(r|R)(i|I)(p|P)(t|T).*"))
+			throw Result.build(8, "\"" + this.name + "\"有误").errorParam(this.code);
+		if ("null".equals(this.value) || "undefined".equals(this.value) || "NaN".equals(this.value))
+			this.value = null;
 		return this;
 	}
 
