@@ -322,6 +322,8 @@ public class Jdbcuu {
 
 	public static int updateById(Connection conn, String table, Object column, Object value, Object id)
 			throws Exception {
+		if (id == null || id.toString() == null || id.toString().isEmpty())
+			return 0;
 		MMap columnm = new MMap();
 		columnm.put((String) column, value);
 		return updateById(conn, table, columnm, id);
@@ -329,6 +331,8 @@ public class Jdbcuu {
 
 	public static int updateById(Connection conn, String table, Object[] columns, Object[] values, Object id)
 			throws Exception {
+		if (id == null || id.toString() == null || id.toString().isEmpty())
+			return 0;
 		MMap columnm = new MMap();
 		columns = columns == null ? new Object[] {} : columns;
 		values = values == null ? new Object[] {} : values;
@@ -339,6 +343,8 @@ public class Jdbcuu {
 	}
 
 	public static int updateById(Connection conn, String table, MMap columnm, Object id) throws Exception {
+		if (id == null || id.toString() == null || id.toString().isEmpty())
+			return 0;
 		MMap conditionm = MMap.build();
 		conditionm.put("id", id);
 		return update(conn, table, columnm, conditionm);
@@ -378,12 +384,16 @@ public class Jdbcuu {
 	}
 
 	public static int deleteById(Connection conn, String table, Object id) throws Exception {
+		if (id == null || id.toString() == null || id.toString().isEmpty())
+			return 0;
 		MMap conditionm = new MMap();
 		conditionm.put("id", id);
 		return delete(conn, table, conditionm);
 	}
 
 	public static int delete(Connection conn, String table, Object columnm, Object value) throws Exception {
+		if (value == null || value.toString() == null || value.toString().isEmpty())
+			return 0;
 		MMap conditionm = new MMap();
 		conditionm.put((String) columnm, value);
 		return delete(conn, table, conditionm);

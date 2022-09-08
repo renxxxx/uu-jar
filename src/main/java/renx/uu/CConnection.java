@@ -207,25 +207,15 @@ public class CConnection {
 	}
 
 	public int updateById(String table, Object column, Object value, Object id) throws Exception {
-		MMap columnm = new MMap();
-		columnm.put((String) column, value);
-		return Jdbcuu.updateById(conn, table, columnm, id);
+		return Jdbcuu.updateById(conn, table, column, value, id);
 	}
 
 	public int updateById(String table, Object[] columns, Object[] values, Object id) throws Exception {
-		MMap columnm = new MMap();
-		columns = columns == null ? new Object[] {} : columns;
-		values = values == null ? new Object[] {} : values;
-		for (int i = 0; i < columns.length; i++) {
-			columnm.put((String) columns[i], values[i]);
-		}
-		return Jdbcuu.updateById(conn, table, columnm, id);
+		return Jdbcuu.updateById(conn, table, columns, values, id);
 	}
 
 	public int updateById(String table, MMap columnm, Object id) throws Exception {
-		MMap conditionm = new MMap();
-		conditionm.put("id", id);
-		return Jdbcuu.update(conn, table, columnm, conditionm);
+		return Jdbcuu.updateById(conn, table, columnm, id);
 	}
 
 	public int update(String table, MMap columnm, MMap conditionm) throws Exception {
@@ -233,25 +223,15 @@ public class CConnection {
 	}
 
 	public int deleteById(String table, Object id) throws Exception {
-		MMap conditionm = new MMap();
-		conditionm.put("id", id);
-		return Jdbcuu.delete(conn, table, conditionm);
+		return Jdbcuu.deleteById(conn, table, id);
 	}
 
 	public int delete(String table, Object columnm, Object value) throws Exception {
-		MMap conditionm = new MMap();
-		conditionm.put((String) columnm, value);
-		return Jdbcuu.delete(conn, table, conditionm);
+		return Jdbcuu.delete(conn, table, columnm, value);
 	}
 
 	public int delete(String table, Object[] columnms, Object[] values) throws Exception {
-		MMap conditionm = new MMap();
-		columnms = columnms == null ? new Object[] {} : columnms;
-		values = values == null ? new Object[] {} : values;
-		for (int i = 0; i < columnms.length; i++) {
-			conditionm.put((String) columnms[i], values[i]);
-		}
-		return Jdbcuu.delete(conn, table, conditionm);
+		return Jdbcuu.delete(conn, table, columnms, values);
 	}
 
 	public int delete(String table, MMap conditionm) throws Exception {
@@ -269,18 +249,10 @@ public class CConnection {
 	}
 
 	public int insert(String table, Object column, Object value) throws Exception {
-		MMap columnm = new MMap();
-		columnm.put((String) column, value);
-		return Jdbcuu.insert(conn, table, columnm);
+		return Jdbcuu.insert(conn, table, column, value);
 	}
 
 	public int insert(String table, Object[] columnms, Object[] values) throws Exception {
-		MMap columnm = new MMap();
-		columnms = columnms == null ? new Object[] {} : columnms;
-		values = values == null ? new Object[] {} : values;
-		for (int i = 0; i < columnms.length; i++) {
-			columnm.put((String) columnms[i], values[i]);
-		}
-		return Jdbcuu.insert(conn, table, columnm);
+		return Jdbcuu.insert(conn, table, columnms, values);
 	}
 }
