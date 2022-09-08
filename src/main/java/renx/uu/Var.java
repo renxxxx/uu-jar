@@ -150,12 +150,12 @@ public class Var {
 	public Var value(Object... from) {
 
 		if (from != null)
-			for (Object value : from) {
-				if (value != null) {
-					if (value instanceof Float || value instanceof Double) {
-						value = value.toString().replaceAll("\\.0*$", "");
+			for (Object vv : from) {
+				if (vv != null) {
+					if (vv instanceof Float || vv instanceof Double) {
+						value = vv.toString().replaceAll("\\.0*$", "");
 					} else {
-						value = value.toString();
+						value = vv.toString();
 					}
 					break;
 				}
