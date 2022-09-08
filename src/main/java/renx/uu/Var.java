@@ -9,10 +9,12 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -1253,10 +1255,32 @@ public class Var {
 		return var2;
 	}
 
+	public static Var timeId() {
+		return Var.build(Stringuu.timeId());
+	}
+
+	public static Var timeId(int length) {
+		return Var.build(Stringuu.timeId(length));
+	}
+
+	public static Var uuid() {
+		return Var.build(UUID.randomUUID().toString().replace("-", ""));
+	}
+
+	public static Var randomNumeric(final int count) {
+		return Var.build(RandomStringUtils.randomNumeric(count));
+	}
+
+	public static Var randomAlphabetic(final int count) {
+		return Var.build(RandomStringUtils.randomAlphabetic(count));
+	}
+
+	public static Var randomAlphanumeric(final int count) {
+		return Var.build(RandomStringUtils.randomAlphanumeric(count));
+	}
+
 	public static void main(String[] args) throws ParseException, NoSuchFieldException, SecurityException,
 			IllegalArgumentException, IllegalAccessException {
-		double d = 2.0d;
-		Object c = d;
-		System.out.println(Double.valueOf(1.0).toString().replaceAll("\\.0*$", ""));
+		System.out.println(UUID.randomUUID());
 	}
 }

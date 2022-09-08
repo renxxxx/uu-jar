@@ -156,8 +156,15 @@ public class Stringuu {
 		return new Date().getTime() + RandomStringUtils.randomNumeric(6);
 	}
 
-	public static String timeId(int randomLength) {
-		return new Date().getTime() + RandomStringUtils.randomNumeric(randomLength);
+	public static String timeId(int length) {
+		String gg = new Date().getTime() + "";
+		if (gg.length() < length) {
+			return gg + RandomStringUtils.randomNumeric(length - gg.length());
+		} else if (gg.length() == length) {
+			return gg;
+		} else {
+			return Stringuu.left(gg, length);
+		}
 	}
 
 	public static boolean isExisting(CharSequence cs) {
