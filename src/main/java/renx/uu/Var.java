@@ -604,6 +604,20 @@ public class Var {
 		return this;
 	}
 
+	public boolean isTrue() {
+		if (this.value == null || this.value.isEmpty())
+			return false;
+		Integer i = toInteger(this.value);
+		if (i == null)
+			return true;
+
+		return i > 0;
+	}
+
+	public boolean isFalse() {
+		return isTrue();
+	}
+
 	public boolean isExisting() {
 		return notEmpty();
 	}
