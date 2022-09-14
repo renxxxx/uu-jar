@@ -5,10 +5,12 @@ import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -254,5 +256,20 @@ public class CConnection {
 
 	public int insert(String table, Object[] columnms, Object[] values) throws Exception {
 		return Jdbcuu.insert(conn, table, columnms, values);
+	}
+
+	public static MMap select(Connection conn, String table, Object[] columns, MMap conditionm) throws Exception {
+		return Jdbcuu.select(conn, table, columns, conditionm);
+
+	}
+
+	public static MMap select(Connection conn, String table, Object splitColumns, Object[] columns, Object[] values)
+			throws Exception {
+		return Jdbcuu.select(conn, table, splitColumns, columns, values);
+	}
+
+	public static MMap select(Connection conn, String table, Object splitColumns, Object column, Object value)
+			throws Exception {
+		return Jdbcuu.select(conn, table, splitColumns, column, value);
 	}
 }

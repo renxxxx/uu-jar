@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -162,6 +163,48 @@ public class Jdbcuu {
 		}
 
 		return item;
+	}
+
+	public static MMap select(Connection conn, String table, Object[] columns, MMap conditionm) throws Exception {
+		String sql = "";
+		sql += "select ";
+		for (int i = 0; i < columns.length; i++) {
+			sql += " `" + columns[i] + "` " + ",";
+		}
+		sql = sql.substring(0, sql.lastIndexOf(","));
+		sql += " from ";
+		sql += table;
+
+		LList params = LList.build();
+		if (conditionm.isExisting()) {
+			sql += " where ";
+			for (Iterator iterator = conditionm.map.keySet().iterator(); iterator.hasNext();) {
+				Object key = (Object) iterator.next();
+				Object value = conditionm.get(key);
+				sql += value == null || value.toString() == null || value.toString().isEmpty() ? ""
+						: "`" + key + "`" + "=? and ";
+				params.addIf(value, value != null && value.toString() != null && !value.toString().isEmpty());
+			}
+			sql = sql.substring(0, sql.lastIndexOf("and"));
+		}
+		return row(conn, sql, params);
+	}
+
+	public static MMap select(Connection conn, String table, Object splitColumns, Object[] columns, Object[] values)
+			throws Exception {
+		MMap conditionm = new MMap();
+		columns = columns == null ? new Object[] {} : columns;
+		values = values == null ? new Object[] {} : values;
+		for (int i = 0; i < columns.length; i++) {
+			conditionm.put((String) columns[i], values[i]);
+		}
+		return select(conn, table, StringUtils.splitByWholeSeparatorPreserveAllTokens((String) splitColumns, ","),
+				conditionm);
+	}
+
+	public static MMap select(Connection conn, String table, Object splitColumns, Object column, Object value)
+			throws Exception {
+		return select(conn, table, splitColumns, new Object[] { column }, new Object[] { value });
 	}
 
 	public static ResultSet selectSql(Connection conn, PreparedStatement pst, String sql, Object... params)
