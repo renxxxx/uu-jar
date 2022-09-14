@@ -165,7 +165,7 @@ public class Jdbcuu {
 		return item;
 	}
 
-	public static MMap select(Connection conn, String table, Object[] columns, MMap conditionm) throws Exception {
+	public static LList selectList(Connection conn, String table, Object[] columns, MMap conditionm) throws Exception {
 		String sql = "";
 		sql += "select ";
 		for (int i = 0; i < columns.length; i++) {
@@ -187,24 +187,27 @@ public class Jdbcuu {
 			}
 			sql = sql.substring(0, sql.lastIndexOf("and"));
 		}
-		return row(conn, sql, params);
+		return rows(conn, sql, params);
 	}
 
-	public static MMap select(Connection conn, String table, Object splitColumns, Object[] columns, Object[] values)
-			throws Exception {
+	public static LList selectList(Connection conn, String table, Object splitColumns, Object splitConditionColumns,
+			Object... conditionValues) throws Exception {
+		Object[] conditionColumns = StringUtils.splitByWholeSeparatorPreserveAllTokens((String) splitConditionColumns,
+				",");
 		MMap conditionm = new MMap();
-		columns = columns == null ? new Object[] {} : columns;
-		values = values == null ? new Object[] {} : values;
-		for (int i = 0; i < columns.length; i++) {
-			conditionm.put((String) columns[i], values[i]);
+		conditionColumns = conditionColumns == null ? new Object[] {} : conditionColumns;
+		conditionValues = conditionValues == null ? new Object[] {} : conditionValues;
+		for (int i = 0; i < conditionColumns.length; i++) {
+			conditionm.put((String) conditionColumns[i], conditionValues[i]);
 		}
-		return select(conn, table, StringUtils.splitByWholeSeparatorPreserveAllTokens((String) splitColumns, ","),
-				conditionm);
+
+		Object columns = StringUtils.splitByWholeSeparatorPreserveAllTokens((String) splitColumns, ",");
+		return selectList(conn, table, columns, conditionm);
 	}
 
-	public static MMap select(Connection conn, String table, Object splitColumns, Object column, Object value)
-			throws Exception {
-		return select(conn, table, splitColumns, new Object[] { column }, new Object[] { value });
+	public static MMap selectOne(Connection conn, String table, Object splitColumns, Object splitConditionColumns,
+			Object... conditionValues) throws Exception {
+		return selectList(conn, table, splitColumns, splitConditionColumns, conditionValues).getMap(0);
 	}
 
 	public static ResultSet selectSql(Connection conn, PreparedStatement pst, String sql, Object... params)
@@ -504,10 +507,22 @@ public class Jdbcuu {
 //		return update(conn, sql, params);
 //	}
 
-	public static int insert(Connection conn, String table, Object column, Object value) throws Exception {
-		MMap columnm = new MMap();
-		columnm.put((String) column, value);
-		return insert(conn, table, columnm);
+//	public static int insert(Connection conn, String table, Object column, Object value) throws Exception {
+//		MMap columnm = new MMap();
+//		columnm.put((String) column, value);
+//		return insert(conn, table, columnm);
+//	}
+
+	public static int insert(Connection conn, String table, Object splitColumns, Object... values) throws Exception {
+		Object[] columns = StringUtils.splitByWholeSeparatorPreserveAllTokens((String) splitColumns, ",");
+		MMap conditionm = new MMap();
+		columns = columns == null ? new Object[] {} : columns;
+		values = values == null ? new Object[] {} : values;
+		for (int i = 0; i < columns.length; i++) {
+			conditionm.put((String) columns[i], columns[i]);
+		}
+
+		return insert(conn, table, columns, conditionm);
 	}
 
 	public static int insert(Connection conn, String table, Object[] columns, Object[] values) throws Exception {

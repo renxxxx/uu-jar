@@ -250,27 +250,29 @@ public class CConnection {
 		return Jdbcuu.insert(conn, table, columnm);
 	}
 
-	public int insert(String table, Object column, Object value) throws Exception {
-		return Jdbcuu.insert(conn, table, column, value);
+//	public int insert(String table, Object column, Object value) throws Exception {
+//		return Jdbcuu.insert(conn, table, column, value);
+//	}
+
+	public int insert(Connection conn, String table, Object splitColumns, Object... values) throws Exception {
+		return Jdbcuu.insert(conn, table, splitColumns, values);
 	}
 
 	public int insert(String table, Object[] columnms, Object[] values) throws Exception {
 		return Jdbcuu.insert(conn, table, columnms, values);
 	}
 
-	public MMap select(String table, Object[] columns, MMap conditionm) throws Exception {
-		return Jdbcuu.select(conn, table, columns, conditionm);
-	}
-
 	public MMap selectById(String table, Object splitColumns, Object id) throws Exception {
-		return Jdbcuu.select(conn, table, splitColumns, "id", id);
+		return Jdbcuu.selectOne(conn, table, splitColumns, "id", id);
 	}
 
-	public MMap select(String table, Object splitColumns, Object[] columns, Object[] values) throws Exception {
-		return Jdbcuu.select(conn, table, splitColumns, columns, values);
+	public LList selectList(String table, Object splitColumns, Object splitConditionColumns, Object... conditionValues)
+			throws Exception {
+		return Jdbcuu.selectList(conn, table, splitConditionColumns, conditionValues);
 	}
 
-	public MMap select(String table, Object splitColumns, Object column, Object value) throws Exception {
-		return Jdbcuu.select(conn, table, splitColumns, column, value);
+	public MMap selectOne(String table, Object splitColumns, Object splitConditionColumns, Object... conditionValues)
+			throws Exception {
+		return Jdbcuu.selectList(conn, table, splitColumns, splitConditionColumns, conditionValues).getMap(0);
 	}
 }
