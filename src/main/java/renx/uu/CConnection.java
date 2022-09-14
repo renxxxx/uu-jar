@@ -254,7 +254,7 @@ public class CConnection {
 //		return Jdbcuu.insert(conn, table, column, value);
 //	}
 
-	public int insert(Connection conn, String table, Object splitColumns, Object... values) throws Exception {
+	public int insert(String table, Object splitColumns, Object... values) throws Exception {
 		return Jdbcuu.insert(conn, table, splitColumns, values);
 	}
 
