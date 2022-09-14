@@ -190,6 +190,8 @@ public class MMap {
 		Object value = this.get(key);
 		if (value == null)
 			return false;
+		if (value.toString() == null)
+			return false;
 		if (value.toString().isEmpty())
 			return false;
 		return true;
