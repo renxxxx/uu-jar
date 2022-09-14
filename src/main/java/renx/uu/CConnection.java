@@ -262,6 +262,10 @@ public class CConnection {
 		return Jdbcuu.select(conn, table, columns, conditionm);
 	}
 
+	public MMap selectById(String table, Object splitColumns, Object id) throws Exception {
+		return Jdbcuu.select(conn, table, splitColumns, "id", id);
+	}
+
 	public MMap select(String table, Object splitColumns, Object[] columns, Object[] values) throws Exception {
 		return Jdbcuu.select(conn, table, splitColumns, columns, values);
 	}
