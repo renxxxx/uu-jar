@@ -190,6 +190,12 @@ public class MMap {
 		Object value = this.get(key);
 		if (value == null)
 			return false;
+		if (value instanceof Var)
+			return ((Var) value).notEmpty();
+		if (value instanceof MMap)
+			return ((MMap) value).notEmpty();
+		if (value instanceof LList)
+			return ((LList) value).notEmpty();
 		if (value.toString() == null)
 			return false;
 		if (value.toString().isEmpty())
