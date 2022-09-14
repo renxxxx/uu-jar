@@ -258,18 +258,15 @@ public class CConnection {
 		return Jdbcuu.insert(conn, table, columnms, values);
 	}
 
-	public static MMap select(Connection conn, String table, Object[] columns, MMap conditionm) throws Exception {
+	public MMap select(String table, Object[] columns, MMap conditionm) throws Exception {
 		return Jdbcuu.select(conn, table, columns, conditionm);
-
 	}
 
-	public static MMap select(Connection conn, String table, Object splitColumns, Object[] columns, Object[] values)
-			throws Exception {
+	public MMap select(String table, Object splitColumns, Object[] columns, Object[] values) throws Exception {
 		return Jdbcuu.select(conn, table, splitColumns, columns, values);
 	}
 
-	public static MMap select(Connection conn, String table, Object splitColumns, Object column, Object value)
-			throws Exception {
+	public MMap select(String table, Object splitColumns, Object column, Object value) throws Exception {
 		return Jdbcuu.select(conn, table, splitColumns, column, value);
 	}
 }
