@@ -797,6 +797,10 @@ public class Var {
 		return Var.toList(value);
 	}
 
+	public Boolean toBoolean() {
+		return isEmpty() ? false : toBoolean(value);
+	}
+
 	public Integer toInteger() {
 		return isEmpty() ? null : toInteger(value);
 	}
@@ -1291,5 +1295,65 @@ public class Var {
 	public static void main(String[] args) throws ParseException, NoSuchFieldException, SecurityException,
 			IllegalArgumentException, IllegalAccessException {
 		System.out.println(UUID.randomUUID());
+	}
+
+	public boolean equalsAny(Object... params) {
+		if (params == null)
+			params = new Object[] {};
+		for (Object c : params) {
+			if (this.value == c)
+				return true;
+			if (c != null && (c.toString() == this.value || c.toString().equals(this.value)))
+				return true;
+		}
+		return false;
+	}
+
+	public boolean notEqualsAny(Object... params) {
+		return !equalsAny(params);
+	}
+
+	public boolean notEqualsIgnoreCaseAny(Object... params) {
+		return !equalsIgnoreCaseAny(params);
+	}
+
+	public boolean equalsIgnoreCaseAny(Object... params) {
+		if (params == null)
+			params = new Object[] {};
+		for (Object c : params) {
+			if (this.value == c)
+				return true;
+			if (c != null && (c.toString() == this.value || c.toString().equalsIgnoreCase(this.value)))
+				return true;
+		}
+		return false;
+	}
+
+	public boolean notEqualsAll(String... items) {
+		return !equalsAll(items);
+	}
+
+	public boolean equalsAll(String... items) {
+		for (String c : items) {
+			if (this.value == c)
+				continue;
+			if (this.value != c || !this.value.equals(c))
+				return false;
+		}
+		return true;
+	}
+
+	public boolean notEqualsIgnoreCaseAll(String... items) {
+		return !equalsIgnoreCaseAll(items);
+	}
+
+	public boolean equalsIgnoreCaseAll(String... items) {
+		for (String c : items) {
+			if (this.value == c)
+				continue;
+			if (this.value != c || !this.value.equalsIgnoreCase(c))
+				return false;
+		}
+		return true;
 	}
 }
