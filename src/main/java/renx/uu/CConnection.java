@@ -250,7 +250,7 @@ public class CConnection {
 
 	}
 
-	public int delete(String table, Object splitColumns, Object[] values) throws Exception {
+	public int delete(String table, Object splitColumns, Object... values) throws Exception {
 		return Jdbcuu.delete(conn, table, splitColumns, values);
 	}
 //	public int insertByCustomKeyCommonly(String table, MMap columnm) throws Exception {
