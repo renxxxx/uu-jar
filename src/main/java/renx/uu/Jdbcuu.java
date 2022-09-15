@@ -176,7 +176,7 @@ public class Jdbcuu {
 		}
 		sql = sql.substring(0, sql.lastIndexOf(","));
 		sql += " from ";
-		sql += table;
+		sql += "`" + table + "`" + " ";
 
 		LList params = LList.build();
 		if (conditionm.isExisting()) {
@@ -194,7 +194,7 @@ public class Jdbcuu {
 			sql += " order by " + order + " ";
 		}
 		if (limit != null && !limit.isEmpty()) {
-			sql += " " + limit + " ";
+			sql += " limit " + limit + " ";
 		}
 		return rows(conn, sql, params);
 	}
