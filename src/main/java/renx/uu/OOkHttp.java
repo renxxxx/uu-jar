@@ -57,7 +57,7 @@ public class OOkHttp {
 		return this;
 	}
 
-	public MMap postJson() throws IOException {
+	public MMap postJsonToJson() throws IOException {
 		buildRequest();
 		RequestBody body = RequestBody.create(MediaType.parse("application/json"), paramm.toJSONString());
 		requestBuilder.post(body);
@@ -76,7 +76,7 @@ public class OOkHttp {
 		return MMap.build();
 	}
 
-	public MMap postForm() throws IOException {
+	public MMap postFormToJson() throws IOException {
 		buildRequest();
 		FormBody.Builder builder = new FormBody.Builder();
 
