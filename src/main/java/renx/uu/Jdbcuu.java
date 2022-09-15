@@ -210,7 +210,7 @@ public class Jdbcuu {
 			conditionm.put((String) conditionColumns[i], conditionValues[i]);
 		}
 
-		Object columns = StringUtils.splitByWholeSeparatorPreserveAllTokens((String) splitColumns, ",");
+		Object[] columns = StringUtils.splitByWholeSeparatorPreserveAllTokens((String) splitColumns, ",");
 		return selectList(conn, table, order, limit, columns, conditionm);
 	}
 
