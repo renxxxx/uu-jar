@@ -191,10 +191,10 @@ public class Jdbcuu {
 			sql = sql.substring(0, sql.lastIndexOf("and"));
 		}
 		if (order != null && !order.isEmpty()) {
-			sql += " order by " + order;
+			sql += " order by " + order + " ";
 		}
 		if (limit != null && !limit.isEmpty()) {
-			sql += limit;
+			sql += " " + limit + " ";
 		}
 		return rows(conn, sql, params);
 	}
