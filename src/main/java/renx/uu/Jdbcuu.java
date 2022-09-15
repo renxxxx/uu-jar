@@ -557,14 +557,14 @@ public class Jdbcuu {
 
 	public static int insert(Connection conn, String table, Object splitColumns, Object... values) throws Exception {
 		Object[] columns = StringUtils.splitByWholeSeparatorPreserveAllTokens((String) splitColumns, ",");
-		MMap conditionm = new MMap();
+		MMap columnm = new MMap();
 		columns = columns == null ? new Object[] {} : columns;
 		values = values == null ? new Object[] {} : values;
 		for (int i = 0; i < columns.length; i++) {
-			conditionm.put((String) columns[i], columns[i]);
+			columnm.put((String) columns[i], columns[i]);
 		}
 
-		return insert(conn, table, columns, conditionm);
+		return insert(conn, table, columnm);
 	}
 
 	public static int insert(Connection conn, String table, Object[] columns, Object[] values) throws Exception {

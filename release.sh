@@ -59,7 +59,7 @@ git add .
 echo
 
 echo "-git commit"
-git commit -am "$version"
+git commit -am "$newVersion"
 echo
 
 echo "-git pull"
