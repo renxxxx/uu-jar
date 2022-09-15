@@ -366,6 +366,12 @@ public class Jdbcuu {
 //		return rows(conn, sql, params);
 //	}
 
+	public static int updateById(Connection conn, String table, Object splitColumns, Object[] values, Object id)
+			throws Exception {
+		Object[] columns = StringUtils.splitByWholeSeparatorPreserveAllTokens((String) splitColumns, ",");
+		return updateById(conn, table, columns, values, id);
+	}
+
 	public static int updateById(Connection conn, String table, Object column, Object value, Object id)
 			throws Exception {
 		if (id == null || id.toString() == null || id.toString().isEmpty())
@@ -393,6 +399,28 @@ public class Jdbcuu {
 			return 0;
 		MMap conditionm = MMap.build();
 		conditionm.put("id", id);
+		return update(conn, table, columnm, conditionm);
+	}
+
+	public static int update(Connection conn, String table, Object splitColumns, Object[] values,
+			Object splitConditions, Object[] conditionValues) throws Exception {
+		Object[] columns = StringUtils.splitByWholeSeparatorPreserveAllTokens((String) splitColumns, ",");
+		Object[] conditions = StringUtils.splitByWholeSeparatorPreserveAllTokens((String) splitConditions, ",");
+
+		MMap columnm = new MMap();
+		columns = columns == null ? new Object[] {} : columns;
+		values = values == null ? new Object[] {} : values;
+		for (int i = 0; i < columns.length; i++) {
+			columnm.put((String) columns[i], values[i]);
+		}
+
+		MMap conditionm = new MMap();
+		conditions = conditions == null ? new Object[] {} : conditions;
+		conditionValues = conditionValues == null ? new Object[] {} : conditionValues;
+		for (int i = 0; i < conditions.length; i++) {
+			conditionm.put((String) conditions[i], conditionValues[i]);
+		}
+
 		return update(conn, table, columnm, conditionm);
 	}
 

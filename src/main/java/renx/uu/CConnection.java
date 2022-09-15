@@ -220,6 +220,15 @@ public class CConnection {
 		return Jdbcuu.updateById(conn, table, columnm, id);
 	}
 
+	public int updateById(String table, Object splitColumns, Object[] values, Object id) throws Exception {
+		return Jdbcuu.updateById(conn, table, splitColumns, values, id);
+	}
+
+	public int update(String table, Object splitColumns, Object[] values, Object splitConditions,
+			Object[] conditionValues) throws Exception {
+		return Jdbcuu.update(conn, table, splitColumns, values, splitConditions, conditionValues);
+	}
+
 	public int update(String table, MMap columnm, MMap conditionm) throws Exception {
 		return Jdbcuu.update(conn, table, columnm, conditionm);
 	}
