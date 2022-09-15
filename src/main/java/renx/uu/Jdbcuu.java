@@ -165,7 +165,10 @@ public class Jdbcuu {
 		return item;
 	}
 
-	public static LList selectList(Connection conn, String table, Object[] columns, MMap conditionm) throws Exception {
+	public static LList selectList(Connection conn, String table, String order, String limit, Object[] columns,
+			MMap conditionm) throws Exception {
+		if (limit == null || limit.isEmpty())
+			limit = "1,20";
 		String sql = "";
 		sql += "select ";
 		for (int i = 0; i < columns.length; i++) {
@@ -187,11 +190,17 @@ public class Jdbcuu {
 			}
 			sql = sql.substring(0, sql.lastIndexOf("and"));
 		}
+		if (order != null && !order.isEmpty()) {
+			sql += " order by " + order;
+		}
+		if (limit != null && !limit.isEmpty()) {
+			sql += limit;
+		}
 		return rows(conn, sql, params);
 	}
 
-	public static LList selectList(Connection conn, String table, Object splitColumns, Object splitConditionColumns,
-			Object... conditionValues) throws Exception {
+	public static LList selectList(Connection conn, String table, String order, String limit, Object splitColumns,
+			Object splitConditionColumns, Object... conditionValues) throws Exception {
 		Object[] conditionColumns = StringUtils.splitByWholeSeparatorPreserveAllTokens((String) splitConditionColumns,
 				",");
 		MMap conditionm = new MMap();
@@ -202,12 +211,12 @@ public class Jdbcuu {
 		}
 
 		Object columns = StringUtils.splitByWholeSeparatorPreserveAllTokens((String) splitColumns, ",");
-		return selectList(conn, table, columns, conditionm);
+		return selectList(conn, table, order, limit, columns, conditionm);
 	}
 
 	public static MMap selectOne(Connection conn, String table, Object splitColumns, Object splitConditionColumns,
 			Object... conditionValues) throws Exception {
-		return selectList(conn, table, splitColumns, splitConditionColumns, conditionValues).getMap(0);
+		return selectList(conn, table, "", "1", splitColumns, splitConditionColumns, conditionValues).getMap(0);
 	}
 
 	public static ResultSet selectSql(Connection conn, PreparedStatement pst, String sql, Object... params)

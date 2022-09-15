@@ -278,13 +278,13 @@ public class CConnection {
 		return Jdbcuu.selectOne(conn, table, splitColumns, "id", id);
 	}
 
-	public LList selectList(String table, Object splitColumns, Object splitConditionColumns, Object... conditionValues)
-			throws Exception {
-		return Jdbcuu.selectList(conn, table, splitConditionColumns, conditionValues);
+	public LList selectList(String table, String order, String limit, Object splitColumns, Object splitConditionColumns,
+			Object... conditionValues) throws Exception {
+		return Jdbcuu.selectList(conn, table, order, limit, splitConditionColumns, conditionValues);
 	}
 
 	public MMap selectOne(String table, Object splitColumns, Object splitConditionColumns, Object... conditionValues)
 			throws Exception {
-		return Jdbcuu.selectList(conn, table, splitColumns, splitConditionColumns, conditionValues).getMap(0);
+		return Jdbcuu.selectOne(conn, table, splitColumns, splitConditionColumns, conditionValues);
 	}
 }
