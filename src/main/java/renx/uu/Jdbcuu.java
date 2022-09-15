@@ -465,6 +465,11 @@ public class Jdbcuu {
 		return delete(conn, table, conditionm);
 	}
 
+	public static int delete(Connection conn, String table, Object splitColumns, Object[] values) throws Exception {
+		Object[] columns = StringUtils.splitByWholeSeparatorPreserveAllTokens((String) splitColumns, ",");
+		return delete(conn, table, columns, values);
+	}
+
 	public static int delete(Connection conn, String table, Object columnm, Object value) throws Exception {
 		if (value == null || value.toString() == null || value.toString().isEmpty())
 			return 0;
