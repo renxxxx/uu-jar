@@ -561,7 +561,7 @@ public class Jdbcuu {
 		columns = columns == null ? new Object[] {} : columns;
 		values = values == null ? new Object[] {} : values;
 		for (int i = 0; i < columns.length; i++) {
-			columnm.put((String) columns[i], columns[i]);
+			columnm.put((String) columns[i], values[i]);
 		}
 
 		return insert(conn, table, columnm);
