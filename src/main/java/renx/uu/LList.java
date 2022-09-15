@@ -72,6 +72,8 @@ public class LList<E> {
 			e = ((MMap) e).map;
 		else if (e instanceof LList)
 			e = ((LList) e).list;
+		else if (e instanceof Var)
+			e = ((Var) e).value;
 		this.list.add(i, e);
 		return this;
 	}
@@ -83,6 +85,8 @@ public class LList<E> {
 			e = ((MMap) e).map;
 		else if (e instanceof LList)
 			e = ((LList) e).list;
+		else if (e instanceof Var)
+			e = ((Var) e).value;
 		this.list.add(e);
 		return this;
 	}
@@ -145,8 +149,16 @@ public class LList<E> {
 	public Object getObject(int index) {
 		if (this.list == null || this.list.size() <= index)
 			return null;
-		else
-			return this.list.get(index);
+		else {
+			Object item = this.list.get(index);
+			if (item instanceof MMap)
+				item = ((MMap) item).map;
+			else if (item instanceof LList)
+				item = ((LList) item).list;
+			else if (item instanceof Var)
+				item = ((Var) item).value;
+			return item;
+		}
 	};
 
 	public MMap getMap(int index) {

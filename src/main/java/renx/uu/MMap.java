@@ -83,10 +83,18 @@ public class MMap {
 			Iterator keys = map.keySet().iterator();
 			while (keys.hasNext()) {
 				Object key = keys.next();
+				if (key instanceof Var)
+					key = ((Var) key).value;
 				this.put(key, map.get(key));
 			}
 		}
 		return this;
+	}
+
+	public MMap putAll(MMap mmap) {
+		if (mmap == null)
+			return this;
+		return putAll(mmap.map);
 	}
 
 	public MMap putAll(String keyPrefix, Map map) {
@@ -102,12 +110,6 @@ public class MMap {
 			this.put(key2, map.get(key));
 		}
 		return this;
-	}
-
-	public MMap putAll(MMap mmap) {
-		if (mmap == null)
-			return this;
-		return putAll(mmap.map);
 	}
 
 	public MMap putAll(String keyPrefix, MMap mmap) {
@@ -149,9 +151,7 @@ public class MMap {
 	}
 
 	public Integer getInteger(Object key) {
-		if (map == null)
-			return null;
-		return Var.toInteger(map.get(key));
+		return get(key).toInteger();
 	}
 
 	public Long getLong(Object key) {
