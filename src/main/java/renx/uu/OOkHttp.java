@@ -1,6 +1,7 @@
 package renx.uu;
 
 import java.io.IOException;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -39,19 +40,25 @@ public class OOkHttp {
 		return this;
 	}
 
-	public OOkHttp header(Var name, Var value) {
+	public OOkHttp header(Object name, Object value) {
 		buildRequest();
-		requestBuilder.addHeader(name.value, value.value);
+		requestBuilder.addHeader(name == null ? null : name.toString(), value == null ? null : value.toString());
 		return this;
 	}
 
-	public OOkHttp param(Var name, Var value) {
+	public OOkHttp param(Object name, Object value) {
 		buildRequest();
-		paramm.put(name, value);
+		paramm.put(name == null ? null : name.toString(), value == null ? null : value.toString());
 		return this;
 	}
 
 	public OOkHttp paramm(MMap paramm$) {
+		buildRequest();
+		paramm.putAll(paramm$);
+		return this;
+	}
+
+	public OOkHttp paramm(Map paramm$) {
 		buildRequest();
 		paramm.putAll(paramm$);
 		return this;
