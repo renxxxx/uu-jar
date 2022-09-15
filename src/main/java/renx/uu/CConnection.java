@@ -296,7 +296,7 @@ public class CConnection {
 	public LList selectList(String table, String order, String limit, Object splitColumns, Object splitConditionColumns,
 			Object... conditionValues) throws Exception {
 		setConnection();
-		return Jdbcuu.selectList(conn, table, order, limit, splitConditionColumns, conditionValues);
+		return Jdbcuu.selectList(conn, table, order, limit, splitColumns, splitConditionColumns, conditionValues);
 	}
 
 	public MMap selectOne(String table, Object splitColumns, Object splitConditionColumns, Object... conditionValues)
