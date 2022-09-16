@@ -123,9 +123,9 @@ public class Jdbcuu {
 
 	public static Object getObject(Connection conn, String sql, Object... params) throws Exception {
 		MMap row = row(conn, sql, params);
-		if (row.map == null)
+		if (row.isEmpty())
 			return null;
-		return row.get(row.map.keySet().iterator().next());
+		return row.get(row.keySet().iterator().next());
 	}
 
 //	public static Mappquery(Connection conn, String sql, Object... params) throws Exception {
