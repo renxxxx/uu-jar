@@ -17,7 +17,7 @@ public class LList<E> {
 	}
 
 	public int index = -1;
-	public List list = null;
+	public List list = new ArrayList();
 
 	public LList attrs(String key) {
 		if (this.list == null)

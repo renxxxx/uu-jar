@@ -15,7 +15,7 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 
 public class MMap {
 
-	public Map map = null;
+	public Map map = new LinkedHashMap();
 
 	public Set keySet() {
 		if (this.map == null)
