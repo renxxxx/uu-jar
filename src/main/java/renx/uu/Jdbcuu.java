@@ -408,7 +408,15 @@ public class Jdbcuu {
 			return 0;
 		MMap conditionm = MMap.build();
 		conditionm.put("id", id);
-		return update(conn, table, columnm, conditionm);
+		return updateOne(conn, table, columnm, conditionm);
+	}
+
+	public static int updateOne(Connection conn, String table, Object splitColumns, Object[] values,
+			Object splitConditions, Object[] conditionValues) throws Exception {
+		int cnt = update(conn, table, splitColumns, values, splitConditions, conditionValues);
+		if (cnt > 1)
+			throw new Exception("受影响的数量超过1");
+		return cnt;
 	}
 
 	public static int update(Connection conn, String table, Object splitColumns, Object[] values,
@@ -431,6 +439,13 @@ public class Jdbcuu {
 		}
 
 		return update(conn, table, columnm, conditionm);
+	}
+
+	public static int updateOne(Connection conn, String table, MMap columnm, MMap conditionm) throws Exception {
+		int cnt = update(conn, table, columnm, conditionm);
+		if (cnt > 1)
+			throw new Exception("受影响的数量超过1");
+		return cnt;
 	}
 
 	public static int update(Connection conn, String table, MMap columnm, MMap conditionm) throws Exception {
@@ -471,12 +486,26 @@ public class Jdbcuu {
 			return 0;
 		MMap conditionm = new MMap();
 		conditionm.put("id", id);
-		return delete(conn, table, conditionm);
+		return deleteOne(conn, table, conditionm);
+	}
+
+	public static int deleteOne(Connection conn, String table, Object splitColumns, Object... values) throws Exception {
+		int cnt = delete(conn, table, splitColumns, values);
+		if (cnt > 1)
+			throw new Exception("受影响的数量超过1");
+		return cnt;
 	}
 
 	public static int delete(Connection conn, String table, Object splitColumns, Object... values) throws Exception {
 		Object[] columns = StringUtils.splitByWholeSeparatorPreserveAllTokens((String) splitColumns, ",");
 		return delete(conn, table, columns, values);
+	}
+
+	public static int deleteOne(Connection conn, String table, Object columnm, Object value) throws Exception {
+		int cnt = delete(conn, table, columnm, value);
+		if (cnt > 1)
+			throw new Exception("受影响的数量超过1");
+		return cnt;
 	}
 
 	public static int delete(Connection conn, String table, Object columnm, Object value) throws Exception {
@@ -487,6 +516,13 @@ public class Jdbcuu {
 		return delete(conn, table, conditionm);
 	}
 
+	public static int deleteOne(Connection conn, String table, Object[] columnms, Object[] values) throws Exception {
+		int cnt = delete(conn, table, columnms, values);
+		if (cnt > 1)
+			throw new Exception("受影响的数量超过1");
+		return cnt;
+	}
+
 	public static int delete(Connection conn, String table, Object[] columnms, Object[] values) throws Exception {
 		MMap conditionm = new MMap();
 		columnms = columnms == null ? new Object[] {} : columnms;
@@ -495,6 +531,13 @@ public class Jdbcuu {
 			conditionm.put((String) columnms[i], values[i]);
 		}
 		return delete(conn, table, conditionm);
+	}
+
+	public static int deleteOne(Connection conn, String table, MMap conditionm) throws Exception {
+		int cnt = delete(conn, table, conditionm);
+		if (cnt > 1)
+			throw new Exception("受影响的数量超过1");
+		return cnt;
 	}
 
 	public static int delete(Connection conn, String table, MMap conditionm) throws Exception {

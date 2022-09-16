@@ -322,7 +322,15 @@ public class Jdbcuu2 {
 	public static int updateById(Connection conn, String table, JSONObject columnm, String id) throws Exception {
 		JSONObject conditionm = new JSONObject();
 		conditionm.put("id", id);
-		return update(conn, table, columnm, conditionm);
+		return updateOne(conn, table, columnm, conditionm);
+	}
+
+	public static int updateOne(Connection conn, String table, JSONObject columnm, JSONObject conditionm)
+			throws Exception {
+		int cnt = update(conn, table, columnm, conditionm);
+		if (cnt > 1)
+			throw new Exception("受影响的数量超过1");
+		return cnt;
 	}
 
 	public static int update(Connection conn, String table, JSONObject columnm, JSONObject conditionm)
@@ -362,13 +370,27 @@ public class Jdbcuu2 {
 	public static int deleteById(Connection conn, String table, Object id) throws Exception {
 		JSONObject conditionm = new JSONObject();
 		conditionm.put("id", id);
-		return delete(conn, table, conditionm);
+		return deleteOne(conn, table, conditionm);
+	}
+
+	public static int deleteOne(Connection conn, String table, Object columnm, Object value) throws Exception {
+		int cnt = delete(conn, table, columnm, value);
+		if (cnt > 1)
+			throw new Exception("受影响的数量超过1");
+		return cnt;
 	}
 
 	public static int delete(Connection conn, String table, Object columnm, Object value) throws Exception {
 		JSONObject conditionm = new JSONObject();
 		conditionm.put((String) columnm, value);
 		return delete(conn, table, conditionm);
+	}
+
+	public static int deleteOne(Connection conn, String table, Object[] columnms, Object[] values) throws Exception {
+		int cnt = delete(conn, table, columnms, values);
+		if (cnt > 1)
+			throw new Exception("受影响的数量超过1");
+		return cnt;
 	}
 
 	public static int delete(Connection conn, String table, Object[] columnms, Object[] values) throws Exception {
@@ -379,6 +401,13 @@ public class Jdbcuu2 {
 			conditionm.put((String) columnms[i], values[i]);
 		}
 		return delete(conn, table, conditionm);
+	}
+
+	public static int deleteOne(Connection conn, String table, JSONObject conditionm) throws Exception {
+		int cnt = delete(conn, table, conditionm);
+		if (cnt > 1)
+			throw new Exception("受影响的数量超过1");
+		return cnt;
 	}
 
 	public static int delete(Connection conn, String table, JSONObject conditionm) throws Exception {

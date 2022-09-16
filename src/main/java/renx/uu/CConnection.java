@@ -228,10 +228,21 @@ public class CConnection {
 		return Jdbcuu.updateById(conn, table, splitColumns, values, id);
 	}
 
+	public int updateOne(String table, Object splitColumns, Object[] values, Object splitConditions,
+			Object[] conditionValues) throws Exception {
+		setConnection();
+		return Jdbcuu.updateOne(conn, table, splitColumns, values, splitConditions, conditionValues);
+	}
+
 	public int update(String table, Object splitColumns, Object[] values, Object splitConditions,
 			Object[] conditionValues) throws Exception {
 		setConnection();
 		return Jdbcuu.update(conn, table, splitColumns, values, splitConditions, conditionValues);
+	}
+
+	public int updateOne(String table, MMap columnm, MMap conditionm) throws Exception {
+		setConnection();
+		return Jdbcuu.updateOne(conn, table, columnm, conditionm);
 	}
 
 	public int update(String table, MMap columnm, MMap conditionm) throws Exception {
@@ -244,9 +255,19 @@ public class CConnection {
 		return Jdbcuu.deleteById(conn, table, id);
 	}
 
+	public int deleteOne(String table, Object columnm, Object value) throws Exception {
+		setConnection();
+		return Jdbcuu.deleteOne(conn, table, columnm, value);
+	}
+
 	public int delete(String table, Object columnm, Object value) throws Exception {
 		setConnection();
 		return Jdbcuu.delete(conn, table, columnm, value);
+	}
+
+	public int deleteOne(String table, Object[] columnms, Object[] values) throws Exception {
+		setConnection();
+		return Jdbcuu.deleteOne(conn, table, columnms, values);
 	}
 
 	public int delete(String table, Object[] columnms, Object[] values) throws Exception {
@@ -254,10 +275,20 @@ public class CConnection {
 		return Jdbcuu.delete(conn, table, columnms, values);
 	}
 
+	public int deleteOne(String table, MMap conditionm) throws Exception {
+		setConnection();
+		return Jdbcuu.deleteOne(conn, table, conditionm);
+	}
+
 	public int delete(String table, MMap conditionm) throws Exception {
 		setConnection();
 		return Jdbcuu.delete(conn, table, conditionm);
 
+	}
+
+	public int deleteOne(String table, Object splitColumns, Object... values) throws Exception {
+		setConnection();
+		return Jdbcuu.deleteOne(conn, table, splitColumns, values);
 	}
 
 	public int delete(String table, Object splitColumns, Object... values) throws Exception {
