@@ -942,7 +942,7 @@ public class Var {
 				return (Integer) value;
 			if (value instanceof Boolean)
 				return (Boolean) value ? 1 : 0;
-			return new Integer(value.toString().split("\\.")[0]);
+			return Integer.valueOf(value.toString().split("\\.")[0]);
 		} catch (Exception e) {
 			logger.debug(ExceptionUtils.getStackTrace(e));
 		}
@@ -960,7 +960,7 @@ public class Var {
 			if (valueStr.trim().isEmpty())
 				return null;
 			else
-				return new Float(valueStr);
+				return Float.valueOf(valueStr);
 		} catch (Exception e) {
 			logger.debug(ExceptionUtils.getStackTrace(e));
 			return null;
@@ -977,7 +977,7 @@ public class Var {
 			if (valueStr.trim().isEmpty())
 				return null;
 			else
-				return new Double(valueStr);
+				return Double.valueOf(valueStr);
 		} catch (Exception e) {
 			logger.debug(ExceptionUtils.getStackTrace(e));
 			return null;
@@ -1171,7 +1171,7 @@ public class Var {
 		if (valueStr.trim().isEmpty())
 			return null;
 		else
-			return new Long(valueStr.split("\\.")[0]);
+			return Long.valueOf(valueStr.split("\\.")[0]);
 	}
 
 	public static BigDecimal toDecimal(Object value) {
