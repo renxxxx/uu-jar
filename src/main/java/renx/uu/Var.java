@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -178,6 +179,15 @@ public class Var {
 
 		if (value != null)
 			value = prefix.toString() + value;
+		return this;
+	}
+
+	public Var md5() {
+		if (!this.run)
+			return this;
+
+		if (value != null && !value.isEmpty())
+			value = DigestUtils.md5Hex(value);
 		return this;
 	}
 
@@ -474,7 +484,7 @@ public class Var {
 	public Var vList() {
 		if (!this.run)
 			return this;
-		LList list = null;
+		LList list = LList.build();
 		if (this.value != null && !this.value.isEmpty()) {
 			try {
 				list = Var.toList(this.value);
