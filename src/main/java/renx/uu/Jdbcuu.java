@@ -155,13 +155,11 @@ public class Jdbcuu {
 	}
 
 	public static MMap row(Connection conn, String sql, Object... params) throws Exception {
-
 		MMap item = MMap.build();
-		LList<Map> itemList = rows(conn, sql, params);
-		if (itemList != null && itemList.size() > 0) {
+		LList itemList = rows(conn, sql, params);
+		if (itemList.size() == 1) {
 			item = itemList.getMap(0);
 		}
-
 		return item;
 	}
 
@@ -216,7 +214,10 @@ public class Jdbcuu {
 
 	public static MMap selectOne(Connection conn, String table, Object splitColumns, Object splitConditionColumns,
 			Object... conditionValues) throws Exception {
-		return selectList(conn, table, "", "1", splitColumns, splitConditionColumns, conditionValues).getMap(0);
+		LList rows = selectList(conn, table, "", "1", splitColumns, splitConditionColumns, conditionValues);
+		if (rows.size() > 1)
+			return MMap.build();
+		return rows.getMap(0);
 	}
 
 	public static ResultSet selectSql(Connection conn, PreparedStatement pst, String sql, Object... params)
