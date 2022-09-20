@@ -208,20 +208,20 @@ public class CConnection {
 		return Jdbcuu.getObject(conn, sql, params);
 	}
 
-	public int updateById(String table, Object column, Object value, Object id) throws Exception {
-		setConnection();
-		return Jdbcuu.updateById(conn, table, column, value, id);
-	}
+//	public int updateById(String table, Object column, Object value, Object id) throws Exception {
+//		setConnection();
+//		return Jdbcuu.updateById(conn, table, column, value, id);
+//	}
 
-	public int updateById(String table, Object[] columns, Object[] values, Object id) throws Exception {
-		setConnection();
-		return Jdbcuu.updateById(conn, table, columns, values, id);
-	}
-
-	public int updateById(String table, MMap columnm, Object id) throws Exception {
-		setConnection();
-		return Jdbcuu.updateById(conn, table, columnm, id);
-	}
+//	public int updateById(String table, Object[] columns, Object[] values, Object id) throws Exception {
+//		setConnection();
+//		return Jdbcuu.updateById(conn, table, columns, values, id);
+//	}
+//
+//	public int updateById(String table, MMap columnm, Object id) throws Exception {
+//		setConnection();
+//		return Jdbcuu.updateById(conn, table, columnm, id);
+//	}
 
 	public int updateById(String table, Object splitColumns, Object[] values, Object id) throws Exception {
 		setConnection();
@@ -240,51 +240,50 @@ public class CConnection {
 		return Jdbcuu.update(conn, table, splitColumns, values, splitConditions, conditionValues);
 	}
 
-	public int updateOne(String table, MMap columnm, MMap conditionm) throws Exception {
-		setConnection();
-		return Jdbcuu.updateOne(conn, table, columnm, conditionm);
-	}
-
-	public int update(String table, MMap columnm, MMap conditionm) throws Exception {
-		setConnection();
-		return Jdbcuu.update(conn, table, columnm, conditionm);
-	}
+//	public int updateOne(String table, MMap columnm, MMap conditionm) throws Exception {
+//		setConnection();
+//		return Jdbcuu.updateOne(conn, table, columnm, conditionm);
+//	}
+//
+//	public int update(String table, MMap columnm, MMap conditionm) throws Exception {
+//		setConnection();
+//		return Jdbcuu.update(conn, table, columnm, conditionm);
+//	}
 
 	public int deleteById(String table, Object id) throws Exception {
 		setConnection();
 		return Jdbcuu.deleteById(conn, table, id);
 	}
 
-	public int deleteOne(String table, Object columnm, Object value) throws Exception {
-		setConnection();
-		return Jdbcuu.deleteOne(conn, table, columnm, value);
-	}
-
-	public int delete(String table, Object columnm, Object value) throws Exception {
-		setConnection();
-		return Jdbcuu.delete(conn, table, columnm, value);
-	}
-
-	public int deleteOne(String table, Object[] columnms, Object[] values) throws Exception {
-		setConnection();
-		return Jdbcuu.deleteOne(conn, table, columnms, values);
-	}
-
-	public int delete(String table, Object[] columnms, Object[] values) throws Exception {
-		setConnection();
-		return Jdbcuu.delete(conn, table, columnms, values);
-	}
-
-	public int deleteOne(String table, MMap conditionm) throws Exception {
-		setConnection();
-		return Jdbcuu.deleteOne(conn, table, conditionm);
-	}
-
-	public int delete(String table, MMap conditionm) throws Exception {
-		setConnection();
-		return Jdbcuu.delete(conn, table, conditionm);
-
-	}
+//	public int deleteOne(String table, Object columnm, Object value) throws Exception {
+//		setConnection();
+//		return Jdbcuu.deleteOne(conn, table, columnm, value);
+//	}
+//
+//	public int delete(String table, Object columnm, Object value) throws Exception {
+//		setConnection();
+//		return Jdbcuu.delete(conn, table, columnm, value);
+//	}
+//
+//	public int deleteOne(String table, Object[] columnms, Object[] values) throws Exception {
+//		setConnection();
+//		return Jdbcuu.deleteOne(conn, table, columnms, values);
+//	}
+//
+//	public int delete(String table, Object[] columnms, Object[] values) throws Exception {
+//		setConnection();
+//		return Jdbcuu.delete(conn, table, columnms, values);
+//	}
+//
+//	public int deleteOne(String table, MMap conditionm) throws Exception {
+//		setConnection();
+//		return Jdbcuu.deleteOne(conn, table, conditionm);
+//	}
+//
+//	public int delete(String table, MMap conditionm) throws Exception {
+//		setConnection();
+//		return Jdbcuu.delete(conn, table, conditionm);
+//	}
 
 	public int deleteOne(String table, Object splitColumns, Object... values) throws Exception {
 		setConnection();
@@ -295,15 +294,16 @@ public class CConnection {
 		setConnection();
 		return Jdbcuu.delete(conn, table, splitColumns, values);
 	}
+	
 //	public int insertByCustomKeyCommonly(String table, MMap columnm) throws Exception {
 //		return Jdbcuu.insertByCustomKeyCommonly(conn, table, columnm);
 //
 //	}
 
-	public int insert(String table, MMap columnm) throws Exception {
-		setConnection();
-		return Jdbcuu.insert(conn, table, columnm);
-	}
+//	public int insert(String table, MMap columnm) throws Exception {
+//		setConnection();
+//		return Jdbcuu.insert(conn, table, columnm);
+//	}
 
 //	public int insert(String table, Object column, Object value) throws Exception {
 //		return Jdbcuu.insert(conn, table, column, value);
@@ -314,19 +314,17 @@ public class CConnection {
 		return Jdbcuu.insert(conn, table, splitColumns, values);
 	}
 
-	public int insert(String table, Object[] columnms, Object[] values) throws Exception {
-		setConnection();
-		return Jdbcuu.insert(conn, table, columnms, values);
-	}
+//	public int insert(String table, Object[] columnms, Object[] values) throws Exception {
+//		setConnection();
+//		return Jdbcuu.insert(conn, table, columnms, values);
+//	}
 
 	public MMap selectById(String table, Object splitColumns, Object id) throws Exception {
 		setConnection();
-		if (id == null || id.toString() == null || id.toString().isEmpty())
-			return MMap.build();
-		return Jdbcuu.selectOne(conn, table, splitColumns, "id", id);
+		return Jdbcuu.selectById(conn, table, splitColumns, id);
 	}
 
-	public LList selectList(String table, String order, String limit, Object splitColumns, Object splitConditionColumns,
+	public LList selectList(String table, Object order, Object limit, Object splitColumns, Object splitConditionColumns,
 			Object... conditionValues) throws Exception {
 		setConnection();
 		return Jdbcuu.selectList(conn, table, order, limit, splitColumns, splitConditionColumns, conditionValues);

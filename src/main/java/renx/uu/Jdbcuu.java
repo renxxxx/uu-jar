@@ -163,9 +163,9 @@ public class Jdbcuu {
 		return item;
 	}
 
-	public static LList selectList(Connection conn, String table, String order, String limit, Object[] columns,
+	public static LList select(Connection conn, Object table, Object order, Object limit, Object[] columns,
 			MMap conditionm) throws Exception {
-		if (limit == null || limit.isEmpty())
+		if (limit == null || limit.toString() == null || limit.toString().isEmpty())
 			limit = "1,20";
 		String sql = "";
 		sql += "select ";
@@ -188,16 +188,16 @@ public class Jdbcuu {
 			}
 			sql = sql.substring(0, sql.lastIndexOf("and"));
 		}
-		if (order != null && !order.isEmpty()) {
+		if (order != null && order.toString() != null && !order.toString().isEmpty()) {
 			sql += " order by " + order + " ";
 		}
-		if (limit != null && !limit.isEmpty()) {
+		if (limit != null && limit.toString() != null && !limit.toString().isEmpty()) {
 			sql += " limit " + limit + " ";
 		}
 		return rows(conn, sql, params);
 	}
 
-	public static LList selectList(Connection conn, String table, String order, String limit, Object splitColumns,
+	public static LList selectList(Connection conn, Object table, Object order, Object limit, Object splitColumns,
 			Object splitConditionColumns, Object... conditionValues) throws Exception {
 		Object[] conditionColumns = StringUtils.splitByWholeSeparatorPreserveAllTokens((String) splitConditionColumns,
 				",");
@@ -209,12 +209,16 @@ public class Jdbcuu {
 		}
 
 		Object[] columns = StringUtils.splitByWholeSeparatorPreserveAllTokens((String) splitColumns, ",");
-		return selectList(conn, table, order, limit, columns, conditionm);
+		return select(conn, table, order, limit, columns, conditionm);
+	}
+
+	public static MMap selectById(Connection conn, String table, Object splitColumns, Object id) throws Exception {
+		return selectOne(conn, table, splitColumns, "id", id);
 	}
 
 	public static MMap selectOne(Connection conn, String table, Object splitColumns, Object splitConditionColumns,
 			Object... conditionValues) throws Exception {
-		LList rows = selectList(conn, table, "", "1", splitColumns, splitConditionColumns, conditionValues);
+		LList rows = selectList(conn, table, "", "2", splitColumns, splitConditionColumns, conditionValues);
 		if (rows.size() > 1)
 			return MMap.build();
 		return rows.getMap(0);
@@ -378,42 +382,41 @@ public class Jdbcuu {
 
 	public static int updateById(Connection conn, String table, Object splitColumns, Object[] values, Object id)
 			throws Exception {
-		Object[] columns = StringUtils.splitByWholeSeparatorPreserveAllTokens((String) splitColumns, ",");
-		return updateById(conn, table, columns, values, id);
-	}
-
-	public static int updateById(Connection conn, String table, Object column, Object value, Object id)
-			throws Exception {
 		if (id == null || id.toString() == null || id.toString().isEmpty())
 			return 0;
-		MMap columnm = new MMap();
-		columnm.put((String) column, value);
-		return updateById(conn, table, columnm, id);
+		return updateOne(conn, table, splitColumns, values, "id", id);
 	}
 
-	public static int updateById(Connection conn, String table, Object[] columns, Object[] values, Object id)
-			throws Exception {
-		if (id == null || id.toString() == null || id.toString().isEmpty())
-			return 0;
-		MMap columnm = new MMap();
-		columns = columns == null ? new Object[] {} : columns;
-		values = values == null ? new Object[] {} : values;
-		for (int i = 0; i < columns.length; i++) {
-			columnm.put((String) columns[i], values[i]);
-		}
-		return updateById(conn, table, columnm, id);
-	}
+//	public static int updateById(Connection conn, String table, Object id, Object column, Object value)
+//			throws Exception {
+//		if (id == null || id.toString() == null || id.toString().isEmpty())
+//			return 0;
+//		return updateById(conn, table, id, column, value);
+//	}
 
-	public static int updateById(Connection conn, String table, MMap columnm, Object id) throws Exception {
-		if (id == null || id.toString() == null || id.toString().isEmpty())
-			return 0;
-		MMap conditionm = MMap.build();
-		conditionm.put("id", id);
-		return updateOne(conn, table, columnm, conditionm);
-	}
+//	public static int updateById(Connection conn, String table, Object[] columns, Object[] values, Object id)
+//			throws Exception {
+//		if (id == null || id.toString() == null || id.toString().isEmpty())
+//			return 0;
+//		MMap columnm = new MMap();
+//		columns = columns == null ? new Object[] {} : columns;
+//		values = values == null ? new Object[] {} : values;
+//		for (int i = 0; i < columns.length; i++) {
+//			columnm.put((String) columns[i], values[i]);
+//		}
+//		return updateById(conn, table, columnm, id);
+//	}
+
+//	public static int updateById(Connection conn, String table, MMap columnm, Object id) throws Exception {
+//		if (id == null || id.toString() == null || id.toString().isEmpty())
+//			return 0;
+//		MMap conditionm = MMap.build();
+//		conditionm.put("id", id);
+//		return updateOne(conn, table, columnm, conditionm);
+//	}
 
 	public static int updateOne(Connection conn, String table, Object splitColumns, Object[] values,
-			Object splitConditions, Object[] conditionValues) throws Exception {
+			Object splitConditions, Object... conditionValues) throws Exception {
 		int cnt = update(conn, table, splitColumns, values, splitConditions, conditionValues);
 		if (cnt > 1)
 			throw new Exception("受影响的数量超过1");
@@ -421,7 +424,7 @@ public class Jdbcuu {
 	}
 
 	public static int update(Connection conn, String table, Object splitColumns, Object[] values,
-			Object splitConditions, Object[] conditionValues) throws Exception {
+			Object splitConditions, Object... conditionValues) throws Exception {
 		Object[] columns = StringUtils.splitByWholeSeparatorPreserveAllTokens((String) splitColumns, ",");
 		Object[] conditions = StringUtils.splitByWholeSeparatorPreserveAllTokens((String) splitConditions, ",");
 
@@ -442,12 +445,12 @@ public class Jdbcuu {
 		return update(conn, table, columnm, conditionm);
 	}
 
-	public static int updateOne(Connection conn, String table, MMap columnm, MMap conditionm) throws Exception {
-		int cnt = update(conn, table, columnm, conditionm);
-		if (cnt > 1)
-			throw new Exception("受影响的数量超过1");
-		return cnt;
-	}
+//	public static int updateOne(Connection conn, String table, MMap columnm, MMap conditionm) throws Exception {
+//		int cnt = update(conn, table, columnm, conditionm);
+//		if (cnt > 1)
+//			throw new Exception("受影响的数量超过1");
+//		return cnt;
+//	}
 
 	public static int update(Connection conn, String table, MMap columnm, MMap conditionm) throws Exception {
 		String sql = "";
@@ -485,9 +488,7 @@ public class Jdbcuu {
 	public static int deleteById(Connection conn, String table, Object id) throws Exception {
 		if (id == null || id.toString() == null || id.toString().isEmpty())
 			return 0;
-		MMap conditionm = new MMap();
-		conditionm.put("id", id);
-		return deleteOne(conn, table, conditionm);
+		return deleteOne(conn, table, "id", id);
 	}
 
 	public static int deleteOne(Connection conn, String table, Object splitColumns, Object... values) throws Exception {
@@ -499,47 +500,54 @@ public class Jdbcuu {
 
 	public static int delete(Connection conn, String table, Object splitColumns, Object... values) throws Exception {
 		Object[] columns = StringUtils.splitByWholeSeparatorPreserveAllTokens((String) splitColumns, ",");
-		return delete(conn, table, columns, values);
-	}
 
-	public static int deleteOne(Connection conn, String table, Object columnm, Object value) throws Exception {
-		int cnt = delete(conn, table, columnm, value);
-		if (cnt > 1)
-			throw new Exception("受影响的数量超过1");
-		return cnt;
-	}
-
-	public static int delete(Connection conn, String table, Object columnm, Object value) throws Exception {
-		if (value == null || value.toString() == null || value.toString().isEmpty())
-			return 0;
 		MMap conditionm = new MMap();
-		conditionm.put((String) columnm, value);
-		return delete(conn, table, conditionm);
-	}
-
-	public static int deleteOne(Connection conn, String table, Object[] columnms, Object[] values) throws Exception {
-		int cnt = delete(conn, table, columnms, values);
-		if (cnt > 1)
-			throw new Exception("受影响的数量超过1");
-		return cnt;
-	}
-
-	public static int delete(Connection conn, String table, Object[] columnms, Object[] values) throws Exception {
-		MMap conditionm = new MMap();
-		columnms = columnms == null ? new Object[] {} : columnms;
+		columns = columns == null ? new Object[] {} : columns;
 		values = values == null ? new Object[] {} : values;
-		for (int i = 0; i < columnms.length; i++) {
-			conditionm.put((String) columnms[i], values[i]);
+		for (int i = 0; i < columns.length; i++) {
+			conditionm.put((String) columns[i], values[i]);
 		}
 		return delete(conn, table, conditionm);
 	}
 
-	public static int deleteOne(Connection conn, String table, MMap conditionm) throws Exception {
-		int cnt = delete(conn, table, conditionm);
-		if (cnt > 1)
-			throw new Exception("受影响的数量超过1");
-		return cnt;
-	}
+//	public static int deleteOne(Connection conn, String table, Object columnm, Object value) throws Exception {
+//		int cnt = delete(conn, table, columnm, value);
+//		if (cnt > 1)
+//			throw new Exception("受影响的数量超过1");
+//		return cnt;
+//	}
+//
+//	public static int delete(Connection conn, String table, Object columnm, Object value) throws Exception {
+//		if (value == null || value.toString() == null || value.toString().isEmpty())
+//			return 0;
+//		MMap conditionm = new MMap();
+//		conditionm.put((String) columnm, value);
+//		return delete(conn, table, conditionm);
+//	}
+//
+//	public static int deleteOne(Connection conn, String table, Object[] columnms, Object[] values) throws Exception {
+//		int cnt = delete(conn, table, columnms, values);
+//		if (cnt > 1)
+//			throw new Exception("受影响的数量超过1");
+//		return cnt;
+//	}
+//
+//	public static int delete(Connection conn, String table, Object[] columnms, Object[] values) throws Exception {
+//		MMap conditionm = new MMap();
+//		columnms = columnms == null ? new Object[] {} : columnms;
+//		values = values == null ? new Object[] {} : values;
+//		for (int i = 0; i < columnms.length; i++) {
+//			conditionm.put((String) columnms[i], values[i]);
+//		}
+//		return delete(conn, table, conditionm);
+//	}
+
+//	public static int deleteOne(Connection conn, String table, MMap conditionm) throws Exception {
+//		int cnt = delete(conn, table, conditionm);
+//		if (cnt > 1)
+//			throw new Exception("受影响的数量超过1");
+//		return cnt;
+//	}
 
 	public static int delete(Connection conn, String table, MMap conditionm) throws Exception {
 		String sql = "";
@@ -611,15 +619,15 @@ public class Jdbcuu {
 		return insert(conn, table, columnm);
 	}
 
-	public static int insert(Connection conn, String table, Object[] columns, Object[] values) throws Exception {
-		MMap columnm = new MMap();
-		columns = columns == null ? new Object[] {} : columns;
-		values = values == null ? new Object[] {} : values;
-		for (int i = 0; i < columns.length; i++) {
-			columnm.put((String) columns[i], values[i]);
-		}
-		return insert(conn, table, columnm);
-	}
+//	public static int insert(Connection conn, String table, Object[] columns, Object[] values) throws Exception {
+//		MMap columnm = new MMap();
+//		columns = columns == null ? new Object[] {} : columns;
+//		values = values == null ? new Object[] {} : values;
+//		for (int i = 0; i < columns.length; i++) {
+//			columnm.put((String) columns[i], values[i]);
+//		}
+//		return insert(conn, table, columnm);
+//	}
 
 	public static int insert(Connection conn, String table, MMap columnm) throws Exception {
 		String sql = "";
