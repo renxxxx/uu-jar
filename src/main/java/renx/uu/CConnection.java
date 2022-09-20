@@ -321,6 +321,8 @@ public class CConnection {
 
 	public MMap selectById(String table, Object splitColumns, Object id) throws Exception {
 		setConnection();
+		if (id == null || id.toString() == null || id.toString().isEmpty())
+			return MMap.build();
 		return Jdbcuu.selectOne(conn, table, splitColumns, "id", id);
 	}
 
