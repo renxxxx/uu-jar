@@ -5,38 +5,36 @@ import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class CConnection3 {
-	private static Logger logger = LoggerFactory.getLogger(CConnection.class);
+	private static Logger logger = LoggerFactory.getLogger(CConnection3.class);
 
 	public DataSource dataSource;
 	public Connection conn;
 	public boolean self = true;
 
-	public static CConnection build() {
+	public static CConnection3 build() {
 		return build(null, null);
 	}
 
-	public static CConnection build(Connection conn) {
-		CConnection cconn = build();
+	public static CConnection3 build(Connection conn) {
+		CConnection3 cconn = build();
 		cconn.conn = conn;
 		return cconn;
 	}
 
-	public static CConnection build(DataSource ds) {
+	public static CConnection3 build(DataSource ds) {
 		return build(ds, null);
 	}
 
-	public static CConnection build(DataSource dataSource, CConnection cconn) {
-		CConnection cconn2 = new CConnection();
+	public static CConnection3 build(DataSource dataSource, CConnection3 cconn) {
+		CConnection3 cconn2 = new CConnection3();
 		cconn2.dataSource = dataSource;
 		if (cconn != null && cconn.conn != null) {
 			cconn2.conn = cconn.conn;

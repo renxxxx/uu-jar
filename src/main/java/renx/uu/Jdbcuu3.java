@@ -25,7 +25,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
 public class Jdbcuu3 {
-	private static Logger logger = LoggerFactory.getLogger(Jdbcuu.class);
+	private static Logger logger = LoggerFactory.getLogger(Jdbcuu3.class);
 
 	public static void main(String[] args) {
 		Object value = "";
