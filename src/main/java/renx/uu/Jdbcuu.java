@@ -180,7 +180,7 @@ public class Jdbcuu {
 
 		LList params = LList.build();
 		if (conditionm.isExisting()) {
-			sql += " where ";
+			sql += " where 1=1 and ";
 			for (Iterator iterator = conditionm.map.keySet().iterator(); iterator.hasNext();) {
 				Object key = (Object) iterator.next();
 				Object value = conditionm.get(key);
@@ -467,7 +467,7 @@ public class Jdbcuu {
 		}
 		sql = sql.substring(0, sql.lastIndexOf(","));
 		if (conditionm.isExisting()) {
-			sql += " where ";
+			sql += " where 1=1 and ";
 			for (Iterator iterator = conditionm.map.keySet().iterator(); iterator.hasNext();) {
 				Object key = (Object) iterator.next();
 				Object value = conditionm.get(key);
@@ -548,7 +548,7 @@ public class Jdbcuu {
 		LList params = LList.build();
 
 		if (conditionm.isExisting()) {
-			sql += " where ";
+			sql += " where 1=1 and ";
 			for (Iterator iterator = conditionm.map.keySet().iterator(); iterator.hasNext();) {
 				Object key = (Object) iterator.next();
 				Object value = conditionm.get(key);

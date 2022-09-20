@@ -1,6 +1,6 @@
 #!/bin/bash
-group=renx
-artifact=uu
+env=renx
+groject=uu
 
 version=`cat  ./src/main/java/renx/uu/UU.java |grep -oP '(?<= version = ").*(?=";)'`
 
@@ -41,8 +41,8 @@ echo
 
 ###########################################
 
-sed -i "0,/^\(.*\)<groupId>.*<\/groupId>\(.*\)$/s//\1<groupId>$group<\/groupId>/" ./pom.xml
-sed -i "0,/^\(.*\)<artifactId>.*<\/artifactId>\(.*\)$/s//\1<artifactId>$artifact<\/artifactId>/" ./pom.xml
+sed -i "0,/^\(.*\)<groupId>.*<\/groupId>\(.*\)$/s//\1<groupId>$env<\/groupId>/" ./pom.xml
+sed -i "0,/^\(.*\)<artifactId>.*<\/artifactId>\(.*\)$/s//\1<artifactId>$groject<\/artifactId>/" ./pom.xml
 sed -i "0,/^\(.*\)<version>.*<\/version>\(.*\)$/s//\1<version>$newVersion<\/version>/" ./pom.xml
 sed -i "0,/^\(\s*\)public static String version = \".*\";$/s//\1public static String version = \"$newVersion\";/" ./src/main/java/renx/uu/UU.java
 
@@ -71,7 +71,7 @@ git push
 echo
 
 echo "-rename package"
-packageName=$group-$artifact-$newVersion.jar
+packageName=$env-$groject-$newVersion.jar
 mv target/*.jar target/$packageName
 echo
 
