@@ -229,13 +229,13 @@ public class CConnection {
 	}
 
 	public int updateOne(String table, Object splitColumns, Object[] values, Object splitConditions,
-			Object[] conditionValues) throws Exception {
+			Object... conditionValues) throws Exception {
 		setConnection();
 		return Jdbcuu.updateOne(conn, table, splitColumns, values, splitConditions, conditionValues);
 	}
 
 	public int update(String table, Object splitColumns, Object[] values, Object splitConditions,
-			Object[] conditionValues) throws Exception {
+			Object... conditionValues) throws Exception {
 		setConnection();
 		return Jdbcuu.update(conn, table, splitColumns, values, splitConditions, conditionValues);
 	}
@@ -294,7 +294,7 @@ public class CConnection {
 		setConnection();
 		return Jdbcuu.delete(conn, table, splitColumns, values);
 	}
-	
+
 //	public int insertByCustomKeyCommonly(String table, MMap columnm) throws Exception {
 //		return Jdbcuu.insertByCustomKeyCommonly(conn, table, columnm);
 //
