@@ -14,7 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class CConnection {
+public class CConnection3 {
 	private static Logger logger = LoggerFactory.getLogger(CConnection.class);
 
 	public DataSource dataSource;
@@ -74,7 +74,7 @@ public class CConnection {
 
 	public LList rows(String sql, Object... params) throws Exception {
 		setConnection();
-		LList rows = Jdbcuu.rows(conn, sql, params);
+		LList rows = Jdbcuu3.rows(conn, sql, params);
 		return rows;
 	}
 
@@ -94,7 +94,7 @@ public class CConnection {
 
 	public MMap row(String sql, Object... params) throws Exception {
 		setConnection();
-		MMap row = Jdbcuu.row(conn, sql, params);
+		MMap row = Jdbcuu3.row(conn, sql, params);
 		return row;
 	}
 
@@ -114,7 +114,7 @@ public class CConnection {
 
 	public int updateSql(String sql, Object... params) throws Exception {
 		setConnection();
-		return Jdbcuu.updateSql(conn, sql, params);
+		return Jdbcuu3.updateSql(conn, sql, params);
 	}
 
 	public Integer insertSql(String sql, LList params) throws Exception {
@@ -133,7 +133,7 @@ public class CConnection {
 
 	public Integer insertSql(String sql, Object... params) throws Exception {
 		setConnection();
-		return Jdbcuu.insertSql(conn, sql, params);
+		return Jdbcuu3.insertSql(conn, sql, params);
 	}
 
 	public void rollback() throws Exception {
@@ -156,185 +156,183 @@ public class CConnection {
 
 	public InputStream getStream(String sql, Object... params) throws Exception {
 		setConnection();
-		return Jdbcuu.getStream(conn, sql, params);
+		return Jdbcuu3.getStream(conn, sql, params);
 	}
 
 	public Integer getInteger(String sql, Object... params) throws Exception {
 		setConnection();
-		return Jdbcuu.getInteger(conn, sql, params);
+		return Jdbcuu3.getInteger(conn, sql, params);
 	}
 
 	public Var get(String sql, Object... params) throws Exception {
-		return Jdbcuu.get(conn, sql, params);
+		return Jdbcuu3.get(conn, sql, params);
 	}
 
 	public String getString(String sql, Object... params) throws Exception {
 		setConnection();
-		return Jdbcuu.getString(conn, sql, params);
+		return Jdbcuu3.getString(conn, sql, params);
 	}
 
 	public LList getList(String sql, Object... params) throws Exception {
 		setConnection();
-		return Jdbcuu.getList(conn, sql, params);
+		return Jdbcuu3.getList(conn, sql, params);
 	}
 
 	public MMap getMap(String sql, Object... params) throws Exception {
 		setConnection();
-		return Jdbcuu.getMap(conn, sql, params);
+		return Jdbcuu3.getMap(conn, sql, params);
 	}
 
 	public BigDecimal getDecimal(String sql, Object... params) throws Exception {
 		setConnection();
-		return Jdbcuu.getDecimal(conn, sql, params);
+		return Jdbcuu3.getDecimal(conn, sql, params);
 	}
 
 	public Long getLong(String sql, Object... params) throws Exception {
 		setConnection();
-		return Jdbcuu.getLong(conn, sql, params);
+		return Jdbcuu3.getLong(conn, sql, params);
 	}
 
 	public Float getFloat(String sql, Object... params) throws Exception {
 		setConnection();
-		return Jdbcuu.getFloat(conn, sql, params);
+		return Jdbcuu3.getFloat(conn, sql, params);
 	}
 
 	public Date getDate(String sql, Object... params) throws Exception {
 		setConnection();
-		return Jdbcuu.getDate(conn, sql, params);
+		return Jdbcuu3.getDate(conn, sql, params);
 	}
 
 	public Object getObject(String sql, Object... params) throws Exception {
 		setConnection();
-		return Jdbcuu.getObject(conn, sql, params);
+		return Jdbcuu3.getObject(conn, sql, params);
 	}
 
-	public int updateById(String table, Object column, Object value, Object id) throws Exception {
-		setConnection();
-		return Jdbcuu.updateById(conn, table, column, value, id);
-	}
+//	public int updateById(String table, Object column, Object value, Object id) throws Exception {
+//		setConnection();
+//		return Jdbcuu3.updateById(conn, table, column, value, id);
+//	}
 
-	public int updateById(String table, Object[] columns, Object[] values, Object id) throws Exception {
-		setConnection();
-		return Jdbcuu.updateById(conn, table, columns, values, id);
-	}
-
-	public int updateById(String table, MMap columnm, Object id) throws Exception {
-		setConnection();
-		return Jdbcuu.updateById(conn, table, columnm, id);
-	}
+//	public int updateById(String table, Object[] columns, Object[] values, Object id) throws Exception {
+//		setConnection();
+//		return Jdbcuu3.updateById(conn, table, columns, values, id);
+//	}
+//
+//	public int updateById(String table, MMap columnm, Object id) throws Exception {
+//		setConnection();
+//		return Jdbcuu3.updateById(conn, table, columnm, id);
+//	}
 
 	public int updateById(String table, Object splitColumns, Object[] values, Object id) throws Exception {
 		setConnection();
-		return Jdbcuu.updateById(conn, table, splitColumns, values, id);
+		return Jdbcuu3.updateById(conn, table, splitColumns, values, id);
 	}
 
 	public int updateOne(String table, Object splitColumns, Object[] values, Object splitConditions,
-			Object[] conditionValues) throws Exception {
+			Object... conditionValues) throws Exception {
 		setConnection();
-		return Jdbcuu.updateOne(conn, table, splitColumns, values, splitConditions, conditionValues);
+		return Jdbcuu3.updateOne(conn, table, splitColumns, values, splitConditions, conditionValues);
 	}
 
 	public int update(String table, Object splitColumns, Object[] values, Object splitConditions,
-			Object[] conditionValues) throws Exception {
+			Object... conditionValues) throws Exception {
 		setConnection();
-		return Jdbcuu.update(conn, table, splitColumns, values, splitConditions, conditionValues);
+		return Jdbcuu3.update(conn, table, splitColumns, values, splitConditions, conditionValues);
 	}
 
-	public int updateOne(String table, MMap columnm, MMap conditionm) throws Exception {
-		setConnection();
-		return Jdbcuu.updateOne(conn, table, columnm, conditionm);
-	}
-
-	public int update(String table, MMap columnm, MMap conditionm) throws Exception {
-		setConnection();
-		return Jdbcuu.update(conn, table, columnm, conditionm);
-	}
+//	public int updateOne(String table, MMap columnm, MMap conditionm) throws Exception {
+//		setConnection();
+//		return Jdbcuu3.updateOne(conn, table, columnm, conditionm);
+//	}
+//
+//	public int update(String table, MMap columnm, MMap conditionm) throws Exception {
+//		setConnection();
+//		return Jdbcuu3.update(conn, table, columnm, conditionm);
+//	}
 
 	public int deleteById(String table, Object id) throws Exception {
 		setConnection();
-		return Jdbcuu.deleteById(conn, table, id);
+		return Jdbcuu3.deleteById(conn, table, id);
 	}
 
-	public int deleteOne(String table, Object columnm, Object value) throws Exception {
-		setConnection();
-		return Jdbcuu.deleteOne(conn, table, columnm, value);
-	}
-
-	public int delete(String table, Object columnm, Object value) throws Exception {
-		setConnection();
-		return Jdbcuu.delete(conn, table, columnm, value);
-	}
-
-	public int deleteOne(String table, Object[] columnms, Object[] values) throws Exception {
-		setConnection();
-		return Jdbcuu.deleteOne(conn, table, columnms, values);
-	}
-
-	public int delete(String table, Object[] columnms, Object[] values) throws Exception {
-		setConnection();
-		return Jdbcuu.delete(conn, table, columnms, values);
-	}
-
-	public int deleteOne(String table, MMap conditionm) throws Exception {
-		setConnection();
-		return Jdbcuu.deleteOne(conn, table, conditionm);
-	}
-
-	public int delete(String table, MMap conditionm) throws Exception {
-		setConnection();
-		return Jdbcuu.delete(conn, table, conditionm);
-
-	}
+//	public int deleteOne(String table, Object columnm, Object value) throws Exception {
+//		setConnection();
+//		return Jdbcuu3.deleteOne(conn, table, columnm, value);
+//	}
+//
+//	public int delete(String table, Object columnm, Object value) throws Exception {
+//		setConnection();
+//		return Jdbcuu3.delete(conn, table, columnm, value);
+//	}
+//
+//	public int deleteOne(String table, Object[] columnms, Object[] values) throws Exception {
+//		setConnection();
+//		return Jdbcuu3.deleteOne(conn, table, columnms, values);
+//	}
+//
+//	public int delete(String table, Object[] columnms, Object[] values) throws Exception {
+//		setConnection();
+//		return Jdbcuu3.delete(conn, table, columnms, values);
+//	}
+//
+//	public int deleteOne(String table, MMap conditionm) throws Exception {
+//		setConnection();
+//		return Jdbcuu3.deleteOne(conn, table, conditionm);
+//	}
+//
+//	public int delete(String table, MMap conditionm) throws Exception {
+//		setConnection();
+//		return Jdbcuu3.delete(conn, table, conditionm);
+//	}
 
 	public int deleteOne(String table, Object splitColumns, Object... values) throws Exception {
 		setConnection();
-		return Jdbcuu.deleteOne(conn, table, splitColumns, values);
+		return Jdbcuu3.deleteOne(conn, table, splitColumns, values);
 	}
 
 	public int delete(String table, Object splitColumns, Object... values) throws Exception {
 		setConnection();
-		return Jdbcuu.delete(conn, table, splitColumns, values);
+		return Jdbcuu3.delete(conn, table, splitColumns, values);
 	}
+
 //	public int insertByCustomKeyCommonly(String table, MMap columnm) throws Exception {
-//		return Jdbcuu.insertByCustomKeyCommonly(conn, table, columnm);
+//		return Jdbcuu3.insertByCustomKeyCommonly(conn, table, columnm);
 //
 //	}
 
-	public int insert(String table, MMap columnm) throws Exception {
-		setConnection();
-		return Jdbcuu.insert(conn, table, columnm);
-	}
+//	public int insert(String table, MMap columnm) throws Exception {
+//		setConnection();
+//		return Jdbcuu3.insert(conn, table, columnm);
+//	}
 
 //	public int insert(String table, Object column, Object value) throws Exception {
-//		return Jdbcuu.insert(conn, table, column, value);
+//		return Jdbcuu3.insert(conn, table, column, value);
 //	}
 
 	public int insert(String table, Object splitColumns, Object... values) throws Exception {
 		setConnection();
-		return Jdbcuu.insert(conn, table, splitColumns, values);
+		return Jdbcuu3.insert(conn, table, splitColumns, values);
 	}
 
-	public int insert(String table, Object[] columnms, Object[] values) throws Exception {
-		setConnection();
-		return Jdbcuu.insert(conn, table, columnms, values);
-	}
+//	public int insert(String table, Object[] columnms, Object[] values) throws Exception {
+//		setConnection();
+//		return Jdbcuu3.insert(conn, table, columnms, values);
+//	}
 
 	public MMap selectById(String table, Object splitColumns, Object id) throws Exception {
 		setConnection();
-		if (id == null || id.toString() == null || id.toString().isEmpty())
-			return MMap.build();
-		return Jdbcuu.selectOne(conn, table, splitColumns, "id", id);
+		return Jdbcuu3.selectById(conn, table, splitColumns, id);
 	}
 
-	public LList selectList(String table, String order, String limit, Object splitColumns, Object splitConditionColumns,
+	public LList selectList(String table, Object order, Object limit, Object splitColumns, Object splitConditionColumns,
 			Object... conditionValues) throws Exception {
 		setConnection();
-		return Jdbcuu.selectList(conn, table, order, limit, splitColumns, splitConditionColumns, conditionValues);
+		return Jdbcuu3.selectList(conn, table, order, limit, splitColumns, splitConditionColumns, conditionValues);
 	}
 
 	public MMap selectOne(String table, Object splitColumns, Object splitConditionColumns, Object... conditionValues)
 			throws Exception {
 		setConnection();
-		return Jdbcuu.selectOne(conn, table, splitColumns, splitConditionColumns, conditionValues);
+		return Jdbcuu3.selectOne(conn, table, splitColumns, splitConditionColumns, conditionValues);
 	}
 }
