@@ -98,12 +98,13 @@ public class JJedis {
 	}
 
 	public boolean lock(String lockName) {
+		if (jedis == null)
+			jedis = jedisPool.getResource();
 		long acquireTimeout = 0;
 		long lockTimeout = 0;
 
 		String realLockName = prefix + lockName;
 		String theadId = String.valueOf(Thread.currentThread().getId());
-		Jedis jedis = null;
 		if (acquireTimeout == 0) {
 			// 如未设置锁获取超时时间默认为10秒
 			acquireTimeout = 10000;
@@ -114,53 +115,46 @@ public class JJedis {
 		}
 		int lockTimeoutMin = (int) (lockTimeout / 1000);
 		long acquireEndTime = System.currentTimeMillis() + acquireTimeout;
-		try {
-			// 防止未设置时间产生死锁
-			if (jedis.ttl(realLockName) == -1) {
+		// 防止未设置时间产生死锁
+		if (jedis.ttl(realLockName) == -1) {
+			jedis.expire(realLockName, lockTimeoutMin);
+		}
+		while (System.currentTimeMillis() < acquireEndTime) {
+			// 加锁成功
+			if (theadId.equals(jedis.get(realLockName)) || jedis.setnx(realLockName, theadId) == 1) {
 				jedis.expire(realLockName, lockTimeoutMin);
+				return true;
 			}
-			while (System.currentTimeMillis() < acquireEndTime) {
-				// 加锁成功
-				if (theadId.equals(jedis.get(realLockName)) || jedis.setnx(realLockName, theadId) == 1) {
-					jedis.expire(realLockName, lockTimeoutMin);
-					return true;
-				}
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
-		} finally {
-			jedis.close();
 		}
 		return false;
 	}
 
 	public boolean unlock(String lockName) {
+		if (jedis == null)
+			jedis = jedisPool.getResource();
 		String realLockName = prefix + lockName;
 		String theadId = String.valueOf(Thread.currentThread().getId());
-		Jedis jedis = null;
 		boolean isRelease = false;
-		try {
-			while (true) {
-				// jedis事务操作 监控realLockName
-				// 如果其中值发生变化tx.exec事务不会提交(注jedis中的事务不具备原子性,其中一个事务有错误，另外的仍然执行)
-				jedis.watch(realLockName);
-				if (theadId.equals(jedis.get(realLockName))) {
-					Transaction tx = jedis.multi();
-					tx.del(realLockName);
-					if (tx.exec().isEmpty()) {
-						continue;
-					}
-					isRelease = true;
+		while (true) {
+			// jedis事务操作 监控realLockName
+			// 如果其中值发生变化tx.exec事务不会提交(注jedis中的事务不具备原子性,其中一个事务有错误，另外的仍然执行)
+			jedis.watch(realLockName);
+			if (theadId.equals(jedis.get(realLockName))) {
+				Transaction tx = jedis.multi();
+				tx.del(realLockName);
+				if (tx.exec().isEmpty()) {
+					continue;
 				}
-				// q取消监控
-				jedis.unwatch();
-				break;
+				isRelease = true;
 			}
-		} finally {
-			jedis.close();
+			// q取消监控
+			jedis.unwatch();
+			break;
 		}
 		return isRelease;
 	}
