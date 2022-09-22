@@ -127,9 +127,8 @@ public class JJedis {
 		}
 		while (System.currentTimeMillis() < acquireEndTime) {
 			// 加锁成功
-			logger.info("lock realLockName " + realLockName + " true");
 			if (theadId.equals(jedis.get(realLockName)) || jedis.setnx(realLockName, theadId) == 1) {
-				logger.info("1");
+				logger.info("lock realLockName " + realLockName + " true");
 				jedis.expire(realLockName, lockTimeoutMin);
 				return true;
 			}
