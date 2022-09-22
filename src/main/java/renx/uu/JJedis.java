@@ -29,6 +29,8 @@ public class JJedis {
 		jjedis2.jedisPool = jedisPool;
 		if (jjedis != null && jjedis.jedis != null) {
 			jjedis2.jedis = jjedis.jedis;
+			jjedis2.prefix = jjedis.prefix;
+			jjedis2.runId = jjedis.runId;
 			jjedis2.self = false;
 		}
 		return jjedis2;
