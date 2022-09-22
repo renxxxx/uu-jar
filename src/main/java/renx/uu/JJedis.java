@@ -12,7 +12,7 @@ public class JJedis {
 
 	public JedisPool jedisPool;
 	public Jedis jedis;
-	public String id = Stringuu.timeId();
+	public String runId = Stringuu.timeId();
 	public boolean self = true;
 	public String prefix = "";
 
@@ -36,6 +36,11 @@ public class JJedis {
 
 	public JJedis prefix(String prefix) {
 		this.prefix = prefix;
+		return this;
+	}
+
+	public JJedis runId(String runId) {
+		this.runId = runId;
 		return this;
 	}
 
