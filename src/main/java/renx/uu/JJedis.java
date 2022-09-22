@@ -1,10 +1,15 @@
 package renx.uu;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.Transaction;
 
 public class JJedis {
+	private static Logger logger = LoggerFactory.getLogger(JJedis.class);
+
 	public JedisPool jedisPool;
 	public Jedis jedis;
 	public boolean self = true;
@@ -104,6 +109,7 @@ public class JJedis {
 		long lockTimeout = 0;
 
 		String realLockName = prefix + lockName;
+		logger.info("lock realLockName " + realLockName);
 		String theadId = String.valueOf(Thread.currentThread().getId());
 		if (acquireTimeout == 0) {
 			// 如未设置锁获取超时时间默认为10秒
@@ -121,7 +127,9 @@ public class JJedis {
 		}
 		while (System.currentTimeMillis() < acquireEndTime) {
 			// 加锁成功
+			logger.info("lock realLockName " + realLockName + " true");
 			if (theadId.equals(jedis.get(realLockName)) || jedis.setnx(realLockName, theadId) == 1) {
+				logger.info("1");
 				jedis.expire(realLockName, lockTimeoutMin);
 				return true;
 			}
@@ -131,6 +139,7 @@ public class JJedis {
 				e.printStackTrace();
 			}
 		}
+		logger.info("lock realLockName " + realLockName + " false");
 		return false;
 	}
 
@@ -138,6 +147,7 @@ public class JJedis {
 		if (jedis == null)
 			jedis = jedisPool.getResource();
 		String realLockName = prefix + lockName;
+		logger.info("unlock realLockName " + realLockName);
 		String theadId = String.valueOf(Thread.currentThread().getId());
 		boolean isRelease = false;
 		while (true) {
@@ -156,6 +166,7 @@ public class JJedis {
 			jedis.unwatch();
 			break;
 		}
+		logger.info("unlock realLockName " + realLockName + " " + isRelease);
 		return isRelease;
 	}
 }
