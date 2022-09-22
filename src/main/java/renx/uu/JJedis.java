@@ -12,6 +12,7 @@ public class JJedis {
 
 	public JedisPool jedisPool;
 	public Jedis jedis;
+	public String id = Stringuu.timeId();
 	public boolean self = true;
 	public String prefix = "";
 
@@ -43,56 +44,47 @@ public class JJedis {
 	}
 
 	public Long ttl(final String key) {
-		if (jedis == null)
-			jedis = jedisPool.getResource();
+		open();
 		return jedis.ttl(buildKey(key));
 	}
 
 	public String get(final String key) {
-		if (jedis == null)
-			jedis = jedisPool.getResource();
+		open();
 		return jedis.get(buildKey(key));
 	}
 
 	public String set(final String key, String value) {
-		if (jedis == null)
-			jedis = jedisPool.getResource();
+		open();
 		return jedis.set(buildKey(key), value);
 	}
 
 	public Long del(final String key) {
-		if (jedis == null)
-			jedis = jedisPool.getResource();
+		open();
 		return jedis.del(buildKey(key));
 	}
 
 	public String getSet(final String key, String value) {
-		if (jedis == null)
-			jedis = jedisPool.getResource();
+		open();
 		return jedis.getSet(buildKey(key), value);
 	}
 
 	public Long setnx(final String key, String value) {
-		if (jedis == null)
-			jedis = jedisPool.getResource();
+		open();
 		return jedis.setnx(buildKey(key), value);
 	}
 
 	public String setex(final String key, final int seconds, final String value) {
-		if (jedis == null)
-			jedis = jedisPool.getResource();
+		open();
 		return jedis.setex(buildKey(key), seconds, value);
 	}
 
 	public String psetex(final String key, final long milliseconds, final String value) {
-		if (jedis == null)
-			jedis = jedisPool.getResource();
+		open();
 		return jedis.psetex(buildKey(key), milliseconds, value);
 	}
 
 	public String set(final String key, final String value, final String nxxx, final String expx, final long time) {
-		if (jedis == null)
-			jedis = jedisPool.getResource();
+		open();
 		return jedis.set(buildKey(key), value, key, value, time);
 	}
 
@@ -102,9 +94,15 @@ public class JJedis {
 		}
 	}
 
-	public boolean lock(String lockName) {
-		if (jedis == null)
+	public void open() {
+		if (jedis == null) {
+			logger.info("open " + id);
 			jedis = jedisPool.getResource();
+		}
+	}
+
+	public boolean lock(String lockName) {
+		open();
 		long acquireTimeout = 0;
 		long lockTimeout = 0;
 
@@ -144,8 +142,7 @@ public class JJedis {
 	}
 
 	public boolean unlock(String lockName) {
-		if (jedis == null)
-			jedis = jedisPool.getResource();
+		open();
 		String realLockName = prefix + lockName;
 		logger.info("unlock realLockName " + realLockName);
 		String theadId = String.valueOf(Thread.currentThread().getId());
