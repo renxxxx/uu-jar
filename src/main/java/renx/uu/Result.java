@@ -44,7 +44,14 @@ public class Result extends RuntimeException {
 		Result result = new Result(0 + " : " + msg);
 		result.code = 0;
 		result.msg = msg;
-		result.data = data;
+
+		Object jj = data;
+		if (data instanceof MMap)
+			jj = ((MMap) jj).map;
+		if (data instanceof LList)
+			jj = ((LList) jj).list;
+		if (jj != null)
+			result.data = data;
 		return result;
 	}
 
@@ -66,7 +73,13 @@ public class Result extends RuntimeException {
 		Result result = new Result(9 + " : " + msg);
 		result.code = 9;
 		result.msg = msg;
-		result.data = data;
+		Object jj = data;
+		if (data instanceof MMap)
+			jj = ((MMap) jj).map;
+		if (data instanceof LList)
+			jj = ((LList) jj).list;
+		if (jj != null)
+			result.data = data;
 		return result;
 	}
 
@@ -153,9 +166,13 @@ public class Result extends RuntimeException {
 	}
 
 	public Result data(Object data) {
+		Object jj = data;
 		if (data instanceof MMap)
-			data = ((MMap) data).map;
-		this.data = data;
+			jj = ((MMap) jj).map;
+		if (data instanceof LList)
+			jj = ((LList) jj).list;
+		if (jj != null)
+			this.data = data;
 		return this;
 	}
 
