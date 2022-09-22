@@ -147,7 +147,7 @@ public class LList<E> {
 	}
 
 	public Object getObject(int index) {
-		if (this.list == null || this.list.size() <= index)
+		if (this.list == null || this.list.isEmpty() || this.list.size() <= index)
 			return null;
 		else {
 			Object item = this.list.get(index);
@@ -162,21 +162,21 @@ public class LList<E> {
 	};
 
 	public MMap getMap(int index) {
-		if (this.list == null || this.list.size() <= index)
+		if (this.list == null || this.list.isEmpty() || this.list.size() <= index)
 			return MMap.build();
 		else
 			return MMap.build((Map) this.list.get(index));
 	};
 
 	public LList getList(int index) {
-		if (this.list == null || this.list.size() <= index)
+		if (this.list == null || this.list.isEmpty() || this.list.size() <= index)
 			return LList.build();
 		else
 			return LList.build((List) this.list.get(index));
 	};
 
 	public String getString(int index) {
-		if (this.list == null || this.list.size() <= index)
+		if (this.list == null || this.list.isEmpty() || this.list.size() <= index)
 			return null;
 		else
 			return Var.toString(this.list.get(index));
@@ -240,7 +240,7 @@ public class LList<E> {
 	}
 
 	public Var get(int index) {
-		if (this.list == null)
+		if (this.list == null || this.list.isEmpty() || this.list.size() <= index)
 			return Var.build();
 		return Var.build(this.list.get(index));
 	}
