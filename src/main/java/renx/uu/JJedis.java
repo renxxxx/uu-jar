@@ -144,7 +144,7 @@ public class JJedis {
 		logger.info("unlock " + runId);
 		open();
 		String script = "if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end";
-		Object result = jedis.eval(script, Collections.singletonList(lock), Collections.singletonList(owner));
+		Object result = jedis.eval(script, Collections.singletonList(buildKey(lock)), Collections.singletonList(owner));
 
 		Long RELEASE_SUCCESS = 1L;
 		if (RELEASE_SUCCESS.equals(result)) {
