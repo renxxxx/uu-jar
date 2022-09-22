@@ -125,6 +125,7 @@ public class JJedis {
 		long seconds = acquireTime / 1000;
 		while (true) {
 			String result = set(lock, owner, "NX", "PX", period);
+			logger.info("lock result " + result);
 			if ("OK".equals(result)) {
 				logger.info("lock success " + "lock: " + lock + " owner: " + owner);
 				return true;
