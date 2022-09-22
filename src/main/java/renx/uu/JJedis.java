@@ -90,6 +90,7 @@ public class JJedis {
 
 	public void close() {
 		if (self && jedis != null) {
+			logger.info("close " + id);
 			jedis.close();
 		}
 	}
@@ -102,6 +103,7 @@ public class JJedis {
 	}
 
 	public boolean lock(String lockName) {
+		logger.info("start lock " + id);
 		open();
 		long acquireTimeout = 0;
 		long lockTimeout = 0;
@@ -142,6 +144,7 @@ public class JJedis {
 	}
 
 	public boolean unlock(String lockName) {
+		logger.info("start unlock " + id);
 		open();
 		String realLockName = prefix + lockName;
 		logger.info("unlock realLockName " + realLockName);
