@@ -100,7 +100,7 @@ public class JJedis {
 	public String set(final String key, final String value, final String nxxx, final String expx, final long time) {
 		logger.info("set " + runId);
 		open();
-		return jedis.set(buildKey(key), value, key, value, time);
+		return jedis.set(buildKey(key), value, nxxx, expx, time);
 	}
 
 	public void close() {
