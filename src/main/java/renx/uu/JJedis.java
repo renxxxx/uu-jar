@@ -126,6 +126,7 @@ public class JJedis {
 		while (true) {
 			String result = set(lock, owner, "NX", "PX", period);
 			if ("OK".equals(result)) {
+				logger.info("lock success " + "lock: " + lock + " owner: " + owner);
 				return true;
 			}
 			i++;
@@ -133,6 +134,7 @@ public class JJedis {
 				break;
 			Thread.sleep(1000);
 		}
+		logger.info("lock fail " + "lock: " + lock + " owner: " + owner);
 		return false;
 	}
 
@@ -148,8 +150,10 @@ public class JJedis {
 
 		Long RELEASE_SUCCESS = 1L;
 		if (RELEASE_SUCCESS.equals(result)) {
+			logger.info("unlock success " + "lock: " + lock + " owner: " + owner);
 			return true;
 		}
+		logger.info("unlock fail " + "lock: " + lock + " owner: " + owner);
 		return false;
 
 	}
