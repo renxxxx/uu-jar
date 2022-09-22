@@ -164,6 +164,13 @@ public class Result extends RuntimeException {
 		return this;
 	}
 
+	public static void throwFail(boolean is, String msg) {
+		Result r = Result.fail(msg);
+		if (is) {
+			throw r;
+		}
+	}
+
 	public static void main(String[] args) {
 		System.out.println(JSON.toJSONString(Result.fail("1212"), SerializerFeature.IgnoreNonFieldGetter));
 	}
