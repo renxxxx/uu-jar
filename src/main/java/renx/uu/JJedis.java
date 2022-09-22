@@ -54,11 +54,13 @@ public class JJedis {
 	}
 
 	public Long ttl(final String key) {
+		logger.info("ttl " + runId);
 		open();
 		return jedis.ttl(buildKey(key));
 	}
 
 	public String get(final String key) {
+		logger.info("get " + runId);
 		open();
 		return jedis.get(buildKey(key));
 	}
@@ -69,6 +71,7 @@ public class JJedis {
 	}
 
 	public Long del(final String key) {
+		logger.info("del " + runId);
 		open();
 		return jedis.del(buildKey(key));
 	}
@@ -79,6 +82,7 @@ public class JJedis {
 	}
 
 	public Long setnx(final String key, String value) {
+		logger.info("setnx " + runId);
 		open();
 		return jedis.setnx(buildKey(key), value);
 	}
@@ -94,6 +98,7 @@ public class JJedis {
 	}
 
 	public String set(final String key, final String value, final String nxxx, final String expx, final long time) {
+		logger.info("set " + runId);
 		open();
 		return jedis.set(buildKey(key), value, key, value, time);
 	}
@@ -114,11 +119,12 @@ public class JJedis {
 
 	public boolean lock(String lock, String owner, long acquireTime, long period)
 			throws SQLException, InterruptedException {
+		logger.info("lock " + runId);
 		open();
 		int i = 0;
 		long seconds = acquireTime / 1000;
 		while (true) {
-			String result = jedis.set(lock, owner, "NX", "PX", period);
+			String result = set(lock, owner, "NX", "PX", period);
 			if ("OK".equals(result)) {
 				return true;
 			}
@@ -135,6 +141,7 @@ public class JJedis {
 	}
 
 	public boolean unlock(String lock, String owner) {
+		logger.info("unlock " + runId);
 		open();
 		String script = "if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end";
 		Object result = jedis.eval(script, Collections.singletonList(lock), Collections.singletonList(owner));
