@@ -105,7 +105,7 @@ public class JJedis {
 		}
 	}
 
-	public void open() {
+	public synchronized void open() {
 		if (jedis == null) {
 			logger.info("open " + runId);
 			jedis = jedisPool.getResource();
