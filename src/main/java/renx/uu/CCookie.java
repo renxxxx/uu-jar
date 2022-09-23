@@ -91,6 +91,14 @@ public class CCookie {
 		return this;
 	}
 
+	public CCookie default1(String newValue) {
+		if (o != null) {
+			if (o.getValue() == null || o.getValue().isEmpty())
+				o.setValue(newValue);
+		}
+		return this;
+	}
+
 	public String name() {
 		return name;
 	}
