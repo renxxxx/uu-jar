@@ -50,6 +50,8 @@ echo "-mvn -q clean install"
 mvn -q clean install
 echo
 
+git rm -r --cached .
+
 echo "-git status"
 git status
 echo
