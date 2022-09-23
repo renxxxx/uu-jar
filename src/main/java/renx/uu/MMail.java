@@ -26,7 +26,7 @@ public class MMail {
 	public String sender;
 
 	public void send(String[] receivers, String subject, String content) throws Exception {
-		for (int i = 0; i < receivers.length; i++) {
+		for (int i = 0; receivers != null && i < receivers.length; i++) {
 			String receiver = receivers[i];
 			send(receiver, subject, content);
 		}
