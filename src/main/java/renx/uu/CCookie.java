@@ -91,10 +91,12 @@ public class CCookie {
 		return this;
 	}
 
-	public CCookie default1(String newValue) {
+	public CCookie default1(String value) {
 		if (o != null) {
 			if (o.getValue() == null || o.getValue().isEmpty())
-				o.setValue(newValue);
+				o.setValue(value);
+		} else {
+			o = new Cookie(name, value);
 		}
 		return this;
 	}
