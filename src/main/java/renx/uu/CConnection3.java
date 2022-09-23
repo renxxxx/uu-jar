@@ -58,16 +58,10 @@ public class CConnection3 {
 	}
 
 	private void setConnection() throws SQLException {
-		int mark = 0;
-		logger.info("mark" + ++mark);
 		if (conn == null) {
-			logger.info("mark" + ++mark);
 			conn = dataSource.getConnection();
-
-			logger.info("mark" + ++mark);
 			conn.setAutoCommit(false);
 		}
-		logger.info("mark" + ++mark);
 	}
 
 	public LList rows(String sql, Object... params) throws Exception {
