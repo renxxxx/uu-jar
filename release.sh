@@ -1,8 +1,8 @@
 #!/bin/bash
-env=renx
+env=renx.cc
 groject=uu
 
-version=`cat  ./src/main/java/renx/uu/UU.java |grep -oP '(?<= version = ").*(?=";)'`
+version=`cat  ./src/main/java/renx/cc/uu/UU.java |grep -oP '(?<= version = ").*(?=";)'`
 
 echo "-git status"
 result=`git status`
@@ -44,7 +44,7 @@ echo
 sed -i "0,/^\(.*\)<groupId>.*<\/groupId>\(.*\)$/s//\1<groupId>$env<\/groupId>/" ./pom.xml
 sed -i "0,/^\(.*\)<artifactId>.*<\/artifactId>\(.*\)$/s//\1<artifactId>$groject<\/artifactId>/" ./pom.xml
 sed -i "0,/^\(.*\)<version>.*<\/version>\(.*\)$/s//\1<version>$newVersion<\/version>/" ./pom.xml
-sed -i "0,/^\(\s*\)public static String version = \".*\";$/s//\1public static String version = \"$newVersion\";/" ./src/main/java/renx/uu/UU.java
+sed -i "0,/^\(\s*\)public static String version = \".*\";$/s//\1public static String version = \"$newVersion\";/" ./src/main/java/renx/cc/uu/UU.java
 
 echo "-mvn -q clean install"
 mvn -q clean install
