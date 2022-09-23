@@ -145,4 +145,9 @@ public class CCookie {
 	public boolean isExisting() {
 		return !isEmpty();
 	}
+
+	@Override
+	public String toString() {
+		return o != null ? o.getValue() : null;
+	}
 }
