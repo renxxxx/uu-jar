@@ -14,7 +14,7 @@ public class MMail {
 		MMail j = new MMail();
 		j.host = "smtp.qq.com";
 		j.user = "413038044@qq.com";
-		j.password = "mwnfxakaeqrybhcg";
+		j.password = "";
 		j.sender = "413038044@qq.com";
 
 		j.send("413038044@qq.com", "aq123123d", "qqqq");
@@ -24,6 +24,13 @@ public class MMail {
 	public String user;
 	public String password;
 	public String sender;
+
+	public void send(String[] receivers, String subject, String content) throws Exception {
+		for (int i = 0; i < receivers.length; i++) {
+			String receiver = receivers[i];
+			send(receiver, subject, content);
+		}
+	}
 
 	public Message send(String receiver, String subject, String content) throws Exception {
 		if (receiver == null || receiver.isEmpty())
