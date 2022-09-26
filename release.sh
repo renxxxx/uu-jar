@@ -64,6 +64,8 @@ echo "-git commit"
 git commit -am "$newVersion"
 echo
 
+git tag -a "$newVersion" -m "$newVersion"
+
 echo "-git pull"
 git pull
 echo

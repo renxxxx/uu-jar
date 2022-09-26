@@ -121,8 +121,7 @@ public class JJedis {
 			throws SQLException, InterruptedException {
 		logger.info("lock " + runId);
 		open();
-		int i = 0;
-		long seconds = acquireTime / 1000;
+		long ccc = 0;
 		while (true) {
 			String result = set(lock, owner, "NX", "PX", period);
 			logger.info("lock result " + result);
@@ -130,10 +129,11 @@ public class JJedis {
 				logger.info("lock success " + "lock: " + lock + " owner: " + owner);
 				return true;
 			}
-			i++;
-			if (i > seconds)
+			if (ccc > acquireTime)
 				break;
-			Thread.sleep(1000);
+
+			Thread.sleep(100);
+			ccc += 100;
 		}
 		logger.info("lock fail " + "lock: " + lock + " owner: " + owner);
 		return false;
