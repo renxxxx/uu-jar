@@ -5,10 +5,10 @@
 
 	<groupId>renx.cc</groupId>
 	<artifactId>uu</artifactId>
-	<version>2.7.0.91</version>
+	<version>3.0.0.0</version>
 	<description>all scopes to provided from none</description>
 	<packaging>jar</packaging>
-	<name>archive</name>
+	<name>uu</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
@@ -36,14 +36,16 @@
 		</developer>
 	</developers>
 
-<!-- 	<distributionManagement>
+	<!-- <distributionManagement>
 		<snapshotRepository>
-			<id>maven-public</id> 此处id与setting.xml中的服务id保持一致
+			<id>maven-public</id>
+			此处id与setting.xml中的服务id保持一致
 			<name>oss Snapshots Repository</name>
 			<url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
 		</snapshotRepository>
 		<repository>
-			<id>maven-public</id> 此处id与setting.xml中的服务id保持一致
+			<id>maven-public</id>
+			此处id与setting.xml中的服务id保持一致
 			<name>oss Staging Repository</name>
 			<url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
 		</repository>
@@ -99,37 +101,38 @@
 			</plugin>
 
 			<!-- gpg认证 只需在父工程中添加 -->
-			<!-- <plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-gpg-plugin</artifactId>
 				<version>1.6</version>
 				<executions>
 					<execution>
+						<id>gpg</id>
 						<phase>verify</phase>
 						<goals>
 							<goal>sign</goal>
 						</goals>
 					</execution>
 				</executions>
-			</plugin> -->
+			</plugin>
 		</plugins>
 	</build>
 
 	<repositories>
-		<!-- <repository>
+		<repository>
 			<id>central</id>
 			<name>aliyun maven</name>
 			<url>http://maven.aliyun.com/nexus/content/groups/public/</url>
 			<layout>default</layout>
-			是否开启发布版构件下载
+			<!-- 是否开启发布版构件下载 -->
 			<releases>
 				<enabled>true</enabled>
 			</releases>
-			是否开启快照版构件下载
+	<!-- 是否开启快照版构件下载 -->
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
-		</repository> -->
+		</repository>
 	</repositories>
 
 	<dependencies>
