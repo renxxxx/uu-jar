@@ -1,5 +1,5 @@
 #!/bin/bash
-env=renx.cc
+env=cc.renx
 groject=uu
 
 version=`cat  ./src/main/java/cc/renx/uu/UU.java |grep -oP '(?<= version = ").*(?=";)'`
