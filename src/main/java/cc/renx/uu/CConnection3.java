@@ -226,11 +226,11 @@ public class CConnection3 {
 		return Jdbcuu3.updateOne(conn, table, splitColumns, values, splitConditions, conditionValues);
 	}
 
-	public int update(String table, Object splitColumns, Object[] values, Object splitConditions,
-			Object... conditionValues) throws Exception {
-		setConnection();
-		return Jdbcuu3.update(conn, table, splitColumns, values, splitConditions, conditionValues);
-	}
+//	public int update(String table, Object splitColumns, Object[] values, Object splitConditions,
+//			Object... conditionValues) throws Exception {
+//		setConnection();
+//		return Jdbcuu3.update(conn, table, splitColumns, values, splitConditions, conditionValues);
+//	}
 
 //	public int updateOne(String table, MMap columnm, MMap conditionm) throws Exception {
 //		setConnection();
@@ -282,9 +282,14 @@ public class CConnection3 {
 		return Jdbcuu3.deleteOne(conn, table, splitColumns, values);
 	}
 
-	public int delete(String table, Object splitColumns, Object... values) throws Exception {
+//	public int delete(String table, Object splitColumns, Object... values) throws Exception {
+//		setConnection();
+//		return Jdbcuu3.delete(conn, table, splitColumns, values);
+//	}
+
+	public int deleteSql(String sql, Object... params) throws Exception {
 		setConnection();
-		return Jdbcuu3.delete(conn, table, splitColumns, values);
+		return Jdbcuu3.updateSql(conn, sql, params);
 	}
 
 //	public int insertByCustomKeyCommonly(String table, MMap columnm) throws Exception {
