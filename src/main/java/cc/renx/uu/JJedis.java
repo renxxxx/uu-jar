@@ -103,6 +103,26 @@ public class JJedis {
 		return jedis.set(buildKey(key), value, nxxx, expx, time);
 	}
 
+	public Long decrBy(final String key, final long integer) {
+		return jedis.decrBy(key, integer);
+	}
+
+	public Long decr(final String key) {
+		return jedis.decr(key);
+	}
+
+	public Long incrBy(final String key, final long integer) {
+		return jedis.incrBy(key, integer);
+	}
+
+	public Double incrByFloat(final String key, final double value) {
+		return jedis.incrByFloat(key, value);
+	}
+
+	public Long incr(final String key) {
+		return jedis.incr(key);
+	}
+
 	public void close() {
 		if (self && jedis != null) {
 			logger.info("close " + runId);
