@@ -123,6 +123,14 @@ public class JJedis {
 		return jedis.incr(key);
 	}
 
+	public Long expire(final String key, final int seconds) {
+		return jedis.expire(key, seconds);
+	}
+
+	public Long expireAt(final String key, final long unixTime) {
+		return jedis.expireAt(key, unixTime);
+	}
+
 	public void close() {
 		if (self && jedis != null) {
 			logger.info("close " + runId);
