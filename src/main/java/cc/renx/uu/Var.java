@@ -302,6 +302,14 @@ public class Var {
 		return emptyDefault(run, defaultValue);
 	}
 
+	public Var default2(Object src, Object defaultValue) {
+		String ss2 = defaultValue == null ? null : defaultValue.toString() == null ? null : defaultValue.toString();
+
+		if (equals(src))
+			value = ss2;
+		return this;
+	}
+
 	public Var stop() {
 		this.run = false;
 		return this;
@@ -858,9 +866,9 @@ public class Var {
 	}
 
 	public boolean equals(Object object) {
-		if (this.value == object)
+		if (this.value == object || this.value == object.toString())
 			return true;
-		if (this.value == null || object == null)
+		if (this.value == null || object == null || object.toString() == null)
 			return false;
 		return this.value.equals(object.toString());
 	}
