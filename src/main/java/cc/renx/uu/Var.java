@@ -239,7 +239,7 @@ public class Var {
 			return this;
 
 		String ss = null;
-		ss = defaultValue == null ? null : defaultValue.toString().trim();
+		ss = defaultValue == null ? null : defaultValue.toString() == null ? null : defaultValue.toString();
 		if (isNull() && ss != null)
 			value = ss;
 		return this;
@@ -259,7 +259,7 @@ public class Var {
 			return this;
 
 		String ss = null;
-		ss = defaultValue == null ? null : defaultValue.toString().trim();
+		ss = defaultValue == null ? null : defaultValue.toString() == null ? null : defaultValue.toString();
 		if (isBlank() && ss != null)
 			value = ss;
 		return this;
@@ -279,7 +279,7 @@ public class Var {
 			return this;
 
 		String ss = null;
-		ss = defaultValue == null ? null : defaultValue.toString().trim();
+		ss = defaultValue == null ? null : defaultValue.toString() == null ? null : defaultValue.toString();
 		if (isEmpty() && ss != null)
 			value = ss;
 		return this;
