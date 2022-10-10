@@ -1286,6 +1286,28 @@ public class Var {
 		return var2;
 	}
 
+	public Var trimSymbols() {
+		if (this.value != null) {
+			this.value = this.value.replaceAll("[\\s~!@#$%^&*()_+`\\-=\\\\\\[\\]{}|;':\",./<>?，。、！……（）【】；：‘’“”《》？]",
+					"");
+		}
+		return this;
+	}
+
+	public Var trimNotAlphasNnumerics() {
+		if (this.value != null) {
+			this.value = this.value.replaceAll("[^a-zA-Z0-9]", "");
+		}
+		return this;
+	}
+
+	public Var trimChineseAlphas() {
+		if (this.value != null) {
+			this.value = this.value.replaceAll("[\u4E00-\u9FA5]", "");
+		}
+		return this;
+	}
+
 	public static Var timeId() {
 		return Var.build(Stringuu.timeId());
 	}
@@ -1312,9 +1334,11 @@ public class Var {
 
 	public static void main(String[] args) throws ParseException, NoSuchFieldException, SecurityException,
 			IllegalArgumentException, IllegalAccessException {
-		System.out.println(UUID.randomUUID());
+		System.out.println("12312 3~!@#$%^&*()_+`-=[]\\{}|123;':\",./<>?，。、"
+				.replaceAll("[\\s~!@#$%^&*()_+`\\-=\\\\\\[\\]{}|;':\",./<>?，。、！……（）【】；：‘’“”《》？]", ""));
 	}
 
+//
 	public boolean equalsAny(Object... params) {
 		if (params == null)
 			params = new Object[] {};
@@ -1347,31 +1371,28 @@ public class Var {
 		return false;
 	}
 
-	public boolean notEqualsAll(String... items) {
+	public boolean notEqualsAll(Object... items) {
 		return !equalsAll(items);
 	}
 
-	public boolean equalsAll(String... items) {
-		for (String c : items) {
-			if (this.value == c)
-				continue;
-			if (this.value != c || !this.value.equals(c))
+	public boolean equalsAll(Object... items) {
+		for (Object c : items) {
+			if (notEquals(c))
 				return false;
 		}
 		return true;
 	}
 
-	public boolean notEqualsIgnoreCaseAll(String... items) {
+	public boolean notEqualsIgnoreCaseAll(Object... items) {
 		return !equalsIgnoreCaseAll(items);
 	}
 
-	public boolean equalsIgnoreCaseAll(String... items) {
-		for (String c : items) {
-			if (this.value == c)
-				continue;
-			if (this.value != c || !this.value.equalsIgnoreCase(c))
+	public boolean equalsIgnoreCaseAll(Object... items) {
+		for (Object c : items) {
+			if (notEqualsIgnoreCase(c))
 				return false;
 		}
 		return true;
 	}
+
 }
