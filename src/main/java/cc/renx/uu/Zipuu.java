@@ -126,7 +126,7 @@ public class Zipuu {
 			destDir.mkdir();
 		}
 
-		ZipInputStream zipIn = new ZipInputStream(fileIn, Charset.forName("utf-8"));
+		ZipInputStream zipIn = new ZipInputStream(fileIn, Charset.forName("GBK"));
 
 		ZipEntry entry = zipIn.getNextEntry();
 
