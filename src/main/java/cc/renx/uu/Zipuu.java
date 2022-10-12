@@ -1,12 +1,17 @@
 package cc.renx.uu;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
 import org.slf4j.Logger;
@@ -20,6 +25,10 @@ public class Zipuu {
 	public ZipOutputStream out = null;
 
 	public static void main(String[] args) throws Exception {
+		main3();
+	}
+
+	public static void main2() throws Exception {
 		Zipuu zipuu = Zipuu.build("C:/temp/132440421132.zip");
 
 		// 先添加, 最后一起写入
@@ -35,6 +44,11 @@ public class Zipuu {
 //		zipuu.addwrite("132440421132/info.json", "C:/temp/132440421132/info.json");
 //		zipuu.addwrite("132440421132/video.mp4", "C:/temp/132440421132/video.mp4");
 //		zipuu.out.close();
+	}
+
+	public static void main3() throws Exception {
+		Zipuu.unzip("C:\\Users\\Administrator\\Desktop\\temp\\share-demo.zip",
+				"C:\\Users\\Administrator\\Desktop\\temp\\share-demo");
 	}
 
 	public static Zipuu build(String zip) throws FileNotFoundException {
@@ -94,4 +108,58 @@ public class Zipuu {
 
 	}
 
+	/**
+	 * 解压有zipFilePath所指定的Zip文件到destDirectory所指定的目录（如果目标目录不存在将会重新创建）
+	 * 
+	 * @param zipFilePath
+	 * @param destDirectory
+	 * @throws IOException
+	 */
+	public static void unzip(String zipFilePath, String destDirectory) throws IOException {
+		unzip(new FileInputStream(zipFilePath), destDirectory);
+	}
+
+	public static void unzip(InputStream fileIn, String destDirectory) throws IOException {
+		File destDir = new File(destDirectory);
+		if (!destDir.exists()) {
+			destDir.mkdir();
+		}
+
+		ZipInputStream zipIn = new ZipInputStream(fileIn);
+
+		ZipEntry entry = zipIn.getNextEntry();
+
+		// 遍历Zip文件中的条目
+		while (entry != null) {
+			String filePath = destDirectory + File.separator + entry.getName();
+			if (!entry.isDirectory()) {
+				// 如果条目是文件直接解压
+				extractFile(zipIn, filePath);
+			} else {
+				// 如果条目是目录, 创建对应的目录
+				File dir = new File(filePath);
+				dir.mkdir();
+			}
+			zipIn.closeEntry();
+			entry = zipIn.getNextEntry();
+		}
+		zipIn.close();
+	}
+
+	/**
+	 * 解压Zip包的条目 (文件条目)
+	 * 
+	 * @param zipIn
+	 * @param filePath
+	 * @throws IOException
+	 */
+	private static void extractFile(ZipInputStream zipIn, String filePath) throws IOException {
+		BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(filePath));
+		byte[] bytesIn = new byte[4096];
+		int read = 0;
+		while ((read = zipIn.read(bytesIn)) != -1) {
+			bos.write(bytesIn, 0, read);
+		}
+		bos.close();
+	}
 }

@@ -148,6 +148,8 @@ public class JJedis {
 	public boolean lock(String lock, String owner, long acquireTime, long period)
 			throws SQLException, InterruptedException {
 		logger.info("lock " + runId);
+		if (lock == null || owner == null)
+			return true;
 		open();
 		long ccc = 0;
 		while (true) {
@@ -173,6 +175,8 @@ public class JJedis {
 
 	public boolean unlock(String lock, String owner) {
 		logger.info("unlock " + runId);
+		if (lock == null || owner == null)
+			return true;
 		open();
 		String script = "if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end";
 		Object result = jedis.eval(script, Collections.singletonList(buildKey(lock)), Collections.singletonList(owner));
