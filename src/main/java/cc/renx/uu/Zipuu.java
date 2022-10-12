@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -125,7 +126,7 @@ public class Zipuu {
 			destDir.mkdir();
 		}
 
-		ZipInputStream zipIn = new ZipInputStream(fileIn);
+		ZipInputStream zipIn = new ZipInputStream(fileIn, Charset.forName("utf-8"));
 
 		ZipEntry entry = zipIn.getNextEntry();
 
