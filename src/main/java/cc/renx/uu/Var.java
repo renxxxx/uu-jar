@@ -191,6 +191,16 @@ public class Var {
 		return this;
 	}
 
+	public Var trimSplit() {
+		if (!this.run)
+			return this;
+		if (value == null)
+			return this;
+		value = value.trim();
+		value = value.replaceAll("(\\s,)(,\\s)", ",");
+		return this;
+	}
+
 	public Var trim() {
 		if (!this.run)
 			return this;
@@ -633,7 +643,7 @@ public class Var {
 	}
 
 	public boolean isFalse() {
-		return isTrue();
+		return !isTrue();
 	}
 
 	public boolean isExisting() {
@@ -1334,8 +1344,7 @@ public class Var {
 
 	public static void main(String[] args) throws ParseException, NoSuchFieldException, SecurityException,
 			IllegalArgumentException, IllegalAccessException {
-		System.out.println("12312 3~!@#$%^&*()_+`-=[]\\{}|123;':\",./<>?，。、"
-				.replaceAll("[\\s~!@#$%^&*()_+`\\-=\\\\\\[\\]{}|;':\",./<>?，。、！……（）【】；：‘’“”《》？]", ""));
+		System.out.println("12, 23    , 43,    123123,,".replaceAll("(\\s+,\\s+)|(\\s+,)|(,\\s+)", ","));
 	}
 
 //
