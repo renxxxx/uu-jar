@@ -48,8 +48,8 @@ public class Zipuu {
 	}
 
 	public static void main3() throws Exception {
-		Zipuu.unzip("C:\\Users\\Administrator\\Desktop\\temp\\share-demo.zip",
-				"C:\\Users\\Administrator\\Desktop\\temp\\share-demo");
+		Zipuu.unzip("C:\\Users\\Administrator\\Desktop\\temp\\网络读卡器通讯协议190620.zip",
+				"C:\\Users\\Administrator\\Desktop\\temp\\网络读卡器通讯协");
 	}
 
 	public static Zipuu build(String zip) throws FileNotFoundException {

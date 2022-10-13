@@ -183,7 +183,7 @@ public class Jdbcuu {
 				Object key = (Object) iterator.next();
 				Object value = conditionm.get(key);
 				sql += value == null || value.toString() == null || value.toString().isEmpty() ? ""
-						: "`" + key + "`" + "=? and ";
+						: "`" + key.toString().trim() + "`" + "=? and ";
 				params.addIf(value, value != null && value.toString() != null && !value.toString().isEmpty());
 			}
 			sql = sql.substring(0, sql.lastIndexOf("and"));
@@ -462,7 +462,7 @@ public class Jdbcuu {
 				Object key = (Object) iterator.next();
 				Object value = columnm.get(key);
 				sql += value == null || value.toString() == null ? ""
-						: value.toString().isEmpty() ? "`" + key + "`" + "=null," : "`" + key + "`" + "=?,";
+						: value.toString().isEmpty() ? "`" + key.toString().trim() + "`" + "=null," : "`" + key.toString().trim() + "`" + "=?,";
 				params.addIf(value, value != null && value.toString() != null && !value.toString().isEmpty());
 			}
 		}
@@ -473,7 +473,7 @@ public class Jdbcuu {
 				Object key = (Object) iterator.next();
 				Object value = conditionm.get(key);
 				sql += value == null || value.toString() == null || value.toString().isEmpty() ? ""
-						: "`" + key + "`" + "=? and ";
+						: "`" + key.toString().trim() + "`" + "=? and ";
 				params.addIf(value, value != null && value.toString() != null && !value.toString().isEmpty());
 			}
 			sql = sql.substring(0, sql.lastIndexOf("and"));
@@ -554,7 +554,7 @@ public class Jdbcuu {
 				Object key = (Object) iterator.next();
 				Object value = conditionm.get(key);
 				sql += value == null || value.toString() == null || value.toString().isEmpty() ? ""
-						: "`" + key + "`" + "=? and ";
+						: "`" + key.toString().trim() + "`" + "=? and ";
 				params.addIf(value, value != null && value.toString() != null && !value.toString().isEmpty());
 			}
 			sql = sql.substring(0, sql.lastIndexOf("and"));
@@ -633,7 +633,7 @@ public class Jdbcuu {
 				Object key = (Object) iterator.next();
 				Object value = columnm.get(key);
 				sql += value == null || value.toString() == null || value.toString().isEmpty() ? ""
-						: "`" + key + "`" + ",";
+						: "`" + key.toString().trim() + "`" + ",";
 			}
 		}
 		sql = sql.substring(0, sql.lastIndexOf(","));
