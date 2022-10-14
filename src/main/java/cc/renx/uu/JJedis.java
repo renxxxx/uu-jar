@@ -54,80 +54,91 @@ public class JJedis {
 	}
 
 	public Long ttl(final String key) {
-		logger.info("ttl " + runId);
+		logger.info("redis ttl " + key + " runId: " + runId);
 		open();
 		return jedis.ttl(buildKey(key));
 	}
 
 	public String get(final String key) {
-		logger.info("get " + runId);
+		logger.info("redis get " + key + " runId: " + runId);
 		open();
 		return jedis.get(buildKey(key));
 	}
 
 	public String set(final String key, String value) {
+		logger.info("redis set " + key + " " + value + " runId: " + runId);
 		open();
 		return jedis.set(buildKey(key), value);
 	}
 
 	public Long del(final String key) {
-		logger.info("del " + runId);
+		logger.info("redis del " + key + " runId: " + runId);
 		open();
 		return jedis.del(buildKey(key));
 	}
 
 	public String getSet(final String key, String value) {
+		logger.info("redis getSet " + key + value + " runId: " + runId);
 		open();
 		return jedis.getSet(buildKey(key), value);
 	}
 
 	public Long setnx(final String key, String value) {
-		logger.info("setnx " + runId);
+		logger.info("redis setnx " + key + " " + value + " runId: " + runId);
 		open();
 		return jedis.setnx(buildKey(key), value);
 	}
 
 	public String setex(final String key, final int seconds, final String value) {
+		logger.info("redis setex " + key + " " + seconds + " " + value + " runId: " + runId);
 		open();
 		return jedis.setex(buildKey(key), seconds, value);
 	}
 
 	public String psetex(final String key, final long milliseconds, final String value) {
+		logger.info("redis psetex " + key + " " + milliseconds + " " + value + " runId: " + runId);
 		open();
 		return jedis.psetex(buildKey(key), milliseconds, value);
 	}
 
 	public String set(final String key, final String value, final String nxxx, final String expx, final long time) {
-		logger.info("set " + runId);
+		logger.info("redis set " + key + " " + value + " " + nxxx + " " + expx + " runId: " + runId);
 		open();
 		return jedis.set(buildKey(key), value, nxxx, expx, time);
 	}
 
 	public Long decrBy(final String key, final long integer) {
+		logger.info("redis decrBy " + key + " " + integer + " runId: " + runId);
 		return jedis.decrBy(key, integer);
 	}
 
 	public Long decr(final String key) {
+		logger.info("redis decrBy " + key + " runId: " + runId);
 		return jedis.decr(key);
 	}
 
 	public Long incrBy(final String key, final long integer) {
+		logger.info("redis incrBy " + key + " " + integer + " runId: " + runId);
 		return jedis.incrBy(key, integer);
 	}
 
 	public Double incrByFloat(final String key, final double value) {
+		logger.info("redis incrByFloat " + key + " " + value + " runId: " + runId);
 		return jedis.incrByFloat(key, value);
 	}
 
 	public Long incr(final String key) {
+		logger.info("redis incr " + key + " runId: " + runId);
 		return jedis.incr(key);
 	}
 
 	public Long expire(final String key, final int seconds) {
+		logger.info("redis expire " + key + " " + seconds + " runId: " + runId);
 		return jedis.expire(key, seconds);
 	}
 
 	public Long expireAt(final String key, final long unixTime) {
+		logger.info("redis expireAt " + key + " " + unixTime + " runId: " + runId);
 		return jedis.expireAt(key, unixTime);
 	}
 
@@ -147,7 +158,7 @@ public class JJedis {
 
 	public boolean lock(String lock, String owner, long acquireTime, long period)
 			throws SQLException, InterruptedException {
-		logger.info("lock " + runId);
+		logger.info("redis lock " + owner + " " + acquireTime + " runId: " + runId);
 		if (lock == null || owner == null)
 			return true;
 		open();
@@ -170,11 +181,11 @@ public class JJedis {
 	}
 
 	public boolean lock(String lock, String owner) throws SQLException, InterruptedException {
-		return lock(lock, owner, 10 * 1000, 1 * 60 * 1000);
+		return lock(lock, owner, 1 * 60 * 1000, 1 * 60 * 1000);
 	}
 
 	public boolean unlock(String lock, String owner) {
-		logger.info("unlock " + runId);
+		logger.info("redis unlock " + owner + " runId: " + runId);
 		if (lock == null || owner == null)
 			return true;
 		open();
