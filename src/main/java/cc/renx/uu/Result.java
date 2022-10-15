@@ -176,11 +176,6 @@ public class Result extends RuntimeException {
 		return this;
 	}
 
-	public Result duration(long duration) {
-		this.duration = duration;
-		return this;
-	}
-
 	public Result refreshDuration() {
 		if (this.submitTime != null && this.runTime != null)
 			this.submitDuration = this.runTime - this.submitTime;
@@ -189,19 +184,19 @@ public class Result extends RuntimeException {
 		return this;
 	}
 
-	public Result submitTime(long submitTime) {
+	public Result submitTime(Long submitTime) {
 		this.submitTime = submitTime;
 		this.refreshDuration();
 		return this;
 	}
 
-	public Result runTime(long runTime) {
+	public Result runTime(Long runTime) {
 		this.runTime = runTime;
 		this.refreshDuration();
 		return this;
 	}
 
-	public Result responseTime(long responseTime) {
+	public Result responseTime(Long responseTime) {
 		this.responseTime = responseTime;
 		this.refreshDuration();
 		return this;
