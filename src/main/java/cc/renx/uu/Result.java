@@ -15,6 +15,7 @@ public class Result extends RuntimeException {
 	public Object data = new LinkedHashMap();
 	public String enMsg = null;
 	public String zhMsg = null;
+	public Long submitDuration = null;
 	public Long duration = null;
 
 	public Map to() {
@@ -23,6 +24,7 @@ public class Result extends RuntimeException {
 		map.put("msg", msg);
 		map.put("data", data);
 		map.put("errorParam", errorParam);
+		map.put("submitDuration", submitDuration);
 		map.put("duration", duration);
 		map.put("runId", runId);
 		return map;
@@ -169,6 +171,11 @@ public class Result extends RuntimeException {
 
 	public Result duration(long duration) {
 		this.duration = duration;
+		return this;
+	}
+
+	public Result submitDuration(long submitDuration) {
+		this.submitDuration = submitDuration;
 		return this;
 	}
 

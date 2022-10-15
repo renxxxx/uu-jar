@@ -5,7 +5,7 @@
 
 	<groupId>cc.renx</groupId>
 	<artifactId>uu</artifactId>
-	<version>3.0.0.15</version>
+	<version>3.0.0.16</version>
 	<description>all scopes to provided from none</description>
 	<packaging>jar</packaging>
 	<name>uu</name>
