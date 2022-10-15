@@ -18,6 +18,10 @@ public class Result extends RuntimeException {
 	public Long submitDuration = null;
 	public Long duration = null;
 
+	public Long submitTime = null;
+	public Long requestTime = null;
+	public Long responseTime = null;
+
 	public Map to() {
 		Map map = new LinkedHashMap();
 		map.put("code", code);
@@ -26,6 +30,9 @@ public class Result extends RuntimeException {
 		map.put("errorParam", errorParam);
 		map.put("submitDuration", submitDuration);
 		map.put("duration", duration);
+		map.put("submitTime", submitTime);
+		map.put("requestTime", requestTime);
+		map.put("responseTime", responseTime);
 		map.put("runId", runId);
 		return map;
 	}
@@ -174,8 +181,29 @@ public class Result extends RuntimeException {
 		return this;
 	}
 
-	public Result submitDuration(long submitDuration) {
-		this.submitDuration = submitDuration;
+	public Result refreshDuration() {
+		if (this.submitTime != null || this.requestTime != null)
+			this.submitDuration = this.requestTime - this.submitTime;
+		if (this.requestTime != null || this.responseTime != null)
+			this.duration = this.responseTime - this.requestTime;
+		return this;
+	}
+
+	public Result submitTime(long submitTime) {
+		this.submitTime = submitTime;
+		this.refreshDuration();
+		return this;
+	}
+
+	public Result requestTime(long requestTime) {
+		this.requestTime = requestTime;
+		this.refreshDuration();
+		return this;
+	}
+
+	public Result responseTime(long responseTime) {
+		this.responseTime = responseTime;
+		this.refreshDuration();
 		return this;
 	}
 
