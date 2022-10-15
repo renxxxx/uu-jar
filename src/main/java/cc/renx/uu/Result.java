@@ -15,11 +15,11 @@ public class Result extends RuntimeException {
 	public Object data = new LinkedHashMap();
 	public String enMsg = null;
 	public String zhMsg = null;
+
 	public Long submitDuration = null;
 	public Long duration = null;
-
 	public Long submitTime = null;
-	public Long requestTime = null;
+	public Long runTime = null;
 	public Long responseTime = null;
 
 	public Map to() {
@@ -31,7 +31,7 @@ public class Result extends RuntimeException {
 		map.put("submitDuration", submitDuration);
 		map.put("duration", duration);
 		map.put("submitTime", submitTime);
-		map.put("requestTime", requestTime);
+		map.put("runTime", runTime);
 		map.put("responseTime", responseTime);
 		map.put("runId", runId);
 		return map;
@@ -182,10 +182,10 @@ public class Result extends RuntimeException {
 	}
 
 	public Result refreshDuration() {
-		if (this.submitTime != null && this.requestTime != null)
-			this.submitDuration = this.requestTime - this.submitTime;
-		if (this.requestTime != null && this.responseTime != null)
-			this.duration = this.responseTime - this.requestTime;
+		if (this.submitTime != null && this.runTime != null)
+			this.submitDuration = this.runTime - this.submitTime;
+		if (this.runTime != null && this.responseTime != null)
+			this.duration = this.responseTime - this.runTime;
 		return this;
 	}
 
@@ -195,8 +195,8 @@ public class Result extends RuntimeException {
 		return this;
 	}
 
-	public Result requestTime(long requestTime) {
-		this.requestTime = requestTime;
+	public Result runTime(long runTime) {
+		this.runTime = runTime;
 		this.refreshDuration();
 		return this;
 	}
