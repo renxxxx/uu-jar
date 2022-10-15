@@ -182,9 +182,9 @@ public class Result extends RuntimeException {
 	}
 
 	public Result refreshDuration() {
-		if (this.submitTime != null || this.requestTime != null)
+		if (this.submitTime != null && this.requestTime != null)
 			this.submitDuration = this.requestTime - this.submitTime;
-		if (this.requestTime != null || this.responseTime != null)
+		if (this.requestTime != null && this.responseTime != null)
 			this.duration = this.responseTime - this.requestTime;
 		return this;
 	}
