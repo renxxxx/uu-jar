@@ -9,30 +9,8 @@ public class DDate extends Date {
 	public Calendar calendar = Calendar.getInstance();
 
 	public static void main(String[] args) throws ParseException {
-		DDate ddate = new DDate("1111111111");
-		System.out.println(ddate.AddSecs(1));
-		System.out.println(ddate.AddMins(1));
-		System.out.println(ddate.AddHours(1));
-		System.out.println(ddate.AddDays(1));
-		System.out.println(ddate.AddMons(1));
-		System.out.println(ddate.AddYears(1));
-
-		System.out.println();
-		System.out.println(ddate.SetYear(2022));
-		System.out.println(ddate.SetMonth(3));
-		System.out.println(ddate.SetDay(4));
-		System.out.println(ddate.SetHour(13));
-		System.out.println(ddate.SetMinute(44));
-		System.out.println(ddate.SetSecond(23));
-
-		System.out.println();
-		System.out.println(ddate.SubSecs(1));
-		System.out.println(ddate.SubMins(1));
-		System.out.println(ddate.SubHours(1));
-		System.out.println(ddate.SubDays(1));
-		System.out.println(ddate.SubMons(1));
-		System.out.println(ddate.SubYears(1));
-
+		DDate ddate = DDate.build().trim("yyyy-MM-dd 00:00:00.000");
+		System.out.println(ddate.getTime());
 	}
 
 	public DDate(Long time) {
@@ -248,16 +226,7 @@ public class DDate extends Date {
 		}
 		if (date == null) {
 			try {
-				if (source.length() == 13)
-					date = new Date(Long.parseLong(source));
-			} catch (Exception e) {
-			}
-		}
-		if (date == null) {
-			try {
-				if (source.length() == 10) {
-					date = new Date(Long.parseLong(source + "000"));
-				}
+				date = new Date(Long.parseLong(source));
 			} catch (Exception e) {
 			}
 		}
@@ -287,4 +256,12 @@ public class DDate extends Date {
 	public String format(String pattern) {
 		return new SimpleDateFormat(pattern).format(this);
 	}
+
+	public DDate trim(String pattern) throws ParseException {
+		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+		calendar.setTime(sdf.parse(sdf.format(this)));
+		this.setTime(calendar.getTimeInMillis());
+		return this;
+	}
+
 }
