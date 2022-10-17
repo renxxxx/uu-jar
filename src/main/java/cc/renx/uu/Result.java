@@ -50,18 +50,15 @@ public class Result extends RuntimeException {
 	}
 
 	public static Result success(String msg, Object data) {
-		if (data instanceof MMap)
-			data = ((MMap) data).map;
 		Result result = new Result(0 + " : " + msg);
 		result.code = 0;
 		result.msg = msg;
 
-		Object jj = data;
 		if (data instanceof MMap)
-			jj = ((MMap) jj).map;
+			data = ((MMap) data).map;
 		if (data instanceof LList)
-			jj = ((LList) jj).list;
-		if (jj != null)
+			data = ((LList) data).list;
+		if (data != null)
 			result.data = data;
 		return result;
 	}
@@ -79,17 +76,14 @@ public class Result extends RuntimeException {
 	}
 
 	public static Result fail(String msg, Object data) {
-		if (data instanceof MMap)
-			data = ((MMap) data).map;
 		Result result = new Result(9 + " : " + msg);
 		result.code = 9;
 		result.msg = msg;
-		Object jj = data;
 		if (data instanceof MMap)
-			jj = ((MMap) jj).map;
+			data = ((MMap) data).map;
 		if (data instanceof LList)
-			jj = ((LList) jj).list;
-		if (jj != null)
+			data = ((LList) data).list;
+		if (data != null)
 			result.data = data;
 		return result;
 	}
@@ -101,12 +95,16 @@ public class Result extends RuntimeException {
 	}
 
 	public static Result build(int code, String msg, Object data) {
-		if (data instanceof MMap)
-			data = ((MMap) data).map;
 		Result result = new Result(code + " : " + msg);
 		result.code = code;
 		result.msg = msg;
 		result.data = data;
+		if (data instanceof MMap)
+			data = ((MMap) data).map;
+		if (data instanceof LList)
+			data = ((LList) data).list;
+		if (data != null)
+			result.data = data;
 		return result;
 	}
 
@@ -122,7 +120,12 @@ public class Result extends RuntimeException {
 			data = ((MMap) data).map;
 		Result result = new Result(code + "");
 		result.code = code;
-		result.data = data;
+		if (data instanceof MMap)
+			data = ((MMap) data).map;
+		if (data instanceof LList)
+			data = ((LList) data).list;
+		if (data != null)
+			result.data = data;
 		return result;
 	}
 
@@ -203,12 +206,11 @@ public class Result extends RuntimeException {
 	}
 
 	public Result data(Object data) {
-		Object jj = data;
 		if (data instanceof MMap)
-			jj = ((MMap) jj).map;
+			data = ((MMap) data).map;
 		if (data instanceof LList)
-			jj = ((LList) jj).list;
-		if (jj != null)
+			data = ((LList) data).list;
+		if (data != null)
 			this.data = data;
 		return this;
 	}
