@@ -266,6 +266,8 @@ public class Jdbcuu3 {
 			pst = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 			updateSql(conn, pst, sql, params);
 			ResultSet rs = pst.getGeneratedKeys();
+			if (rs == null)
+				return null;
 			if (rs.next())
 				return rs.getInt(1);
 			else
@@ -664,6 +666,8 @@ public class Jdbcuu3 {
 
 	public static Integer generatedKey(PreparedStatement pst) throws SQLException {
 		ResultSet rs = pst.getGeneratedKeys();
+		if (rs == null)
+			return null;
 		if (rs.next()) {
 			int id = rs.getInt(1);
 			rs.close();
@@ -675,6 +679,8 @@ public class Jdbcuu3 {
 	public static List<Integer> generatedKeys(PreparedStatement pst) throws SQLException {
 		ResultSet rs = pst.getGeneratedKeys();
 		List<Integer> keys = new ArrayList();
+		if (rs == null)
+			return keys;
 		while (rs.next()) {
 			int key = rs.getInt(1);
 			keys.add(key);
