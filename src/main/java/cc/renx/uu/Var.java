@@ -952,7 +952,7 @@ public class Var {
 
 	public static Boolean toBoolean(Object value) {
 		try {
-			if (value == null)
+			if (value == null || value.toString() == null)
 				return null;
 			return Boolean.parseBoolean(value.toString());
 		} catch (Exception e) {
@@ -964,7 +964,7 @@ public class Var {
 
 	public static Integer toInteger(Object value) {
 		try {
-			if (value == null)
+			if (value == null || value.toString() == null)
 				return null;
 			if (value instanceof Integer)
 				return (Integer) value;
@@ -980,7 +980,7 @@ public class Var {
 
 	public static Float toFloat(Object value) {
 		try {
-			if (value == null)
+			if (value == null || value.toString() == null)
 				return null;
 			if (value instanceof Float)
 				return (Float) value;
@@ -997,7 +997,7 @@ public class Var {
 
 	public static Double toDouble(Object value) {
 		try {
-			if (value == null)
+			if (value == null || value.toString() == null)
 				return null;
 			if (value instanceof Float)
 				return (Double) value;
@@ -1013,7 +1013,7 @@ public class Var {
 	}
 
 	public static String toString(Object value) {
-		if (value == null)
+		if (value == null || value.toString() == null)
 			return null;
 		if (value instanceof String)
 			return (String) value;
@@ -1060,7 +1060,7 @@ public class Var {
 
 	public static Date toDate(Object value) {
 		Date date = null;
-		if (value == null)
+		if (value == null || value.toString() == null)
 			return null;
 		if (value instanceof Date)
 			return (Date) value;
@@ -1191,7 +1191,7 @@ public class Var {
 	}
 
 	public static Long toLong(Object value) {
-		if (value == null)
+		if (value == null || value.toString() == null)
 			return null;
 		if (value instanceof Long)
 			return (Long) value;
@@ -1203,7 +1203,7 @@ public class Var {
 	}
 
 	public static BigDecimal toDecimal(Object value) {
-		if (value == null)
+		if (value == null || value.toString() == null)
 			return null;
 		if (value instanceof BigDecimal)
 			return (BigDecimal) value;
@@ -1216,7 +1216,7 @@ public class Var {
 
 	public static LList toList(Object value) {
 		try {
-			if (value == null)
+			if (value == null || value.toString() == null)
 				return LList.build();
 			String valueStr = value.toString();
 			if (valueStr.trim().isEmpty())
@@ -1231,7 +1231,7 @@ public class Var {
 
 	public static MMap toMap(Object value) {
 		try {
-			if (value == null)
+			if (value == null || value.toString() == null)
 				return MMap.build();
 			String valueStr = value.toString();
 			if (valueStr.trim().isEmpty())

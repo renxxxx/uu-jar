@@ -125,7 +125,7 @@ public class Jdbcuu3 {
 		MMap row = row(conn, sql, params);
 		if (row.isEmpty())
 			return null;
-		return row.get(row.keySet().iterator().next());
+		return row.getObject(row.keySet().iterator().next());
 	}
 
 //	public static Mappquery(Connection conn, String sql, Object... params) throws Exception {
