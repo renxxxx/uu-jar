@@ -812,7 +812,7 @@ public class Jdbcuu3 {
 	public static Object getColumn(ResultSet rs) throws SQLException {
 		LList<Map> list = rows(rs);
 		if (list.size() > 0)
-			return list.getMap(0).get(list.getMap(0).keySet().iterator().next());
+			return list.getMap(0).getObject(list.getMap(0).keySet().iterator().next());
 		else
 			return null;
 	}
