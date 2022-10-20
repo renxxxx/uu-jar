@@ -611,7 +611,8 @@ public class Jdbcuu3 {
 //		return insert(conn, table, columnm);
 //	}
 
-	public static int insert(Connection conn, String table, Object splitColumns, Object... values) throws Exception {
+	public static Integer insert(Connection conn, String table, Object splitColumns, Object... values)
+			throws Exception {
 		Object[] columns = StringUtils.splitByWholeSeparatorPreserveAllTokens((String) splitColumns, ",");
 		MMap columnm = new MMap();
 		columns = columns == null ? new Object[] {} : columns;
@@ -633,7 +634,7 @@ public class Jdbcuu3 {
 //		return insert(conn, table, columnm);
 //	}
 
-	public static int insert(Connection conn, String table, MMap columnm) throws Exception {
+	public static Integer insert(Connection conn, String table, MMap columnm) throws Exception {
 		String sql = "";
 		sql += "insert into ";
 		sql += "`" + table + "`";
