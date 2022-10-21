@@ -460,7 +460,7 @@ public class Jdbcuu3 {
 		String sql = "";
 		sql += "update ";
 		sql += " `" + table + "` ";
-		sql += " set id=id,";
+		sql += " set ";
 
 		LList params = LList.build();
 
@@ -472,6 +472,8 @@ public class Jdbcuu3 {
 						: value.toString().isEmpty() ? "`" + key + "`" + "=null," : "`" + key + "`" + "=?,";
 				params.addIf(value, value != null && value.toString() != null && !value.toString().isEmpty());
 			}
+		} else {
+			return 0;
 		}
 		sql = sql.substring(0, sql.lastIndexOf(","));
 		if (conditionm.isExisting()) {
