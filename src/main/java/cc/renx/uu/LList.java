@@ -7,6 +7,8 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.alibaba.fastjson.JSON;
+
 public class LList<E> {
 
 	public static void main(String[] args) {
@@ -25,23 +27,40 @@ public class LList<E> {
 
 		LList values = LList.build();
 		for (int i = 0; i < this.list.size(); i++) {
-			MMap m = this.getMap(i);
+			MMap m = getMap(i);
 			Object value = m.getObject(key);
 			values.add(value);
 		}
 		return values;
 	}
 
-	public static LList build(List list) {
-		if (list == null) {
-			LList listt = new LList();
-			return listt;
-		} else {
-			LList listt = new LList();
-			listt.list = list;
-			return listt;
+	public static LList build(Object obj) {
+		LList llist = new LList();
+		if (obj == null)
+			llist = llist;
+		if (obj instanceof LList) {
+			llist.list = ((LList) obj).list;
 		}
+		if (obj instanceof List) {
+			llist.list = (List) obj;
+		}
+		try {
+			llist.list = JSON.parseArray(obj.toString());
+		} catch (Exception e) {
+		}
+		return llist;
 	}
+
+//	public static LList build(List list) {
+//		if (list == null) {
+//			LList listt = new LList();
+//			return listt;
+//		} else {
+//			LList listt = new LList();
+//			listt.list = list;
+//			return listt;
+//		}
+//	}
 
 	public static LList build() {
 		return build(null);
@@ -162,36 +181,25 @@ public class LList<E> {
 	};
 
 	public MMap getMap(int index) {
-		if (this.list == null || this.list.isEmpty() || this.list.size() <= index)
-			return MMap.build();
-		else
-			return MMap.build((Map) this.list.get(index));
+		return MMap.build(getObject(index));
 	};
 
 	public LList getList(int index) {
-		if (this.list == null || this.list.isEmpty() || this.list.size() <= index)
-			return LList.build();
-		else
-			return LList.build((List) this.list.get(index));
+		return LList.build(getObject(index));
 	};
 
 	public String getString(int index) {
-		if (this.list == null || this.list.isEmpty() || this.list.size() <= index)
-			return null;
-		else
-			return Var.toString(this.list.get(index));
+		return Var.toString(getObject(index));
 	};
 
 	public Object next() {
 		if (this.list != null && (this.list.size() - 1) >= (this.index + 1))
-			return get(++this.index);
+			return getObject(++this.index);
 		return null;
 	};
 
 	public String nextString() {
-		if (this.list != null && (this.list.size() - 1) >= (this.index + 1))
-			return getString(++this.index);
-		return null;
+		return Var.toString(next());
 	};
 
 	public void reset() {
@@ -240,8 +248,6 @@ public class LList<E> {
 	}
 
 	public Var get(int index) {
-		if (this.list == null || this.list.isEmpty() || this.list.size() <= index)
-			return Var.build();
-		return Var.build(this.list.get(index));
+		return Var.build(getObject(index));
 	}
 }

@@ -25,24 +25,41 @@ public class MMap {
 		}
 	}
 
-	public static MMap build(MMap mmap) {
-		if (mmap == null)
-			return new MMap();
-		else {
-			MMap mapp = new MMap();
-			mapp.map = mmap.map;
-			return mapp;
-		}
-	}
+//	public static MMap build(MMap mmap) {
+//		if (mmap == null)
+//			return new MMap();
+//		else {
+//			MMap mapp = new MMap();
+//			mapp.map = mmap.map;
+//			return mapp;
+//		}
+//	}
+//
+//	public static MMap build(Map map) {
+//		if (map == null)
+//			return new MMap();
+//		else {
+//			MMap mapp = new MMap();
+//			mapp.map = map;
+//			return mapp;
+//		}
+//	}
 
-	public static MMap build(Map map) {
-		if (map == null)
-			return new MMap();
-		else {
-			MMap mapp = new MMap();
-			mapp.map = map;
-			return mapp;
+	public static MMap build(Object obj) {
+		MMap mmap = new MMap();
+		if (obj == null)
+			mmap = mmap;
+		if (obj instanceof MMap) {
+			mmap.map = ((MMap) obj).map;
 		}
+		if (obj instanceof Map) {
+			mmap.map = (Map) obj;
+		}
+		try {
+			mmap.map = JSON.parseObject(obj.toString(), LinkedHashMap.class);
+		} catch (Exception e) {
+		}
+		return mmap;
 	}
 
 	public static MMap build() {
@@ -77,16 +94,12 @@ public class MMap {
 	}
 
 	public MMap putAll(Map map) {
-		if (this.map == null)
-			this.map = new LinkedHashMap();
-		if (map != null) {
-			Iterator keys = map.keySet().iterator();
-			while (keys.hasNext()) {
-				Object key = keys.next();
-				if (key instanceof Var)
-					key = ((Var) key).value;
-				this.put(key, map.get(key));
-			}
+		if (map == null)
+			return this;
+		Iterator keys = map.keySet().iterator();
+		while (keys.hasNext()) {
+			Object key = keys.next();
+			put(key, map.get(key));
 		}
 		return this;
 	}
@@ -98,8 +111,6 @@ public class MMap {
 	}
 
 	public MMap putAll(String keyPrefix, Map map) {
-		if (this.map == null)
-			this.map = new LinkedHashMap();
 		if (map == null)
 			return this;
 
@@ -107,7 +118,7 @@ public class MMap {
 		while (keys.hasNext()) {
 			Object key = keys.next();
 			String key2 = keyPrefix + (key.toString().charAt(0) + "").toUpperCase() + key.toString().substring(1);
-			this.put(key2, map.get(key));
+			put(key2, map.get(key));
 		}
 		return this;
 	}
@@ -135,59 +146,43 @@ public class MMap {
 	}
 
 	public Var get(Object key) {
-		if (key instanceof Var)
-			key = ((Var) key).value;
-		if (map == null)
-			return Var.build().code(key == null ? null : key.toString());
-		return Var.build(map.get(key)).code(key == null ? null : key.toString());
+		return Var.build(getObject(key));
 	}
 
 	public String getString(Object key) {
-		return get(key).toString();
+		return Var.toString(getObject(key));
 	}
 
 	public Boolean getBoolean(Object key) {
-		return get(key).toBoolean();
+		return Var.toBoolean(getObject(key));
 	}
 
 	public Integer getInteger(Object key) {
-		return get(key).toInteger();
+		return Var.toInteger(getObject(key));
 	}
 
 	public Long getLong(Object key) {
-		if (map == null)
-			return null;
-		return Var.toLong(map.get(key));
+		return Var.toLong(getObject(key));
 	}
 
 	public BigDecimal getDecimal(Object key) {
-		if (map == null)
-			return null;
-		return Var.toDecimal(map.get(key));
+		return Var.toDecimal(getObject(key));
 	}
 
 	public Float getFloat(Object key) {
-		if (map == null)
-			return null;
-		return Var.toFloat(map.get(key));
+		return Var.toFloat(getObject(key));
 	}
 
 	public Date getDate(Object key) {
-		if (map == null)
-			return null;
-		return Var.toDate(map.get(key));
+		return Var.toDate(getObject(key));
 	}
 
 	public LList getList(Object key) {
-		if (map == null)
-			return LList.build();
-		return LList.build((List) map.get(key));
+		return Var.toList(getObject(key));
 	}
 
 	public MMap getMap(Object key) {
-		if (map == null)
-			return MMap.build();
-		return MMap.build((Map) map.get(key));
+		return Var.toMap(getObject(key));
 	}
 
 	public boolean isEmpty() {
@@ -202,7 +197,7 @@ public class MMap {
 	}
 
 	public boolean notEmpty(String key) {
-		Object value = this.get(key);
+		Object value = getObject(key);
 		if (value == null)
 			return false;
 		if (value instanceof Var)
@@ -235,9 +230,8 @@ public class MMap {
 	}
 
 	public boolean getAndEquals(Object key, Object target) {
-		if (map == null)
-			return false;
-		Object value = map.get(key);
+		Object value = getObject(key);
+
 		if (value == target)
 			return true;
 		if (value == null || target == null)
@@ -248,7 +242,7 @@ public class MMap {
 		if (vs == ts)
 			return true;
 		if (vs == null || ts == null)
-			return true;
+			return false;
 		return vs.equals(ts);
 	}
 
@@ -263,5 +257,15 @@ public class MMap {
 
 	public String toJSONString(SerializerFeature... features) {
 		return JSON.toJSONString(this.map, features);
+	}
+
+	public LList toList() {
+		LList llist = LList.build();
+		Iterator keys = keySet().iterator();
+		while (keys.hasNext()) {
+			Object key = keys.next();
+			llist.add(getObject(key));
+		}
+		return llist;
 	}
 }

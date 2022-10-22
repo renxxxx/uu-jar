@@ -148,7 +148,7 @@ public class Var {
 		if (from != null)
 			for (Object value : from) {
 				if (value != null) {
-					if (value instanceof Float || value instanceof Double) {
+					if (value instanceof Float || value instanceof Double || value instanceof BigDecimal) {
 						this.value = value.toString().replaceAll("\\.0*$", "");
 					} else {
 						this.value = value.toString();
@@ -954,12 +954,16 @@ public class Var {
 		try {
 			if (value == null || value.toString() == null)
 				return null;
-			return Boolean.parseBoolean(value.toString());
+			if (value instanceof Boolean)
+				return (Boolean) value;
+			if (value.toString().isEmpty() || value.toString().equals("0")
+					|| value.toString().equalsIgnoreCase("false"))
+				return false;
+			return true;
 		} catch (Exception e) {
 			logger.debug(ExceptionUtils.getStackTrace(e));
 		}
 		return null;
-
 	}
 
 	public static Integer toInteger(Object value) {
@@ -1015,8 +1019,10 @@ public class Var {
 	public static String toString(Object value) {
 		if (value == null || value.toString() == null)
 			return null;
-		if (value instanceof String)
-			return (String) value;
+		return value.toString();
+
+//		if (value instanceof String)
+//			return (String) value;
 //		if (value instanceof Double) {
 //			String dds = BigDecimal.valueOf((Double) value).toPlainString();
 //			String[] ss = dds.split("\\.");
@@ -1051,11 +1057,11 @@ public class Var {
 //				d = d + "." + d2;
 //			return d;
 //		}
-		String valueStr = value.toString();
-		if (valueStr.isEmpty())
-			return null;
-		else
-			return valueStr.toString();
+//		String valueStr = value.toString();
+//		if (valueStr.isEmpty())
+//			return null;
+//		else
+//			return valueStr.toString();
 	}
 
 	public static Date toDate(Object value) {
@@ -1214,34 +1220,41 @@ public class Var {
 			return new BigDecimal(valueStr);
 	}
 
+//	public static LList toList(Object value) {
+//		try {
+//			if (value == null || value.toString() == null)
+//				return LList.build();
+//			String valueStr = value.toString();
+//			if (valueStr.trim().isEmpty())
+//				return LList.build();
+//			else
+//				return LList.build(JSONObject.parseArray(valueStr));
+//		} catch (Exception e) {
+//			logger.info(ExceptionUtils.getStackTrace(e));
+//			return LList.build();
+//		}
+//	}
+
 	public static LList toList(Object value) {
-		try {
-			if (value == null || value.toString() == null)
-				return LList.build();
-			String valueStr = value.toString();
-			if (valueStr.trim().isEmpty())
-				return LList.build();
-			else
-				return LList.build(JSONObject.parseArray(valueStr));
-		} catch (Exception e) {
-			logger.info(ExceptionUtils.getStackTrace(e));
-			return LList.build();
-		}
+		return LList.build(value);
 	}
 
+//	public static MMap toMap(Object value) {
+//		try {
+//			if (value == null || value.toString() == null)
+//				return MMap.build();
+//			String valueStr = value.toString();
+//			if (valueStr.trim().isEmpty())
+//				return MMap.build();
+//			else
+//				return MMap.build(JSONObject.parseObject(valueStr, LinkedHashMap.class));
+//		} catch (Exception e) {
+//			logger.info(ExceptionUtils.getStackTrace(e));
+//			return MMap.build();
+//		}
+//	}
 	public static MMap toMap(Object value) {
-		try {
-			if (value == null || value.toString() == null)
-				return MMap.build();
-			String valueStr = value.toString();
-			if (valueStr.trim().isEmpty())
-				return MMap.build();
-			else
-				return MMap.build(JSONObject.parseObject(valueStr, LinkedHashMap.class));
-		} catch (Exception e) {
-			logger.info(ExceptionUtils.getStackTrace(e));
-			return MMap.build();
-		}
+		return MMap.build(value);
 	}
 
 	public static Object attr(Object target, Object... keys)
