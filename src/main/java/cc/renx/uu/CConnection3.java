@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 
 public class CConnection3 {
 	private static Logger logger = LoggerFactory.getLogger(CConnection3.class);
+	public static ThreadLocal<CConnection3> threadLocal = new ThreadLocal<CConnection3>();
 
 	public DataSource dataSource;
 	public Connection conn;
@@ -62,6 +63,7 @@ public class CConnection3 {
 			conn = dataSource.getConnection();
 			conn.setAutoCommit(false);
 		}
+		threadLocal.set(this);
 	}
 
 	public LList rows(String sql, Object... params) throws Exception {

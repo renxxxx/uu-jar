@@ -12,6 +12,7 @@ import redis.clients.jedis.Transaction;
 
 public class JJedis {
 	private static Logger logger = LoggerFactory.getLogger(JJedis.class);
+	public static ThreadLocal<JJedis> threadLocal = new ThreadLocal<JJedis>();
 
 	public JedisPool jedisPool;
 	public Jedis jedis;
@@ -154,6 +155,7 @@ public class JJedis {
 			logger.info("open " + runId);
 			jedis = jedisPool.getResource();
 		}
+		threadLocal.set(this);
 	}
 
 	public boolean lock(String lock, String owner, long acquireTime, long period)
