@@ -1322,30 +1322,50 @@ public class Var {
 		return MMap.build(value);
 	}
 
-	public Object attrBySplit(Object splitKeys)
+	public Var attrBySplit(Object splitKeys)
+			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		return Var.build(attrObjectBySplit(splitKeys));
+	}
+
+	public Var attr(Object... keys)
+			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		return Var.build(attrObject(keys));
+	}
+
+	public static Var attrBySplit(Object target, Object splitKeys)
+			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		return Var.build(attrObjectBySplit(target, splitKeys));
+	}
+
+	public static Var attr(Object target, Object... keys)
+			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		return Var.build(attrObject(target, keys));
+	}
+
+	public Object attrObjectBySplit(Object splitKeys)
 			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		splitKeys = splitKeys == null ? null : splitKeys.toString();
 		String[] keys = splitKeys == null ? new String[] {}
 				: StringUtils.splitByWholeSeparatorPreserveAllTokens(splitKeys.toString(), ",");
 
-		return attr(this.source, keys);
+		return attrObject(this.source, keys);
 	}
 
-	public Object attr(Object... keys)
+	public Object attrObject(Object... keys)
 			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
-		return attr(this.source, keys);
+		return attrObject(this.source, keys);
 	}
 
-	public static Object attrBySplit(Object target, Object splitKeys)
+	public static Object attrObjectBySplit(Object target, Object splitKeys)
 			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		splitKeys = splitKeys == null ? null : splitKeys.toString();
 		String[] keys = splitKeys == null ? new String[] {}
 				: StringUtils.splitByWholeSeparatorPreserveAllTokens(splitKeys.toString(), ",");
 
-		return attr(target, keys);
+		return attrObject(target, keys);
 	}
 
-	public static Object attr(Object target, Object... keys)
+	public static Object attrObject(Object target, Object... keys)
 			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		for (int i = 0; i < keys.length; i++) {
 			Object key = keys[i];
