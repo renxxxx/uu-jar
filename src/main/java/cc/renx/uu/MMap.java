@@ -268,4 +268,14 @@ public class MMap {
 		}
 		return llist;
 	}
+
+	public Object attrBySplit(Object splitKeys)
+			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		return Var.attrBySplit(this, splitKeys);
+	}
+
+	public Object attr(Object... keys)
+			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		return Var.attr(this, keys);
+	}
 }
