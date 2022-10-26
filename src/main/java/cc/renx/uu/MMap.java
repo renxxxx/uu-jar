@@ -269,23 +269,19 @@ public class MMap {
 		return llist;
 	}
 
-	public Var attrBySplit(Object splitKeys)
-			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
-		return Var.attrBySplit(this, splitKeys);
+	public Var attrChain(Object chainKeys) throws Exception {
+		return Var.attrChain(this, chainKeys);
 	}
 
-	public Var attr(Object... keys)
-			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+	public Var attr(Object... keys) throws Exception {
 		return Var.attr(this, keys);
 	}
 
-	public Object attrObjectBySplit(Object splitKeys)
-			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
-		return Var.attrObjectBySplit(this, splitKeys);
+	public Object attrObjectChain(Object chainKeys) throws Exception {
+		return Var.attrObjectChain(this, chainKeys);
 	}
 
-	public Object attrObject(Object... keys)
-			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+	public Object attrObject(Object... keys) throws Exception {
 		return Var.attrObject(this, keys);
 	}
 }

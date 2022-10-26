@@ -21,17 +21,21 @@ public class LList<E> {
 	public int index = -1;
 	public List list = new ArrayList();
 
-	public LList attrs(Object key) throws Exception {
+	public LList attrs(Object... keys) throws Exception {
 		if (this.list == null)
 			this.list = new ArrayList();
 
 		LList values = LList.build();
 		for (int i = 0; i < this.list.size(); i++) {
 			MMap m = getMap(i);
-			Object value = m.attrObject(key);
+			Object value = m.attrObject(keys);
 			values.add(value);
 		}
 		return values;
+	}
+
+	public LList attrsChain(Object chainKeys) throws Exception {
+		return attrs(Var.$split(chainKeys, ".").toArray());
 	}
 
 	public static LList build(Object obj) {

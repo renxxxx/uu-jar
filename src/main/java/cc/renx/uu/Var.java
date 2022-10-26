@@ -1322,51 +1322,35 @@ public class Var {
 		return MMap.build(value);
 	}
 
-	public Var attrBySplit(Object splitKeys)
-			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
-		return Var.build(attrObjectBySplit(splitKeys));
+	public Var attrChain(Object chainKeys) throws Exception {
+		return attr(Var.$split(chainKeys, ".").toArray());
 	}
 
-	public Var attr(Object... keys)
-			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+	public Var attr(Object... keys) throws Exception {
 		return Var.build(attrObject(keys));
 	}
 
-	public static Var attrBySplit(Object target, Object splitKeys)
-			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
-		return Var.build(attrObjectBySplit(target, splitKeys));
+	public Object attrObjectChain(Object chainKeys) throws Exception {
+		return attrObject(this.source, Var.$split(chainKeys, ".").toArray());
 	}
 
-	public static Var attr(Object target, Object... keys)
-			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+	public Object attrObject(Object... keys) throws Exception {
+		return attrObject(this.source, keys);
+	}
+
+	public static Var attrChain(Object target, Object chainKeys) throws Exception {
+		return attr(target, Var.$split(chainKeys, ".").toArray());
+	}
+
+	public static Var attr(Object target, Object... keys) throws Exception {
 		return Var.build(attrObject(target, keys));
 	}
 
-	public Object attrObjectBySplit(Object splitKeys)
-			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
-		splitKeys = splitKeys == null ? null : splitKeys.toString();
-		String[] keys = splitKeys == null ? new String[] {}
-				: StringUtils.splitByWholeSeparatorPreserveAllTokens(splitKeys.toString(), ",");
-
-		return attrObject(this.source, keys);
+	public static Object attrObjectChain(Object target, Object chainKeys) throws Exception {
+		return attrObject(target, Var.$split(chainKeys, ".").toArray());
 	}
 
-	public Object attrObject(Object... keys)
-			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
-		return attrObject(this.source, keys);
-	}
-
-	public static Object attrObjectBySplit(Object target, Object splitKeys)
-			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
-		splitKeys = splitKeys == null ? null : splitKeys.toString();
-		String[] keys = splitKeys == null ? new String[] {}
-				: StringUtils.splitByWholeSeparatorPreserveAllTokens(splitKeys.toString(), ",");
-
-		return attrObject(target, keys);
-	}
-
-	public static Object attrObject(Object target, Object... keys)
-			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+	public static Object attrObject(Object target, Object... keys) throws Exception {
 		for (int i = 0; i < keys.length; i++) {
 			Object key = keys[i];
 			if (key instanceof Var)
@@ -1553,16 +1537,16 @@ public class Var {
 	}
 
 	public static LList $split(Object src) {
+		return $split(src, ",");
+	}
+
+	public static LList $split(Object src, Object separator) {
 		src = toString(src);
 		if (src == null)
 			return LList.build();
 
-		String[] ss = StringUtils.splitByWholeSeparatorPreserveAllTokens(src.toString(), ",");
+		String[] ss = StringUtils.splitByWholeSeparatorPreserveAllTokens(src.toString(), toString(separator));
 		return LList.build().addAll(ss);
-	}
-
-	public static LList $split(Object src, Object separator) {
-		return $split(src, toString(separator));
 	}
 
 	public boolean find(Object regex) {
