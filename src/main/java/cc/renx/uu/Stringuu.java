@@ -92,14 +92,14 @@ public class Stringuu {
 		return str;
 	}
 
-	public static boolean notEqualsAny(String str, Object... params) {
+	public static boolean notEqualsAny(String str, String... params) {
 		return !equalsAny(str, params);
 	}
 
-	public static boolean equalsAny(String str, Object... params) {
+	public static boolean equalsAny(String str, String... params) {
 		if (params == null)
 			return false;
-		for (Object c : params) {
+		for (String c : params) {
 			if (str == c)
 				return true;
 			if (c != null && c.toString().equals(str))
@@ -108,14 +108,14 @@ public class Stringuu {
 		return false;
 	}
 
-	public static boolean notEqualsIgnoreCaseAny(String str, Object... params) {
+	public static boolean notEqualsIgnoreCaseAny(String str, String... params) {
 		return !equalsIgnoreCaseAny(str, params);
 	}
 
-	public static boolean equalsIgnoreCaseAny(String str, Object... params) {
+	public static boolean equalsIgnoreCaseAny(String str, String... params) {
 		if (params == null)
 			return false;
-		for (Object c : params) {
+		for (String c : params) {
 			if (str == c)
 				return true;
 			if (c != null && c.toString().equalsIgnoreCase(str))
@@ -274,10 +274,10 @@ public class Stringuu {
 		return item;
 	}
 
-	public static String concat(Object... items) {
+	public static String concat(String... items) {
 		String v = "";
 		for (int i = 0; i < items.length; i++) {
-			Object item = items[i];
+			String item = items[i];
 			v += item == null || item.toString() == null ? "" : item.toString();
 		}
 		return v;

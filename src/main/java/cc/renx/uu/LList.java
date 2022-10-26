@@ -165,8 +165,10 @@ public class LList<E> {
 		return (T[]) this.list.toArray(a);
 	}
 
-	public Object getObject(int index) {
-		if (this.list == null || this.list.isEmpty() || this.list.size() <= index)
+	public Object getObject(Integer index) {
+		if (index == null)
+			return null;
+		if (this.list == null || this.list.isEmpty() || this.list.size() <= index || index < 0)
 			return null;
 		else {
 			Object item = this.list.get(index);
@@ -180,15 +182,15 @@ public class LList<E> {
 		}
 	};
 
-	public MMap getMap(int index) {
+	public MMap getMap(Integer index) {
 		return MMap.build(getObject(index));
 	};
 
-	public LList getList(int index) {
+	public LList getList(Integer index) {
 		return LList.build(getObject(index));
 	};
 
-	public String getString(int index) {
+	public String getString(Integer index) {
 		return Var.toString(getObject(index));
 	};
 
@@ -247,7 +249,7 @@ public class LList<E> {
 		return StringUtils.join(this.list, separator);
 	}
 
-	public Var get(int index) {
+	public Var get(Integer index) {
 		return Var.build(getObject(index));
 	}
 }

@@ -7,7 +7,6 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.regex.Pattern;
@@ -18,11 +17,9 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.apache.commons.lang3.math.NumberUtils;
+import org.jsoup.select.Evaluator.IsEmpty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.alibaba.fastjson.JSONObject;
 
 public class Var {
 	private static Logger logger = LoggerFactory.getLogger(Var.class);
@@ -31,7 +28,7 @@ public class Var {
 	public String code;
 	public String[] codes;
 	public String value;
-	public String source;
+	public Object source;
 
 	private static String datePattern1 = "yyyy-MM-dd HH:mm:ss.SSS Z";
 	private static String datePattern2 = "yyyy-MM-dd HH:mm:ss";
@@ -129,7 +126,6 @@ public class Var {
 				}
 			}
 		return value(value);
-
 	}
 
 	public Var value(Map from) {
@@ -148,6 +144,15 @@ public class Var {
 		if (from != null)
 			for (Object value : from) {
 				if (value != null) {
+					if (value instanceof MMap)
+						this.source = ((MMap) value).map;
+					else if (value instanceof LList)
+						this.source = ((LList) value).list;
+					else if (value instanceof Var)
+						this.source = ((Var) value).source;
+					else
+						this.source = value;
+
 					if (value instanceof Float || value instanceof Double || value instanceof BigDecimal) {
 						this.value = value.toString().replaceAll("\\.0*$", "");
 					} else {
@@ -168,8 +173,11 @@ public class Var {
 		if (!this.run)
 			return this;
 
-		if (value != null)
-			value = value + suffix.toString();
+		if (suffix == null || suffix.toString() == null || this.value == null)
+			return this;
+
+		value = new StringBuilder().append(this.value).append(suffix.toString()).toString();
+
 		return this;
 	}
 
@@ -177,8 +185,11 @@ public class Var {
 		if (!this.run)
 			return this;
 
-		if (value != null)
-			value = prefix.toString() + value;
+		if (prefix == null || prefix.toString() == null || this.value == null)
+			return this;
+
+		value = new StringBuilder().append(prefix.toString()).append(this.value).toString();
+
 		return this;
 	}
 
@@ -186,8 +197,8 @@ public class Var {
 		if (!this.run)
 			return this;
 
-		if (value != null && !value.isEmpty())
-			value = DigestUtils.md5Hex(value);
+		if (notEmpty())
+			this.value = DigestUtils.md5Hex(this.value);
 		return this;
 	}
 
@@ -242,6 +253,36 @@ public class Var {
 
 		value = value == null ? null : value.trim();
 		return this;
+	}
+
+	public Var left(int length) {
+		if (!this.run)
+			return this;
+
+		this.value = left(this.value, length);
+		return this;
+	}
+
+	public Var right(int length) {
+		if (!this.run)
+			return this;
+
+		this.value = right(this.value, length);
+		return this;
+	}
+
+	public static String left(Object src, int length) {
+		String ss = toString(src);
+		if (ss == null || ss.isEmpty())
+			return ss;
+		return StringUtils.left(ss, length);
+	}
+
+	public static String right(Object src, int length) {
+		String ss = toString(src);
+		if (ss == null || ss.isEmpty())
+			return ss;
+		return StringUtils.right(ss, length);
 	}
 
 	public Var nullDefault(Object defaultValue) {
@@ -561,7 +602,7 @@ public class Var {
 			return this;
 		if (this.value == null || this.value.isEmpty() || enums == null || enums.length == 0)
 			return this;
-		boolean v = Stringuu.equalsAny(this.value, enums);
+		boolean v = equalsAny(this.value, enums);
 		if (!v)
 			throw Result.build(8, "\"" + this.name + "\"有误").errorParam(this.code);
 		else
@@ -633,17 +674,11 @@ public class Var {
 	}
 
 	public boolean isTrue() {
-		if (this.value == null || this.value.isEmpty())
-			return false;
-		Integer i = toInteger(this.value);
-		if (i == null)
-			return true;
-
-		return i > 0;
+		return isTrue(this.value);
 	}
 
 	public boolean isFalse() {
-		return !isTrue();
+		return isFalse(this.value);
 	}
 
 	public boolean isExisting() {
@@ -700,83 +735,103 @@ public class Var {
 		return this;
 	}
 
-	public Var vReg(Pattern regex) {
+//	public Var vReg(Pattern regex) {
+//		if (!this.run)
+//			return this;
+//		return vReg(regex, null);
+//	}
+//
+//	public Var vReg(Pattern regex, String note) {
+//		if (!this.run)
+//			return this;
+//		if (this.value != null && !this.value.isEmpty() && regex != null) {
+//			if (regex.matcher(this.value).matches())
+//				throw Result
+//						.build(8,
+//								"\"" + this.name + "\"有误"
+//										+ (note == null || note.isEmpty() ? "" : ", 正确格式: " + note + "."))
+//						.errorParam(this.code);
+//		}
+//		return this;
+//	}
+//
+//	public Var vRegNot(Pattern regex) {
+//		if (!this.run)
+//			return this;
+//		return vRegNot(regex, null);
+//	}
+//
+//	public Var vRegNot(Pattern regex, String note) {
+//		if (!this.run)
+//			return this;
+//		if (this.value != null && !this.value.isEmpty() && regex != null) {
+//			if (!regex.matcher(this.value).matches())
+//				throw Result
+//						.build(8,
+//								"\"" + this.name + "\"有误"
+//										+ (note == null || note.isEmpty() ? "" : ", 正确格式: " + note + "."))
+//						.errorParam(this.code);
+//		}
+//		return this;
+//	}
+
+	public Var vReg(Object regex) {
 		if (!this.run)
 			return this;
 		return vReg(regex, null);
 	}
 
-	public Var vReg(Pattern regex, String note) {
+	public Var vReg(Object regex, String note) {
 		if (!this.run)
 			return this;
-		if (this.value != null && !this.value.isEmpty() && regex != null) {
-			if (regex.matcher(this.value).matches())
-				throw Result
-						.build(8,
-								"\"" + this.name + "\"有误"
-										+ (note == null || note.isEmpty() ? "" : ", 正确格式: " + note + "."))
-						.errorParam(this.code);
+
+		Pattern p = null;
+		try {
+			if (regex instanceof Pattern)
+				p = (Pattern) regex;
+			else
+				p = Pattern.compile(regex.toString());
+		} catch (Exception e) {
 		}
+
+		if (p == null || isEmpty())
+			return this;
+
+		if (p.matcher(this.value).matches())
+			throw Result
+					.build(8,
+							"\"" + this.name + "\"有误" + (note == null || note.isEmpty() ? "" : ", 正确格式: " + note + "."))
+					.errorParam(this.code);
 		return this;
 	}
 
-	public Var vRegNot(Pattern regex) {
+	public Var vRegNot(Object regex) {
 		if (!this.run)
 			return this;
 		return vRegNot(regex, null);
 	}
 
-	public Var vRegNot(Pattern regex, String note) {
+	public Var vRegNot(Object regex, String note) {
 		if (!this.run)
 			return this;
-		if (this.value != null && !this.value.isEmpty() && regex != null) {
-			if (!regex.matcher(this.value).matches())
-				throw Result
-						.build(8,
-								"\"" + this.name + "\"有误"
-										+ (note == null || note.isEmpty() ? "" : ", 正确格式: " + note + "."))
-						.errorParam(this.code);
+
+		Pattern p = null;
+		try {
+			if (regex instanceof Pattern)
+				p = (Pattern) regex;
+			else
+				p = Pattern.compile(regex.toString());
+		} catch (Exception e) {
 		}
-		return this;
-	}
 
-	public Var vReg(String regex) {
-		if (!this.run)
+		if (p == null || isEmpty())
 			return this;
-		return vReg(regex, null);
-	}
 
-	public Var vReg(String regex, String note) {
-		if (!this.run)
-			return this;
-		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty()) {
-			if (regexCache.getWithCreate(regex).matcher(this.value).matches())
-				throw Result
-						.build(8,
-								"\"" + this.name + "\"有误"
-										+ (note == null || note.isEmpty() ? "" : ", 正确格式: " + note + "."))
-						.errorParam(this.code);
-		}
-		return this;
-	}
-
-	public Var vRegNot(String regex) {
-		if (!this.run)
-			return this;
-		return vRegNot(regex, null);
-	}
-
-	public Var vRegNot(String regex, String note) {
-		if (!this.run)
-			return this;
-		if (this.value != null && !this.value.isEmpty() && regex != null && !regex.isEmpty()) {
-			if (!regexCache.getWithCreate(regex).matcher(this.value).matches())
-				throw Result
-						.build(8,
-								"\"" + this.name + "\"有误"
-										+ (note == null || note.isEmpty() ? "" : ", 正确格式: " + note + "."))
-						.errorParam(this.code);
-		}
+		if (!p.matcher(this.value).matches())
+			throw Result
+					.build(8,
+							"\"" + this.name + "\"有误" + (note == null || note.isEmpty() ? "" : ", 正确格式: " + note + "."))
+					.errorParam(this.code);
 		return this;
 	}
 
@@ -805,11 +860,11 @@ public class Var {
 //	}
 
 	public LList split() {
-		return Stringuu.split(this.value, ",");
+		return $split(this.value, ",");
 	}
 
-	public LList split(String separator) {
-		return Stringuu.split(this.value, separator);
+	public LList split(Object separator) {
+		return $split(this.value, separator);
 	}
 
 	@Override
@@ -979,7 +1034,6 @@ public class Var {
 			logger.debug(ExceptionUtils.getStackTrace(e));
 		}
 		return null;
-
 	}
 
 	public static Float toFloat(Object value) {
@@ -1197,27 +1251,38 @@ public class Var {
 	}
 
 	public static Long toLong(Object value) {
-		if (value == null || value.toString() == null)
+		try {
+			if (value == null || value.toString() == null)
+				return null;
+			if (value instanceof Long)
+				return (Long) value;
+			if (value instanceof Boolean)
+				return (Boolean) value ? 1l : 0l;
+			String valueStr = value.toString();
+			if (valueStr.trim().isEmpty())
+				return null;
+			else
+				return Long.valueOf(valueStr.split("\\.")[0]);
+		} catch (Exception e) {
 			return null;
-		if (value instanceof Long)
-			return (Long) value;
-		String valueStr = value.toString();
-		if (valueStr.trim().isEmpty())
-			return null;
-		else
-			return Long.valueOf(valueStr.split("\\.")[0]);
+		}
 	}
 
 	public static BigDecimal toDecimal(Object value) {
-		if (value == null || value.toString() == null)
+		try {
+			if (value == null || value.toString() == null)
+				return null;
+			if (value instanceof BigDecimal)
+				return (BigDecimal) value;
+			String valueStr = value.toString();
+			if (valueStr.trim().isEmpty())
+				return null;
+			else
+				return new BigDecimal(valueStr);
+
+		} catch (Exception e) {
 			return null;
-		if (value instanceof BigDecimal)
-			return (BigDecimal) value;
-		String valueStr = value.toString();
-		if (valueStr.trim().isEmpty())
-			return null;
-		else
-			return new BigDecimal(valueStr);
+		}
 	}
 
 //	public static LList toList(Object value) {
@@ -1257,34 +1322,84 @@ public class Var {
 		return MMap.build(value);
 	}
 
+	public Object attrBySplit(Object splitKeys)
+			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		splitKeys = splitKeys == null ? null : splitKeys.toString();
+		String[] keys = splitKeys == null ? new String[] {}
+				: StringUtils.splitByWholeSeparatorPreserveAllTokens(splitKeys.toString(), ",");
+
+		return attr(this.source, keys);
+	}
+
+	public Object attr(Object... keys)
+			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		return attr(this.source, keys);
+	}
+
+	public static Object attrBySplit(Object target, Object splitKeys)
+			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		splitKeys = splitKeys == null ? null : splitKeys.toString();
+		String[] keys = splitKeys == null ? new String[] {}
+				: StringUtils.splitByWholeSeparatorPreserveAllTokens(splitKeys.toString(), ",");
+
+		return attr(target, keys);
+	}
+
 	public static Object attr(Object target, Object... keys)
 			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		for (int i = 0; i < keys.length; i++) {
-			if (target instanceof Map) {
-				target = ((Map) target).get(keys[i]);
-			} else if (target instanceof String) {
+			Object key = keys[i];
+			if (key instanceof Var)
+				key = ((Var) key).toString();
 
+			if (target == null)
+				return null;
+
+			if (key != null && key.toString() != null) {
+				Integer index = Var.toInteger(key.toString().replaceAll("[|]", ""));
+				if (index != null && index > -1) {
+					LList targetList = LList.build(target);
+					target = targetList.get(index);
+					continue;
+				}
+			}
+
+			if (target instanceof Map) {
+				target = ((Map) target).get(key);
+			} else if (target instanceof MMap) {
+				target = ((MMap) target).get(key);
+			} else if (target instanceof Var) {
+				target = ((Var) target).toString();
+			} else if (target instanceof String || target instanceof Integer || target instanceof Long
+					|| target instanceof BigDecimal || target instanceof Float || target instanceof Double
+					|| target instanceof Boolean) {
+				break;
 			} else if (target instanceof Object) {
 				Field f = Object.class.getDeclaredField(keys[i].toString());
 				f.setAccessible(true);
 				target = f.get(target);
 			}
-
-			if (target == null)
-				break;
 		}
 		return target;
 	}
 
 	public Var concat(Object str) {
-		String str2 = str == null ? "" : str.toString();
-		value = value == null ? "" : value;
-		value = value.concat(str2);
+		if (str == null || str.toString() == null || this.value == null)
+			return this;
+		value = new StringBuilder().append(this.value).append(str.toString()).toString();
+		return this;
+	}
+
+	public Var concat(boolean run, Object str) {
+		if (!this.run)
+			return this;
+		if (run)
+			this.concat(str);
 		return this;
 	}
 
 	public Var reset() {
-		value = this.source;
+		value = this.source == null ? null : this.source.toString();
 		run = true;
 		return this;
 	}
@@ -1357,7 +1472,7 @@ public class Var {
 
 	public static void main(String[] args) throws ParseException, NoSuchFieldException, SecurityException,
 			IllegalArgumentException, IllegalAccessException {
-		System.out.println("12, 23    , 43,    123123,,".replaceAll("(\\s+,\\s+)|(\\s+,)|(,\\s+)", ","));
+		System.out.println(Var.isTrue(null));
 	}
 
 //
@@ -1417,4 +1532,70 @@ public class Var {
 		return true;
 	}
 
+	public static LList $split(Object src) {
+		src = toString(src);
+		if (src == null)
+			return LList.build();
+
+		String[] ss = StringUtils.splitByWholeSeparatorPreserveAllTokens(src.toString(), ",");
+		return LList.build().addAll(ss);
+	}
+
+	public static LList $split(Object src, Object separator) {
+		return $split(src, toString(separator));
+	}
+
+	public boolean find(Object regex) {
+		String rr = toString(regex);
+		return Regexuu.find(this.value, rr);
+	}
+
+	public Var group(Object regex) {
+		String rr = toString(regex);
+		return Var.build(Regexuu.group(this.value, rr, 1));
+	}
+
+	public Var group(Object regex, int group) {
+		String rr = toString(regex);
+		return Var.build(Regexuu.group(this.value, rr, group));
+	}
+
+	public static boolean find(Object source, Object regex) {
+		String ss = toString(source);
+		String rr = toString(regex);
+		return Regexuu.find(ss, rr);
+	}
+
+	public static Var group(Object source, Object regex) {
+		String ss = toString(source);
+		String rr = toString(regex);
+		return Var.build(Regexuu.group(ss, rr, 1));
+	}
+
+	public static Var group(Object source, Object regex, int group) {
+		String ss = toString(source);
+		String rr = toString(regex);
+		return Var.build(Regexuu.group(ss, rr, group));
+	}
+
+	public static boolean isTrue(Object src) {
+		if (src == null)
+			return false;
+		if (src instanceof Boolean)
+			return (Boolean) src;
+		if (src instanceof Var)
+			src = src.toString();
+		if (src == null)
+			return false;
+
+		Long i = toLong(src);
+		if (i != null)
+			return i > 0;
+
+		return true;
+	}
+
+	public static boolean isFalse(Object src) {
+		return !isTrue(src);
+	}
 }
