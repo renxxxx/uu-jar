@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.regex.Pattern;
@@ -17,7 +18,6 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.jsoup.select.Evaluator.IsEmpty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1350,7 +1350,9 @@ public class Var {
 		return attrObject(target, Var.$split(chainKeys, ".").toArray());
 	}
 
-	public static Object attrObject(Object target, Object... keys) throws Exception {
+	public static Object attrObject(Object src, Object... keys) throws Exception {
+		Object target = src;
+
 		for (int i = 0; i < keys.length; i++) {
 			Object key = keys[i];
 			if (key instanceof Var)
@@ -1359,25 +1361,23 @@ public class Var {
 			if (target == null)
 				return null;
 
+			Integer index = null;
 			if (key != null && key.toString() != null) {
-				Integer index = Var.toInteger(key.toString().replaceAll("[|]", ""));
-				if (index != null && index > -1) {
-					LList targetList = LList.build(target);
-					target = targetList.get(index);
-					continue;
-				}
+				index = Var.build(key.toString().replaceAll("\\[|\\]", "")).default1(0).toInteger();
 			}
 
 			if (target instanceof Map) {
 				target = ((Map) target).get(key);
 			} else if (target instanceof MMap) {
-				target = ((MMap) target).get(key);
-			} else if (target instanceof Var) {
-				target = ((Var) target).toString();
-			} else if (target instanceof String || target instanceof Integer || target instanceof Long
-					|| target instanceof BigDecimal || target instanceof Float || target instanceof Double
-					|| target instanceof Boolean) {
-				break;
+				target = ((MMap) target).getObject(key);
+			} else if (target instanceof List) {
+				try {
+					target = ((List) target).get(index);
+				} catch (Exception e) {
+					target = null;
+				}
+			} else if (target instanceof LList) {
+				target = ((LList) target).getObject(index);
 			} else if (target instanceof Object) {
 				Field f = Object.class.getDeclaredField(keys[i].toString());
 				f.setAccessible(true);
