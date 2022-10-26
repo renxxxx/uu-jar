@@ -21,14 +21,14 @@ public class LList<E> {
 	public int index = -1;
 	public List list = new ArrayList();
 
-	public LList attrs(String key) {
+	public LList attrs(Object key) throws Exception {
 		if (this.list == null)
 			this.list = new ArrayList();
 
 		LList values = LList.build();
 		for (int i = 0; i < this.list.size(); i++) {
 			MMap m = getMap(i);
-			Object value = m.getObject(key);
+			Object value = m.attrObject(key);
 			values.add(value);
 		}
 		return values;
