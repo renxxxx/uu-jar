@@ -251,8 +251,8 @@ public class Jdbcuu3 {
 
 			return rs;
 		} catch (Exception e) {
-			throw new RuntimeException(MMap.build().put("error", e.getMessage()).put("sql", sql)
-					.put("params", Arrays.toString(params)).put("sqlId", sqlId).toJSONString(), e);
+			throw Stump.build(MMap.build().put("sql", sql).put("params", Arrays.toString(params)).put("sqlId", sqlId)
+					.toJSONString(), e);
 		}
 	}
 
@@ -336,8 +336,8 @@ public class Jdbcuu3 {
 
 			logger.info("duration: " + duration + " affected: " + cnt + " " + sqlId);
 		} catch (Exception e) {
-			throw new RuntimeException(MMap.build().put("error", e.getMessage()).put("sql", sql)
-					.put("params", Arrays.toString(params)).put("sqlId", sqlId).toJSONString(), e);
+			throw Stump.build(MMap.build().put("sql", sql).put("params", Arrays.toString(params)).put("sqlId", sqlId)
+					.toJSONString(), e);
 		}
 		return cnt;
 	}
