@@ -231,9 +231,8 @@ public class Jdbcuu3 {
 		if (params == null)
 			params = new Object[] {};
 		sql = sql.trim().replaceAll("\\s+", " ");
-		String sqlNo = new SimpleDateFormat("YYYYMMDDHHmmssSSS").format(new Date())
-				+ RandomStringUtils.randomNumeric(8);
-		logger.info("[" + sql + "]" + " " + Arrays.toString(params) + " " + sqlNo);
+		String sqlId = Stringuu.timeId();
+		logger.info("[" + sql + "]" + " " + Arrays.toString(params) + " " + sqlId);
 		try {
 			for (int i = 0; i < params.length; i++) {
 				Object param = params[i];
@@ -248,11 +247,12 @@ public class Jdbcuu3 {
 			logger.info("end preparedStatement.executeQuery()");
 			long e = System.currentTimeMillis();
 			Float duration = (e - s) / 1000f;
-			logger.info("duration: " + duration + " " + sqlNo);
+			logger.info("duration: " + duration + " " + sqlId);
 
 			return rs;
 		} catch (Exception e) {
-			throw new Exception(e.getMessage() + " sqlNo: " + sqlNo, e);
+			throw new RuntimeException(MMap.build().put("error", e.getMessage()).put("sql", sql)
+					.put("params", Arrays.toString(params)).put("sqlId", sqlId).toJSONString(), e);
 		}
 	}
 
@@ -310,9 +310,8 @@ public class Jdbcuu3 {
 		if (params == null)
 			params = new Object[] {};
 		sql = sql.trim().replaceAll("\\s+", " ");
-		String sqlNo = new SimpleDateFormat("YYYYMMDDHHmmssSSS").format(new Date())
-				+ RandomStringUtils.randomNumeric(8);
-		logger.info("[" + sql + "]" + " " + Arrays.toString(params) + " " + sqlNo);
+		String sqlId = Stringuu.timeId();
+		logger.info("[" + sql + "]" + " " + Arrays.toString(params) + " " + sqlId);
 		int cnt = 0;
 		try {
 			for (int i = 0; i < params.length; i++) {
@@ -333,11 +332,12 @@ public class Jdbcuu3 {
 			logger.info("end preparedStatement.executeQuery()");
 			long e = System.currentTimeMillis();
 			Float duration = (e - s) / 1000f;
-			logger.info("duration: " + duration + " " + sqlNo);
+			logger.info("duration: " + duration + " " + sqlId);
 
-			logger.info("duration: " + duration + " affected: " + cnt + " " + sqlNo);
+			logger.info("duration: " + duration + " affected: " + cnt + " " + sqlId);
 		} catch (Exception e) {
-			throw new Exception(e.getMessage() + " sqlNo: " + sqlNo, e);
+			throw new RuntimeException(MMap.build().put("error", e.getMessage()).put("sql", sql)
+					.put("params", Arrays.toString(params)).put("sqlId", sqlId).toJSONString(), e);
 		}
 		return cnt;
 	}
