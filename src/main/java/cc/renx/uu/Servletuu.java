@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 public class Servletuu {
 	private static Logger logger = LoggerFactory.getLogger(Servletuu.class);
 
-	public static Map<String, List<String>> headerm(HttpServletResponse response) {
+	public static MMap headerm(HttpServletResponse response) {
 		Map<String, List<String>> headersMap = new LinkedHashMap<String, List<String>>();
 		Collection<String> names = response.getHeaderNames();
 		for (Iterator iterator = names.iterator(); iterator.hasNext();) {
@@ -31,15 +31,15 @@ public class Servletuu {
 			}
 			headersMap.put(name, valueList);
 		}
-		return headersMap;
+		return MMap.build(headersMap);
 	}
 
-	public static Map<String, List<String>> headerm(HttpServletRequest request) {
+	public static MMap headerm(HttpServletRequest request) {
 		Map<String, List<String>> headersMap = (Map<String, List<String>>) request.getAttribute("headerm-10000");
 		if (headersMap == null)
 			headersMap = new LinkedHashMap<String, List<String>>();
 		else {
-			return headersMap;
+			return MMap.build(headersMap);
 		}
 		Enumeration<String> names = request.getHeaderNames();
 		while (names.hasMoreElements()) {
@@ -52,7 +52,7 @@ public class Servletuu {
 			}
 			headersMap.put(name, valueList);
 		}
-		return headersMap;
+		return MMap.build(headersMap);
 	}
 
 	public static Map<String, Object> attributem(HttpServletRequest request) {

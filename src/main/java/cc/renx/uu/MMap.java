@@ -15,6 +15,12 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 
 public class MMap {
 
+	public static void main(String[] args) {
+		LinkedHashMap hh = new LinkedHashMap();
+		hh.put("a", 11);
+		System.out.println(hh.toString());
+	}
+
 	public Map map = new LinkedHashMap();
 
 	public Set keySet() {
