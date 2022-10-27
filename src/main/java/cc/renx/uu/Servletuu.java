@@ -55,6 +55,17 @@ public class Servletuu {
 		return headersMap;
 	}
 
+	public static Map<String, Object> attributem(HttpServletRequest request) {
+		Map<String, Object> attributesMap = new LinkedHashMap<String, Object>();
+		Enumeration<String> names = request.getAttributeNames();
+		while (names.hasMoreElements()) {
+			String name = (String) names.nextElement();
+			Object ve = request.getAttribute(name);
+
+		}
+		return attributesMap;
+	}
+
 	public static Map<String, Cookie> cookiem(HttpServletRequest request) {
 		Map<String, Cookie> cookiesMap = (Map<String, Cookie>) request.getAttribute("cookiem-10000");
 		if (cookiesMap == null)
