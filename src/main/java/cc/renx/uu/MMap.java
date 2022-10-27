@@ -252,7 +252,7 @@ public class MMap {
 	}
 
 	public String toJSONString() {
-		return JSON.toJSONString(this.map);
+		return JSON.toJSONString(this.map, SerializerFeature.WriteMapNullValue, SerializerFeature.PrettyFormat);
 	}
 
 	public String toJSONString(SerializerFeature... features) {
