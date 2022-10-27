@@ -143,7 +143,12 @@ public class MMap {
 		return map.get(key);
 	}
 
-	public Object remove(Object key) {
+	public MMap remove(Object key) {
+		removeGetObject(key);
+		return this;
+	}
+
+	public Object removeGetObject(Object key) {
 		if (this.map == null)
 			return null;
 		if (key instanceof Var)
