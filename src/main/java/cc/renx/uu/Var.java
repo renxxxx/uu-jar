@@ -900,9 +900,9 @@ public class Var {
 		return isEmpty() ? null : toDecimal(value);
 	}
 
-	public String formatDate(String pattern) {
+	public Var formatDate(String pattern) {
 		Date data = toDate();
-		return data == null ? null : new SimpleDateFormat(pattern).format(data);
+		return Var.build(data == null ? null : new SimpleDateFormat(pattern).format(data));
 	}
 
 	public Date toDate() {
